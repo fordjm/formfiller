@@ -5,13 +5,13 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import formfiller.entities.IPrompt;
+import formfiller.entities.PromptFunctions;
 import formfiller.entities.NullPrompt;
 import formfiller.entities.Prompt;
 
 public class PromptWidgetTest {
 
-	private IPrompt p;
+	private PromptFunctions p;
 
 	private void assertPromptIsNullPrompt() {
 		assertTrue(PromptWidget.getPrompt() instanceof NullPrompt);
@@ -21,7 +21,7 @@ public class PromptWidgetTest {
 		assertEquals("", PromptWidget.getResponse());
 	}
 
-	private void setWidgetPrompt(IPrompt prompt) {
+	private void setWidgetPrompt(PromptFunctions prompt) {
 		PromptWidget.setPrompt(p);
 	}
 

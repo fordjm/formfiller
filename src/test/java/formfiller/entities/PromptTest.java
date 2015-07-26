@@ -10,15 +10,15 @@ import org.junit.Test;
 
 public class PromptTest {
 
-	private IPrompt p;
+	private PromptFunctions p;
 	private ResponseConstraint mockedFormat;
 	private ResponseConstraint formatOfP;
 
-	private IPrompt createPrompt(String id, String content) {
+	private PromptFunctions createPrompt(String id, String content) {
 		return new Prompt(id, content);
 	}
 	
-	private IPrompt createNamePrompt() {
+	private PromptFunctions createNamePrompt() {
 		return createPrompt("name", "Joe");
 	}
 	

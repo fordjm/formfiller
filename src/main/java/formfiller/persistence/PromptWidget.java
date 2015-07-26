@@ -1,14 +1,14 @@
 package formfiller.persistence;
 
-import formfiller.entities.IPrompt;
+import formfiller.entities.PromptFunctions;
 import formfiller.entities.NullPrompt;
 
 public class PromptWidget {
 
-	private static IPrompt prompt = new NullPrompt();
+	private static PromptFunctions prompt = new NullPrompt();
 	private static String response = "";
 
-	public static IPrompt getPrompt() {
+	public static PromptFunctions getPrompt() {
 		return prompt;
 	}
 
@@ -16,7 +16,7 @@ public class PromptWidget {
 		return response;
 	}
 
-	public static void setPrompt(IPrompt prompt) {
+	public static void setPrompt(PromptFunctions prompt) {
 		if (prompt == null)
 			clearPrompt();
 		else

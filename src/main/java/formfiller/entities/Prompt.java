@@ -3,7 +3,7 @@ package formfiller.entities;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Prompt implements IPrompt {
+public class Prompt implements PromptFunctions {
 	String id;
 	String content;
 	ResponseConstraint format;
@@ -19,11 +19,11 @@ public class Prompt implements IPrompt {
 		return content;
 	}
 
-	public void setFormat(ResponseConstraint f) {
+	public <T> void setFormat(ResponseConstraint<T> f) {
 		format = f;
 	}
 
-	public ResponseConstraint format() {
+	public <T> ResponseConstraint<T> format() {
 		return format;
 	}
 

@@ -9,7 +9,7 @@ import org.junit.Test;
 
 public class NullPromptTest {
 
-	private IPrompt n;
+	private PromptFunctions n;
 
 	private SelectionFormat createSelectionFormatWithNoSelections() {
 		return new SelectionFormat(new ArrayList<String>());

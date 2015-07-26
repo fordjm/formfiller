@@ -8,20 +8,20 @@ import java.util.List;
 
 import org.junit.Test;
 
-import formfiller.entities.IPrompt;
+import formfiller.entities.PromptFunctions;
 import formfiller.entities.ResponseConstraint;
 import formfiller.entities.SelectionFormat;
 import formfiller.persistence.PromptWidget;
 
-public class SetNewSelectionPromptTest {
+public class AddSelectionPromptTest {
 	
 	@Test
 	public void canSetNewSelectionPrompt(){
 		List<String> names = Arrays.asList(new String[]{"Bob", "Jim", "Mike"});
-		Transaction t = new SetNewSelectionPrompt("name", "Name", names);
+		Transaction t = new AddSelectionPrompt("name", "Name", names);
 		
 		t.execute();		
-		IPrompt p = PromptWidget.getPrompt();		
+		PromptFunctions p = PromptWidget.getPrompt();		
 		ResponseConstraint r = p.format();		
 		SelectionFormat s = (SelectionFormat) r;
 

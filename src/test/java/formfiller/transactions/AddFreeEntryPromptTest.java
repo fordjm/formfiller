@@ -5,18 +5,18 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import formfiller.entities.FreeEntryFormat;
-import formfiller.entities.IPrompt;
+import formfiller.entities.PromptFunctions;
 import formfiller.entities.ResponseConstraint;
 import formfiller.persistence.PromptWidget;
 
-public class SetNewFreeEntryPromptTest {
+public class AddFreeEntryPromptTest {
 
 	@Test
 	public void canSetNewFreeEntryPrompt() {
-		Transaction t = new SetNewFreeEntryPrompt("name", "Name");
+		Transaction t = new AddFreeEntryPrompt("name", "Name");
 		
 		t.execute();
-		IPrompt p = PromptWidget.getPrompt();		
+		PromptFunctions p = PromptWidget.getPrompt();		
 		ResponseConstraint r = p.format();
 		
 		assertEquals("Name", p.content());
