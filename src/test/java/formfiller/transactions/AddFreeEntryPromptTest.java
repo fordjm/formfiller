@@ -1,23 +1,25 @@
 package formfiller.transactions;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import formfiller.entities.FreeEntryFormat;
-import formfiller.entities.PromptFunctions;
-import formfiller.entities.ResponseConstraint;
-import formfiller.persistence.PromptWidget;
+import formfiller.entities.Prompt;
+import formfiller.entities.ResponseFormat;
+import formfiller.persistence.FormWidget;
 
-public class AddFreeEntryPromptTest {
-
+public class AddFreeEntryPromptTest<T> {
+	
 	@Test
-	public void canSetNewFreeEntryPrompt() {
-		Transaction t = new AddFreeEntryPrompt("name", "Name");
+	public void canAddStringFreeEntryPrompt() {
+		Transaction t = new AddFreeEntryPrompt<String>("name", "Name");
 		
 		t.execute();
-		PromptFunctions p = PromptWidget.getPrompt();		
-		ResponseConstraint r = p.format();
+		Prompt<?> p = FormWidget.getPrompt();		
+		ResponseFormat<?> r = p.format();
 		
 		assertEquals("Name", p.content());
 		assertTrue(r instanceof FreeEntryFormat);

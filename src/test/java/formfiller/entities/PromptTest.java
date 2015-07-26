@@ -1,28 +1,29 @@
 package formfiller.entities;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
 
 import java.util.ArrayList;
 
 import org.junit.Before;
 import org.junit.Test;
 
-public class PromptTest {
+public class PromptTest<T> {
 
-	private PromptFunctions p;
-	private ResponseConstraint mockedFormat;
-	private ResponseConstraint formatOfP;
+	private Prompt<T> p;
+	private ResponseFormat<T> mockedFormat;
+	private ResponseFormat<T> formatOfP;
 
-	private PromptFunctions createPrompt(String id, String content) {
-		return new Prompt(id, content);
+	private Prompt<T> createPrompt(String id, String content) {
+		return new PromptImpl<T>(id, content);
 	}
 	
-	private PromptFunctions createNamePrompt() {
-		return createPrompt("name", "Joe");
+	private Prompt<T> createNamePrompt() {
+		return createPrompt("name", "What is your name?");
 	}
 	
-	private void setupMockedFormat(ResponseConstraint r){
+	private void setupMockedFormat(ResponseFormat<T> r){
 		mockedFormat = mock(r.getClass());
 		p.setFormat(mockedFormat);
 		formatOfP = p.format();
@@ -40,18 +41,18 @@ public class PromptTest {
 	
 	@Test 
 	public void givenStringContent_contentIsNewString(){
-		assertEquals("Joe", p.content());
+		assertEquals("What is your name?", p.content());
 	}
 	
 	@Test
 	public void givenFreeEntryFormat_formatIsFreeEntry(){
-		setupMockedFormat(new FreeEntryFormat());
+		setupMockedFormat(new FreeEntryFormat<T>());
 		assertTrue(formatOfP instanceof FreeEntryFormat);
 	}
 	
 	@Test
 	public void givenSelectionFormat_formatIsSelection(){
-		setupMockedFormat(new SelectionFormat(new ArrayList<String>()));
+		setupMockedFormat(new SelectionFormat<T>(new ArrayList<T>()));
 		assertTrue(formatOfP instanceof SelectionFormat);
 	}
 }

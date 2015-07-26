@@ -1,15 +1,20 @@
 package formfiller.entities;
 
-public class NullPrompt implements PromptFunctions {
+public class NullPrompt implements Prompt {
+	 ResponseFormat format;
+	
+	public NullPrompt(){
+		format = new FreeEntryFormat();
+	}
 
 	public String content() {
 		return "";
 	}
 
-	public <T> void setFormat(ResponseConstraint<T> f) {}
+	public void setFormat(ResponseFormat f) {}
 
-	public <T> ResponseConstraint<T> format() {
-		return new FreeEntryFormat<T>();
+	public ResponseFormat format() {
+		return format;
 	}
 
 	public String id() {

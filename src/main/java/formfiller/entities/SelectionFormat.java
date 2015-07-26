@@ -2,7 +2,7 @@ package formfiller.entities;
 
 import java.util.List;
 
-public class SelectionFormat<T> implements ResponseConstraint<T> {
+public class SelectionFormat<T> extends ResponseFormat<T> {
 	private List<T> selections;
 	
 	public SelectionFormat(List<T> selections){

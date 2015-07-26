@@ -7,12 +7,12 @@ import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.Test;
 
-public class NullPromptTest {
+public class NullPromptTest<T> {
 
-	private PromptFunctions n;
+	private Prompt<T> n;
 
-	private SelectionFormat createSelectionFormatWithNoSelections() {
-		return new SelectionFormat(new ArrayList<String>());
+	private SelectionFormat<T> createSelectionFormatWithNoSelections() {
+		return new SelectionFormat<T>(new ArrayList<T>());
 	}
 
 	private void assertNullPromptHasFreeEntryFormat() {

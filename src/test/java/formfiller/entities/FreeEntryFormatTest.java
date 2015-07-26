@@ -5,27 +5,22 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-public class FreeEntryFormatTest {
+public abstract class FreeEntryFormatTest<T> {
 	
-	private FreeEntryFormat format;
+	protected FreeEntryFormat<T> format;
+	
+	protected abstract FreeEntryFormat<T> makeFormat();
 
 	@Before
 	public void setup(){
-		format = new FreeEntryFormat();
+		format = makeFormat();
 	}
 
 	@Test
-	public void givenNull_isValidResponseReturnsFalse() {
+	public void givenNull_isNotValidResponse() {
 		assertFalse(format.satisfiesConstraint(null));
 	}
 	
 	@Test
-	public void givenEmptyString_isValidResponseReturnsTrue(){
-		assertTrue(format.satisfiesConstraint(""));
-	}
-	
-	@Test
-	public void givenNonEmptyString_isValidResponseReturnsTrue(){
-		assertTrue(format.satisfiesConstraint("x"));
-	}
+	public abstract void givenProperDataType_isValidResponse();
 }

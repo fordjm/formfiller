@@ -2,10 +2,10 @@ package formfiller.transactions;
 
 import java.util.List;
 
-import formfiller.entities.ResponseConstraint;
+import formfiller.entities.ResponseFormat;
 import formfiller.entities.SelectionFormat;
 
-public class AddSelectionPrompt<T> extends AddPrompt implements Transaction {
+public class AddSelectionPrompt<T> extends AddPrompt<T> implements Transaction {
 	private List<T> selections;
 
 	public AddSelectionPrompt(String id, String content, List<T> selections) {
@@ -14,7 +14,7 @@ public class AddSelectionPrompt<T> extends AddPrompt implements Transaction {
 	}
 
 	@Override
-	public ResponseConstraint<T> makeFormat() {
+	public ResponseFormat<T> makeFormat() {
 		return new SelectionFormat<T>(selections);
 	}
 }

@@ -1,15 +1,15 @@
 package formfiller.transactions;
 
 import formfiller.entities.FreeEntryFormat;
-import formfiller.entities.ResponseConstraint;
+import formfiller.entities.ResponseFormat;
 
-public class AddFreeEntryPrompt<T> extends AddPrompt {
+public class AddFreeEntryPrompt<T> extends AddPrompt<T> {
 
 	public AddFreeEntryPrompt(String id, String content) {
 		super(id, content);
 	}
 
-	public ResponseConstraint<T> makeFormat(){
+	public ResponseFormat<T> makeFormat(){
 		return new FreeEntryFormat<T>();
 	}
 }

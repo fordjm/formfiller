@@ -1,6 +1,6 @@
 package formfiller.entities;
 
-public class FreeEntryFormat<T> implements ResponseConstraint<T> {
+public class FreeEntryFormat<T> extends ResponseFormat<T> {
 
 	public boolean satisfiesConstraint(T response) {
 		if (response == null)

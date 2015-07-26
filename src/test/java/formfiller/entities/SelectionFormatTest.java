@@ -1,64 +1,56 @@
 package formfiller.entities;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
 
-public class SelectionFormatTest {
+public abstract class SelectionFormatTest<T> {
 
-	List<String> selections;
-	SelectionFormat s;
+	protected SelectionFormat<T> format;
+	protected List<T> selections;
 
-	private void assertInvalidResponse(String r) {
-		assertFalse(s.satisfiesConstraint(r));
+	protected void assertInvalidResponse(T r) {
+		assertFalse(format.satisfiesConstraint(r));
 	}
 
-	private void assertValidResponse(String r) {
-		assertTrue(s.satisfiesConstraint(r));
+	protected void assertValidResponse(T r) {
+		assertTrue(format.satisfiesConstraint(r));
 	}
+	
+	protected abstract SelectionFormat<T> makeFormat();
+	
+	protected abstract List<T> makeSelections();
 			
 	@Before
-	public void setup(){
-		selections = Arrays.asList(new String[]{"a", "b", "c"});
-		s = new SelectionFormat(selections);
+	public void setUp() throws Exception {
+		selections = makeSelections();
+		format = makeFormat();
 	}
 
 	@Test
 	public void givenNull_isNotValidResponse() {		
 		assertInvalidResponse(null);
 	}
-
+	
 	@Test
-	public void givenEmptyString_isNotValidResponse() {
-		assertInvalidResponse("");		
+	public void givenFirstSelection_isValidResponse() {
+		assertValidResponse(selections.get(0));
 	}
 	
 	@Test
-	public void givenNonSelectionString_isNotValidResponse() {
-		assertInvalidResponse("x");
+	public void givenSecondSelection_isValidResponse() {
+		assertValidResponse(selections.get(1));
 	}
 	
 	@Test
-	public void givenFirstSelectionString_isValidResponse() {
-		assertValidResponse("a");
+	public void givenThirdSelection_isValidResponse() {
+		assertValidResponse(selections.get(2));
 	}
 	
 	@Test
-	public void givenSecondSelectionString_isValidResponse() {
-		assertValidResponse("b");
-	}
-	
-	@Test
-	public void givenThirdSelectionString_isValidResponse() {
-		assertValidResponse("c");
-	}
-	
-	@Test
-	public void givenMultipleSelectionString_isNotValidResponse() {
-		assertInvalidResponse("a b");
-	}
+	public abstract void givenNonSelection_isNotValidResponse();
 }

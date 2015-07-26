@@ -1,19 +1,19 @@
 package formfiller.transactions;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import formfiller.persistence.PromptWidget;
+import formfiller.persistence.FormWidget;
 
 public class AddResponseTest {
 
 	@Test
 	public void canAddNewResponse() {
-		Transaction t = new AddResponse("Joe");
+		Transaction t = new AddResponse<String>("Joe");
 		
 		t.execute();
 		
-		assertEquals("Joe", PromptWidget.getResponse());
+		assertEquals("Joe", FormWidget.getResponse().content());
 	}
 }

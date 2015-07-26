@@ -5,13 +5,14 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import formfiller.persistence.PromptWidget;
+import formfiller.entities.ResponseImpl;
+import formfiller.persistence.FormWidget;
 
 public class RemoveResponseTest {
 
 	@Before
 	public void setUp() throws Exception {
-		PromptWidget.setResponse("Response");
+		FormWidget.setResponse(new ResponseImpl(0, "Response"));
 	}
 
 	@Test
@@ -20,7 +21,7 @@ public class RemoveResponseTest {
 		
 		t.execute();
 		
-		assertEquals("", PromptWidget.getResponse());
+		assertEquals("", FormWidget.getResponse().content());
 	}
 
 }
