@@ -5,27 +5,27 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Test;
 
-import formfiller.entities.Prompt;
-import formfiller.entities.ResponseFormat;
+import formfiller.entities.Constraint;
 import formfiller.entities.SelectionFormat;
 import formfiller.persistence.FormWidget;
+import formfiller.utilities.ConstraintName;
 
-public class AddSelectionPromptTest {
+public class AddSelectionFormatTest {
 	
 	@Test
-	public void canSetNewSelectionPrompt(){
-		List<String> names = Arrays.asList(new String[]{"Bob", "Jim", "Mike"});
-		Transaction t = new AddSelectionPrompt<String>("name", "Name", names);
+	public void canAddSelectionFormat(){
+		List<String> names = Arrays.asList("Bob", "Jim", "Mike");
+		Transaction t = new AddSelectionFormat<String>(names);
 		
 		t.execute();		
-		Prompt p = FormWidget.getPrompt();		
-		ResponseFormat<String> r = p.format();	
+		Map<ConstraintName, Constraint<?>> p = FormWidget.constraints();		
+		Constraint<?> r = p.get(ConstraintName.FORMAT);
 		SelectionFormat<String> s = (SelectionFormat<String>) r;
 
-		assertEquals("Name", p.content());
 		assertTrue(r instanceof SelectionFormat);
 		assertEquals(names, s.selections());
 	}

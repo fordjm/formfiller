@@ -1,8 +1,6 @@
 package formfiller.entities;
 
-public interface Prompt<T> {
+public interface Prompt {
 	String content();
 	String id();
-	void setFormat(ResponseFormat<T> f);
-	ResponseFormat<T> format();
 }

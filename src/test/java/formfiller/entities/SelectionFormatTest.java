@@ -13,12 +13,12 @@ public abstract class SelectionFormatTest<T> {
 	protected SelectionFormat<T> format;
 	protected List<T> selections;
 
-	protected void assertInvalidResponse(T r) {
-		assertFalse(format.satisfiesConstraint(r));
+	protected void assertInvalidResponse() {
+		assertFalse(format.satisfiesConstraint());
 	}
 
-	protected void assertValidResponse(T r) {
-		assertTrue(format.satisfiesConstraint(r));
+	protected void assertValidResponse() {
+		assertTrue(format.satisfiesConstraint());
 	}
 	
 	protected abstract SelectionFormat<T> makeFormat();
@@ -30,27 +30,7 @@ public abstract class SelectionFormatTest<T> {
 		selections = makeSelections();
 		format = makeFormat();
 	}
-
-	@Test
-	public void givenNull_isNotValidResponse() {		
-		assertInvalidResponse(null);
-	}
 	
 	@Test
-	public void givenFirstSelection_isValidResponse() {
-		assertValidResponse(selections.get(0));
-	}
-	
-	@Test
-	public void givenSecondSelection_isValidResponse() {
-		assertValidResponse(selections.get(1));
-	}
-	
-	@Test
-	public void givenThirdSelection_isValidResponse() {
-		assertValidResponse(selections.get(2));
-	}
-	
-	@Test
-	public abstract void givenNonSelection_isNotValidResponse();
+	public abstract void givenSelection_isValidResponse();
 }

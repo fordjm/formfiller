@@ -1,19 +1,19 @@
 package formfiller.entities;
 
-public class ResponseImpl<T> implements Response<T> {
+public class ResponseImpl<T> extends AbstractResponse<T> implements Response<T> {
 	int id;
-	T data;
 	
 	public ResponseImpl(int id, T data){
+		super(data);
 		this.id = id;
-		this.data = data;
-	}
-
-	public T content() {
-		return data;
 	}
 	
 	public int id(){
 		return id;
+	}
+
+	@Override
+	public boolean satisfiesConstraint() {
+		return id >= 0 && content != null;
 	}
 }

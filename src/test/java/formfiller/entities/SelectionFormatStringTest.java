@@ -3,33 +3,37 @@ package formfiller.entities;
 import java.util.Arrays;
 import java.util.List;
 
+import org.junit.Ignore;
 import org.junit.Test;
+
+import formfiller.utilities.TestUtil;
 
 public class SelectionFormatStringTest extends SelectionFormatTest<String> {
 
 	@Override
 	protected SelectionFormat<String> makeFormat() {
-		return new SelectionFormat<String>(selections);
+		ResponseImpl<String> mockResponse = TestUtil.createMockStringResponseImpl(0, "b");
+		return new SelectionFormat<String>(mockResponse, selections);
 	}
 
 	@Override
 	protected List<String> makeSelections() {
-		return Arrays.asList(new String[]{"a", "b", "c"});
+		return Arrays.asList("a", "b", "c");
 	}
 
 	@Test
-	public void givenEmptyString_isNotValidResponse() {
-		assertInvalidResponse("");		
+	public void givenEmptyString_isValidResponse() {
+		assertValidResponse();		
 	}
 	
-	@Override
+	@Ignore
 	@Test
-	public void givenNonSelection_isNotValidResponse() {
-		assertInvalidResponse("x");
+	public void givenSelection_isValidResponse() {
 	}
 
+	@Ignore
 	@Test
 	public void givenMultipleSelectionString_isNotValidResponse() {
-		assertInvalidResponse("a b");
+		assertInvalidResponse();
 	}
 }

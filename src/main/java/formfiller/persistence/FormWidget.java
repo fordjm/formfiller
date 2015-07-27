@@ -1,25 +1,27 @@
 package formfiller.persistence;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.HashMap;
+import java.util.Map;
 
 import formfiller.entities.NullPrompt;
+import formfiller.entities.NullResponse;
 import formfiller.entities.Prompt;
 import formfiller.entities.Response;
-import formfiller.entities.ResponseConstraint;
-import formfiller.entities.ResponseImpl;
+import formfiller.entities.Constraint;
+import formfiller.utilities.ConstraintName;
 
 public class FormWidget {
 
 	private static Prompt prompt = new NullPrompt();
-	private static Response response = new ResponseImpl(-1, "");
-	private static Set<ResponseConstraint> constraints = new HashSet<ResponseConstraint>();
+	private static Response<?> response = new NullResponse();
+	private static Map<ConstraintName, Constraint<?>> constraints = 
+			new HashMap<ConstraintName, Constraint<?>>();
 
 	public static Prompt getPrompt() {
 		return prompt;
 	}
 
-	public static Response getResponse() {
+	public static Response<?> getResponse() {
 		return response;
 	}
 
@@ -33,24 +35,33 @@ public class FormWidget {
 	private static void clearPrompt() {
 		prompt = new NullPrompt();
 	}
+	
+	private static void clearConstraints() {
+		constraints = new HashMap<ConstraintName, Constraint<?>>();
+	}
 
-	public static void setResponse(Response content) {
-		if (content.content() == null)
+	public static void setResponse(Response<?> content) {
+		if (content == null)
 			clearResponse();
 		else
 			response = content;
 	}
 
-	public static void clearResponse() {
-		response = new ResponseImpl(-1, "");
-	}
-
 	public static void clear() {
 		clearPrompt();
+		clearConstraints();
 		clearResponse();
 	}
 
-	public static Set<ResponseConstraint> constraints() {
+	public static void clearResponse() {
+		response = new NullResponse();
+	}
+
+	public static Map<ConstraintName, Constraint<?>> constraints() {
 		return constraints;
+	}
+
+	public static void addConstraint(ConstraintName constraintName, Constraint<?> constraint) {
+		constraints.put(constraintName, constraint);
 	}
 }

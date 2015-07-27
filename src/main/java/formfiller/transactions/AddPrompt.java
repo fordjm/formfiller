@@ -1,11 +1,10 @@
 package formfiller.transactions;
 
-import formfiller.entities.PromptImpl;
 import formfiller.entities.Prompt;
-import formfiller.entities.ResponseFormat;
+import formfiller.entities.PromptImpl;
 import formfiller.persistence.FormWidget;
 
-public abstract class AddPrompt<T> implements Transaction {
+public class AddPrompt implements Transaction {
 	String id;
 	String content;
 
@@ -15,11 +14,7 @@ public abstract class AddPrompt<T> implements Transaction {
 	}
 
 	public void execute() {
-		Prompt<T> p = new PromptImpl<T>(id, content);
-		p.setFormat(makeFormat());
-		
+		Prompt p = new PromptImpl(id, content);		
 		FormWidget.setPrompt(p);
 	}
-	
-	public abstract ResponseFormat<T> makeFormat();
 }
