@@ -16,6 +16,6 @@ public class AddPromptTest {
 		t.execute();
 		Prompt p = FormWidget.getPrompt();
 		
-		assertEquals("Name", p.content());
+		assertEquals("Name", p.getContent());
 	}
 }

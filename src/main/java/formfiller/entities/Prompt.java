@@ -1,6 +1,6 @@
 package formfiller.entities;
 
 public interface Prompt {
-	String content();
-	String id();
+	String getContent();
+	String getId();
 }

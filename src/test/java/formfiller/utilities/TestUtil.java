@@ -12,16 +12,16 @@ public class TestUtil {
 	public static Prompt createMockPrompt(Class<?> classToMock, String id, String content) {
 		Prompt mockPrompt = 
 				(Prompt) mock(classToMock);
-		when(mockPrompt.id()).thenReturn(id);
-		when(mockPrompt.content()).thenReturn(content);
+		when(mockPrompt.getId()).thenReturn(id);
+		when(mockPrompt.getContent()).thenReturn(content);
 		return mockPrompt;
 	}
 
 	public static <T> ResponseImpl<T> createMockResponseImpl(int id, T content) {
 		ResponseImpl<T> mockResponseImpl = 
 				(ResponseImpl<T>) mock(ResponseImpl.class);
-		when(mockResponseImpl.id()).thenReturn(id);
-		when(mockResponseImpl.content()).thenReturn(content);
+		when(mockResponseImpl.getId()).thenReturn(id);
+		when(mockResponseImpl.getContent()).thenReturn(content);
 		return mockResponseImpl;
 	}	
 

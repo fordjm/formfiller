@@ -2,11 +2,15 @@ package formfiller.entities;
 
 public class NullResponse implements Response<String> {
 
-	public int id() {
+	public int getId() {
 		return -1;
 	}
 
-	public String content() {
+	public String getContent() {
 		return "";
+	}
+
+	public boolean satisfiesConstraint() {
+		return false;
 	}
 }

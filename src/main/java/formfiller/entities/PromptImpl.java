@@ -9,11 +9,11 @@ public class PromptImpl implements Prompt {
 		this.content = content;
 	}
 	
-	public String content(){
+	public String getContent(){
 		return content;
 	}
 
-	public String id() {
+	public String getId() {
 		return id;
 	}
 }

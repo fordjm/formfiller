@@ -1,13 +1,19 @@
 package formfiller.entities;
 
-public abstract class AbstractResponse<T> implements Constraint<T> {
+public abstract class AbstractResponse<T> implements Response<T> {
+	int id;
 	T content;
 
-	public AbstractResponse(T content) {
+	public AbstractResponse(int id, T content) {
+		this.id = id;
 		this.content = content;
 	}
 
-	public T content() {
+	public int getId() {
+		return id;
+	}
+
+	public T getContent() {
 		return content;
 	}
 

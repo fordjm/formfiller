@@ -17,7 +17,7 @@ public class AddResponseTest {
 		
 		t.execute();
 		
-		assertEquals("Joe", FormWidget.getResponse().content());
+		assertEquals("Joe", FormWidget.getResponse().getContent());
 	}
 
 	@Test
@@ -28,6 +28,6 @@ public class AddResponseTest {
 		
 		t.execute();
 		
-		assertEquals(names, FormWidget.getResponse().content());
+		assertEquals(names, FormWidget.getResponse().getContent());
 	}
 }

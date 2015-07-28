@@ -7,15 +7,15 @@ import formfiller.entities.NullPrompt;
 import formfiller.entities.NullResponse;
 import formfiller.entities.Prompt;
 import formfiller.entities.Response;
-import formfiller.entities.Constraint;
+import formfiller.entities.Constrainable;
 import formfiller.utilities.ConstraintName;
 
 public class FormWidget {
 
 	private static Prompt prompt = new NullPrompt();
 	private static Response<?> response = new NullResponse();
-	private static Map<ConstraintName, Constraint<?>> constraints = 
-			new HashMap<ConstraintName, Constraint<?>>();
+	private static Map<ConstraintName, Constrainable<?>> constraints = 
+			new HashMap<ConstraintName, Constrainable<?>>();
 
 	public static Prompt getPrompt() {
 		return prompt;
@@ -37,7 +37,7 @@ public class FormWidget {
 	}
 	
 	private static void clearConstraints() {
-		constraints = new HashMap<ConstraintName, Constraint<?>>();
+		constraints = new HashMap<ConstraintName, Constrainable<?>>();
 	}
 
 	public static void setResponse(Response<?> content) {
@@ -57,11 +57,11 @@ public class FormWidget {
 		response = new NullResponse();
 	}
 
-	public static Map<ConstraintName, Constraint<?>> constraints() {
+	public static Map<ConstraintName, Constrainable<?>> constraints() {
 		return constraints;
 	}
 
-	public static void addConstraint(ConstraintName constraintName, Constraint<?> constraint) {
+	public static void addConstraint(ConstraintName constraintName, Constrainable<?> constraint) {
 		constraints.put(constraintName, constraint);
 	}
 }

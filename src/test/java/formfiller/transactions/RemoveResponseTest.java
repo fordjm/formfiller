@@ -21,7 +21,7 @@ public class RemoveResponseTest {
 		
 		t.execute();
 		
-		assertEquals("", FormWidget.getResponse().content());
+		assertEquals("", FormWidget.getResponse().getContent());
 	}
 
 }

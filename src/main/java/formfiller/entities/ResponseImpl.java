@@ -1,14 +1,12 @@
 package formfiller.entities;
 
-public class ResponseImpl<T> extends AbstractResponse<T> implements Response<T> {
-	int id;
+public class ResponseImpl<T> extends AbstractResponse<T> {
 	
-	public ResponseImpl(int id, T data){
-		super(data);
-		this.id = id;
+	public ResponseImpl(int id, T content){
+		super(id, content);
 	}
 	
-	public int id(){
+	public int getId(){
 		return id;
 	}
 

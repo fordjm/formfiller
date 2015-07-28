@@ -1,38 +1,67 @@
 package formfiller.entities;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
-import java.util.Date;
-import java.util.GregorianCalendar;
+import java.lang.reflect.Type;
 
+import org.junit.Before;
 import org.junit.Test;
 
-import formfiller.utilities.TestUtil;
-
 public class ResponseTypeTest<T> {
-
-	// Ugly comment:  Should have a subclass for each data type.
-	@Test
-	public void stringSatisfiesDataTypeConstraint() {
-		String string = "Joe";
-		ResponseImpl<String> response = TestUtil.createMockStringResponseImpl(0, string);
-		ResponseType<String> t = new ResponseType<String>(response, string.getClass());
-		assertTrue(t.satisfiesConstraint(string));
+	
+	public static abstract class GivenGenericResponseType<T>{
+		ResponseType<T> responseType;
+		AbstractResponse<T> mockResponse = mock(AbstractResponse.class);
+		T content = (T) "";
+		Type type = content.getClass();
+		
+		void setupMockResponse(){
+			when(mockResponse.getContent()).thenReturn(content);
+			when(mockResponse.satisfiesConstraint()).thenReturn(
+					getResponseSatisfiesConstraint());
+		}
+		
+		protected abstract boolean getResponseSatisfiesConstraint();
+		
+		@Before
+		public void givenGenericResponseType(){
+			setupMockResponse();
+			responseType = new ResponseType<T>(mockResponse, content.getClass());
+		}
+		
+		@Test
+		public void whenGetTypeRuns_ThenItReturnsGivenGeneric(){
+			assertEquals(type, responseType.getType());
+		}
 	}
+	
+	public static class GivenValidResponse<T> extends GivenGenericResponseType<T>{
 
-	@Test
-	public void integerSatisfiesDataTypeConstraint() {
-		Integer integer = 23;
-		ResponseImpl<Integer> response = TestUtil.createMockIntegerResponseImpl(0, integer);
-		ResponseType<Integer> t = new ResponseType<Integer>(response, integer.getClass());
-		assertTrue(t.satisfiesConstraint(integer));
+		@Override
+		protected boolean getResponseSatisfiesConstraint() {
+			return true;
+		}
+		
+		@Test
+		public void whenSatisfiesConstraintRuns_ThenItReturnsTrue(){
+			assertTrue(responseType.satisfiesConstraint());
+		}
 	}
+	
+	public static class GivenInvalidResponse<T> extends GivenGenericResponseType<T>{
 
-	@Test
-	public void dateSatisfiesDataTypeConstraint() {
-		Date date = new GregorianCalendar().getTime();
-		ResponseImpl<Date> response = TestUtil.createMockDateResponseImpl(0, date);
-		ResponseType<Date> t = new ResponseType<Date>(response, date.getClass());
-		assertTrue(t.satisfiesConstraint(date));
+		@Override
+		protected boolean getResponseSatisfiesConstraint() {
+			return false;
+		}
+		
+		@Test
+		public void whenSatisfiesConstraintRuns_ThenItReturnsFalse(){
+			assertFalse(responseType.satisfiesConstraint());
+		}
 	}
 }

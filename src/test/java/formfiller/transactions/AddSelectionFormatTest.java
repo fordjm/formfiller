@@ -9,7 +9,7 @@ import java.util.Map;
 
 import org.junit.Test;
 
-import formfiller.entities.Constraint;
+import formfiller.entities.Constrainable;
 import formfiller.entities.SelectionFormat;
 import formfiller.persistence.FormWidget;
 import formfiller.utilities.ConstraintName;
@@ -22,8 +22,8 @@ public class AddSelectionFormatTest {
 		Transaction t = new AddSelectionFormat<String>(names);
 		
 		t.execute();		
-		Map<ConstraintName, Constraint<?>> p = FormWidget.constraints();		
-		Constraint<?> r = p.get(ConstraintName.FORMAT);
+		Map<ConstraintName, Constrainable<?>> p = FormWidget.constraints();		
+		Constrainable<?> r = p.get(ConstraintName.FORMAT);
 		SelectionFormat<String> s = (SelectionFormat<String>) r;
 
 		assertTrue(r instanceof SelectionFormat);

@@ -9,17 +9,20 @@ public class ResponseType<T> extends ConstraintDecorator<T> {
 		super(response);
 		this.type = type;
 	}
-
-	public boolean satisfiesConstraint(T response) {
-		return response.getClass().equals(type);
+	
+	public Type getType(){
+		return type;
 	}
 
 	public boolean satisfiesConstraint() {
-		return content().getClass().equals(type);
+		return responseTypeMatchesGivenType(
+					response.getContent(), type) && 
+				response.satisfiesConstraint();
 	}
-
-	@Override
-	public T content() {
-		return response.content();
+	
+	private boolean responseTypeMatchesGivenType(
+			T content, Type type){
+		Class<? extends Object> responseClass = content.getClass();		
+		return responseClass.equals(type);
 	}
 }

@@ -5,11 +5,11 @@ public class NullPrompt implements Prompt {
 	public NullPrompt(){
 	}
 
-	public String content() {
+	public String getContent() {
 		return "";
 	}
 
-	public String id() {
+	public String getId() {
 		return "";
 	}
 }

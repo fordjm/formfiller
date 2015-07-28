@@ -6,21 +6,20 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class NullPromptTest<T> {
-
-	private Prompt n;
+	private NullPrompt nullPrompt;
 	
 	@Before
-	public void setup(){
-		n = new NullPrompt();
-	}
-
-	@Test
-	public void contentReturnsEmptyString() {
-		assertEquals("", n.content());
+	public void givenNullPrompt(){
+		nullPrompt = new NullPrompt();
 	}
 	
 	@Test
-	public void idReturnsEmptyString() {
-		assertEquals("", n.id());
+	public void whenGetIdRuns_ThenIdEqualsEmptyString() {
+		assertEquals("", nullPrompt.getId());
+	}
+
+	@Test
+	public void whenGetContentRuns_ThenContentEqualsEmptyString() {
+		assertEquals("", nullPrompt.getContent());
 	}
 }

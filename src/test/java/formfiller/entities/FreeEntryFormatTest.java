@@ -1,19 +1,26 @@
 package formfiller.entities;
 
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
+
 import org.junit.Before;
 import org.junit.Test;
 
-public abstract class FreeEntryFormatTest<T> {
-	
-	protected FreeEntryFormat<T> format;
-	
-	protected abstract FreeEntryFormat<T> makeFormat();
+public class FreeEntryFormatTest<T> {
 
+	FreeEntryFormat<T> format;
+	AbstractResponse<T> mockResponse = mock(AbstractResponse.class);
+	
+	// TODO:  Add case where mockResponse returns false.
 	@Before
-	public void setup(){
-		format = makeFormat();
+	public void givenAFreeEntryFormat(){
+		format = new FreeEntryFormat<T>(mockResponse);
+		when(mockResponse.getContent()).thenReturn((T) "");
+		when(mockResponse.satisfiesConstraint()).thenReturn(true);
 	}
 	
 	@Test
-	public abstract void givenProperDataType_isValidResponse();
+	public void whenSatisfiesConstraintRuns_ThenItReturnsTrue(){
+		assertTrue(format.satisfiesConstraint());
+	}
 }

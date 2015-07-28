@@ -1,6 +1,6 @@
 package formfiller.entities;
 
-public interface Constraint<T> {
+public interface Constrainable<T> {
 
 	boolean satisfiesConstraint();
 }

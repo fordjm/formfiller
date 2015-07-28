@@ -8,6 +8,7 @@ public class FreeEntryFormat<T> extends ResponseFormat<T> {
 
 	@Override
 	public boolean satisfiesConstraint() {
-		return super.content() != null;
+		return super.getContent() != null && 
+				response.satisfiesConstraint();
 	}
 }

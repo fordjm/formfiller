@@ -9,7 +9,7 @@ import org.junit.Test;
 
 import formfiller.entities.FreeEntryFormat;
 import formfiller.entities.ResponseImpl;
-import formfiller.entities.Constraint;
+import formfiller.entities.Constrainable;
 import formfiller.persistence.FormWidget;
 import formfiller.utilities.ConstraintName;
 
@@ -21,8 +21,8 @@ public class AddFreeEntryFormatTest<T> {
 		Transaction t = new AddFreeEntryFormat<T>(mockResponse);
 		t.execute();
 		
-		Map<ConstraintName, Constraint<?>> p = FormWidget.constraints();
-		Constraint<?> r = p.get(ConstraintName.FORMAT);
+		Map<ConstraintName, Constrainable<?>> p = FormWidget.constraints();
+		Constrainable<?> r = p.get(ConstraintName.FORMAT);
 		assertTrue(r instanceof FreeEntryFormat);
 	}
 

@@ -1,19 +1,36 @@
 package formfiller.entities;
 
-public class ListResponse<T> implements Response<Response<T>> {
-	int id;
-	Response<T> content;
+import java.util.ArrayList;
+import java.util.List;
+
+public class ListResponse<T> extends AbstractResponse<List<Response<T>>> {
 	
-	public ListResponse(int id, T data){
-		content = new ResponseImpl<T>(id, data);
+	public ListResponse(int id, final T content){
+		super(id, new ArrayList<Response<T>>(){{ 
+			add(new ResponseImpl<T>(0, content)); }});
 	}
 
-	public int id() {
+	public int getId() {
 		return id;
 	}
 
-	public Response<T> content() {
+	public List<Response<T>> getContent(){
 		return content;
 	}
 
+	public boolean satisfiesConstraint(){
+		return content.size() > 0 && allElementsSatisfyConstraints();
+	}
+	
+	private boolean allElementsSatisfyConstraints(){
+		for (Response<T> response : content){
+			if (!response.satisfiesConstraint())
+				return false;
+		}
+		return true;
+	}
+
+	public void addResponse(Response<T> response){
+		super.content.add(response);
+	}
 }
