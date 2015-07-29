@@ -10,27 +10,38 @@ public class ListResponse<T> extends AbstractResponse<List<Response<T>>> {
 			add(new ResponseImpl<T>(0, content)); }});
 	}
 
-	public int getId() {
-		return id;
-	}
-
 	public List<Response<T>> getContent(){
 		return content;
 	}
 
-	public boolean satisfiesConstraint(){
-		return content.size() > 0 && allElementsSatisfyConstraints();
+	public int getSize(){
+		return content.size();
 	}
 	
-	private boolean allElementsSatisfyConstraints(){
-		for (Response<T> response : content){
+	public boolean contains(Response<T> response){
+		return content.contains(response);
+	}
+
+	public boolean satisfiesConstraint(){
+		return listResponseSatisfiesConstraints() && containedElementsSatisfyConstraints();
+	}
+	
+	private boolean listResponseSatisfiesConstraints(){
+		return id >= 0 && content.size() > 0;
+	}
+	
+	private boolean containedElementsSatisfyConstraints(){
+		for (Response<T> response : content)
 			if (!response.satisfiesConstraint())
 				return false;
-		}
 		return true;
 	}
 
 	public void addResponse(Response<T> response){
 		super.content.add(response);
+	}
+
+	public void removeResponse(int responseIndex){
+		super.content.remove(responseIndex);
 	}
 }

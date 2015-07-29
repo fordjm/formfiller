@@ -11,7 +11,8 @@ public class SelectionFormat<T> extends ResponseFormat<T> {
 	}
 
 	public boolean satisfiesConstraint() {
-		return selections.contains(super.getContent());
+		return selections.contains(response.getContent()) && 
+				response.satisfiesConstraint();
 	}
 
 	public List<T> selections() {

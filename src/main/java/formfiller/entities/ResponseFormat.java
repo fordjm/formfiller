@@ -7,10 +7,6 @@ public abstract class ResponseFormat<T> extends ConstraintDecorator<T> {
 		super(response);
 		this.response = response;
 	}
-	
-	public T getContent(){
-		return response.getContent();
-	}
 
 	public abstract boolean satisfiesConstraint();
 }
