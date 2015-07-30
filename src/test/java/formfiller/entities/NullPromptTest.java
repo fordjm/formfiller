@@ -7,19 +7,20 @@ import org.junit.Test;
 
 public class NullPromptTest<T> {
 	private NullPrompt nullPrompt;
+	private final String emptyString = "";
 	
 	@Before
-	public void givenNullPrompt(){
+	public void givenANullPrompt(){
 		nullPrompt = new NullPrompt();
 	}
 	
 	@Test
 	public void whenGetIdRuns_ThenIdEqualsEmptyString() {
-		assertEquals("", nullPrompt.getId());
+		assertEquals(emptyString, nullPrompt.getId());
 	}
 
 	@Test
 	public void whenGetContentRuns_ThenContentEqualsEmptyString() {
-		assertEquals("", nullPrompt.getContent());
+		assertEquals(emptyString, nullPrompt.getContent());
 	}
 }

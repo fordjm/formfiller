@@ -2,20 +2,23 @@ package formfiller.entities;
 
 import java.util.List;
 
-public class SelectionFormat<T> extends ResponseFormat<T> {
+import formfiller.utilities.ConstraintName;
+
+public class SelectionFormat<T> extends ConstraintDecorator<T> {
 	private List<T> selections;
 	
-	public SelectionFormat(AbstractResponse<T> component, List<T> selections){
-		super(component);
+	public SelectionFormat(List<T> selections) throws IllegalArgumentException {
+		super(ConstraintName.FORMAT_SELECTION);
 		this.selections = selections;
 	}
-
-	public boolean satisfiesConstraint() {
-		return selections.contains(response.getContent()) && 
+	
+	@Override
+	protected boolean isConstraintSatisfied() {
+		return selections.size() > 0 && selections.contains(response.getContent()) && 
 				response.satisfiesConstraint();
 	}
 
-	public List<T> selections() {
+	public List<T> getSelections() {
 		return selections;
 	}
 }

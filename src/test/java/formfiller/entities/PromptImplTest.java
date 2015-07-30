@@ -12,7 +12,7 @@ public class PromptImplTest {
 	final String content = "What is your name?";
 
 	@Before
-	public void givenAPromptImplWithStringsIdAndContent(){
+	public void givenAPromptImpl(){
 		promptImpl = new PromptImpl(id, content);
 	}
 	

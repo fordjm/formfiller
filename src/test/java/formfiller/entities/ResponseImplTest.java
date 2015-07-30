@@ -6,9 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class ResponseImplTest<T> {
-	
-	// TODO:  Factor getContent() into separate derived class from getId() (initialize to null)
-	public abstract static class GivenResponseWithIntegerIdAndGenericContent<T>{
+	public abstract static class GivenAResponseImpl<T>{
 		int id;
 		T content;
 		ResponseImpl<T> response;
@@ -17,18 +15,64 @@ public class ResponseImplTest<T> {
 		public abstract T getContent();
 		
 		@Before
-		public void givenResponseWithIntegerIdAndGenericContent(){
+		public void givenAResponseImpl(){
 			id = getId();
 			content = getContent();
 			response = new ResponseImpl<T>(id, content);
 		}
+		
+		void assertResponseDataIsConsistent(){
+			assertSame(id, response.getId());
+			assertSame(content, response.getContent());
+		}
+		
+		@Test
+		public void whenFieldValuesAreCompared_ThenValuesAreConsistent(){
+			assertResponseDataIsConsistent();
+		}
+		
 	}
 	
-	public static class GivenLegalIntegerIdAndLegalGenericContent<T> extends 
-		GivenResponseWithIntegerIdAndGenericContent<T>{
-		
+	public static class GivenAnIllegalIdAndLegalContent<T> extends GivenAResponseImpl<T>{
+
 		@Override
-		public int getId(){
+		public int getId() {
+			return -12;
+		}
+
+		@Override
+		public T getContent() {
+			return (T) "";
+		}
+		
+		@Test
+		public void whenSatisfiesConstraintRuns_ThenItReturnsFalse(){
+			assertFalse(response.satisfiesConstraint());
+		}
+	}
+	
+	public static class GivenALegalIdAndIllegalContent<T> extends GivenAResponseImpl<T>{
+
+		@Override
+		public int getId() {
+			return 32;
+		}
+
+		@Override
+		public T getContent() {
+			return null;
+		}
+		
+		@Test
+		public void whenSatisfiesConstraintRuns_ThenItReturnsFalse(){
+			assertFalse(response.satisfiesConstraint());
+		}		
+	}
+	
+	public static class GivenALegalIdAndLegalContent<T> extends GivenAResponseImpl<T>{
+
+		@Override
+		public int getId() {
 			return 0;
 		}
 
@@ -38,57 +82,8 @@ public class ResponseImplTest<T> {
 		}
 		
 		@Test
-		public void whenGetIdIsCalled_ThenIdEqualsGivenInteger(){
-			assertEquals(id, response.getId());
-		}
-		
-		@Test
-		public void whenGetContentIsCalled_ThenContentEqualsGivenGeneric() {
-			assertEquals(content, response.getContent());
-		}
-		
-		@Test
 		public void whenSatisfiesConstraintRuns_ThenItReturnsTrue(){
 			assertTrue(response.satisfiesConstraint());
-		}
-	}
-
-	
-	public static class GivenLegalIntegerIdAndNullContent<T> extends 
-		GivenResponseWithIntegerIdAndGenericContent<T>{
-		
-		@Override
-		public int getId() {
-			return 5;
-		}
-
-		@Override
-		public T getContent() {
-			return null;
-		}	
-		
-		@Test
-		public void whenSatisfiesConstraintRuns_ThenItReturnsFalse(){
-			assertFalse(response.satisfiesConstraint());
-		}
-	}
-	
-	public static class GivenIllegalIntegerIdAndGenericContent<T> extends 
-		GivenResponseWithIntegerIdAndGenericContent<T>{
-		
-		@Override
-		public int getId() {
-			return -1;
-		}
-
-		@Override
-		public T getContent() {
-			return (T) "Joe";
-		}	
-		
-		@Test
-		public void whenSatisfiesConstraintRuns_ThenItReturnsFalse(){
-			assertFalse(response.satisfiesConstraint());
-		}
+		}			
 	}
 }

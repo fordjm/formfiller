@@ -32,19 +32,19 @@ public class FormWidget {
 			FormWidget.prompt = prompt;
 	}
 
-	private static void clearPrompt() {
-		prompt = new NullPrompt();
+	public static void setResponse(Response<?> content) {
+		if (canSetResponse(content))
+			response = content;
+		else
+			return;
 	}
 	
-	private static void clearConstraints() {
-		constraints = new HashMap<ConstraintName, Constrainable<?>>();
+	private static boolean canSetResponse(Response<?> content){
+		return widgetHasPrompt() && content != null;
 	}
-
-	public static void setResponse(Response<?> content) {
-		if (content == null)
-			clearResponse();
-		else
-			response = content;
+	
+	private static boolean widgetHasPrompt(){
+		return !(prompt instanceof NullPrompt);
 	}
 
 	public static void clear() {
@@ -53,11 +53,19 @@ public class FormWidget {
 		clearResponse();
 	}
 
+	private static void clearPrompt() {
+		prompt = new NullPrompt();
+	}
+	
+	private static void clearConstraints() {
+		constraints = new HashMap<ConstraintName, Constrainable<?>>();
+	}
+
 	public static void clearResponse() {
 		response = new NullResponse();
 	}
 
-	public static Map<ConstraintName, Constrainable<?>> constraints() {
+	public static Map<ConstraintName, Constrainable<?>> getConstraints() {
 		return constraints;
 	}
 

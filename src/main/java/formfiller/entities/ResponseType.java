@@ -2,11 +2,13 @@ package formfiller.entities;
 
 import java.lang.reflect.Type;
 
+import formfiller.utilities.ConstraintName;
+
 public class ResponseType<T> extends ConstraintDecorator<T> {
 	Type type;
 
-	public ResponseType(AbstractResponse<T> response, Type type) {
-		super(response);
+	public ResponseType(Type type) {
+		super(ConstraintName.TYPE);
 		this.type = type;
 	}
 	
@@ -14,7 +16,8 @@ public class ResponseType<T> extends ConstraintDecorator<T> {
 		return type;
 	}
 
-	public boolean satisfiesConstraint() {
+	@Override
+	protected boolean isConstraintSatisfied() {
 		return responseTypeMatchesGivenType(
 					response.getContent(), type) && 
 				response.satisfiesConstraint();

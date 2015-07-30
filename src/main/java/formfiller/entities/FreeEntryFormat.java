@@ -1,13 +1,15 @@
 package formfiller.entities;
 
-public class FreeEntryFormat<T> extends ResponseFormat<T> {
+import formfiller.utilities.ConstraintName;
 
-	public FreeEntryFormat(AbstractResponse<T> component) {
-		super(component);
+public class FreeEntryFormat<T> extends ConstraintDecorator<T> {
+
+	public FreeEntryFormat() {
+		super(ConstraintName.FORMAT_FREE_ENTRY);
 	}
 
 	@Override
-	public boolean satisfiesConstraint() {
+	public boolean isConstraintSatisfied() {
 		return response.satisfiesConstraint();
 	}
 }

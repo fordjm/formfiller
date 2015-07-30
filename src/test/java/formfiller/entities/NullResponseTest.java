@@ -7,20 +7,22 @@ import org.junit.Test;
 
 public class NullResponseTest {
 	private NullResponse nullResponse;
+	private final int id = -1;
+	private final String content = "";
 	
 	@Before
-	public void givenNullResponse(){
+	public void givenANullResponse(){
 		nullResponse = new NullResponse();
 	}
 
 	@Test
 	public void whenGetIdRuns_ThenIdEqualsNegativeOne() {
-		assertEquals(-1, nullResponse.getId());
+		assertEquals(id, nullResponse.getId());
 	}
 
 	@Test
 	public void whenGetContentRuns_ThenContentEqualsEmptyString() {
-		assertEquals("", nullResponse.getContent());
+		assertEquals(content, nullResponse.getContent());
 	}
 
 	@Test

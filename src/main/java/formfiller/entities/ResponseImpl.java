@@ -5,10 +5,6 @@ public class ResponseImpl<T> extends AbstractResponse<T> {
 	public ResponseImpl(int id, T content){
 		super(id, content);
 	}
-	
-	public int getId(){
-		return id;
-	}
 
 	@Override
 	public boolean satisfiesConstraint() {

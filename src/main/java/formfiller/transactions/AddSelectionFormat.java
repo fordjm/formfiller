@@ -2,24 +2,24 @@ package formfiller.transactions;
 
 import java.util.List;
 
-import formfiller.entities.AbstractResponse;
-import formfiller.entities.ResponseFormat;
+import formfiller.entities.ConstraintDecorator;
 import formfiller.entities.SelectionFormat;
+import formfiller.persistence.FormWidget;
 
-public class AddSelectionFormat<T> extends AddFormat<T> {
-	private AbstractResponse<T> response;
+public class AddSelectionFormat<T> implements Transaction {
 	private List<T> selections;
-	
-	public AddSelectionFormat(AbstractResponse<T> response){
-		this.response = response;
-	}
 
 	public AddSelectionFormat(List<T> selections) {
 		this.selections = selections;
 	}
 
-	@Override
-	protected ResponseFormat<T> makeFormat() {
-		return new SelectionFormat<T>(response, selections);
+	public void execute() {
+		ConstraintDecorator<T> format = makeFormat();
+		FormWidget.addConstraint(format.getName(), format);
+	}
+
+	protected ConstraintDecorator<T> makeFormat() {
+		ConstraintDecorator<T> result = new SelectionFormat<T>(selections);
+		return result;
 	}
 }

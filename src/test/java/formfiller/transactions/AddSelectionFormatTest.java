@@ -22,11 +22,11 @@ public class AddSelectionFormatTest {
 		Transaction t = new AddSelectionFormat<String>(names);
 		
 		t.execute();		
-		Map<ConstraintName, Constrainable<?>> p = FormWidget.constraints();		
-		Constrainable<?> r = p.get(ConstraintName.FORMAT);
+		Map<ConstraintName, Constrainable<?>> p = FormWidget.getConstraints();		
+		Constrainable<?> r = p.get(ConstraintName.FORMAT_SELECTION);
 		SelectionFormat<String> s = (SelectionFormat<String>) r;
 
 		assertTrue(r instanceof SelectionFormat);
-		assertEquals(names, s.selections());
+		assertEquals(names, s.getSelections());
 	}
 }

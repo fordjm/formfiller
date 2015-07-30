@@ -1,107 +1,198 @@
 package formfiller.entities;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
 
-public class SelectionFormatTest<T> {
+import formfiller.utilities.ConstraintName;
+import formfiller.utilities.TestUtil;
 
+public class SelectionFormatTest<T> {
+	
 	public static abstract class GivenASelectionFormat<T>{
-		SelectionFormat<T> format;
-		AbstractResponse<T> mockResponse;
 		List<T> selections;
+		SelectionFormat<T> format;
 		
-		protected abstract AbstractResponse<T> makeMockResponse();		
-		protected abstract List<T> makeSelectionsList();
+		List<T> makeSelectionsList(T... selections){
+			return Arrays.asList(selections);
+		}
 		
+		protected abstract List<T> makeSelections();
+			
 		@Before
 		public void givenASelectionFormat(){
-			mockResponse = makeMockResponse();
-			selections = makeSelectionsList();
-			format = new SelectionFormat<T>(mockResponse, selections);
+			selections = makeSelections();
+			format = new SelectionFormat<T>(selections);
+		}
+		
+		@Test
+		public void whenGetNameRuns_ThenItReturnsCorrectName(){
+			assertSame(ConstraintName.FORMAT_SELECTION, format.getName());
 		}
 		
 		@Test
 		public void whenGetSelectionsRuns_ThenItReturnsGivenSelections(){
-			assertSame(selections, format.selections());
+			assertSame(selections, format.getSelections());			
 		}
 	}
 	
-	public static abstract class GivenAValidResponse<T> extends GivenASelectionFormat<T>{
-		
+	public static class GivenANewSelectionFormat<T> extends GivenASelectionFormat<T>{
+
 		@Override
-		protected AbstractResponse<T> makeMockResponse() {
-			AbstractResponse<T> result = mock(AbstractResponse.class);
-			when(result.getContent()).thenReturn((T) "a");
-			when(result.satisfiesConstraint()).thenReturn(true);
-			return result;
+		protected List<T> makeSelections() {
+			return makeSelectionsList((T) "a", (T) "b", (T) "c");
 		}
 		
-	}
-	
-	public static class GivenAnEmptySelectionsList<T> extends GivenAValidResponse<T>{
-		
-		@Override
-		protected List<T> makeSelectionsList(){
-			return new ArrayList<T>();
+		@Before
+		public void givenANewSelectionFormatAndFullSelectionsList(){
+			makeSelections();
 		}
 		
 		@Test
-		public void whenSatisfiesConstraintRuns_ThenItReturnsFalse(){
+		public void whenFormatIsNew_ThenItWrapsANullResponse(){
+			assertFalse(format.hasResponse());
+			assertSame(-1, format.getId());
+			assertSame("", format.getContent());
 			assertFalse(format.satisfiesConstraint());
 		}
 	}
 	
-	public static class GivenSelectionsListContainsGivenContent<T> extends GivenAValidResponse<T>{
+	public static abstract class GivenFormatWrapsResponse<T> extends GivenASelectionFormat<T>{
+		int responseId;
+		T responseContent;
+		boolean satisfiesConstraint;
+		Response<T> response;
 		
-		@Override
-		protected List<T> makeSelectionsList(){
-			return Arrays.asList((T) "a", (T) "b", (T) "c");
-		}
-		
-		@Test
-		public void whenSatisfiesConstraintRuns_ThenItReturnsTrue(){
-			assertTrue(format.satisfiesConstraint());
-		}
-	}
-	
-	public static class GivenSelectionsListWithoutGivenContent<T> extends GivenAValidResponse<T>{
-		
-		@Override
-		protected List<T> makeSelectionsList(){
-			return Arrays.asList((T) "x", (T) "y", (T) "z");
-		}
-		
-		@Test
-		public void whenSatisfiesConstraintRuns_ThenItReturnsFalse(){
-			assertFalse(format.satisfiesConstraint());
-		}
-	}
-	
-	public static class GivenAnInvalidResponse<T> extends GivenASelectionFormat<T>{
-		
-		@Override
-		protected AbstractResponse<T> makeMockResponse() {
-			AbstractResponse<T> result = mock(AbstractResponse.class);
-			when(result.getContent()).thenReturn((T) "z");
-			when(result.satisfiesConstraint()).thenReturn(false);
-			return result;
+		Response<T> makeResponse(int id, T content, boolean satisfied){
+			responseId = id;
+			responseContent = content;
+			satisfiesConstraint = satisfied;
+			response = TestUtil.makeMockResponse(responseId, responseContent, 
+					satisfiesConstraint);
+			return response;
 		}
 
 		@Override
-		protected List<T> makeSelectionsList(){
-			return Arrays.asList((T) "x", (T) "y", (T) "z");
+		protected List<T> makeSelections() {
+			return makeSelectionsList();
+		}
+		
+		public void setupResponse(int id, T content, boolean satisfied){
+			makeResponse(id, content, satisfied);
+			format.wrap(response);
+		}
+		
+		public void assertFormatHasResponse(){
+			assertTrue(format.hasResponse());
+		}
+		
+		public void assertResponseDataIsConsistent(){
+			assertSame(responseId, format.getId());
+			assertSame(responseContent, format.getContent());
+		}
+		
+		public void assertConstraintIsSatisfied(boolean flag){
+			if (flag)
+				assertTrue(format.satisfiesConstraint());
+			else
+				assertFalse(format.satisfiesConstraint());
+		}
+	}
+	
+	public static class GivenAnEmptySelectionsList<T> extends GivenFormatWrapsResponse<T>{
+		
+		@Test
+		public void whenResponseIsInvalid_ThenConstraintIsUnsatisfied(){
+			setupResponse(-5, (T) "", false);			
+			assertFormatHasResponse();
+			assertResponseDataIsConsistent();
+			assertSame(satisfiesConstraint, format.satisfiesConstraint());
+			assertConstraintIsSatisfied(false);
 		}
 		
 		@Test
-		public void whenSatisfiesConstraintRuns_ThenItReturnsFalse(){
-			assertFalse(format.satisfiesConstraint());
+		public void whenResponseIsValid_ThenConstraintIsUnsatisfied(){
+			setupResponse(0, (T) "Joe", true);			
+			assertFormatHasResponse();
+			assertResponseDataIsConsistent();
+			assertNotSame(satisfiesConstraint, format.satisfiesConstraint());
+			assertConstraintIsSatisfied(false);
+		}
+	}
+	
+	public static class GivenAFullSelectionsList<T> extends GivenFormatWrapsResponse<T>{
+
+		@Override
+		protected List<T> makeSelections() {
+			return makeSelectionsList((T) "a", (T) "b", (T) "c");
+		}		
+	}
+	
+	public static class GivenANullToWrap<T> extends GivenAFullSelectionsList<T>{
+		
+		@Before
+		public void givenANullToWrap(){
+			response = null;
+		}
+		
+		@Test(expected = IllegalArgumentException.class)
+		public void whenWrappingNull_ThenIllegalArgumentExceptionIsThrown(){
+			format.wrap(response);
+		}
+	}
+	
+	public static class GivenAnInvalidResponse<T> extends GivenAFullSelectionsList<T>{
+		
+		@Before
+		public void givenAnInvalidResponse(){
+			setupResponse(-5, (T) "", false);
+		}
+		
+		@Test
+		public void whenFormatWrapsInvalidResponse_ThenConstraintNotSatisfied(){
+			assertFormatHasResponse();
+			assertResponseDataIsConsistent();
+			assertSame(satisfiesConstraint, format.satisfiesConstraint());
+			assertConstraintIsSatisfied(false);
+		}
+	}
+	
+	public static class GivenAValidNonSelectionResponse<T> extends GivenAFullSelectionsList<T>{
+		
+		@Before
+		public void givenAValidNonSelectionResponse(){
+			setupResponse(0, (T) "Joe", true);
+		}
+		
+		@Test
+		public void whenFormatWrapsNonSelectionResponse_ThenConstraintNotSatisfied(){
+			assertFormatHasResponse();
+			assertResponseDataIsConsistent();
+			assertNotSame(satisfiesConstraint, format.satisfiesConstraint());
+			assertConstraintIsSatisfied(false);
+		}
+	}
+	
+	public static class GivenAValidSelectionResponse<T> extends GivenAFullSelectionsList<T>{
+
+		@Before
+		public void givenAValidSelectionResponse(){
+			setupResponse(0, (T) "b", true);
+		}
+		
+		@Test
+		public void whenFormatWrapsSelectionResponse_ThenConstraintIsSatisfied(){
+			assertFormatHasResponse();
+			assertResponseDataIsConsistent();
+			assertSame(satisfiesConstraint, format.satisfiesConstraint());
+			assertConstraintIsSatisfied(true);
 		}
 	}
 }
