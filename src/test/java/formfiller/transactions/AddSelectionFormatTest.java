@@ -11,8 +11,8 @@ import org.junit.Test;
 
 import formfiller.entities.Constrainable;
 import formfiller.entities.SelectionFormat;
+import formfiller.enums.ConstraintName;
 import formfiller.persistence.FormWidget;
-import formfiller.utilities.ConstraintName;
 
 public class AddSelectionFormatTest {
 	

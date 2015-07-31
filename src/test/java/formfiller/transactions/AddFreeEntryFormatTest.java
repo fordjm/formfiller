@@ -1,24 +1,29 @@
 package formfiller.transactions;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.util.Map;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import formfiller.entities.AbstractResponse;
 import formfiller.entities.Constrainable;
 import formfiller.entities.ConstraintDecorator;
 import formfiller.entities.FreeEntryFormat;
-import formfiller.entities.ResponseImpl;
+import formfiller.enums.ConstraintName;
 import formfiller.persistence.FormWidget;
-import formfiller.utilities.ConstraintName;
 
 public class AddFreeEntryFormatTest<T> {
+	
+	public static class GivenAClearedFormWidget{
+		@Before
+		public void givenAClearedFormWidget(){
+			FormWidget.clear();
+		}
+	}
 	
 	static ConstraintDecorator<?> getFormatConstraint(){
 		ConstraintDecorator<?> result = null;
@@ -52,41 +57,10 @@ public class AddFreeEntryFormatTest<T> {
 			format.wrap(response);
 		}
 	}
-	
-	public static class GivenAnInvalidResponse<T> extends GivenAFreeEntryFormat<T>{
-
-		@Override
-		protected int makeResponseId() {
-			return -1;
-		}
-
-		@Override
-		protected T makeResponseContent() {
-			return null;
-		}		
-		
-		@Ignore
-		@Test
-		// Ugly comment:  Format does change.
-		// Should check response validity in Transaction.
-		// Must update transaction to handle Response objects.
-		public void whenAddFreeEntryFormatRuns_ThenFormatDoesNotChange(){
-			ConstraintDecorator<?> defaultFormat = getFormatConstraint();
-			Transaction t = new AddFreeEntryFormat<T>(response);
-			t.execute();
-			
-			Map<ConstraintName, Constrainable<?>> c = FormWidget.getConstraints();
-			Constrainable<?> f = c.get(ConstraintName.FORMAT_FREE_ENTRY);
-			assertTrue(f instanceof FreeEntryFormat);
-			assertSame(defaultFormat, getFormatConstraint());
-		}
-		
-	}
 
 	@Test
 	public void canAddFreeEntryFormat() {
-		ResponseImpl<T> mockResponse = mock(ResponseImpl.class);
-		Transaction t = new AddFreeEntryFormat<T>(mockResponse);
+		Transaction t = new AddFreeEntryFormat<T>();
 		t.execute();
 		
 		Map<ConstraintName, Constrainable<?>> c = FormWidget.getConstraints();

@@ -12,7 +12,7 @@ public class RemoveResponseTest {
 
 	@Before
 	public void setUp() throws Exception {
-		FormWidget.setResponse(new ResponseImpl(0, "Response"));
+		FormWidget.addResponse(new ResponseImpl(0, "Response"));
 	}
 
 	@Test

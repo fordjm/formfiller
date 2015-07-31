@@ -15,6 +15,6 @@ public class AddPrompt implements Transaction {
 
 	public void execute() {
 		Prompt p = new PromptImpl(id, content);		
-		FormWidget.setPrompt(p);
+		FormWidget.addPrompt(p);
 	}
 }

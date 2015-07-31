@@ -1,6 +1,6 @@
 package formfiller.entities;
 
-import formfiller.utilities.ConstraintName;
+import formfiller.enums.ConstraintName;
 
 public abstract class ConstraintDecorator<T> implements Response<T> {
 	ConstraintName name;
@@ -10,7 +10,7 @@ public abstract class ConstraintDecorator<T> implements Response<T> {
 		this.name = name;
 		this.response = (Response<T>) new NullResponse();		
 	}
-//####################################################################################
+
 	public void wrap(Response<T> response) throws IllegalArgumentException{
 		if (response == null || response.getContent() == null)
 			throw new IllegalArgumentException("ConstraintDecorator cannot wrap null "

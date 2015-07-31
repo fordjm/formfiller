@@ -2,7 +2,7 @@ package formfiller.entities;
 
 import java.util.List;
 
-import formfiller.utilities.ConstraintName;
+import formfiller.enums.ConstraintName;
 
 public class SelectionFormat<T> extends ConstraintDecorator<T> {
 	private List<T> selections;

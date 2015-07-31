@@ -2,7 +2,7 @@ package formfiller.entities;
 
 import java.lang.reflect.Type;
 
-import formfiller.utilities.ConstraintName;
+import formfiller.enums.ConstraintName;
 
 public class ResponseType<T> extends ConstraintDecorator<T> {
 	Type type;

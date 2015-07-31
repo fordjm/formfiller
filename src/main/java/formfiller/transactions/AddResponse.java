@@ -13,6 +13,6 @@ public class AddResponse<T> implements Transaction {
 	}
 
 	public void execute() {		
-		FormWidget.setResponse(response);
+		FormWidget.addResponse(response);
 	}
 }

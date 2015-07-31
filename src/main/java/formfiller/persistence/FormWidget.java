@@ -7,8 +7,9 @@ import formfiller.entities.NullPrompt;
 import formfiller.entities.NullResponse;
 import formfiller.entities.Prompt;
 import formfiller.entities.Response;
+import formfiller.enums.Cardinality;
+import formfiller.enums.ConstraintName;
 import formfiller.entities.Constrainable;
-import formfiller.utilities.ConstraintName;
 
 public class FormWidget {
 
@@ -16,6 +17,11 @@ public class FormWidget {
 	private static Response<?> response = new NullResponse();
 	private static Map<ConstraintName, Constrainable<?>> constraints = 
 			new HashMap<ConstraintName, Constrainable<?>>();
+	private static Cardinality responseCardinality = Cardinality.SINGLE;
+
+	public static Cardinality getCardinality() {
+		return responseCardinality;
+	}
 
 	public static Prompt getPrompt() {
 		return prompt;
@@ -24,23 +30,27 @@ public class FormWidget {
 	public static Response<?> getResponse() {
 		return response;
 	}
-
-	public static void setPrompt(Prompt prompt) {
-		if (prompt == null)
-			FormWidget.clearPrompt();
-		else
-			FormWidget.prompt = prompt;
-	}
-
-	public static void setResponse(Response<?> content) {
-		if (canSetResponse(content))
-			response = content;
-		else
-			return;
+	
+	public static boolean hasPrompt(){
+		return !(prompt instanceof NullPrompt);
 	}
 	
-	private static boolean canSetResponse(Response<?> content){
-		return widgetHasPrompt() && content != null;
+	public static void setCardinality(Cardinality c){
+		responseCardinality = c;
+	}
+
+	public static void addPrompt(Prompt prompt) {
+		if (prompt == null) return;
+		FormWidget.prompt = prompt;
+	}
+
+	public static void addResponse(Response<?> response) {
+		if (!canSetResponse(response)) return;
+		FormWidget.response = response;
+	}
+	
+	private static boolean canSetResponse(Response<?> response){
+		return widgetHasPrompt() && response != null;
 	}
 	
 	private static boolean widgetHasPrompt(){

@@ -1,6 +1,6 @@
 package formfiller.entities;
 
-import formfiller.utilities.ConstraintName;
+import formfiller.enums.ConstraintName;
 
 public class FreeEntryFormat<T> extends ConstraintDecorator<T> {
 

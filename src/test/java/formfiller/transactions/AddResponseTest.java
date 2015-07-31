@@ -2,32 +2,34 @@ package formfiller.transactions;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.Arrays;
-import java.util.List;
-
+import org.junit.Before;
 import org.junit.Test;
 
+import formfiller.entities.Prompt;
+import formfiller.entities.PromptImpl;
+import formfiller.entities.Response;
 import formfiller.persistence.FormWidget;
 
 public class AddResponseTest {
+	
+	public static class GivenWidgetHasAPrompt{
+		
+		@Before
+		public void givenWidgetHasAPrompt(){
+			Prompt p = new PromptImpl("name", "What is your name?");
+			FormWidget.addPrompt(p);
+		}
 
-	@Test
-	public void canAddNewStringResponse() {
-		Transaction t = new AddResponse<String>("Joe");
-		
-		t.execute();
-		
-		assertEquals("Joe", FormWidget.getResponse().getContent());
-	}
-
-	@Test
-	public void canAddNewMultiStringResponse() {
-		// Ugly comment:  Should never have a list in one response.
-		List<String> names = Arrays.asList("Bill", "Dan", "Joe");
-		Transaction t = new AddResponse<List<String>>(names);
-		
-		t.execute();
-		
-		assertEquals(names, FormWidget.getResponse().getContent());
+		@Test
+		public void canAddNewStringResponse() {
+			Response<?> response;
+			
+			Transaction t = new AddResponse<String>("Joe");
+			
+			t.execute();
+			
+			response = FormWidget.getResponse();
+			assertEquals("Joe", response.getContent());
+		}
 	}
 }

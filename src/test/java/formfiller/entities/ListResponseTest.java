@@ -1,5 +1,5 @@
 package formfiller.entities;
-//###########################################################################
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
@@ -104,7 +104,7 @@ public class ListResponseTest<T> {
 	
 	public static class GivenOnlyElementWasRemoved<T> extends GivenResponseHasOneLegalElement<T>{
 
-		public void givenAnIllegalResponseWasRemoved() {
+		public void givenOnlyElementWasRemoved() {
 			response.removeResponse(0);
 		}
 		

@@ -11,7 +11,7 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import formfiller.utilities.ConstraintName;
+import formfiller.enums.ConstraintName;
 import formfiller.utilities.TestUtil;
 
 public class SelectionFormatTest<T> {

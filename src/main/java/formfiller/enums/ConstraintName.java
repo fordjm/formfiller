@@ -1,0 +1,11 @@
+package formfiller.enums;
+
+public enum ConstraintName {
+	CARDINALITY_MULTI,
+	CARDINALITY_SINGLE,
+	FORMAT_FREE_ENTRY,
+	FORMAT_SELECTION,
+	TYPE,
+	VALUE_MAXIMUM,
+	VALUE_MINIMUM;
+}
