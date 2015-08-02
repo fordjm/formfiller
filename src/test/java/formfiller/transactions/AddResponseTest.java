@@ -16,6 +16,7 @@ public class AddResponseTest {
 		
 		@Before
 		public void givenWidgetHasAPrompt(){
+			FormWidget.clear();
 			Prompt p = new PromptImpl("name", "What is your name?");
 			FormWidget.addPrompt(p);
 		}

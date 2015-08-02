@@ -1,12 +1,12 @@
 package formfiller.entities;
 
-import formfiller.enums.ConstraintName;
+import formfiller.enums.ContentConstraint;
 
-public abstract class ConstraintDecorator<T> implements Response<T> {
-	ConstraintName name;
+public abstract class Constraint<T> implements Response<T> {
+	ContentConstraint name;
 	Response<T> response;
 	
-	public ConstraintDecorator(ConstraintName name){
+	public Constraint(ContentConstraint name){
 		this.name = name;
 		this.response = (Response<T>) new NullResponse();		
 	}
@@ -22,7 +22,7 @@ public abstract class ConstraintDecorator<T> implements Response<T> {
 		return !(response instanceof NullResponse);
 	}
 	
-	public ConstraintName getName(){
+	public ContentConstraint getName(){
 		return name;
 	}
 

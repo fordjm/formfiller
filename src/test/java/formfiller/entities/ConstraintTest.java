@@ -7,12 +7,12 @@ import org.junit.Test;
 
 import formfiller.utilities.TestUtil;
 
-public abstract class ConstraintDecoratorTest {
+public abstract class ConstraintTest {
 	
-	public static abstract class GivenAConstraintDecorator<T>{
-		ConstraintDecorator<T> decorator;
+	public static abstract class GivenAConstraint<T>{
+		Constraint<T> decorator;
 		
-		protected abstract ConstraintDecorator<T> makeDecorator();
+		protected abstract Constraint<T> makeDecorator();
 		
 		@Before
 		public void givenAConstraintDecorator(){
@@ -20,7 +20,7 @@ public abstract class ConstraintDecoratorTest {
 		}
 	}
 	
-	public abstract static class GivenANullToWrap<T> extends GivenAConstraintDecorator<T>{
+	public abstract static class GivenANullToWrap<T> extends GivenAConstraint<T>{
 		Response<T> response;
 		
 		@Before
@@ -34,7 +34,7 @@ public abstract class ConstraintDecoratorTest {
 		}
 	}
 	
-	public static abstract class GivenResponseContent<T> extends GivenAConstraintDecorator<T>{
+	public static abstract class GivenResponseContent<T> extends GivenAConstraint<T>{
 		T responseContent;
 		
 		protected abstract T makeResponseContent();

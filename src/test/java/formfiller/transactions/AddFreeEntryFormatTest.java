@@ -11,9 +11,9 @@ import org.junit.Test;
 
 import formfiller.entities.AbstractResponse;
 import formfiller.entities.Constrainable;
-import formfiller.entities.ConstraintDecorator;
+import formfiller.entities.Constraint;
 import formfiller.entities.FreeEntryFormat;
-import formfiller.enums.ConstraintName;
+import formfiller.enums.ContentConstraint;
 import formfiller.persistence.FormWidget;
 
 public class AddFreeEntryFormatTest<T> {
@@ -25,12 +25,12 @@ public class AddFreeEntryFormatTest<T> {
 		}
 	}
 	
-	static ConstraintDecorator<?> getFormatConstraint(){
-		ConstraintDecorator<?> result = null;
-		Map<ConstraintName, Constrainable<?>> c = FormWidget.getConstraints();
-		Constrainable<?> formatConstrainable = c.get(ConstraintName.FORMAT_FREE_ENTRY);
-		if (formatConstrainable instanceof ConstraintDecorator<?>)
-			result = (ConstraintDecorator<?>) formatConstrainable;
+	static Constraint<?> getFormatConstraint(){
+		Constraint<?> result = null;
+		Map<ContentConstraint, Constrainable<?>> c = FormWidget.getConstraints();
+		Constrainable<?> formatConstrainable = c.get(ContentConstraint.FORMAT_FREE_ENTRY);
+		if (formatConstrainable instanceof Constraint<?>)
+			result = (Constraint<?>) formatConstrainable;
 		return result;
 	}
 	
@@ -63,8 +63,8 @@ public class AddFreeEntryFormatTest<T> {
 		Transaction t = new AddFreeEntryFormat<T>();
 		t.execute();
 		
-		Map<ConstraintName, Constrainable<?>> c = FormWidget.getConstraints();
-		Constrainable<?> f = c.get(ConstraintName.FORMAT_FREE_ENTRY);
+		Map<ContentConstraint, Constrainable<?>> c = FormWidget.getConstraints();
+		Constrainable<?> f = c.get(ContentConstraint.FORMAT_FREE_ENTRY);
 		assertTrue(f instanceof FreeEntryFormat);
 	}
 }

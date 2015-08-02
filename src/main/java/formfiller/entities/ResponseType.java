@@ -2,13 +2,13 @@ package formfiller.entities;
 
 import java.lang.reflect.Type;
 
-import formfiller.enums.ConstraintName;
+import formfiller.enums.ContentConstraint;
 
-public class ResponseType<T> extends ConstraintDecorator<T> {
+public class ResponseType<T> extends Constraint<T> {
 	Type type;
 
 	public ResponseType(Type type) {
-		super(ConstraintName.TYPE);
+		super(ContentConstraint.TYPE);
 		this.type = type;
 	}
 	

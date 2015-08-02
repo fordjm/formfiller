@@ -11,7 +11,7 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import formfiller.enums.ConstraintName;
+import formfiller.enums.ContentConstraint;
 import formfiller.utilities.TestUtil;
 
 public class SelectionFormatTest<T> {
@@ -34,7 +34,7 @@ public class SelectionFormatTest<T> {
 		
 		@Test
 		public void whenGetNameRuns_ThenItReturnsCorrectName(){
-			assertSame(ConstraintName.FORMAT_SELECTION, format.getName());
+			assertSame(ContentConstraint.FORMAT_SELECTION, format.getName());
 		}
 		
 		@Test

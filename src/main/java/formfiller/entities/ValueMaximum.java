@@ -1,12 +1,12 @@
 package formfiller.entities;
 
-import formfiller.enums.ConstraintName;
+import formfiller.enums.ContentConstraint;
 
-public class ValueMaximum<T> extends ConstraintDecorator<T> {
+public class ValueMaximum<T> extends Constraint<T> {
 	T maximum;
 
 	public ValueMaximum(T maximum) {
-		super(ConstraintName.VALUE_MAXIMUM);
+		super(ContentConstraint.VALUE_MAXIMUM);
 		this.maximum = maximum;
 	}
 

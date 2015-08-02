@@ -2,7 +2,7 @@ package formfiller.transactions;
 
 import java.util.List;
 
-import formfiller.entities.ConstraintDecorator;
+import formfiller.entities.Constraint;
 import formfiller.entities.SelectionFormat;
 import formfiller.persistence.FormWidget;
 
@@ -14,12 +14,12 @@ public class AddSelectionFormat<T> implements Transaction {
 	}
 
 	public void execute() {
-		ConstraintDecorator<T> format = makeFormat();
+		Constraint<T> format = makeFormat();
 		FormWidget.addConstraint(format.getName(), format);
 	}
 
-	protected ConstraintDecorator<T> makeFormat() {
-		ConstraintDecorator<T> result = new SelectionFormat<T>(selections);
+	protected Constraint<T> makeFormat() {
+		Constraint<T> result = new SelectionFormat<T>(selections);
 		return result;
 	}
 }

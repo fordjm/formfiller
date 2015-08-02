@@ -1,11 +1,11 @@
 package formfiller.entities;
 
-import formfiller.enums.ConstraintName;
+import formfiller.enums.ContentConstraint;
 
-public class FreeEntryFormat<T> extends ConstraintDecorator<T> {
+public class FreeEntryFormat<T> extends Constraint<T> {
 
 	public FreeEntryFormat() {
-		super(ConstraintName.FORMAT_FREE_ENTRY);
+		super(ContentConstraint.FORMAT_FREE_ENTRY);
 	}
 
 	@Override

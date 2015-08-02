@@ -12,7 +12,7 @@ import java.lang.reflect.Type;
 import org.junit.Before;
 import org.junit.Test;
 
-import formfiller.enums.ConstraintName;
+import formfiller.enums.ContentConstraint;
 import formfiller.utilities.TestUtil;
 
 public class ResponseTypeTest<T> {
@@ -30,7 +30,7 @@ public class ResponseTypeTest<T> {
 		
 		@Test
 		public void whenGetNameRuns_ThenItReturnsCorrectName(){
-			assertSame(ConstraintName.TYPE, responseType.getName());
+			assertSame(ContentConstraint.TYPE, responseType.getName());
 		}
 		
 		@Test

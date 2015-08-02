@@ -2,7 +2,6 @@ package formfiller.persistence;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
@@ -14,16 +13,25 @@ import java.util.Map;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
+import de.bechte.junit.runners.context.HierarchicalContextRunner;
 import formfiller.entities.Constrainable;
 import formfiller.entities.NullPrompt;
 import formfiller.entities.NullResponse;
 import formfiller.entities.Prompt;
 import formfiller.entities.Response;
-import formfiller.enums.ConstraintName;
+import formfiller.enums.ContentConstraint;
 import formfiller.utilities.TestUtil;
 
+@RunWith(HierarchicalContextRunner.class)
 public class FormWidgetTest {
+	static Prompt oldPrompt;
+	static Prompt addedPrompt;
+	static Prompt newPrompt;
+	static Response<?> oldResponse;
+	static Response<?> addedResponse;
+	static Response<?> newResponse;
 
 	static void assertPromptIsNullPrompt() {
 		assertTrue(FormWidget.getPrompt() instanceof NullPrompt);
@@ -36,21 +44,25 @@ public class FormWidgetTest {
 		assertEquals(-1, FormWidget.getResponse().getId());
 		assertEquals("", FormWidget.getResponse().getContent());
 	}
-	
+
 	static void assertWidgetHasNoConstraints(){
 		Collection<Constrainable<?>> constraintValues = getConstraintValues();
 		assertTrue(constraintValues.size() == 0);
 	}
-	
+
 	static Collection<Constrainable<?>> getConstraintValues(){
-		Map<ConstraintName, Constrainable<?>> constraintsMap = getConstraintsMap();
+		Map<ContentConstraint, Constrainable<?>> constraintsMap = getConstraintsMap();
 		return constraintsMap.values();
 	}
-	
-	static Map<ConstraintName, Constrainable<?>> getConstraintsMap(){
+
+	static Map<ContentConstraint, Constrainable<?>> getConstraintsMap(){
 		return FormWidget.getConstraints();
 	}
-	
+
+	static Prompt makeMockNamePrompt() {
+		return makeMockPrompt("name", "What is your name?");
+	}
+
 	static Prompt makeMockPrompt(String id, String content){
 		Prompt result = mock(Prompt.class);
 		when (result.getId()).thenReturn(id);
@@ -58,148 +70,243 @@ public class FormWidgetTest {
 		return result;
 	}
 
-	static void assertResponseDidNotChange(Response<?> initialResponse, Response<?> newResponse,
-			Response<?> finalResponse) {
-		assertTrue(finalResponse instanceof NullResponse);
-		assertNotSame(initialResponse, newResponse);
-		assertSame(initialResponse, finalResponse);
+	static void assertPromptDidNotChange() {
+		assertNotSame(oldPrompt, newPrompt);
+		assertSame(oldPrompt, newPrompt);
 	}
-	
-	public static class GivenAClearedWidget{
-		Prompt mockPrompt;
-		Response<?> mockResponse;
-		
+
+	static void assertPromptChanged() {
+		assertNotSame(oldPrompt, addedPrompt);
+		assertNotSame(oldPrompt, newPrompt);
+		assertSame(addedPrompt, newPrompt);
+	}
+
+	static void setNewPromptValue() {
+		newPrompt = FormWidget.getPrompt();
+	}
+
+	static void updateResponseFieldValues() {
+		oldResponse = FormWidget.getResponse();
+		FormWidget.addResponse(addedResponse);
+		newResponse = FormWidget.getResponse();
+	}
+
+	void setNewResponse() {
+		newResponse = FormWidget.getResponse();
+	}
+
+	void assertResponseDidNotChange() {
+		assertNotSame(addedResponse, newResponse);
+		assertSame(oldResponse, newResponse);
+	}
+
+	void assertResponseChanged() {
+		assertNotSame(oldResponse, addedResponse);
+		assertNotSame(oldResponse, newResponse);
+		assertSame(addedResponse, newResponse);		
+	}
+
+	public class GivenAPrompt{
+
+		@Before
+		public void givenAPrompt(){
+			oldPrompt = FormWidget.getPrompt();					
+		}
+
+		public class GivenAnInvalidPrompt {
+
+			@Before
+			public void givenAnInvalidPrompt(){
+				addedPrompt = null;
+			}
+
+			@Test(expected = IllegalArgumentException.class)
+			public void whenAddPromptRuns_ThenPromptThrowsException(){
+				FormWidget.addPrompt(addedPrompt);
+				setNewPromptValue();
+				assertPromptDidNotChange();
+			}
+		}
+
+		public class GivenAValidPrompt{
+			@Before
+			public void givenAValidPrompt(){
+				addedPrompt = makeMockNamePrompt();
+			}
+
+			@Test
+			public void whenAddPromptRuns_ThenWidgetAddsNewPrompt(){
+				FormWidget.addPrompt(addedPrompt);
+				setNewPromptValue();
+				assertPromptChanged();
+			}
+		}
+	}
+
+	public class GivenAClearedWidget{
+
 		@Before
 		public void givenWidgetInStartState(){
 			FormWidget.clear();
 		}
-	}
-	
-	public static class GivenFieldsHaveDefaultValues extends GivenAClearedWidget{
-		
-		@Test
-		public void whenGetPromptRuns_ThenItReturnsNullPrompt(){
-			assertPromptIsNullPrompt();
+
+		public class GivenFieldsHaveDefaultValues {
+
+			@Test
+			public void whenIsRequiredRuns_ThenItReturnsFalse(){
+				assertFalse(FormWidget.isResponseRequired());
+			}
+
+			@Test
+			public void whenGetPromptRuns_ThenItReturnsNullPrompt(){
+				assertPromptIsNullPrompt();
+			}
+
+			@Test
+			public void whenGetResponseRuns_ThenItReturnsNullResponse(){
+				assertResponseIsNullResponse();
+			}	
+
+			@Test
+			public void whenConstraintValuesSizeChecked_ThenItReturnsZero(){
+				assertWidgetHasNoConstraints();
+			}
+
+			public class GivenAnInvalidResponse{
+				@Before
+				public void givenAnInvalidResponse(){
+					addedResponse = new NullResponse();
+				}
+
+				@Test
+				public void whenSetResponseRuns_ThenResponseDoesNotChange(){
+					updateResponseFieldValues();
+					assertResponseDidNotChange();			
+				}
+			}
+
+			public class GivenAValidResponse{
+
+				@Before
+				public <T> void givenAValidResponse(){
+					addedResponse = TestUtil.makeMockResponse(0, (T) "Joe", true);
+				}
+
+				@Test
+				public void whenSetResponseRuns_ThenWidgetSetsNewResponse(){
+					updateResponseFieldValues();
+					assertResponseDidNotChange();
+				}	
+			}
 		}
-		
-		@Test
-		public void whenGetResponseRuns_ThenItReturnsNullResponse(){
-			assertResponseIsNullResponse();
-		}	
-		
-		@Test
-		public void whenConstraintValuesSizeChecked_ThenItReturnsZero(){
-			assertWidgetHasNoConstraints();
-		}		
 	}
-	
-	public static class GivenAnInvalidPrompt extends GivenAClearedWidget{
-		
+
+	public class GivenValidPromptAdded{
+
+		public class GivenAnInvalidResponse{
+			@Before
+			public void givenAnInvalidResponse(){
+				addedResponse = new NullResponse();
+			}
+
+			@Test
+			public void whenSetResponseRuns_ThenResponseDoesNotChange(){
+				updateResponseFieldValues();
+				assertResponseDidNotChange();			
+			}
+		}
+
+		public class GivenAValidResponse{
+
+			@Before
+			public <T> void givenAValidResponse(){
+				addedResponse = TestUtil.makeMockResponse(0, (T) "Joe", true);
+			}
+
+			@Test
+			public void whenSetResponseRuns_ThenWidgetSetsNewResponse(){
+				updateResponseFieldValues();
+				assertResponseChanged();
+			}	
+		}
+
+		Prompt makeMockAgePrompt() {
+			return makeMockPrompt("age", "What is your age?");
+		}
+
+		Response<Integer> makeMockAgeResponse() {
+			return TestUtil.makeMockResponse(0, 47, true);
+		}
+
 		@Before
-		public void givenAnInvalidPrompt(){
-			mockPrompt = null;
+		public void givenValidPromptAdded(){
+			FormWidget.clear();
+			addedPrompt = makeMockNamePrompt();
+			FormWidget.addPrompt(addedPrompt);
 		}
-		
-		@Test
-		public void whenSetPromptRuns_ThenWidgetSetsNullPrompt(){
-			Prompt initialPrompt = FormWidget.getPrompt();
-			FormWidget.addPrompt(mockPrompt);
-			Prompt currentPrompt = FormWidget.getPrompt();
-			assertNotNull(currentPrompt);
-			assertSame(initialPrompt, currentPrompt);
+
+		public class GivenResponseIsNotRequired {
+
+			@Before
+			public void givenResponseIsNotRequired(){
+				FormWidget.setRequired(false);		
+				addedPrompt = makeMockAgePrompt();	
+			}
+
+			@Test
+			public void whenAddPromptRuns_ThenItAddsANewPrompt(){
+				FormWidget.addPrompt(addedPrompt);
+				setNewPromptValue();
+				assertPromptChanged();
+			}
+
+			@Test
+			public void whenAddResponseRuns_ThenItAddsANewResponse(){
+				addedResponse = makeMockAgeResponse();
+				updateResponseFieldValues();
+				assertResponseChanged();
+			}
+
+			// TODO:  Cannot add two responses (must add Cardinality)
 		}
-	}
-	
-	public static class GivenAValidPrompt extends GivenAClearedWidget{
-		
-		@Before
-		public void givenAValidPrompt(){
-			mockPrompt = makeMockPrompt("name", "What is your name?");
-		}
-		
-		@Test
-		public void whenSetPromptRuns_ThenWidgetSetsNewPrompt(){
-			FormWidget.addPrompt(mockPrompt);
-			Prompt currentPrompt = FormWidget.getPrompt();
-			assertFalse(currentPrompt instanceof NullPrompt);
-			assertSame(mockPrompt, currentPrompt);
-		}
-	}
-	
-	public static class GivenAnInvalidResponse extends GivenAClearedWidget{
-		@Before
-		public void givenAnInvalidResponse(){
-			mockResponse = new NullResponse();
-		}
-		
-		@Test
-		public void whenSetResponseRuns_ThenResponseDoesNotChange(){
-			Response<?> initialResponse = FormWidget.getResponse();
-			FormWidget.addResponse(mockResponse);
-			Response<?> finalResponse = FormWidget.getResponse();
-			
-			assertResponseDidNotChange(initialResponse, mockResponse, finalResponse);			
-		}
-	}
-	
-	public static class GivenAValidResponse extends GivenAClearedWidget{
-		
-		@Before
-		public <T> void givenAValidResponse(){
-			mockResponse = TestUtil.makeMockResponse(0, (T) "Joe", true);
-		}
-		
-		// Cases make no difference.  No prompt means no response.
-		@Test
-		public void whenSetResponseRuns_ThenWidgetSetsNewResponse(){
-			Response<?> initialResponse = FormWidget.getResponse();
-			FormWidget.addResponse(mockResponse);
-			Response<?> finalResponse = FormWidget.getResponse();
-			
-			assertResponseDidNotChange(initialResponse, mockResponse, finalResponse);
-		}	
-	}
-	
-	public static class GivenValidPromptAdded extends GivenAClearedWidget{
-		
-		@Before
-		public void givenValidPromptSet(){
-			mockPrompt = makeMockPrompt("name", "What is your name?");
-			FormWidget.addPrompt(mockPrompt);
-		}
-	}
-	
-	public static class GivenCannotAddResponse extends GivenValidPromptAdded{
-		@Before
-		public <T> void givenCannotAddResponse(){
-			mockResponse = null;
-		}
-		
-		@Test
-		public void whenSetResponseRuns_ThenResponseDoesNotChange(){
-			Response<?> initialResponse = FormWidget.getResponse();
-			FormWidget.addResponse(mockResponse);
-			Response<?> finalResponse = FormWidget.getResponse();
-			
-			assertResponseDidNotChange(initialResponse, mockResponse, finalResponse);			
-		}
-	}
-	
-	public static class GivenCanAddResponse extends GivenValidPromptAdded{
-		
-		@Before
-		public <T> void givenCanSetResponse(){
-			mockResponse = TestUtil.makeMockResponse(0, (T) "Joe", true);
-		}
-		
-		// TODO:  Handle different response cases.
-		@Test
-		public void whenSetResponseRuns_ThenWidgetSetsNewResponse(){
-			Response<?> initialResponse = FormWidget.getResponse();
-			FormWidget.addResponse(mockResponse);
-			Response<?> finalResponse = FormWidget.getResponse();
-			
-			assertEquals(mockResponse, finalResponse);
+
+		public class GivenResponseIsRequired{
+			@Before
+			public void givenResponseIsRequired(){
+				oldPrompt = makeMockNamePrompt();
+				FormWidget.addPrompt(oldPrompt);
+				FormWidget.setRequired(true);			
+			}
+
+			@Test
+			public void whenResponseIsRequired_ThenRequiredReturnsTrue(){
+				assertTrue(FormWidget.isResponseRequired());
+			}
+
+			public class GivenResponseIsAbsent{
+				@Test(expected = IllegalStateException.class)
+				public void whenResponseIsAbsent_ThenAddPromptThrowsException(){
+					addedPrompt = makeMockAgePrompt();
+					FormWidget.addPrompt(addedPrompt);
+				}
+			}
+
+			public class GivenResponseIsPresent{
+				@Before
+				public void givenResponseIsPresent(){
+					addedResponse = makeMockAgeResponse();
+					FormWidget.addResponse(addedResponse);					
+				}
+
+				@Test
+				public void whenAddPromptRuns_ThenItAddsANewPrompt(){
+					addedPrompt = makeMockAgePrompt();
+					oldPrompt = FormWidget.getPrompt();
+					FormWidget.addPrompt(addedPrompt);
+					setNewPromptValue();
+					assertPromptChanged();
+				}
+			}
 		}
 	}
 }

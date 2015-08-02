@@ -1,12 +1,12 @@
 package formfiller.entities;
 
-import formfiller.enums.ConstraintName;
+import formfiller.enums.ContentConstraint;
 
-public class ValueMinimum<T> extends ConstraintDecorator<T> {
+public class ValueMinimum<T> extends Constraint<T> {
 	T minimum;
 
 	public ValueMinimum(T minimum) {
-		super(ConstraintName.VALUE_MINIMUM);
+		super(ContentConstraint.VALUE_MINIMUM);
 		this.minimum = minimum;
 	}
 

@@ -7,9 +7,9 @@ import static org.junit.Assert.assertSame;
 import org.junit.Before;
 import org.junit.Test;
 
-import formfiller.enums.ConstraintName;
+import formfiller.enums.ContentConstraint;
 
-public class FreeEntryFormatTest<T> extends ConstraintDecoratorTest {
+public class FreeEntryFormatTest<T> extends ConstraintTest {
 
 	public static class GivenAFreeEntryFormat<T>{
 		FreeEntryFormat<T> format;
@@ -21,7 +21,7 @@ public class FreeEntryFormatTest<T> extends ConstraintDecoratorTest {
 		
 		@Test
 		public void whenGetNameRuns_ThenItReturnsCorrectName(){
-			assertEquals(ConstraintName.FORMAT_FREE_ENTRY, 
+			assertEquals(ContentConstraint.FORMAT_FREE_ENTRY, 
 					format.getName());
 		}
 	}
@@ -40,7 +40,7 @@ public class FreeEntryFormatTest<T> extends ConstraintDecoratorTest {
 	public static class GivenFormatWrapsInvalidResponse<T> extends GivenAnInvalidResponse<T>{
 
 		@Override
-		protected ConstraintDecorator<T> makeDecorator() {
+		protected Constraint<T> makeDecorator() {
 			return new FreeEntryFormat<T>();
 		}
 
@@ -60,7 +60,7 @@ public class FreeEntryFormatTest<T> extends ConstraintDecoratorTest {
 	public static class GivenFormatWrapsValidResponse<T> extends GivenAValidResponse<T>{
 
 		@Override
-		protected ConstraintDecorator<T> makeDecorator() {
+		protected Constraint<T> makeDecorator() {
 			return new FreeEntryFormat<T>();
 		}
 

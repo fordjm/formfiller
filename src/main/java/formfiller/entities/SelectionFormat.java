@@ -2,13 +2,13 @@ package formfiller.entities;
 
 import java.util.List;
 
-import formfiller.enums.ConstraintName;
+import formfiller.enums.ContentConstraint;
 
-public class SelectionFormat<T> extends ConstraintDecorator<T> {
+public class SelectionFormat<T> extends Constraint<T> {
 	private List<T> selections;
 	
 	public SelectionFormat(List<T> selections) throws IllegalArgumentException {
-		super(ConstraintName.FORMAT_SELECTION);
+		super(ContentConstraint.FORMAT_SELECTION);
 		this.selections = selections;
 	}
 	

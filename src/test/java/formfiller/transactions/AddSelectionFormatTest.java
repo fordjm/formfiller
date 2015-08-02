@@ -11,7 +11,7 @@ import org.junit.Test;
 
 import formfiller.entities.Constrainable;
 import formfiller.entities.SelectionFormat;
-import formfiller.enums.ConstraintName;
+import formfiller.enums.ContentConstraint;
 import formfiller.persistence.FormWidget;
 
 public class AddSelectionFormatTest {
@@ -22,8 +22,8 @@ public class AddSelectionFormatTest {
 		Transaction t = new AddSelectionFormat<String>(names);
 		
 		t.execute();		
-		Map<ConstraintName, Constrainable<?>> p = FormWidget.getConstraints();		
-		Constrainable<?> r = p.get(ConstraintName.FORMAT_SELECTION);
+		Map<ContentConstraint, Constrainable<?>> p = FormWidget.getConstraints();		
+		Constrainable<?> r = p.get(ContentConstraint.FORMAT_SELECTION);
 		SelectionFormat<String> s = (SelectionFormat<String>) r;
 
 		assertTrue(r instanceof SelectionFormat);

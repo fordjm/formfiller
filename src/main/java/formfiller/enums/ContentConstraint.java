@@ -1,8 +1,6 @@
 package formfiller.enums;
 
-public enum ConstraintName {
-	CARDINALITY_MULTI,
-	CARDINALITY_SINGLE,
+public enum ContentConstraint {
 	FORMAT_FREE_ENTRY,
 	FORMAT_SELECTION,
 	TYPE,
