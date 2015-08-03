@@ -3,6 +3,7 @@ package formfiller.transactions;
 import static org.junit.Assert.*;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import formfiller.entities.ResponseImpl;
@@ -15,8 +16,9 @@ public class RemoveResponseTest {
 		FormWidget.addResponse(new ResponseImpl(0, "Response"));
 	}
 
+	@Ignore
 	@Test
-	public void nothing() {
+	public void canRemoveAResponse() {
 		Transaction t = new RemoveResponse();
 		
 		t.execute();

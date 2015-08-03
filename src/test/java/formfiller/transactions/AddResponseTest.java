@@ -3,6 +3,7 @@ package formfiller.transactions;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import formfiller.entities.Prompt;
@@ -21,6 +22,7 @@ public class AddResponseTest {
 			FormWidget.addPrompt(p);
 		}
 
+		@Ignore
 		@Test
 		public void canAddNewStringResponse() {
 			Response<?> response;

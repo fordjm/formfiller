@@ -9,18 +9,23 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
+import formfiller.entities.AbstractResponse;
 import formfiller.entities.Constrainable;
+import formfiller.entities.ListResponse;
 import formfiller.entities.NullPrompt;
 import formfiller.entities.NullResponse;
 import formfiller.entities.Prompt;
 import formfiller.entities.Response;
+import formfiller.enums.Cardinality;
 import formfiller.enums.ContentConstraint;
 import formfiller.utilities.TestUtil;
 
@@ -63,6 +68,10 @@ public class FormWidgetTest {
 		return makeMockPrompt("name", "What is your name?");
 	}
 
+	static Response<String> makeMockNameResponse() {
+		return TestUtil.makeMockResponse(0, "Joe", true);
+	}
+
 	static Prompt makeMockPrompt(String id, String content){
 		Prompt result = mock(Prompt.class);
 		when (result.getId()).thenReturn(id);
@@ -103,7 +112,7 @@ public class FormWidgetTest {
 	void assertResponseChanged() {
 		assertNotSame(oldResponse, addedResponse);
 		assertNotSame(oldResponse, newResponse);
-		assertSame(addedResponse, newResponse);		
+		// assertSame(addedResponse, newResponse);		TODO:  Put this test elsewhere (doesn't belong here.)	
 	}
 
 	public class GivenAPrompt{
@@ -158,6 +167,11 @@ public class FormWidgetTest {
 			}
 
 			@Test
+			public void whenGetCardinalityRuns_ThenItReturnsSingle(){
+				assertSame(Cardinality.SINGLE, FormWidget.getCardinality());
+			}
+
+			@Test
 			public void whenGetPromptRuns_ThenItReturnsNullPrompt(){
 				assertPromptIsNullPrompt();
 			}
@@ -178,7 +192,7 @@ public class FormWidgetTest {
 					addedResponse = new NullResponse();
 				}
 
-				@Test
+				@Test(expected = IllegalStateException.class)
 				public void whenSetResponseRuns_ThenResponseDoesNotChange(){
 					updateResponseFieldValues();
 					assertResponseDidNotChange();			
@@ -189,11 +203,11 @@ public class FormWidgetTest {
 
 				@Before
 				public <T> void givenAValidResponse(){
-					addedResponse = TestUtil.makeMockResponse(0, (T) "Joe", true);
+					addedResponse = makeMockNameResponse();
 				}
 
-				@Test
-				public void whenSetResponseRuns_ThenWidgetSetsNewResponse(){
+				@Test(expected = IllegalStateException.class)
+				public void whenAddResponseRuns_ThenResponseDoesNotChange(){
 					updateResponseFieldValues();
 					assertResponseDidNotChange();
 				}	
@@ -209,7 +223,7 @@ public class FormWidgetTest {
 				addedResponse = new NullResponse();
 			}
 
-			@Test
+			@Test(expected = IllegalArgumentException.class)
 			public void whenSetResponseRuns_ThenResponseDoesNotChange(){
 				updateResponseFieldValues();
 				assertResponseDidNotChange();			
@@ -220,7 +234,7 @@ public class FormWidgetTest {
 
 			@Before
 			public <T> void givenAValidResponse(){
-				addedResponse = TestUtil.makeMockResponse(0, (T) "Joe", true);
+				addedResponse = makeMockNameResponse();
 			}
 
 			@Test
@@ -234,8 +248,8 @@ public class FormWidgetTest {
 			return makeMockPrompt("age", "What is your age?");
 		}
 
-		Response<Integer> makeMockAgeResponse() {
-			return TestUtil.makeMockResponse(0, 47, true);
+		Response<Integer> makeMockAgeResponse(int age) {
+			return TestUtil.makeMockResponse(0, age, true);
 		}
 
 		@Before
@@ -259,15 +273,59 @@ public class FormWidgetTest {
 				setNewPromptValue();
 				assertPromptChanged();
 			}
+			
+			public class GivenPromptTakesASingleResponse {
+				@Before
+				public void givenPromptTakesASingleResponse(){
+					FormWidget.setCardinality(Cardinality.SINGLE);
+				}
 
-			@Test
-			public void whenAddResponseRuns_ThenItAddsANewResponse(){
-				addedResponse = makeMockAgeResponse();
-				updateResponseFieldValues();
-				assertResponseChanged();
+				@Test
+				public void whenAddResponseRuns_ThenItAddsANewResponse(){
+					addedResponse = makeMockAgeResponse(47);
+					updateResponseFieldValues();
+					assertResponseChanged();
+				}
+
+				@Test(expected = IllegalStateException.class)
+				public void whenAddResponseRunsTwice_ThenItThrowsAnException(){
+					addedResponse = makeMockAgeResponse(47);
+					Response<Integer> secondResponse = TestUtil.makeMockResponse(1, 52, true);
+					updateResponseFieldValues();
+					FormWidget.addResponse(secondResponse);
+				}				
 			}
+			
+			public class GivenPromptTakesMultipleResponses {
 
-			// TODO:  Cannot add two responses (must add Cardinality)
+				private void assertResponseContainsNResponses(int n) {
+					assertTrue(newResponse.getContent() instanceof List);
+					List<?> content = (List<?>) newResponse.getContent();
+					assertSame(n, content.size());
+				}
+				
+				@Before
+				public void givenPromptTakesMultipleResponses(){
+					FormWidget.setCardinality(Cardinality.MULTI);
+				}
+
+				@Test
+				public void whenAddResponseRuns_ThenItAddsANewResponse(){
+					addedResponse = makeMockAgeResponse(47);
+					updateResponseFieldValues();
+					assertResponseChanged();
+					assertResponseContainsNResponses(1);
+				}
+
+				@Test
+				public void whenAddResponseRunsTwice_ThenItAddsBothResponses(){
+					Response<Integer> secondResponse = makeMockAgeResponse(52);
+					addedResponse = makeMockAgeResponse(47);
+					updateResponseFieldValues();
+					FormWidget.addResponse(secondResponse);
+					assertResponseContainsNResponses(2);
+				}	
+			}
 		}
 
 		public class GivenResponseIsRequired{
@@ -294,7 +352,7 @@ public class FormWidgetTest {
 			public class GivenResponseIsPresent{
 				@Before
 				public void givenResponseIsPresent(){
-					addedResponse = makeMockAgeResponse();
+					addedResponse = makeMockAgeResponse(47);
 					FormWidget.addResponse(addedResponse);					
 				}
 
