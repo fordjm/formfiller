@@ -13,13 +13,14 @@ import formfiller.entities.ResponseImpl;
 import formfiller.enums.Cardinality;
 import formfiller.enums.ContentConstraint;
 import formfiller.entities.Constrainable;
+import formfiller.entities.Constraint;
 
 public class FormWidget {
 
 	private static Prompt prompt = new NullPrompt();
 	private static Response<?> response = new NullResponse();
-	private static Map<ContentConstraint, Constrainable<?>> contentConstraints = 
-			new HashMap<ContentConstraint, Constrainable<?>>();
+	private static Map<ContentConstraint, Constraint<?>> contentConstraints = 
+			new HashMap<ContentConstraint, Constraint<?>>();
 	private static Cardinality responseCardinality = Cardinality.SINGLE;
 	private static boolean responseRequired = false;
 
@@ -130,19 +131,19 @@ public class FormWidget {
 	}
 	
 	private static void clearConstraints() {
-		contentConstraints = new HashMap<ContentConstraint, Constrainable<?>>();
+		contentConstraints = new HashMap<ContentConstraint, Constraint<?>>();
 	}
 
 	public static void clearResponse() {
 		response = new NullResponse();
 	}
 
-	public static Map<ContentConstraint, Constrainable<?>> getConstraints() {
+	public static Map<ContentConstraint, Constraint<?>> getConstraints() {
 		return contentConstraints;
 	}
 
-	public static void addConstraint(ContentConstraint constraintName, Constrainable<?> constraint) {
-		contentConstraints.put(constraintName, constraint);
+	public static void addConstraint(Constraint<?> constraint) {
+		contentConstraints.put(constraint.getName(), constraint);
 	}
 
 	public static boolean isResponseRequired() {

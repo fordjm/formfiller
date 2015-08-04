@@ -3,10 +3,19 @@ package formfiller.utilities;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import formfiller.entities.Constraint;
 import formfiller.entities.Prompt;
 import formfiller.entities.Response;
+import formfiller.enums.ContentConstraint;
 
 public class TestUtil {
+	public static <T> Constraint<T> makeMockConstraint(int id, boolean satisfiesConstraint) {
+		Constraint<T> result = mock(Constraint.class);
+		when(result.getName()).thenReturn(ContentConstraint.MOCK);
+		when(result.getId()).thenReturn(id);
+		when(result.satisfiesConstraint()).thenReturn(satisfiesConstraint);
+		return result;
+	}
 	public static <T> Response<T> makeMockResponse(boolean satisfiesConstraint) {
 		Response<T> result = 
 				(Response<T>) mock(Response.class);

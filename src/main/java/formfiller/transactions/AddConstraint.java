@@ -12,7 +12,7 @@ public abstract class AddConstraint<T> implements Transaction {
 	}
 	public void execute() {
 		constraint = makeConstraint();
-		FormWidget.addConstraint(constraintName, constraint);
+		FormWidget.addConstraint(constraint);
 	}
 	protected abstract Constraint<T> makeConstraint();
 }

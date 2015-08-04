@@ -4,5 +4,6 @@ public enum ContentConstraint {
 	FORMAT,
 	TYPE,
 	VALUE_MAXIMUM,
-	VALUE_MINIMUM;
+	VALUE_MINIMUM,
+	MOCK;
 }

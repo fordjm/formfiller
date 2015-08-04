@@ -13,6 +13,7 @@ import org.junit.runner.RunWith;
 
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
 import formfiller.entities.Constrainable;
+import formfiller.entities.Constraint;
 import formfiller.entities.FreeEntryFormat;
 import formfiller.entities.ResponseType;
 import formfiller.entities.SelectionFormat;
@@ -24,8 +25,8 @@ import formfiller.persistence.FormWidget;
 @RunWith(HierarchicalContextRunner.class)
 public class AddConstraintTest {
 	static Transaction addConstraint;
-	static Map<ContentConstraint, Constrainable<?>> constraintsMap;
-	static Constrainable<?> constraint;
+	static Map<ContentConstraint, Constraint<?>> constraintsMap;
+	static Constraint<?> constraint;
 	static void setConstraintsMap() {
 		constraintsMap = FormWidget.getConstraints();
 	}

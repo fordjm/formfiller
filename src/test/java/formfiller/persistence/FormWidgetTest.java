@@ -17,7 +17,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
-import formfiller.entities.Constrainable;
+import formfiller.entities.Constraint;
 import formfiller.entities.NullPrompt;
 import formfiller.entities.NullResponse;
 import formfiller.entities.Prompt;
@@ -45,14 +45,14 @@ public class FormWidgetTest {
 		assertEquals("", FormWidget.getResponse().getContent());
 	}
 	static void assertWidgetHasNoConstraints(){
-		Collection<Constrainable<?>> constraintValues = getConstraintValues();
+		Collection<Constraint<?>> constraintValues = getConstraintValues();
 		assertTrue(constraintValues.size() == 0);
 	}
-	static Collection<Constrainable<?>> getConstraintValues(){
-		Map<ContentConstraint, Constrainable<?>> constraintsMap = getConstraintsMap();
+	static Collection<Constraint<?>> getConstraintValues(){
+		Map<ContentConstraint, Constraint<?>> constraintsMap = getConstraintsMap();
 		return constraintsMap.values();
 	}
-	static Map<ContentConstraint, Constrainable<?>> getConstraintsMap(){
+	static Map<ContentConstraint, Constraint<?>> getConstraintsMap(){
 		return FormWidget.getConstraints();
 	}
 	static Prompt makeMockNamePrompt() {
