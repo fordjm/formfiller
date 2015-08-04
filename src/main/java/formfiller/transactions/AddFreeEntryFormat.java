@@ -2,17 +2,13 @@ package formfiller.transactions;
 
 import formfiller.entities.Constraint;
 import formfiller.entities.FreeEntryFormat;
-import formfiller.persistence.FormWidget;
+import formfiller.enums.ContentConstraint;
 
-public class AddFreeEntryFormat<T> implements Transaction {
-
-	public void execute() {
-		Constraint<T> format = makeFormat();
-		FormWidget.addConstraint(format.getName(), format);
+public class AddFreeEntryFormat<T> extends AddConstraint<T> {
+	public AddFreeEntryFormat() {
+		super(ContentConstraint.FORMAT);
 	}
-
-	protected Constraint<T> makeFormat() {
-		Constraint<T> result = new FreeEntryFormat<T>();
-		return result;
+	protected Constraint<T> makeConstraint() {
+		return new FreeEntryFormat<T>();
 	}
 }

@@ -34,7 +34,7 @@ public class SelectionFormatTest<T> {
 		
 		@Test
 		public void whenGetNameRuns_ThenItReturnsCorrectName(){
-			assertSame(ContentConstraint.FORMAT_SELECTION, format.getName());
+			assertSame(ContentConstraint.FORMAT, format.getName());
 		}
 		
 		@Test

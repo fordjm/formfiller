@@ -19,7 +19,7 @@ public class ResponseType<T> extends Constraint<T> {
 	@Override
 	protected boolean isConstraintSatisfied() {
 		return responseTypeMatchesGivenType(
-					response.getContent(), type) && 
+				response.getContent(), type) && 
 				response.satisfiesConstraint();
 	}
 	

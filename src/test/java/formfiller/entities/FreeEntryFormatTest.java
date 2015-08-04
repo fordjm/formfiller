@@ -21,7 +21,7 @@ public class FreeEntryFormatTest<T> extends ConstraintTest {
 		
 		@Test
 		public void whenGetNameRuns_ThenItReturnsCorrectName(){
-			assertEquals(ContentConstraint.FORMAT_FREE_ENTRY, 
+			assertEquals(ContentConstraint.FORMAT, 
 					format.getName());
 		}
 	}

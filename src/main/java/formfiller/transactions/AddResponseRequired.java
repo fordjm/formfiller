@@ -2,10 +2,10 @@ package formfiller.transactions;
 
 import formfiller.persistence.FormWidget;
 
-public class SetResponseRequired implements Transaction {
+public class AddResponseRequired implements Transaction {
 	boolean isRequired;
 
-	public SetResponseRequired(boolean isRequired) {
+	public AddResponseRequired(boolean isRequired) {
 		this.isRequired = isRequired;
 	}
 

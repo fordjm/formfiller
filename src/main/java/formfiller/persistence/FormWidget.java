@@ -52,20 +52,21 @@ public class FormWidget {
 			FormWidget.prompt = prompt;
 	}
 
+	// TODO:  It appears this belongs in AddResponseTransaction...
 	public static void addResponse(Response<?> response) {
 		if (!hasPrompt())
 			throw new IllegalStateException(
 					"Must have a question before adding a response!");
-		else if (!responseIsValid(response))
+		else if (!hasAValidResponse(response))
 			throw new IllegalArgumentException("Response is not valid!");
 		else if (!hasRoomForResponse())
 			throw new IllegalStateException("This question only takes one response!");
 		else
-			addResponseSubroutine(response);
+			addResponseToWidget(response);
 	}
 	
-	// TODO:  Rename
-	private static void addResponseSubroutine(Response<?> response){
+	// TODO:  And this belongs here in the widget.
+	private static void addResponseToWidget(Response<?> response){
 		if (responseCardinality == Cardinality.SINGLE)
 			FormWidget.response = response;
 		else if (FormWidget.response.getContent() instanceof List){
@@ -93,14 +94,16 @@ public class FormWidget {
 		return (response instanceof NullResponse);
 	}
 	
-	private static boolean responseIsValid(Response<?> response){
-		return response != null && !isANullResponse(response) && 
+	private static boolean hasAValidResponse(Response<?> response){
+		return response != null && 
+				!isANullResponse(response) && 
 				response.getContent() != null;
 	}
 
 	public static void clear() {
 		clearPrompt();
 		clearRequired();
+		clearCardinality();
 		clearConstraints();
 		clearResponse();
 	}
@@ -111,6 +114,10 @@ public class FormWidget {
 
 	private static void clearRequired() {
 		responseRequired = false;
+	}
+
+	private static void clearCardinality() {
+		responseCardinality = Cardinality.SINGLE;
 	}
 	
 	private static void clearConstraints() {

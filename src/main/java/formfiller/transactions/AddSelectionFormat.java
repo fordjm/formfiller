@@ -4,22 +4,17 @@ import java.util.List;
 
 import formfiller.entities.Constraint;
 import formfiller.entities.SelectionFormat;
-import formfiller.persistence.FormWidget;
+import formfiller.enums.ContentConstraint;
 
-public class AddSelectionFormat<T> implements Transaction {
+public class AddSelectionFormat<T> extends AddConstraint<T> {
 	private List<T> selections;
 
 	public AddSelectionFormat(List<T> selections) {
+		super(ContentConstraint.FORMAT);
 		this.selections = selections;
 	}
 
-	public void execute() {
-		Constraint<T> format = makeFormat();
-		FormWidget.addConstraint(format.getName(), format);
-	}
-
-	protected Constraint<T> makeFormat() {
-		Constraint<T> result = new SelectionFormat<T>(selections);
-		return result;
+	protected Constraint<T> makeConstraint() {
+		return new SelectionFormat<T>(selections);
 	}
 }

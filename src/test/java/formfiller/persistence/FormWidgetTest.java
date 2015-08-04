@@ -13,14 +13,11 @@ import java.util.List;
 import java.util.Map;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
-import formfiller.entities.AbstractResponse;
 import formfiller.entities.Constrainable;
-import formfiller.entities.ListResponse;
 import formfiller.entities.NullPrompt;
 import formfiller.entities.NullResponse;
 import formfiller.entities.Prompt;
@@ -94,10 +91,17 @@ public class FormWidgetTest {
 		newPrompt = FormWidget.getPrompt();
 	}
 
-	static void updateResponseFieldValues() {
+	static void updateResponseFieldValues(Response<?>... responses) {
 		oldResponse = FormWidget.getResponse();
-		FormWidget.addResponse(addedResponse);
+		addResponses(responses);
 		newResponse = FormWidget.getResponse();
+	}
+
+	static void addResponses(Response<?>... responses) {
+		for (Response<?> response : responses){
+			addedResponse = response;
+			FormWidget.addResponse(response);
+		}
 	}
 
 	void setNewResponse() {
@@ -113,43 +117,6 @@ public class FormWidgetTest {
 		assertNotSame(oldResponse, addedResponse);
 		assertNotSame(oldResponse, newResponse);
 		// assertSame(addedResponse, newResponse);		TODO:  Put this test elsewhere (doesn't belong here.)	
-	}
-
-	public class GivenAPrompt{
-
-		@Before
-		public void givenAPrompt(){
-			oldPrompt = FormWidget.getPrompt();					
-		}
-
-		public class GivenAnInvalidPrompt {
-
-			@Before
-			public void givenAnInvalidPrompt(){
-				addedPrompt = null;
-			}
-
-			@Test(expected = IllegalArgumentException.class)
-			public void whenAddPromptRuns_ThenPromptThrowsException(){
-				FormWidget.addPrompt(addedPrompt);
-				setNewPromptValue();
-				assertPromptDidNotChange();
-			}
-		}
-
-		public class GivenAValidPrompt{
-			@Before
-			public void givenAValidPrompt(){
-				addedPrompt = makeMockNamePrompt();
-			}
-
-			@Test
-			public void whenAddPromptRuns_ThenWidgetAddsNewPrompt(){
-				FormWidget.addPrompt(addedPrompt);
-				setNewPromptValue();
-				assertPromptChanged();
-			}
-		}
 	}
 
 	public class GivenAClearedWidget{
@@ -186,6 +153,73 @@ public class FormWidgetTest {
 				assertWidgetHasNoConstraints();
 			}
 
+			public class GivenAPrompt{
+				@Before
+				public void givenAPrompt(){
+					oldPrompt = FormWidget.getPrompt();					
+				}
+				public class GivenAnInvalidPrompt {
+					@Before
+					public void givenAnInvalidPrompt(){
+						addedPrompt = null;
+					}
+					@Test(expected = IllegalArgumentException.class)
+					public void whenAddPromptRuns_ThenPromptThrowsException(){
+						FormWidget.addPrompt(addedPrompt);
+						setNewPromptValue();
+						assertPromptDidNotChange();
+					}
+				}
+				public class GivenAValidPrompt{
+					@Before
+					public void givenAValidPrompt(){
+						addedPrompt = makeMockNamePrompt();
+					}
+					@Test
+					public void whenAddPromptRuns_ThenWidgetAddsNewPrompt(){
+						FormWidget.addPrompt(addedPrompt);
+						setNewPromptValue();
+						assertPromptChanged();
+					}
+				}
+			}
+			
+			void assertResponseCardinality(Cardinality cardinality) {
+				assertSame(cardinality, FormWidget.getCardinality());
+			}
+			
+			public class GivenSingleResponseCardinality{
+				@Before
+				public void givenSingleResponseCardinality(){
+					FormWidget.setCardinality(Cardinality.SINGLE);
+				}
+				@Test
+				public void whenGetCardinalityRuns_ThenItReturnsSingle(){
+					assertResponseCardinality(Cardinality.SINGLE);
+				}
+				@Test
+				public void whenWidgetIsCleared_ThenCardinalityIsSingle(){
+					FormWidget.clear();
+					assertResponseCardinality(Cardinality.SINGLE);
+				}
+			}
+			
+			public class GivenMultipleResponseCardinality{
+				@Before
+				public void givenMultipleResponseCardinality(){
+					FormWidget.setCardinality(Cardinality.MULTI);
+				}
+				@Test
+				public void whenGetCardinalityRuns_ThenItReturnsMulti(){
+					assertResponseCardinality(Cardinality.MULTI);
+				}
+				@Test
+				public void whenWidgetIsCleared_ThenCardinalityIsSingle(){
+					FormWidget.clear();
+					assertResponseCardinality(Cardinality.SINGLE);
+				}
+			}
+
 			public class GivenAnInvalidResponse{
 				@Before
 				public void givenAnInvalidResponse(){
@@ -194,7 +228,7 @@ public class FormWidgetTest {
 
 				@Test(expected = IllegalStateException.class)
 				public void whenSetResponseRuns_ThenResponseDoesNotChange(){
-					updateResponseFieldValues();
+					updateResponseFieldValues(addedResponse);
 					assertResponseDidNotChange();			
 				}
 			}
@@ -208,7 +242,7 @@ public class FormWidgetTest {
 
 				@Test(expected = IllegalStateException.class)
 				public void whenAddResponseRuns_ThenResponseDoesNotChange(){
-					updateResponseFieldValues();
+					updateResponseFieldValues(addedResponse);
 					assertResponseDidNotChange();
 				}	
 			}
@@ -225,7 +259,7 @@ public class FormWidgetTest {
 
 			@Test(expected = IllegalArgumentException.class)
 			public void whenSetResponseRuns_ThenResponseDoesNotChange(){
-				updateResponseFieldValues();
+				updateResponseFieldValues(addedResponse);
 				assertResponseDidNotChange();			
 			}
 		}
@@ -239,7 +273,7 @@ public class FormWidgetTest {
 
 			@Test
 			public void whenSetResponseRuns_ThenWidgetSetsNewResponse(){
-				updateResponseFieldValues();
+				updateResponseFieldValues(addedResponse);
 				assertResponseChanged();
 			}	
 		}
@@ -283,7 +317,7 @@ public class FormWidgetTest {
 				@Test
 				public void whenAddResponseRuns_ThenItAddsANewResponse(){
 					addedResponse = makeMockAgeResponse(47);
-					updateResponseFieldValues();
+					updateResponseFieldValues(addedResponse);
 					assertResponseChanged();
 				}
 
@@ -291,12 +325,13 @@ public class FormWidgetTest {
 				public void whenAddResponseRunsTwice_ThenItThrowsAnException(){
 					addedResponse = makeMockAgeResponse(47);
 					Response<Integer> secondResponse = TestUtil.makeMockResponse(1, 52, true);
-					updateResponseFieldValues();
-					FormWidget.addResponse(secondResponse);
+					updateResponseFieldValues(addedResponse, secondResponse);
 				}				
 			}
 			
 			public class GivenPromptTakesMultipleResponses {
+				Response<Integer> firstResponse;
+				Response<Integer> secondResponse;
 
 				private void assertResponseContainsNResponses(int n) {
 					assertTrue(newResponse.getContent() instanceof List);
@@ -311,18 +346,18 @@ public class FormWidgetTest {
 
 				@Test
 				public void whenAddResponseRuns_ThenItAddsANewResponse(){
-					addedResponse = makeMockAgeResponse(47);
-					updateResponseFieldValues();
+					firstResponse = makeMockAgeResponse(47);
+					updateResponseFieldValues(firstResponse);
 					assertResponseChanged();
 					assertResponseContainsNResponses(1);
 				}
 
 				@Test
-				public void whenAddResponseRunsTwice_ThenItAddsBothResponses(){
-					Response<Integer> secondResponse = makeMockAgeResponse(52);
-					addedResponse = makeMockAgeResponse(47);
-					updateResponseFieldValues();
-					FormWidget.addResponse(secondResponse);
+				public void whenAddResponseRunsTwice_ThenItAddsTwoResponses(){
+					firstResponse = makeMockAgeResponse(47);
+					secondResponse = makeMockAgeResponse(52);
+					updateResponseFieldValues(firstResponse, secondResponse);
+					assertResponseChanged();
 					assertResponseContainsNResponses(2);
 				}	
 			}

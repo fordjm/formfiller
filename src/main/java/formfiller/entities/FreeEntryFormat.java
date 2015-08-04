@@ -5,7 +5,7 @@ import formfiller.enums.ContentConstraint;
 public class FreeEntryFormat<T> extends Constraint<T> {
 
 	public FreeEntryFormat() {
-		super(ContentConstraint.FORMAT_FREE_ENTRY);
+		super(ContentConstraint.FORMAT);
 	}
 
 	@Override

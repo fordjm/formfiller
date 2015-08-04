@@ -8,7 +8,7 @@ public class SelectionFormat<T> extends Constraint<T> {
 	private List<T> selections;
 	
 	public SelectionFormat(List<T> selections) throws IllegalArgumentException {
-		super(ContentConstraint.FORMAT_SELECTION);
+		super(ContentConstraint.FORMAT);
 		this.selections = selections;
 	}
 	
