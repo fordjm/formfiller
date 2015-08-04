@@ -1,38 +1,75 @@
 package formfiller.transactions;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
+import de.bechte.junit.runners.context.HierarchicalContextRunner;
 import formfiller.entities.Prompt;
-import formfiller.entities.PromptImpl;
-import formfiller.entities.Response;
 import formfiller.persistence.FormWidget;
+import formfiller.utilities.TestUtil;
 
-public class AddResponseTest {
-	
-	public static class GivenWidgetHasAPrompt{
-		
+@RunWith(HierarchicalContextRunner.class)
+public class AddResponseTest<T> {
+	static Transaction addResponse;
+	public class WidgetHasNoPromptContext{
+		@Before
+		public void givenWidgetHasNoPrompt(){
+			FormWidget.clear();
+		}
+		public class GivenAnInvalidResponse{
+			@Before
+			public void givenAnInvalidResponse(){
+				addResponse = new AddResponse<T>(null);
+			}
+			@Test(expected = IllegalStateException.class)
+			public void whenAddResponseRuns_ThenItThrowsAnException(){
+				addResponse.execute();
+			}
+		}
+		public class GivenAValidResponse{
+			T validContent = (T) "Joe";
+			@Before
+			public void givenAValidResponse(){
+				addResponse = new AddResponse<T>(validContent);
+			}
+			@Test(expected = IllegalStateException.class)
+			public void whenAddResponseRuns_ThenItThrowsAnException(){
+				addResponse.execute();
+				assertNotSame(validContent, FormWidget.getResponse().getContent());
+			}	
+		}
+	}
+	public class WidgetHasAPromptContext{
 		@Before
 		public void givenWidgetHasAPrompt(){
 			FormWidget.clear();
-			Prompt p = new PromptImpl("name", "What is your name?");
-			FormWidget.addPrompt(p);
+			Prompt prompt = TestUtil.makeMockNamePrompt();
+			FormWidget.addPrompt(prompt);
 		}
-
-		@Ignore
-		@Test
-		public void canAddNewStringResponse() {
-			Response<?> response;
-			
-			Transaction t = new AddResponse<String>("Joe");
-			
-			t.execute();
-			
-			response = FormWidget.getResponse();
-			assertEquals("Joe", response.getContent());
+		public class GivenAnInvalidResponse{
+			@Before
+			public void givenAnInvalidResponse(){
+				addResponse = new AddResponse<T>(null);
+			}
+			@Test(expected = IllegalArgumentException.class)
+			public void whenAddResponseRuns_ThenItThrowsAnException(){
+				addResponse.execute();
+			}
 		}
+		public class GivenAValidResponse{
+			T validContent = (T) "Joe";
+			@Before
+			public void givenAValidResponse(){
+				addResponse = new AddResponse<T>(validContent);
+			}
+			@Test
+			public void whenAddResponseRuns_ThenItAddsANewResponse(){
+				addResponse.execute();
+				assertSame(validContent, FormWidget.getResponse().getContent());
+			}	
+		}	
 	}
 }

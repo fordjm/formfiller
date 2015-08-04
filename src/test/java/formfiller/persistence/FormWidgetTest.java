@@ -34,125 +34,100 @@ public class FormWidgetTest {
 	static Response<?> oldResponse;
 	static Response<?> addedResponse;
 	static Response<?> newResponse;
-
 	static void assertPromptIsNullPrompt() {
 		assertTrue(FormWidget.getPrompt() instanceof NullPrompt);
 		assertEquals("", FormWidget.getPrompt().getId());
 		assertEquals("", FormWidget.getPrompt().getContent());
 	}
-
 	static void assertResponseIsNullResponse() {
 		assertTrue(FormWidget.getResponse() instanceof NullResponse);
 		assertEquals(-1, FormWidget.getResponse().getId());
 		assertEquals("", FormWidget.getResponse().getContent());
 	}
-
 	static void assertWidgetHasNoConstraints(){
 		Collection<Constrainable<?>> constraintValues = getConstraintValues();
 		assertTrue(constraintValues.size() == 0);
 	}
-
 	static Collection<Constrainable<?>> getConstraintValues(){
 		Map<ContentConstraint, Constrainable<?>> constraintsMap = getConstraintsMap();
 		return constraintsMap.values();
 	}
-
 	static Map<ContentConstraint, Constrainable<?>> getConstraintsMap(){
 		return FormWidget.getConstraints();
 	}
-
 	static Prompt makeMockNamePrompt() {
 		return makeMockPrompt("name", "What is your name?");
 	}
-
 	static Response<String> makeMockNameResponse() {
 		return TestUtil.makeMockResponse(0, "Joe", true);
 	}
-
 	static Prompt makeMockPrompt(String id, String content){
 		Prompt result = mock(Prompt.class);
 		when (result.getId()).thenReturn(id);
 		when (result.getContent()).thenReturn(content);
 		return result;
 	}
-
 	static void assertPromptDidNotChange() {
 		assertNotSame(oldPrompt, newPrompt);
 		assertSame(oldPrompt, newPrompt);
 	}
-
 	static void assertPromptChanged() {
 		assertNotSame(oldPrompt, addedPrompt);
 		assertNotSame(oldPrompt, newPrompt);
 		assertSame(addedPrompt, newPrompt);
 	}
-
 	static void setNewPromptValue() {
 		newPrompt = FormWidget.getPrompt();
 	}
-
 	static void updateResponseFieldValues(Response<?>... responses) {
 		oldResponse = FormWidget.getResponse();
 		addResponses(responses);
 		newResponse = FormWidget.getResponse();
 	}
-
 	static void addResponses(Response<?>... responses) {
 		for (Response<?> response : responses){
 			addedResponse = response;
 			FormWidget.addResponse(response);
 		}
 	}
-
 	void setNewResponse() {
 		newResponse = FormWidget.getResponse();
 	}
-
 	void assertResponseDidNotChange() {
 		assertNotSame(addedResponse, newResponse);
 		assertSame(oldResponse, newResponse);
 	}
-
 	void assertResponseChanged() {
 		assertNotSame(oldResponse, addedResponse);
 		assertNotSame(oldResponse, newResponse);
 		// assertSame(addedResponse, newResponse);		TODO:  Put this test elsewhere (doesn't belong here.)	
 	}
-
 	public class GivenAClearedWidget{
-
 		@Before
 		public void givenWidgetInStartState(){
 			FormWidget.clear();
 		}
-
 		public class GivenFieldsHaveDefaultValues {
-
 			@Test
 			public void whenIsRequiredRuns_ThenItReturnsFalse(){
 				assertFalse(FormWidget.isResponseRequired());
 			}
-
 			@Test
 			public void whenGetCardinalityRuns_ThenItReturnsSingle(){
 				assertSame(Cardinality.SINGLE, FormWidget.getCardinality());
 			}
-
 			@Test
 			public void whenGetPromptRuns_ThenItReturnsNullPrompt(){
 				assertPromptIsNullPrompt();
 			}
-
 			@Test
 			public void whenGetResponseRuns_ThenItReturnsNullResponse(){
 				assertResponseIsNullResponse();
 			}	
-
 			@Test
 			public void whenConstraintValuesSizeChecked_ThenItReturnsZero(){
 				assertWidgetHasNoConstraints();
 			}
-
 			public class GivenAPrompt{
 				@Before
 				public void givenAPrompt(){
@@ -182,12 +157,10 @@ public class FormWidgetTest {
 						assertPromptChanged();
 					}
 				}
-			}
-			
+			}			
 			void assertResponseCardinality(Cardinality cardinality) {
 				assertSame(cardinality, FormWidget.getCardinality());
-			}
-			
+			}			
 			public class GivenSingleResponseCardinality{
 				@Before
 				public void givenSingleResponseCardinality(){
@@ -202,8 +175,7 @@ public class FormWidgetTest {
 					FormWidget.clear();
 					assertResponseCardinality(Cardinality.SINGLE);
 				}
-			}
-			
+			}			
 			public class GivenMultipleResponseCardinality{
 				@Before
 				public void givenMultipleResponseCardinality(){
@@ -219,7 +191,6 @@ public class FormWidgetTest {
 					assertResponseCardinality(Cardinality.SINGLE);
 				}
 			}
-
 			public class GivenAnInvalidResponse{
 				@Before
 				public void givenAnInvalidResponse(){
@@ -232,7 +203,6 @@ public class FormWidgetTest {
 					assertResponseDidNotChange();			
 				}
 			}
-
 			public class GivenAValidResponse{
 
 				@Before
@@ -248,9 +218,7 @@ public class FormWidgetTest {
 			}
 		}
 	}
-
 	public class GivenValidPromptAdded{
-
 		public class GivenAnInvalidResponse{
 			@Before
 			public void givenAnInvalidResponse(){
@@ -263,7 +231,6 @@ public class FormWidgetTest {
 				assertResponseDidNotChange();			
 			}
 		}
-
 		public class GivenAValidResponse{
 
 			@Before
@@ -277,73 +244,60 @@ public class FormWidgetTest {
 				assertResponseChanged();
 			}	
 		}
-
 		Prompt makeMockAgePrompt() {
 			return makeMockPrompt("age", "What is your age?");
 		}
-
 		Response<Integer> makeMockAgeResponse(int age) {
 			return TestUtil.makeMockResponse(0, age, true);
 		}
-
 		@Before
 		public void givenValidPromptAdded(){
 			FormWidget.clear();
 			addedPrompt = makeMockNamePrompt();
 			FormWidget.addPrompt(addedPrompt);
 		}
-
 		public class GivenResponseIsNotRequired {
-
 			@Before
 			public void givenResponseIsNotRequired(){
 				FormWidget.setRequired(false);		
 				addedPrompt = makeMockAgePrompt();	
 			}
-
 			@Test
 			public void whenAddPromptRuns_ThenItAddsANewPrompt(){
 				FormWidget.addPrompt(addedPrompt);
 				setNewPromptValue();
 				assertPromptChanged();
-			}
-			
+			}			
 			public class GivenPromptTakesASingleResponse {
 				@Before
 				public void givenPromptTakesASingleResponse(){
 					FormWidget.setCardinality(Cardinality.SINGLE);
 				}
-
 				@Test
 				public void whenAddResponseRuns_ThenItAddsANewResponse(){
 					addedResponse = makeMockAgeResponse(47);
 					updateResponseFieldValues(addedResponse);
 					assertResponseChanged();
 				}
-
 				@Test(expected = IllegalStateException.class)
 				public void whenAddResponseRunsTwice_ThenItThrowsAnException(){
 					addedResponse = makeMockAgeResponse(47);
 					Response<Integer> secondResponse = TestUtil.makeMockResponse(1, 52, true);
 					updateResponseFieldValues(addedResponse, secondResponse);
 				}				
-			}
-			
+			}			
 			public class GivenPromptTakesMultipleResponses {
 				Response<Integer> firstResponse;
 				Response<Integer> secondResponse;
-
 				private void assertResponseContainsNResponses(int n) {
 					assertTrue(newResponse.getContent() instanceof List);
 					List<?> content = (List<?>) newResponse.getContent();
 					assertSame(n, content.size());
-				}
-				
+				}				
 				@Before
 				public void givenPromptTakesMultipleResponses(){
 					FormWidget.setCardinality(Cardinality.MULTI);
 				}
-
 				@Test
 				public void whenAddResponseRuns_ThenItAddsANewResponse(){
 					firstResponse = makeMockAgeResponse(47);
@@ -351,7 +305,6 @@ public class FormWidgetTest {
 					assertResponseChanged();
 					assertResponseContainsNResponses(1);
 				}
-
 				@Test
 				public void whenAddResponseRunsTwice_ThenItAddsTwoResponses(){
 					firstResponse = makeMockAgeResponse(47);
@@ -362,7 +315,6 @@ public class FormWidgetTest {
 				}	
 			}
 		}
-
 		public class GivenResponseIsRequired{
 			@Before
 			public void givenResponseIsRequired(){
@@ -370,12 +322,10 @@ public class FormWidgetTest {
 				FormWidget.addPrompt(oldPrompt);
 				FormWidget.setRequired(true);			
 			}
-
 			@Test
 			public void whenResponseIsRequired_ThenRequiredReturnsTrue(){
 				assertTrue(FormWidget.isResponseRequired());
 			}
-
 			public class GivenResponseIsAbsent{
 				@Test(expected = IllegalStateException.class)
 				public void whenResponseIsAbsent_ThenAddPromptThrowsException(){
@@ -383,14 +333,12 @@ public class FormWidgetTest {
 					FormWidget.addPrompt(addedPrompt);
 				}
 			}
-
 			public class GivenResponseIsPresent{
 				@Before
 				public void givenResponseIsPresent(){
 					addedResponse = makeMockAgeResponse(47);
 					FormWidget.addResponse(addedResponse);					
 				}
-
 				@Test
 				public void whenAddPromptRuns_ThenItAddsANewPrompt(){
 					addedPrompt = makeMockAgePrompt();

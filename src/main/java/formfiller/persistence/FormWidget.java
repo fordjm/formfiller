@@ -30,6 +30,15 @@ public class FormWidget {
 	public static Prompt getPrompt() {
 		return prompt;
 	}
+	
+	public static int getNextResponseId(){
+		if (!hasResponse()) return 0;
+		else if (response.getContent() instanceof List){
+			List<?> responses = (List<Response<?>>) response.getContent();
+			return responses.size();
+		}
+			return -1;
+	}
 
 	public static Response<?> getResponse() {
 		return response;
@@ -86,7 +95,7 @@ public class FormWidget {
 		return responseCardinality == Cardinality.MULTI;
 	}
 	
-	private static boolean hasResponse(){
+	public static boolean hasResponse(){
 		return !isANullResponse(response);
 	}
 	

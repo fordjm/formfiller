@@ -3,20 +3,34 @@ package formfiller.utilities;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import formfiller.entities.ListResponse;
+import formfiller.entities.Prompt;
 import formfiller.entities.Response;
 
 public class TestUtil {
-	
+	public static <T> Response<T> makeMockResponse(boolean satisfiesConstraint) {
+		Response<T> result = 
+				(Response<T>) mock(Response.class);
+		when(result.satisfiesConstraint()).thenReturn(satisfiesConstraint);
+		return result;
+	}
 	public static <T> Response<T> makeMockResponse(int id, T content, boolean satisfiesConstraint) {
 		Response<T> result = 
 				(Response<T>) mock(Response.class);
 		when(result.getId()).thenReturn(id);
 		when(result.getContent()).thenReturn(content);
 		when(result.satisfiesConstraint()).thenReturn(satisfiesConstraint);
+		return result;
+	}
+	public static Response<String> makeMockNameResponse() {
+		return makeMockResponse(0, "Joe", true);
+	}
+	public static Prompt makeMockNamePrompt() {
+		return makeMockPrompt("name", "What is your name?");
+	}
+	public static Prompt makeMockPrompt(String id, String content){
+		Prompt result = mock(Prompt.class);
+		when (result.getId()).thenReturn(id);
+		when (result.getContent()).thenReturn(content);
 		return result;
 	}
 }
