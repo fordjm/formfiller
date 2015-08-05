@@ -108,26 +108,6 @@ public class FormWidgetTest {
 			FormWidget.clear();
 		}
 		public class GivenFieldsHaveDefaultValues {
-			@Test
-			public void whenIsRequiredRuns_ThenItReturnsFalse(){
-				assertFalse(FormWidget.isResponseRequired());
-			}
-			@Test
-			public void whenGetCardinalityRuns_ThenItReturnsSingle(){
-				assertSame(Cardinality.SINGLE, FormWidget.getCardinality());
-			}
-			@Test
-			public void whenGetPromptRuns_ThenItReturnsNullPrompt(){
-				assertPromptIsNullPrompt();
-			}
-			@Test
-			public void whenGetResponseRuns_ThenItReturnsNullResponse(){
-				assertResponseIsNullResponse();
-			}	
-			@Test
-			public void whenConstraintValuesSizeChecked_ThenItReturnsZero(){
-				assertWidgetHasNoConstraints();
-			}
 			public class GivenAPrompt{
 				@Before
 				public void givenAPrompt(){

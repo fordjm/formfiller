@@ -11,12 +11,11 @@ public abstract class Constraint<T> implements Response<T> {
 		this.response = (Response<T>) new NullResponse();		
 	}
 
-	public Constraint<T> wrap(Response<T> response) throws IllegalArgumentException{
+	public void wrap(Response<T> response) throws IllegalArgumentException{
 		if (response == null || response.getContent() == null)
 			throw new IllegalArgumentException(
-					"ConstraintDecorator cannot wrap null responses or content.");
+					"Constraint cannot wrap null responses or content.");
 		this.response = response;
-		return this;
 	}
 	
 	public boolean hasResponse(){

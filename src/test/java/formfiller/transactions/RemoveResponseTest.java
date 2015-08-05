@@ -1,29 +1,49 @@
 package formfiller.transactions;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
-import formfiller.entities.ResponseImpl;
+import de.bechte.junit.runners.context.HierarchicalContextRunner;
+import formfiller.entities.Response;
 import formfiller.persistence.FormWidget;
+import formfiller.utilities.TestUtil;
 
+@RunWith(HierarchicalContextRunner.class)
 public class RemoveResponseTest {
-
-	@Before
-	public void setUp() throws Exception {
-		FormWidget.addResponse(new ResponseImpl(0, "Response"));
+	public class GivenARemoveResponse{
+		Transaction removeResponse;
+		@Before
+		public void givenARemoveResponse(){
+			removeResponse = new RemoveResponse();
+		}
+		public class GivenWidgetHasNoResponse{
+			@Before
+			public void givenWidgetHasNoResponse(){
+				FormWidget.clear();
+			}
+			@Test(expected = IllegalStateException.class)
+			public void whenRemoveResponseRuns_ThenItThrowsAnException(){
+				removeResponse.execute();
+			}		
+		}
+		public class GivenWidgetHasOneResponse<T>{
+			Response<T> mockResponse;
+			@Before
+			public void givenWidgetHasAResponse() throws Exception {
+				// Line 39 brings more support for mocking FormWidget.
+				FormWidget.addPrompt(TestUtil.makeMockNamePrompt());
+				mockResponse = TestUtil.makeMockResponse(0, (T) "Response", true);
+				FormWidget.addResponse(mockResponse);
+			}
+			@Test
+			public void whenRemoveResponseRuns_ThenWidgetHasNoResponses() {
+				removeResponse = new RemoveResponse();				
+				removeResponse.execute();				
+				assertFalse(FormWidget.hasResponse());
+			}
+		}
 	}
-
-	@Ignore
-	@Test
-	public void canRemoveAResponse() {
-		Transaction t = new RemoveResponse();
-		
-		t.execute();
-		
-		assertEquals("", FormWidget.getResponse().getContent());
-	}
-
 }

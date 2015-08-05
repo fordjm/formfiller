@@ -12,64 +12,96 @@ import org.junit.runner.RunWith;
 
 import formfiller.entities.Prompt;
 import formfiller.persistence.FormWidget;
+import formfiller.utilities.TestUtil;
 
 @RunWith(HierarchicalContextRunner.class)
 public class PromptSubjectTest {
+	private Transaction promptSubject;
 
-	private Transaction transaction;
-	private Prompt initialPrompt;
-	private Prompt currentPrompt;
-
+	PromptSubject makeTransaction(String promptId, String promptContent) {
+		return new PromptSubject(promptId, promptContent, false);
+	}
 	PromptSubject makeTransaction(String promptId, String promptContent, boolean required) {
 		return new PromptSubject(promptId, promptContent, required);
 	}
-	
-	@BeforeClass
-	public static void givenAClearedFormWidget(){
-		FormWidget.clear();
-	}
-	
-	@Test
-	public void whenPromptSubjectRuns_ThenWidgetAddsNewPrompt(){
-		initialPrompt = FormWidget.getPrompt();
-		transaction = makeTransaction("name", "What is your name?", false);
-		transaction.execute();
-		currentPrompt = FormWidget.getPrompt();
-		assertNotSame(initialPrompt, currentPrompt);
-		assertSame("name", currentPrompt.getId());
-		assertSame("What is your name?", currentPrompt.getContent());
-		assertFalse(FormWidget.isResponseRequired());
-	}
-	
-	public class ResponseNotRequiredContext{
+	void makeAgePromptTransaction(){
+		promptSubject = makeTransaction("age", "What is your age?");
+	}			
+
+	public class WidgetHasNoPromptContext{
 		@Before
-		public void givenResponseIsNotRequired(){
-			FormWidget.setRequired(false);
+		public void givenWidgetHasNoPrompt(){
+			FormWidget.clear();
 		}
-		
-		@Test
-		public void whenPromptSubjectRuns_ThenWidgetAddsNewPrompt(){
-			initialPrompt = FormWidget.getPrompt();	
-			transaction = makeTransaction("name", "What is your name?", false);		
-			transaction.execute();
-			currentPrompt = FormWidget.getPrompt();
-			assertNotSame(initialPrompt, currentPrompt);
-		}		
-	}
-	
-	public class ResponseRequiredContext{
-		@Before
-		public void givenResponseIsRequired(){
-			FormWidget.setRequired(true);
+		public class GivenAPrompt{
+			public class GivenAnInvalidPrompt {
+				@Before
+				public void givenAnInvalidPrompt(){
+					promptSubject = makeTransaction(null, null);
+				}
+				@Test(expected = IllegalArgumentException.class)
+				public void whenAddPromptRuns_ThenPromptThrowsException(){
+					promptSubject.execute();
+				}
+			}
+			public class GivenAValidPrompt{
+				@Before
+				public void givenAValidPrompt(){
+					promptSubject = makeTransaction("name", "What is your name?");
+				}
+				@Test
+				public void whenAddPromptRuns_ThenWidgetAddsNewPrompt(){
+					promptSubject.execute();
+					assertEquals("name", FormWidget.getPrompt().getId());
+					assertEquals("What is your name?", FormWidget.getPrompt().getContent());
+				}
+			}
 		}
-		
-		@Test(expected = IllegalStateException.class)
-		public void whenPromptSubjectRuns_ThenWidgetThrowsException(){
-			initialPrompt = FormWidget.getPrompt();
-			transaction = makeTransaction("name", "What is your name?", true);
-			transaction.execute();
-			currentPrompt = FormWidget.getPrompt();
-			assertSame(initialPrompt, currentPrompt);
-		}		
+		public class WidgetHasAPromptContext{
+			Prompt prompt = TestUtil.makeMockNamePrompt();
+			Prompt newPrompt;
+			@Before
+			public void givenWidgetHasAPrompt(){
+				FormWidget.clear();
+				FormWidget.addPrompt(prompt);
+			}
+			public class ResponseNotRequiredContext{
+				@Before
+				public void givenResponseIsNotRequired(){
+					FormWidget.setRequired(false);
+				}
+				@Test
+				public void whenPromptSubjectRuns_ThenWidgetAddsNewPrompt(){
+					makeAgePromptTransaction();
+					promptSubject.execute();
+					newPrompt = FormWidget.getPrompt();
+					assertEquals("age", newPrompt.getId());
+					assertEquals("What is your age?", newPrompt.getContent());
+				}		
+			}
+			public class ResponseRequiredContext{
+				@Before
+				public void givenResponseIsRequired(){
+					FormWidget.setRequired(true);
+				}
+				@Test(expected = IllegalStateException.class)
+				public void whenPromptSubjectRuns_ThenWidgetThrowsException(){
+					makeAgePromptTransaction();
+					promptSubject.execute();
+				}		
+			} 
+		}
+		public class AddedARequiredPromptContext{
+			@Before
+			public void givenARequiredPromptWasAdded(){
+				promptSubject = makeTransaction("name", "What is your name?", true);
+				promptSubject.execute();
+			}
+			@Test(expected = IllegalStateException.class)
+			public void whenPromptSubjectRuns_ThenWidgetThrowsException(){
+				makeAgePromptTransaction();
+				promptSubject.execute();
+			}	
+		}
 	}
 }

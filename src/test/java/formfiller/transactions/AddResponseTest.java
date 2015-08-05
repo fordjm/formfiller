@@ -17,6 +17,9 @@ import formfiller.utilities.TestUtil;
 @RunWith(HierarchicalContextRunner.class)
 public class AddResponseTest<T> {
 	static Transaction addResponse;
+	void makeAddResponse(T content){
+		addResponse = new AddResponse<T>(content);
+	}
 	public class WidgetHasNoPromptContext{
 		@Before
 		public void givenWidgetHasNoPrompt(){
@@ -25,7 +28,7 @@ public class AddResponseTest<T> {
 		public class GivenAnInvalidResponse{
 			@Before
 			public void givenAnInvalidResponse(){
-				addResponse = new AddResponse<T>(null);
+				makeAddResponse(null);
 			}
 			@Test(expected = IllegalStateException.class)
 			public void whenAddResponseRuns_ThenItThrowsAnException(){
@@ -36,7 +39,7 @@ public class AddResponseTest<T> {
 			T validContent = (T) "Joe";
 			@Before
 			public void givenAValidResponse(){
-				addResponse = new AddResponse<T>(validContent);
+				makeAddResponse(validContent);
 			}
 			@Test(expected = IllegalStateException.class)
 			public void whenAddResponseRuns_ThenItThrowsAnException(){
@@ -55,7 +58,7 @@ public class AddResponseTest<T> {
 		public class GivenAnInvalidResponse{
 			@Before
 			public void givenAnInvalidResponse(){
-				addResponse = new AddResponse<T>(null);
+				makeAddResponse(null);
 			}
 			@Test(expected = IllegalArgumentException.class)
 			public void whenAddResponseRuns_ThenItThrowsAnException(){
@@ -66,7 +69,7 @@ public class AddResponseTest<T> {
 			T validContent = (T) "Joe";
 			@Before
 			public void givenAValidResponse(){
-				addResponse = new AddResponse<T>(validContent);
+				makeAddResponse(validContent);
 			}
 			public class GivenNoConstraints{
 				@Test
@@ -75,30 +78,47 @@ public class AddResponseTest<T> {
 					assertSame(validContent, FormWidget.getResponse().getContent());
 				}	
 			}
-			// TODO:  Figure out proper constraint mocking.
 			public class GivenAnUnsatisfiedConstraint{
 				Constraint<T> mockConstraint;
-				Constraint<T> realConstraint = new ResponseType<T>(Double.class);
 				@Before
 				public void givenAnUnsatisfiedConstraint(){
 					mockConstraint = TestUtil.makeMockConstraint(0, false);
-					FormWidget.addConstraint(realConstraint);
+					addConstraints(mockConstraint);
 				}
 				@Test(expected = IllegalArgumentException.class)
 				public void whenAddResponseRuns_ThenItThrowsAnException(){
 					addResponse.execute();
 				}
 			}
+			// TODO:  Figure out proper constraint mocking.
 			public class GivenASatisfiedConstraint{
+				Constraint<T> mockConstraint;
 				Constraint<T> realConstraint = new FreeEntryFormat<T>();
 				@Before
 				public void givenASatisfiedConstraint(){
-					FormWidget.addConstraint(realConstraint);
+					mockConstraint = TestUtil.makeMockConstraint(0, true);
+					addConstraints(realConstraint);
 				}
 				@Test
 				public void whenAddResponseRuns_ThenItAddsANewResponse(){
 					addResponse.execute();
 					assertSame(validContent, FormWidget.getResponse().getContent());
+				}
+			}
+			void addConstraints(Constraint<T>... constraints){
+				for (Constraint<T> constraint : constraints)
+					FormWidget.addConstraint(constraint);
+			}
+			public class GivenTwoConstraintsWhereOneIsUnsatisfied{
+				Constraint<T> format = new FreeEntryFormat<T>();
+				Constraint<T> responseType = new ResponseType<T>(Double.class);
+				@Before
+				public void givenTwoConstraintsWhereOneIsUnsatisfied(){
+					addConstraints(format, responseType);
+				}
+				@Test(expected = IllegalArgumentException.class)
+				public void whenAddResponseRuns_ThenItThrowsAnException(){
+					addResponse.execute();
 				}
 			}
 		}

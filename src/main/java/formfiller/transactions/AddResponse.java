@@ -26,7 +26,8 @@ public class AddResponse<T> implements Transaction {
 		Collection<Constraint<?>> constraintValues = constraints.values();
 		for (Constraint<?> constraint : constraintValues){
 			Constraint<T> castConstraint = (Constraint<T>) constraint;
-			response = castConstraint.wrap(response);
+			castConstraint.wrap(response);
+			response = castConstraint;
 		}
 	}
 	private void checkTransactionIsLegal() throws IllegalStateException, IllegalArgumentException{
