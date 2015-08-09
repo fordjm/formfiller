@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import formfiller.entities.Prompt;
-import formfiller.entities.PromptImpl;
+import formfiller.entities.Question;
 import formfiller.persistence.FormWidget;
 
 public class PromptSubject implements Transaction {
@@ -31,7 +31,7 @@ public class PromptSubject implements Transaction {
 		this.content = content;
 	}
 	public void execute() {
-		Prompt p = new PromptImpl(id, content);
+		Prompt p = new Question(id, content);
 		checkTransactionIsLegal();
 		FormWidget.addPrompt(p);
 	}

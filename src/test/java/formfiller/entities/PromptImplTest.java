@@ -7,13 +7,13 @@ import org.junit.Test;
 
 public class PromptImplTest {
 	
-	PromptImpl promptImpl;
+	Question promptImpl;
 	final String id = "name";
 	final String content = "What is your name?";
 
 	@Before
 	public void givenAPromptImpl(){
-		promptImpl = new PromptImpl(id, content);
+		promptImpl = new Question(id, content);
 	}
 	
 	@Test

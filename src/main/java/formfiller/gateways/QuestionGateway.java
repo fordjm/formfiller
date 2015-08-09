@@ -1,5 +1,6 @@
 package formfiller.gateways;
 
+import formfiller.entities.Prompt;
 import formfiller.entities.Question;
 
 // As presented in the Clean Coders Java Case Study codecast
@@ -8,6 +9,6 @@ import formfiller.entities.Question;
 public interface QuestionGateway {
 	public void delete(Question question);
 	public void findQuestionByIndexOffset(int offset);
-	public Question getQuestion();
+	public Prompt getQuestion();
 	public void save(Question question);
 }
