@@ -9,6 +9,6 @@ import formfiller.gateways.ApplicationContext;
 public class PresentQuestionUseCase {
 	public PresentableQuestion presentQuestion(){
 		Prompt currentQuestion = ApplicationContext.questionGateway.getQuestion();
-		return new PresentableQuestion(currentQuestion.getId(), currentQuestion.getContent());
+		return QuestionPresenter.formatQuestion(currentQuestion);
 	}
 }
