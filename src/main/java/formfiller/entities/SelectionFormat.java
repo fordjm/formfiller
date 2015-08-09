@@ -4,7 +4,7 @@ import java.util.List;
 
 import formfiller.enums.ContentConstraint;
 
-public class SelectionFormat<T> extends Constraint<T> {
+public class SelectionFormat<T> extends Constraint {
 	private List<T> selections;
 	
 	public SelectionFormat(List<T> selections) throws IllegalArgumentException {

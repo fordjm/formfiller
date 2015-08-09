@@ -6,7 +6,7 @@ import formfiller.entities.Constraint;
 import formfiller.entities.SelectionFormat;
 import formfiller.enums.ContentConstraint;
 
-public class AddSelectionFormat<T> extends AddConstraint<T> {
+public class AddSelectionFormat<T> extends AddConstraint {
 	private List<T> selections;
 
 	public AddSelectionFormat(List<T> selections) {
@@ -14,7 +14,7 @@ public class AddSelectionFormat<T> extends AddConstraint<T> {
 		this.selections = selections;
 	}
 
-	protected Constraint<T> makeConstraint() {
+	protected Constraint makeConstraint() {
 		return new SelectionFormat<T>(selections);
 	}
 }

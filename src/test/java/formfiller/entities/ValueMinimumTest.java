@@ -3,79 +3,56 @@ package formfiller.entities;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
-public class ValueMinimumTest extends ConstraintTest {
+import de.bechte.junit.runners.context.HierarchicalContextRunner;
+import formfiller.utilities.TestUtil;
+
+@RunWith(HierarchicalContextRunner.class)
+public class ValueMinimumTest<T> {
+	ValueMinimum<T> valueMinimum;
 	
-	public static class GivenAnInvalidValueForInvalidResponse<T> extends GivenAnInvalidResponse<T>{
-		
-		@Override
-		protected Constraint<T> makeDecorator() {
-			return new ValueMinimum<T>((T) "min");
-		}
-		
-		@Override
-		protected T makeResponseContent(){
-			return (T) "a";
-		}
-		
-		@Test
-		public void whenSatisfiesConstraintRuns_ThenItReturnsFalse(){
-			assertFalse(decorator.satisfiesConstraint());
-		}			
+	@Before
+	public void setUp(){
+		valueMinimum = new ValueMinimum<T>((T) "min");
 	}
 	
-	public static class GivenAValidValueForInvalidResponse<T> extends GivenAnInvalidResponse<T>{
+	public class GivenAResponse{
+		Response response;
 		
-		@Override
-		protected Constraint<T> makeDecorator() {
-			return new ValueMinimum<T>((T) "min");
+		public class GivenAnInvalidResponse{
+			@Before
+			public void givenAnInvalidResponse(){
+				response = TestUtil.makeMockResponse(false);
+			}
+			@Test
+			public void whenSatisfiesConstraintRuns_ThenItReturnsFalse(){
+				assertFalse(valueMinimum.satisfiesConstraint());
+			}
+		}	
+		public class GivenAValidResponseLessThanMinimum{
+			@Before
+			public void givenAValidResponseLessThanMinimum(){
+				response = TestUtil.makeMockNameResponse("joe");
+				valueMinimum.wrap(response);
+			}
+			@Test
+			public void whenSatisfiesConstraintRuns_ThenItReturnsFalse(){
+				assertFalse(valueMinimum.satisfiesConstraint());
+			}
 		}
-		
-		@Override
-		protected T makeResponseContent(){
-			return (T) "z";
+		public class GivenAValidResponseGreaterThanMinimum{
+			@Before
+			public void givenAValidResponseLessThanMinimum(){
+				response = TestUtil.makeMockNameResponse("moe");
+				valueMinimum.wrap(response);
+			}
+			@Test
+			public void whenSatisfiesConstraintRuns_ThenItReturnsTrue(){
+				assertTrue(valueMinimum.satisfiesConstraint());
+			}
 		}
-		
-		@Test
-		public void whenSatisfiesConstraintRuns_ThenItReturnsFalse(){
-			assertFalse(decorator.satisfiesConstraint());
-		}			
-	}
-	
-	public static class GivenAnInvalidValueForValidResponse<T> extends GivenAValidResponse<T>{
-		
-		@Override
-		protected Constraint<T> makeDecorator() {
-			return new ValueMinimum<T>((T) "min");
-		}
-		
-		@Override
-		protected T makeResponseContent(){
-			return (T) "a";
-		}
-		
-		@Test
-		public void whenSatisfiesConstraintRuns_ThenItReturnsFalse(){
-			assertFalse(decorator.satisfiesConstraint());
-		}			
-	}
-	
-	public static class GivenAValidValueForValidResponse<T> extends GivenAValidResponse<T>{
-		
-		@Override
-		protected Constraint<T> makeDecorator() {
-			return new ValueMinimum<T>((T) "min");
-		}
-		
-		@Override
-		protected T makeResponseContent(){
-			return (T) "z";
-		}
-		
-		@Test
-		public void whenSatisfiesConstraintRuns_ThenItReturnsTrue(){
-			assertTrue(decorator.satisfiesConstraint());
-		}			
 	}
 }

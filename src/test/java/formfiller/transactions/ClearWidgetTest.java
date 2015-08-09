@@ -33,14 +33,14 @@ public class ClearWidgetTest {
 		assertEquals("", FormWidget.getResponse().getContent());
 	}
 	static void assertWidgetHasNoConstraints(){
-		Collection<Constraint<?>> constraintValues = getConstraintValues();
+		Collection<Constraint> constraintValues = getConstraintValues();
 		assertThat(constraintValues.size(), is(0));
 	}
-	static Collection<Constraint<?>> getConstraintValues(){
-		Map<ContentConstraint, Constraint<?>> constraintsMap = getConstraintsMap();
+	static Collection<Constraint> getConstraintValues(){
+		Map<ContentConstraint, Constraint> constraintsMap = getConstraintsMap();
 		return constraintsMap.values();
 	}
-	static Map<ContentConstraint, Constraint<?>> getConstraintsMap(){
+	static Map<ContentConstraint, Constraint> getConstraintsMap(){
 		return FormWidget.getConstraints();
 	}
 	

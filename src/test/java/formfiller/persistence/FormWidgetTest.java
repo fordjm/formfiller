@@ -30,9 +30,9 @@ public class FormWidgetTest {
 	static Prompt oldPrompt;
 	static Prompt addedPrompt;
 	static Prompt newPrompt;
-	static Response<?> oldResponse;
-	static Response<?> addedResponse;
-	static Response<?> newResponse;
+	static Response oldResponse;
+	static Response addedResponse;
+	static Response newResponse;
 	static void assertPromptIsNullPrompt() {
 		assertTrue(FormWidget.getPrompt() instanceof NullPrompt);
 		assertEquals("", FormWidget.getPrompt().getId());
@@ -44,20 +44,20 @@ public class FormWidgetTest {
 		assertEquals("", FormWidget.getResponse().getContent());
 	}
 	static void assertWidgetHasNoConstraints(){
-		Collection<Constraint<?>> constraintValues = getConstraintValues();
+		Collection<Constraint> constraintValues = getConstraintValues();
 		assertTrue(constraintValues.size() == 0);
 	}
-	static Collection<Constraint<?>> getConstraintValues(){
-		Map<ContentConstraint, Constraint<?>> constraintsMap = getConstraintsMap();
+	static Collection<Constraint> getConstraintValues(){
+		Map<ContentConstraint, Constraint> constraintsMap = getConstraintsMap();
 		return constraintsMap.values();
 	}
-	static Map<ContentConstraint, Constraint<?>> getConstraintsMap(){
+	static Map<ContentConstraint, Constraint> getConstraintsMap(){
 		return FormWidget.getConstraints();
 	}
 	static Prompt makeMockNamePrompt() {
 		return makeMockPrompt("name", "What is your name?");
 	}
-	static Response<String> makeMockNameResponse() {
+	static Response makeMockNameResponse() {
 		return TestUtil.makeMockResponse(0, "Joe", true);
 	}
 	static Prompt makeMockPrompt(String id, String content){
@@ -78,13 +78,13 @@ public class FormWidgetTest {
 	static void setNewPromptValue() {
 		newPrompt = FormWidget.getPrompt();
 	}
-	static void updateResponseFieldValues(Response<?>... responses) {
+	static void updateResponseFieldValues(Response... responses) {
 		oldResponse = FormWidget.getResponse();
 		addResponses(responses);
 		newResponse = FormWidget.getResponse();
 	}
-	static void addResponses(Response<?>... responses) {
-		for (Response<?> response : responses){
+	static void addResponses(Response... responses) {
+		for (Response response : responses){
 			addedResponse = response;
 			FormWidget.addResponse(response);
 		}
@@ -226,7 +226,7 @@ public class FormWidgetTest {
 		Prompt makeMockAgePrompt() {
 			return makeMockPrompt("age", "What is your age?");
 		}
-		Response<Integer> makeMockAgeResponse(int age) {
+		Response makeMockAgeResponse(int age) {
 			return TestUtil.makeMockResponse(0, age, true);
 		}
 		@Before
@@ -261,13 +261,13 @@ public class FormWidgetTest {
 				@Test(expected = IllegalStateException.class)
 				public void whenAddResponseRunsTwice_ThenItThrowsAnException(){
 					addedResponse = makeMockAgeResponse(47);
-					Response<Integer> secondResponse = TestUtil.makeMockResponse(1, 52, true);
+					Response secondResponse = TestUtil.makeMockResponse(1, 52, true);
 					updateResponseFieldValues(addedResponse, secondResponse);
 				}				
 			}			
 			public class GivenPromptTakesMultipleResponses {
-				Response<Integer> firstResponse;
-				Response<Integer> secondResponse;
+				Response firstResponse;
+				Response secondResponse;
 				private void assertResponseContainsNResponses(int n) {
 					assertTrue(newResponse.getContent() instanceof List);
 					List<?> content = (List<?>) newResponse.getContent();

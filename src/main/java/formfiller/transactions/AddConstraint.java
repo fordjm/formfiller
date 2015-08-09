@@ -4,9 +4,9 @@ import formfiller.entities.Constraint;
 import formfiller.enums.ContentConstraint;
 import formfiller.persistence.FormWidget;
 
-public abstract class AddConstraint<T> implements Transaction {
+public abstract class AddConstraint implements Transaction {
 	ContentConstraint constraintName;
-	Constraint<T> constraint;
+	Constraint constraint;
 	public AddConstraint(ContentConstraint constraint) {
 		this.constraintName = constraint;
 	}
@@ -14,5 +14,5 @@ public abstract class AddConstraint<T> implements Transaction {
 		constraint = makeConstraint();
 		FormWidget.addConstraint(constraint);
 	}
-	protected abstract Constraint<T> makeConstraint();
+	protected abstract Constraint makeConstraint();
 }

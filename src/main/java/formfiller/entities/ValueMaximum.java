@@ -2,7 +2,7 @@ package formfiller.entities;
 
 import formfiller.enums.ContentConstraint;
 
-public class ValueMaximum<T> extends Constraint<T> {
+public class ValueMaximum<T> extends Constraint {
 	T maximum;
 
 	public ValueMaximum(T maximum) {

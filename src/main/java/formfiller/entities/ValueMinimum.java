@@ -2,7 +2,7 @@ package formfiller.entities;
 
 import formfiller.enums.ContentConstraint;
 
-public class ValueMinimum<T> extends Constraint<T> {
+public class ValueMinimum<T> extends Constraint {
 	T minimum;
 
 	public ValueMinimum(T minimum) {

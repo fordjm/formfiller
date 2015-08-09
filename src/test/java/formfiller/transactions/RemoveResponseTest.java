@@ -29,13 +29,13 @@ public class RemoveResponseTest {
 				removeResponse.execute();
 			}		
 		}
-		public class GivenWidgetHasOneResponse<T>{
-			Response<T> mockResponse;
+		public class GivenWidgetHasOneResponse{
+			Response mockResponse;
 			@Before
 			public void givenWidgetHasAResponse() throws Exception {
 				// Line 39 brings more support for mocking FormWidget.
 				FormWidget.addPrompt(TestUtil.makeMockNamePrompt());
-				mockResponse = TestUtil.makeMockResponse(0, (T) "Response", true);
+				mockResponse = TestUtil.makeMockResponse(0, "Response", true);
 				FormWidget.addResponse(mockResponse);
 			}
 			@Test

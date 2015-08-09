@@ -1,76 +1,64 @@
 package formfiller.entities;
-//####################################################################################
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+
+import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.*;
 
 import java.lang.reflect.Type;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
+import de.bechte.junit.runners.context.HierarchicalContextRunner;
 import formfiller.enums.ContentConstraint;
 import formfiller.utilities.TestUtil;
 
+@RunWith(HierarchicalContextRunner.class)
 public class ResponseTypeTest<T> {
+	Type type;
+	ResponseType responseType;
 	
-	public static abstract class GivenAResponseType<T>{
-		Type type;
-		ResponseType<T> responseType;
-		
-		@Before
-		public void givenAResponseType(){
-			T temp = (T) "";
-			type = temp.getClass();
-			responseType = new ResponseType<T>(type);
-		}
-		
-		@Test
-		public void whenGetNameRuns_ThenItReturnsCorrectName(){
-			assertSame(ContentConstraint.TYPE, responseType.getName());
-		}
-		
-		@Test
-		public void whenGetTypeRuns_ThenItReturnsGivenType(){
-			assertSame(type, responseType.getType());
-		}
+	@Before
+	public void setUp(){
+		T temp = (T) "";
+		type = temp.getClass();
+		responseType = new ResponseType(type);
+	}	
+	@Test
+	public void whenGetNameRuns_ThenItReturnsCorrectName(){
+		assertSame(ContentConstraint.TYPE, responseType.getName());
+	}	
+	@Test
+	public void whenGetTypeRuns_ThenItReturnsGivenType(){
+		assertSame(type, responseType.getType());
+	}	
+	@Test
+	public void whenResponseTypeIsNew_ThenItWrapsANullResponse(){
+		assertFalse(responseType.hasResponse());
+		assertSame(-1, responseType.getId());
+		assertSame("", responseType.getContent());
+		assertFalse(responseType.satisfiesConstraint());
 	}
 	
-	public static class GivenANewResponseType<T> extends GivenAResponseType<T>{
-		
-		@Test
-		public void whenResponseTypeIsNew_ThenItWrapsANullResponse(){
-			assertFalse(responseType.hasResponse());
-			assertSame(-1, responseType.getId());
-			assertSame("", responseType.getContent());
-			assertFalse(responseType.satisfiesConstraint());
-		}
-	}
-	
-	public static class GivenANullToWrap<T> extends GivenAResponseType<T>{
-		Response<T> response;
-		
+	public class GivenANullToWrap {
+		Response response;		
 		@Before
 		public void givenANullToWrap(){
 			response = null;
-		}
-		
+		}		
 		@Test(expected = IllegalArgumentException.class)
 		public void whenWrappingNull_ThenIllegalArgumentExceptionIsThrown(){
 			responseType.wrap(response);
 		}
 	}
 	
-	public static class GivenAResponse<T> extends GivenAResponseType<T>{
+	public class GivenAResponse{
 		int responseId;
 		T responseContent;
 		boolean satisfiesConstraint;
-		Response<T> response;
+		Response response;
 		
-		Response<T> makeResponse(int id, T content, boolean satisfied){
+		Response makeResponse(int id, T content, boolean satisfied){
 			responseId = id;
 			responseContent = content;
 			satisfiesConstraint = satisfied;
@@ -88,7 +76,7 @@ public class ResponseTypeTest<T> {
 			assertTrue(responseType.hasResponse());
 		}
 		
-		public void assertResponseDataIsConsistent(){
+		public void assertResponseDataIsConsistent(int responseId, T responseContent){
 			T content = responseType.getContent();
 			assertSame(responseId, responseType.getId());
 			assertSame(responseContent, content);
@@ -102,35 +90,31 @@ public class ResponseTypeTest<T> {
 			else
 				assertFalse(responseType.satisfiesConstraint());
 		}
-	}
-	
-	public static class GivenAnInvalidResponse<T> extends GivenAResponse<T>{
-		
-		@Before
-		public void givenAnInvalidResponse(){
-			setupResponse(-5, (T) "", false);
+		public class GivenAnInvalidResponse{			
+			@Before
+			public void givenAnInvalidResponse(){
+				response = TestUtil.makeMockResponse(false);
+				responseType.wrap(response);
+			}			
+			@Test
+			public void whenFormatWrapsInvalidResponse_ThenConstraintNotSatisfied(){
+				assertConstraintDecoratorHasResponse();
+				assertConstraintIsSatisfied(false);
+			}
 		}
-		
-		@Test
-		public void whenFormatWrapsInvalidResponse_ThenConstraintNotSatisfied(){
-			assertConstraintDecoratorHasResponse();
-			assertResponseDataIsConsistent();
-			assertConstraintIsSatisfied(false);
-		}
-	}
-	
-	public static class GivenAValidResponse<T> extends GivenAResponse<T>{
-		
-		@Before
-		public void givenAValidResponse(){
-			setupResponse(0, (T) "Joe", true);
-		}
-		
-		@Test
-		public void whenFormatWrapsAValidResponse_ThenConstraintIsSatisfied(){
-			assertConstraintDecoratorHasResponse();
-			assertResponseDataIsConsistent();
-			assertConstraintIsSatisfied(true);
+		public class GivenAValidResponse{		
+			@Before
+			public void givenAValidResponse(){
+				response = TestUtil.makeMockNameResponse("Joe");
+			}
+			
+			@Test
+			public void whenFormatWrapsAValidResponse_ThenConstraintIsSatisfied(){
+				responseType.wrap(response);
+				assertConstraintDecoratorHasResponse();
+				assertThat(responseType.getContent().toString(), is(equalTo("Joe")));
+				assertConstraintIsSatisfied(true);
+			}
 		}
 	}
 }

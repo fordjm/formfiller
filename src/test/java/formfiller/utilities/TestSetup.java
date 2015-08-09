@@ -1,9 +1,11 @@
 package formfiller.utilities;
-import formfiller.gateways.Context;
+import formfiller.gateways.ApplicationContext;
 import formfiller.gateways.MockQuestionGateway;
+import formfiller.gateways.MockResponseGateway;
 
 public class TestSetup {
 	public static void setupContext(){
-		Context.questionGateway = new MockQuestionGateway();
+		ApplicationContext.questionGateway = new MockQuestionGateway();
+		ApplicationContext.responseGateway = new MockResponseGateway();
 	}
 }

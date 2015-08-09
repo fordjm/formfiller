@@ -25,8 +25,8 @@ import formfiller.persistence.FormWidget;
 @RunWith(HierarchicalContextRunner.class)
 public class AddConstraintTest {
 	static Transaction addConstraint;
-	static Map<ContentConstraint, Constraint<?>> constraintsMap;
-	static Constraint<?> constraint;
+	static Map<ContentConstraint, Constraint> constraintsMap;
+	static Constraint constraint;
 	static void setConstraintsMap() {
 		constraintsMap = FormWidget.getConstraints();
 	}
@@ -36,7 +36,7 @@ public class AddConstraintTest {
 	public class FreeEntryFormatContext<T>{
 		@Before
 		public void givenAFreeEntryFormat(){
-			addConstraint = new AddFreeEntryFormat<T>();
+			addConstraint = new AddFreeEntryFormat();
 		}
 		@Test
 		public void whenAddConstraintExecutes_ThenFormWidgetHasConstraint(){
@@ -68,14 +68,14 @@ public class AddConstraintTest {
 		@Before
 		public void givenAResponseType(){
 			type = String.class;
-			addConstraint = new AddResponseType<T>(type);
+			addConstraint = new AddResponseType(type);
 		}
 		@Test
 		public void whenAddConstraintExecutes_ThenFormWidgetHasConstraint(){
 			addConstraint.execute();		
 			setConstraintsMap();
 			setConstraint(ContentConstraint.TYPE);
-			ResponseType<T> responseType = (ResponseType<T>) constraint;
+			ResponseType responseType = (ResponseType) constraint;
 			assertTrue(constraint instanceof ResponseType);
 			assertEquals(type, responseType.getType());
 		}

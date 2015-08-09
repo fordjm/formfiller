@@ -6,13 +6,13 @@ import formfiller.entities.Constraint;
 import formfiller.entities.ResponseType;
 import formfiller.enums.ContentConstraint;
 
-public class AddResponseType<T> extends AddConstraint<T> {
+public class AddResponseType extends AddConstraint {
 	Type type;
 	public AddResponseType(Type type) {
 		super(ContentConstraint.TYPE);
 		this.type = type;
 	}
-	protected Constraint<T> makeConstraint() {
-		return new ResponseType<T>(type);
+	protected Constraint makeConstraint() {
+		return new ResponseType(type);
 	}
 }

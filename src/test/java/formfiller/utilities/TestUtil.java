@@ -9,12 +9,11 @@ import formfiller.entities.Response;
 import formfiller.enums.ContentConstraint;
 
 public class TestUtil {
-	public static <T> Constraint<T> makeMockConstraint(int id, boolean satisfiesConstraint) {
-		Constraint<T> result = mock(Constraint.class);
+	public static <T> Constraint makeMockConstraint(int id, boolean satisfiesConstraint) {
+		Constraint result = mock(Constraint.class);
 		when(result.getName()).thenReturn(ContentConstraint.MOCK);
 		when(result.getId()).thenReturn(id);
 		when(result.satisfiesConstraint()).thenReturn(satisfiesConstraint);
-		//when(result.wrap(response)).
 		return result;
 	}
 	public static Prompt makeMockNamePrompt() {
@@ -26,20 +25,21 @@ public class TestUtil {
 		when (result.getContent()).thenReturn(content);
 		return result;
 	}
-	public static Response<String> makeMockNameResponse() {
-		return makeMockResponse(0, "Joe", true);
+	public static Response makeMockNameResponse(String name) {
+		return makeMockResponse(0, name, true);
 	}
-	public static <T> Response<T> makeMockResponse(int id, T content, boolean satisfiesConstraint) {
-		Response<T> result = 
-				(Response<T>) mock(Response.class);
+	public static <T> Response makeMockResponse(int id, T content, boolean satisfiesConstraint) {
+		Response result = 
+				(Response) mock(Response.class);
 		when(result.getId()).thenReturn(id);
 		when(result.getContent()).thenReturn(content);
 		when(result.satisfiesConstraint()).thenReturn(satisfiesConstraint);
 		return result;
 	}
-	public static <T> Response<T> makeMockResponse(boolean satisfiesConstraint) {
-		Response<T> result = 
-				(Response<T>) mock(Response.class);
+	public static <T> Response makeMockResponse(boolean satisfiesConstraint) {
+		Response result = 
+				(Response) mock(Response.class);
+		when(result.getContent()).thenReturn("");
 		when(result.satisfiesConstraint()).thenReturn(satisfiesConstraint);
 		return result;
 	}

@@ -1,33 +1,38 @@
 package formfiller.entities;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertSame;
+import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
+import de.bechte.junit.runners.context.HierarchicalContextRunner;
 import formfiller.enums.ContentConstraint;
+import formfiller.utilities.TestUtil;
 
-public class FreeEntryFormatTest<T> extends ConstraintTest {
-
-	public static class GivenAFreeEntryFormat<T>{
-		FreeEntryFormat<T> format;
-		
-		@Before
-		public void givenAFreeEntryFormat(){
-			format = new FreeEntryFormat<T>();
-		}
-		
-		@Test
-		public void whenGetNameRuns_ThenItReturnsCorrectName(){
-			assertEquals(ContentConstraint.FORMAT, 
-					format.getName());
-		}
+@RunWith(HierarchicalContextRunner.class)
+public class FreeEntryFormatTest {
+	FreeEntryFormat format;
+	
+	public <T> void assertResponseDataIsConsistent(int responseId, T responseContent, boolean satisfiesConstraint){
+		assertSame(responseId, format.getId());
+		assertSame(responseContent, format.getContent());
+		assertSame(satisfiesConstraint, format.satisfiesConstraint());
 	}
 	
-	public static class GivenANewFreeEntryFormat<T> extends GivenAFreeEntryFormat<T>{
-		
+	@Before
+	public void setUp(){
+		format = new FreeEntryFormat();
+	}
+	
+	@Test
+	public void whenGetNameRuns_ThenItReturnsCorrectName(){
+		assertEquals(ContentConstraint.FORMAT, 
+				format.getName());
+	}
+	
+	public class GivenANewFreeEntryFormat {		
 		@Test
 		public void whenFormatIsNew_ThenItWrapsANullResponse(){
 			assertFalse(format.hasResponse());
@@ -37,43 +42,33 @@ public class FreeEntryFormatTest<T> extends ConstraintTest {
 		}
 	}
 	
-	public static class GivenFormatWrapsInvalidResponse<T> extends GivenAnInvalidResponse<T>{
-
-		@Override
-		protected Constraint<T> makeDecorator() {
-			return new FreeEntryFormat<T>();
-		}
-
-		@Override
-		protected T makeResponseContent() {
-			return (T) "";
-		}
+	public class GivenAResponse{
+		Response response;
 		
-		@Test
-		public void whenSatisfiesConstraintRuns_ThenItReturnsFalse(){
-			assertConstraintDecoratorHasResponse();
-			assertResponseDataIsConsistent();
-			assertConstraintIsSatisfied(false);
+		public class GivenAnInvalidResponse{
+			@Before
+			public void givenAnInvalidResponse(){
+				response = null;
+			}
+			
+			@Test
+			public void whenSatisfiesConstraintRuns_ThenItReturnsFalse(){
+				assertThat(format.hasResponse(), is(equalTo(false)));
+				assertThat(format.isConstraintSatisfied(), is(false));
+			}
 		}
-	}
-	
-	public static class GivenFormatWrapsValidResponse<T> extends GivenAValidResponse<T>{
-
-		@Override
-		protected Constraint<T> makeDecorator() {
-			return new FreeEntryFormat<T>();
-		}
-
-		@Override
-		protected T makeResponseContent() {
-			return (T) "";
-		}
-		
-		@Test
-		public void whenSatisfiesConstraintRuns_ThenItReturnsTrue(){
-			assertConstraintDecoratorHasResponse();
-			assertResponseDataIsConsistent();
-			assertConstraintIsSatisfied(true);
+		public class GivenAValidResponse{
+			@Before
+			public void givenAValidResponse(){
+				response = TestUtil.makeMockNameResponse("Joe");
+				format.wrap(response);
+			}			
+			@Test
+			public void whenSatisfiesConstraintRuns_ThenItReturnsFalse(){
+				assertThat(format.hasResponse(), is(equalTo(true)));
+				assertResponseDataIsConsistent(response.getId(), response.getContent(), response.satisfiesConstraint());
+				assertThat(format.isConstraintSatisfied(), is(true));
+			}
 		}
 	}
 }

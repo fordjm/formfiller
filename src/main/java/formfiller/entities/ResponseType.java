@@ -4,7 +4,7 @@ import java.lang.reflect.Type;
 
 import formfiller.enums.ContentConstraint;
 
-public class ResponseType<T> extends Constraint<T> {
+public class ResponseType extends Constraint {
 	Type type;
 
 	public ResponseType(Type type) {
@@ -23,7 +23,7 @@ public class ResponseType<T> extends Constraint<T> {
 				response.satisfiesConstraint();
 	}
 	
-	private boolean responseTypeMatchesGivenType(
+	private <T> boolean responseTypeMatchesGivenType(
 			T content, Type type){
 		Class<? extends Object> responseClass = content.getClass();		
 		return responseClass.equals(type);

@@ -9,9 +9,9 @@ import formfiller.entities.ResponseImpl;
 import formfiller.enums.ContentConstraint;
 import formfiller.persistence.FormWidget;
 
-public class AddResponse<T> implements Transaction {
-	Response<T> response;
-	public AddResponse(T content) {
+public class AddResponse implements Transaction {
+	Response response;
+	public <T> AddResponse(T content) {
 		int id = FormWidget.getNextResponseId();
 		this.response = new ResponseImpl<T>(id, content);
 	}
@@ -20,14 +20,13 @@ public class AddResponse<T> implements Transaction {
 		checkTransactionIsLegal();
 		FormWidget.addResponse(response);
 	}
-	// TODO:  Fix illegal casting.
+
 	private void wrapResponse(){
-		Map<ContentConstraint, Constraint<?>> constraints = FormWidget.getConstraints();
-		Collection<Constraint<?>> constraintValues = constraints.values();
-		for (Constraint<?> constraint : constraintValues){
-			Constraint<T> castConstraint = (Constraint<T>) constraint;
-			castConstraint.wrap(response);
-			response = castConstraint;
+		Map<ContentConstraint, Constraint> constraints = FormWidget.getConstraints();
+		Collection<Constraint> constraintValues = constraints.values();
+		for (Constraint constraint : constraintValues){
+			constraint.wrap(response);
+			response = constraint;
 		}
 	}
 	private void checkTransactionIsLegal() throws IllegalStateException, IllegalArgumentException{

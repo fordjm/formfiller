@@ -1,6 +1,6 @@
 package formfiller.entities;
 
-public abstract class AbstractResponse<T> implements Response<T> {
+public abstract class AbstractResponse<T> implements Response {
 	int id;
 	T content;
 

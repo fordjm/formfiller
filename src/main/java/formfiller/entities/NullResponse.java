@@ -1,6 +1,6 @@
 package formfiller.entities;
 
-public class NullResponse implements Response<String> {
+public class NullResponse implements Response {
 
 	public int getId() {
 		return -1;

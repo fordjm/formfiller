@@ -9,7 +9,7 @@ import formfiller.entities.Question;
 
 public class MockQuestionGateway implements QuestionGateway {
 	private Prompt currentQuestion = new NullPrompt();
-	private int questionIndex = -1;
+	private int currentIndex = -1;
 	@SuppressWarnings("serial")
 	private List<Question> questionSource;
 			
@@ -23,20 +23,20 @@ public class MockQuestionGateway implements QuestionGateway {
 	public Prompt getQuestion() {
 		return currentQuestion;
 	}	
-	public void findQuestionByIndexOffset(int offset){
-		int requestedIndex = questionIndex + offset;
+	public Prompt findQuestionByIndexOffset(int offset){
+		int requestedIndex = currentIndex + offset;
+		updateCurrentQuestion(requestedIndex);
+		return currentQuestion;
+	}
+	void updateCurrentQuestion(int requestedIndex) {
+		updateCurrentIndex(requestedIndex);
+		currentQuestion = questionSource.get(currentIndex);
+	}	
+	void updateCurrentIndex(int requestedIndex){
 		if (isLegalIndex(requestedIndex))
-			questionIndex = requestedIndex;
-		updateCurrentQuestion();
+			currentIndex = requestedIndex;
 	}
-
-	void updateCurrentQuestion() {
-		if (questionIndex >= 0)
-			currentQuestion = questionSource.get(questionIndex);
-		else
-			currentQuestion = new NullPrompt();
-	}
-	private boolean isLegalIndex(int index) {
+	boolean isLegalIndex(int index) {
 		return index >= 0 && index < questionSource.size();
 	}
 

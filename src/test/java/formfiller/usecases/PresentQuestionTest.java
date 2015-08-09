@@ -9,7 +9,7 @@ import org.junit.runner.RunWith;
 
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
 import formfiller.entities.Question;
-import formfiller.gateways.Context;
+import formfiller.gateways.ApplicationContext;
 import formfiller.utilities.TestSetup;
 
 @RunWith(HierarchicalContextRunner.class)
@@ -32,8 +32,8 @@ public class PresentQuestionTest {
 	public class GivenAQuestion{
 		@Before
 		public void givenAQuestion() {
-			Context.questionGateway.save(new Question("name", "What is your name?"));
-			Context.questionGateway.findQuestionByIndexOffset(1);
+			ApplicationContext.questionGateway.save(new Question("name", "What is your name?"));
+			ApplicationContext.questionGateway.findQuestionByIndexOffset(1);
 		}
 		@Test
 		public void whenPresentQuestionRuns_ThenPresentableQuestionFieldsHaveExpectedValues(){

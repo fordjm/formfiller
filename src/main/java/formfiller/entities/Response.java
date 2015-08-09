@@ -1,7 +1,6 @@
 package formfiller.entities;
 
-public interface Response<T> extends Constrainable<T>{
-
+public interface Response extends Constrainable{
 	public int getId();
-	public T getContent();
+	public <T> T getContent();
 }

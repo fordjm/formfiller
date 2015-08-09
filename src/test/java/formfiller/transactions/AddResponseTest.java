@@ -18,7 +18,7 @@ import formfiller.utilities.TestUtil;
 public class AddResponseTest<T> {
 	static Transaction addResponse;
 	void makeAddResponse(T content){
-		addResponse = new AddResponse<T>(content);
+		addResponse = new AddResponse(content);
 	}
 	public class WidgetHasNoPromptContext{
 		@Before
@@ -79,7 +79,7 @@ public class AddResponseTest<T> {
 				}	
 			}
 			public class GivenAnUnsatisfiedConstraint{
-				Constraint<T> mockConstraint;
+				Constraint mockConstraint;
 				@Before
 				public void givenAnUnsatisfiedConstraint(){
 					mockConstraint = TestUtil.makeMockConstraint(0, false);
@@ -92,8 +92,8 @@ public class AddResponseTest<T> {
 			}
 			// TODO:  Figure out proper constraint mocking.
 			public class GivenASatisfiedConstraint{
-				Constraint<T> mockConstraint;
-				Constraint<T> realConstraint = new FreeEntryFormat<T>();
+				Constraint mockConstraint;
+				Constraint realConstraint = new FreeEntryFormat();
 				@Before
 				public void givenASatisfiedConstraint(){
 					mockConstraint = TestUtil.makeMockConstraint(0, true);
@@ -105,13 +105,13 @@ public class AddResponseTest<T> {
 					assertSame(validContent, FormWidget.getResponse().getContent());
 				}
 			}
-			void addConstraints(Constraint<T>... constraints){
-				for (Constraint<T> constraint : constraints)
+			void addConstraints(Constraint... constraints){
+				for (Constraint constraint : constraints)
 					FormWidget.addConstraint(constraint);
 			}
 			public class GivenTwoConstraintsWhereOneIsUnsatisfied{
-				Constraint<T> format = new FreeEntryFormat<T>();
-				Constraint<T> responseType = new ResponseType<T>(Double.class);
+				Constraint format = new FreeEntryFormat();
+				Constraint responseType = new ResponseType(Double.class);
 				@Before
 				public void givenTwoConstraintsWhereOneIsUnsatisfied(){
 					addConstraints(format, responseType);
