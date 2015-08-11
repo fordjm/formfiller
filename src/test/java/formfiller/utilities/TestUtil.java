@@ -5,6 +5,7 @@ import static org.mockito.Mockito.when;
 
 import formfiller.entities.Constraint;
 import formfiller.entities.Prompt;
+import formfiller.entities.Question;
 import formfiller.entities.Response;
 import formfiller.enums.ContentConstraint;
 
@@ -16,11 +17,14 @@ public class TestUtil {
 		when(result.satisfiesConstraint()).thenReturn(satisfiesConstraint);
 		return result;
 	}
-	public static Prompt makeMockNamePrompt() {
-		return makeMockPrompt("name", "What is your name?");
+	public static Question makeMockNameQuestion() {
+		return makeMockQuestion("name", "What is your name?");
 	}
-	public static Prompt makeMockPrompt(String id, String content){
-		Prompt result = mock(Prompt.class);
+	public static Question makeMockAgeQuestion() {
+		return makeMockQuestion("age", "What is your age?");
+	}
+	public static Question makeMockQuestion(String id, String content){
+		Question result = mock(Question.class);
 		when (result.getId()).thenReturn(id);
 		when (result.getContent()).thenReturn(content);
 		return result;

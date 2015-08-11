@@ -58,7 +58,7 @@ public class PromptSubjectTest {
 			}
 		}
 		public class WidgetHasAPromptContext{
-			Prompt prompt = TestUtil.makeMockNamePrompt();
+			Prompt prompt = TestUtil.makeMockNameQuestion();
 			Prompt newPrompt;
 			@Before
 			public void givenWidgetHasAPrompt(){

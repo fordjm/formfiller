@@ -34,7 +34,7 @@ public class RemoveResponseTest {
 			@Before
 			public void givenWidgetHasAResponse() throws Exception {
 				// Line 39 brings more support for mocking FormWidget.
-				FormWidget.addPrompt(TestUtil.makeMockNamePrompt());
+				FormWidget.addPrompt(TestUtil.makeMockNameQuestion());
 				mockResponse = TestUtil.makeMockResponse(0, "Response", true);
 				FormWidget.addResponse(mockResponse);
 			}

@@ -52,7 +52,7 @@ public class AddResponseTest<T> {
 		@Before
 		public void givenWidgetHasAPrompt(){
 			FormWidget.clear();
-			Prompt prompt = TestUtil.makeMockNamePrompt();
+			Prompt prompt = TestUtil.makeMockNameQuestion();
 			FormWidget.addPrompt(prompt);
 		}
 		public class GivenAnInvalidResponse{
