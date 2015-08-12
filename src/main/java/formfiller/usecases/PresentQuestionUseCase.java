@@ -11,15 +11,11 @@ public class PresentQuestionUseCase {
 	
 	public PresentQuestionUseCase(){
 		factory = new PresentableQuestionFactoryImpl();
-	}
-	
+	}	
 	public void requestQuestion(){
-		requestQuestion(0);
-	}
-	public void requestQuestion(int indexOffset){
-		Prompt currentQuestion = 
-				ApplicationContext.questionGateway.findQuestionByIndexOffset(indexOffset);
+		Prompt requestedQuestion = 
+				ApplicationContext.questionGateway.findQuestionByIndexOffset(0);
 		ApplicationContext.presentQuestionBoundary.setQuestion(
-				factory.makePresentableQuestion(currentQuestion));
+				factory.makePresentableQuestion(requestedQuestion));
 	}
 }

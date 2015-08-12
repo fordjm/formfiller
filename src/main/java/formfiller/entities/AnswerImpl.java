@@ -1,8 +1,8 @@
 package formfiller.entities;
 
-public class ResponseImpl<T> extends AbstractResponse<T> {
+public class AnswerImpl<T> extends AbstractAnswer<T> {
 	
-	public ResponseImpl(int id, T content){
+	public AnswerImpl(int id, T content){
 		super(id, content);
 	}
 

@@ -6,10 +6,10 @@ import java.util.List;
 import java.util.Map;
 
 import formfiller.entities.NullPrompt;
-import formfiller.entities.NullResponse;
+import formfiller.entities.NullAnswer;
 import formfiller.entities.Prompt;
-import formfiller.entities.Response;
-import formfiller.entities.ResponseImpl;
+import formfiller.entities.Answer;
+import formfiller.entities.AnswerImpl;
 import formfiller.enums.Cardinality;
 import formfiller.enums.ContentConstraint;
 import formfiller.entities.Constrainable;
@@ -18,7 +18,7 @@ import formfiller.entities.Constraint;
 public class FormWidget {
 
 	private static Prompt prompt = new NullPrompt();
-	private static Response response = new NullResponse();
+	private static Answer response = new NullAnswer();
 	private static Map<ContentConstraint, Constraint> contentConstraints = 
 			new HashMap<ContentConstraint, Constraint>();
 	private static Cardinality responseCardinality = Cardinality.SINGLE;
@@ -35,13 +35,13 @@ public class FormWidget {
 	public static int getNextResponseId(){
 		if (!hasResponse()) return 0;
 		else if (response.getContent() instanceof List){
-			List<?> responses = (List<Response>) response.getContent();
+			List<?> responses = (List<Answer>) response.getContent();
 			return responses.size();
 		}
 			return -1;
 	}
 
-	public static Response getResponse() {
+	public static Answer getResponse() {
 		return response;
 	}
 	
@@ -54,7 +54,7 @@ public class FormWidget {
 	}
 
 	public static void addPrompt(Prompt prompt) throws IllegalStateException, IllegalArgumentException {
-		if (responseRequired && response instanceof NullResponse)
+		if (responseRequired && response instanceof NullAnswer)
 			throw new IllegalStateException("Previous question requires a response!");
 		else if (prompt == null) 
 			throw new IllegalArgumentException("Cannot add nulls to FormWidget!");
@@ -63,7 +63,7 @@ public class FormWidget {
 	}
 
 	// TODO:  It appears this belongs in AddResponseTransaction...
-	public static void addResponse(Response response) {
+	public static void addResponse(Answer response) {
 		if (!hasPrompt())
 			throw new IllegalStateException(
 					"Must have a question before adding a response!");
@@ -76,17 +76,17 @@ public class FormWidget {
 	}
 	
 	// TODO:  And this belongs here in the widget.
-	private static void addResponseToWidget(Response response){
+	private static void addResponseToWidget(Answer response){
 		if (responseCardinality == Cardinality.SINGLE)
 			FormWidget.response = response;
 		else if (FormWidget.response.getContent() instanceof List){
-			List<Response> content = (List<Response>) FormWidget.response.getContent();
+			List<Answer> content = (List<Answer>) FormWidget.response.getContent();
 			content.add(response);
 		}
 		else{
-			List<Response> content = new ArrayList<Response>();
+			List<Answer> content = new ArrayList<Answer>();
 			content.add(response);
-			Response toAdd = new ResponseImpl(0, content);
+			Answer toAdd = new AnswerImpl(0, content);
 			FormWidget.response = toAdd;
 		}
 	}
@@ -100,11 +100,11 @@ public class FormWidget {
 		return !isANullResponse(response);
 	}
 	
-	private static boolean isANullResponse(Response response){
-		return (response instanceof NullResponse);
+	private static boolean isANullResponse(Answer response){
+		return (response instanceof NullAnswer);
 	}
 	
-	private static boolean hasAValidResponse(Response response){
+	private static boolean hasAValidResponse(Answer response){
 		return response != null && 
 				!isANullResponse(response) && 
 				response.getContent() != null;
@@ -135,7 +135,7 @@ public class FormWidget {
 	}
 
 	public static void clearResponse() {
-		response = new NullResponse();
+		response = new NullAnswer();
 	}
 
 	public static Map<ContentConstraint, Constraint> getConstraints() {

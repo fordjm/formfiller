@@ -3,7 +3,7 @@ package formfiller.transactions;
 import java.lang.reflect.Type;
 
 import formfiller.entities.Constraint;
-import formfiller.entities.ResponseType;
+import formfiller.entities.AnswerType;
 import formfiller.enums.ContentConstraint;
 
 public class AddResponseType extends AddConstraint {
@@ -13,6 +13,6 @@ public class AddResponseType extends AddConstraint {
 		this.type = type;
 	}
 	protected Constraint makeConstraint() {
-		return new ResponseType(type);
+		return new AnswerType(type);
 	}
 }

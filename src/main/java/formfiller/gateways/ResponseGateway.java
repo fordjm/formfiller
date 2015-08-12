@@ -1,9 +1,9 @@
 package formfiller.gateways;
 
-import formfiller.entities.Response;
+import formfiller.entities.Answer;
 
 public interface ResponseGateway {
-	public Response findResponseByIndexOffset(int offset);
-	public Response getResponse();
-	public void save(Response response);
+	public Answer findResponseByIndexOffset(int offset);
+	public Answer getResponse();
+	public void save(Answer response);
 }

@@ -1,19 +1,17 @@
 package formfiller.entities;
 
-public class NullPrompt implements Prompt {
-	
-	public NullPrompt(){
-	}
+public class StartPrompt implements Prompt {
 
 	public String getContent() {
-		return "";
+		return "You have reached the start of this form.";
 	}
 
 	public String getId() {
-		return "";
+		return "start";
 	}
 
 	public boolean requiresAnswer() {
 		return false;
 	}
+
 }

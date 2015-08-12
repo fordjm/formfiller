@@ -9,7 +9,7 @@ public class ResponseImplTest<T> {
 	public abstract static class GivenAResponseImpl<T>{
 		int id;
 		T content;
-		ResponseImpl<T> response;
+		AnswerImpl<T> response;
 		
 		public abstract int getId();
 		public abstract T getContent();
@@ -18,7 +18,7 @@ public class ResponseImplTest<T> {
 		public void givenAResponseImpl(){
 			id = getId();
 			content = getContent();
-			response = new ResponseImpl<T>(id, content);
+			response = new AnswerImpl<T>(id, content);
 		}
 		
 		void assertResponseDataIsConsistent(){

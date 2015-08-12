@@ -16,13 +16,13 @@ import formfiller.utilities.TestUtil;
 @RunWith(HierarchicalContextRunner.class)
 public class ResponseTypeTest<T> {
 	Type type;
-	ResponseType responseType;
+	AnswerType responseType;
 	
 	@Before
 	public void setUp(){
 		T temp = (T) "";
 		type = temp.getClass();
-		responseType = new ResponseType(type);
+		responseType = new AnswerType(type);
 	}	
 	@Test
 	public void whenGetNameRuns_ThenItReturnsCorrectName(){
@@ -41,7 +41,7 @@ public class ResponseTypeTest<T> {
 	}
 	
 	public class GivenANullToWrap {
-		Response response;		
+		Answer response;		
 		@Before
 		public void givenANullToWrap(){
 			response = null;
@@ -56,9 +56,9 @@ public class ResponseTypeTest<T> {
 		int responseId;
 		T responseContent;
 		boolean satisfiesConstraint;
-		Response response;
+		Answer response;
 		
-		Response makeResponse(int id, T content, boolean satisfied){
+		Answer makeResponse(int id, T content, boolean satisfied){
 			responseId = id;
 			responseContent = content;
 			satisfiesConstraint = satisfied;

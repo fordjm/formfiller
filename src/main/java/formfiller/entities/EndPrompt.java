@@ -1,19 +1,15 @@
 package formfiller.entities;
 
-public class NullPrompt implements Prompt {
-	
-	public NullPrompt(){
-	}
+public class EndPrompt implements Prompt {
 
 	public String getContent() {
-		return "";
+		return "You have reached the end of this form.";
 	}
-
 	public String getId() {
-		return "";
+		return "end";
 	}
-
 	public boolean requiresAnswer() {
 		return false;
 	}
+
 }

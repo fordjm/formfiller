@@ -46,7 +46,7 @@ public class SelectionFormatTest<T> {
 		int responseId;
 		T responseContent;
 		boolean satisfiesConstraint;
-		Response response;
+		Answer response;
 
 		public void setupResponse(int id, T content, boolean satisfied){
 			format.wrap(response);

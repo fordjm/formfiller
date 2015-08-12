@@ -18,9 +18,9 @@ import org.junit.runner.RunWith;
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
 import formfiller.entities.Constraint;
 import formfiller.entities.NullPrompt;
-import formfiller.entities.NullResponse;
+import formfiller.entities.NullAnswer;
 import formfiller.entities.Prompt;
-import formfiller.entities.Response;
+import formfiller.entities.Answer;
 import formfiller.enums.Cardinality;
 import formfiller.enums.ContentConstraint;
 import formfiller.utilities.TestUtil;
@@ -30,16 +30,16 @@ public class FormWidgetTest {
 	static Prompt oldPrompt;
 	static Prompt addedPrompt;
 	static Prompt newPrompt;
-	static Response oldResponse;
-	static Response addedResponse;
-	static Response newResponse;
+	static Answer oldResponse;
+	static Answer addedResponse;
+	static Answer newResponse;
 	static void assertPromptIsNullPrompt() {
 		assertTrue(FormWidget.getPrompt() instanceof NullPrompt);
 		assertEquals("", FormWidget.getPrompt().getId());
 		assertEquals("", FormWidget.getPrompt().getContent());
 	}
 	static void assertResponseIsNullResponse() {
-		assertTrue(FormWidget.getResponse() instanceof NullResponse);
+		assertTrue(FormWidget.getResponse() instanceof NullAnswer);
 		assertEquals(-1, FormWidget.getResponse().getId());
 		assertEquals("", FormWidget.getResponse().getContent());
 	}
@@ -57,7 +57,7 @@ public class FormWidgetTest {
 	static Prompt makeMockNamePrompt() {
 		return makeMockPrompt("name", "What is your name?");
 	}
-	static Response makeMockNameResponse() {
+	static Answer makeMockNameResponse() {
 		return TestUtil.makeMockResponse(0, "Joe", true);
 	}
 	static Prompt makeMockPrompt(String id, String content){
@@ -78,13 +78,13 @@ public class FormWidgetTest {
 	static void setNewPromptValue() {
 		newPrompt = FormWidget.getPrompt();
 	}
-	static void updateResponseFieldValues(Response... responses) {
+	static void updateResponseFieldValues(Answer... responses) {
 		oldResponse = FormWidget.getResponse();
 		addResponses(responses);
 		newResponse = FormWidget.getResponse();
 	}
-	static void addResponses(Response... responses) {
-		for (Response response : responses){
+	static void addResponses(Answer... responses) {
+		for (Answer response : responses){
 			addedResponse = response;
 			FormWidget.addResponse(response);
 		}
@@ -173,7 +173,7 @@ public class FormWidgetTest {
 			public class GivenAnInvalidResponse{
 				@Before
 				public void givenAnInvalidResponse(){
-					addedResponse = new NullResponse();
+					addedResponse = new NullAnswer();
 				}
 
 				@Test(expected = IllegalStateException.class)
@@ -201,7 +201,7 @@ public class FormWidgetTest {
 		public class GivenAnInvalidResponse{
 			@Before
 			public void givenAnInvalidResponse(){
-				addedResponse = new NullResponse();
+				addedResponse = new NullAnswer();
 			}
 
 			@Test(expected = IllegalArgumentException.class)
@@ -226,7 +226,7 @@ public class FormWidgetTest {
 		Prompt makeMockAgePrompt() {
 			return makeMockPrompt("age", "What is your age?");
 		}
-		Response makeMockAgeResponse(int age) {
+		Answer makeMockAgeResponse(int age) {
 			return TestUtil.makeMockResponse(0, age, true);
 		}
 		@Before
@@ -261,13 +261,13 @@ public class FormWidgetTest {
 				@Test(expected = IllegalStateException.class)
 				public void whenAddResponseRunsTwice_ThenItThrowsAnException(){
 					addedResponse = makeMockAgeResponse(47);
-					Response secondResponse = TestUtil.makeMockResponse(1, 52, true);
+					Answer secondResponse = TestUtil.makeMockResponse(1, 52, true);
 					updateResponseFieldValues(addedResponse, secondResponse);
 				}				
 			}			
 			public class GivenPromptTakesMultipleResponses {
-				Response firstResponse;
-				Response secondResponse;
+				Answer firstResponse;
+				Answer secondResponse;
 				private void assertResponseContainsNResponses(int n) {
 					assertTrue(newResponse.getContent() instanceof List);
 					List<?> content = (List<?>) newResponse.getContent();

@@ -7,7 +7,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
-import formfiller.entities.Response;
+import formfiller.entities.Answer;
 import formfiller.persistence.FormWidget;
 import formfiller.utilities.TestUtil;
 
@@ -30,7 +30,7 @@ public class RemoveResponseTest {
 			}		
 		}
 		public class GivenWidgetHasOneResponse{
-			Response mockResponse;
+			Answer mockResponse;
 			@Before
 			public void givenWidgetHasAResponse() throws Exception {
 				// Line 39 brings more support for mocking FormWidget.

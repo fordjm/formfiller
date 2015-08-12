@@ -1,6 +1,6 @@
 package formfiller.gateways;
 
-import formfiller.usecases.PresentQuestionBoundary;
+import formfiller.usecases.PresentableQuestionBoundary;
 
 // As presented in the Clean Coders Java Case Study codecast
 // https://cleancoders.com/episode/case-study-episode-1/show
@@ -8,5 +8,5 @@ import formfiller.usecases.PresentQuestionBoundary;
 public class ApplicationContext {
 	public static QuestionGateway questionGateway;
 	public static ResponseGateway responseGateway;
-	public static PresentQuestionBoundary presentQuestionBoundary;
+	public static PresentableQuestionBoundary presentQuestionBoundary;
 }

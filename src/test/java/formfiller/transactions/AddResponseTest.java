@@ -10,7 +10,7 @@ import de.bechte.junit.runners.context.HierarchicalContextRunner;
 import formfiller.entities.Constraint;
 import formfiller.entities.FreeEntryFormat;
 import formfiller.entities.Prompt;
-import formfiller.entities.ResponseType;
+import formfiller.entities.AnswerType;
 import formfiller.persistence.FormWidget;
 import formfiller.utilities.TestUtil;
 
@@ -111,7 +111,7 @@ public class AddResponseTest<T> {
 			}
 			public class GivenTwoConstraintsWhereOneIsUnsatisfied{
 				Constraint format = new FreeEntryFormat();
-				Constraint responseType = new ResponseType(Double.class);
+				Constraint responseType = new AnswerType(Double.class);
 				@Before
 				public void givenTwoConstraintsWhereOneIsUnsatisfied(){
 					addConstraints(format, responseType);

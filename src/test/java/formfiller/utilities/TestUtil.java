@@ -6,7 +6,7 @@ import static org.mockito.Mockito.when;
 import formfiller.entities.Constraint;
 import formfiller.entities.Prompt;
 import formfiller.entities.Question;
-import formfiller.entities.Response;
+import formfiller.entities.Answer;
 import formfiller.enums.ContentConstraint;
 
 public class TestUtil {
@@ -18,31 +18,32 @@ public class TestUtil {
 		return result;
 	}
 	public static Question makeMockNameQuestion() {
-		return makeMockQuestion("name", "What is your name?");
+		return makeMockQuestion("name", "What is your name?", false);
 	}
 	public static Question makeMockAgeQuestion() {
-		return makeMockQuestion("age", "What is your age?");
+		return makeMockQuestion("age", "What is your age?", true);
 	}
-	public static Question makeMockQuestion(String id, String content){
+	public static Question makeMockQuestion(String id, String content, boolean isRequired){
 		Question result = mock(Question.class);
 		when (result.getId()).thenReturn(id);
 		when (result.getContent()).thenReturn(content);
+		when (result.requiresAnswer()).thenReturn(isRequired);
 		return result;
 	}
-	public static Response makeMockNameResponse(String name) {
+	public static Answer makeMockNameResponse(String name) {
 		return makeMockResponse(0, name, true);
 	}
-	public static <T> Response makeMockResponse(int id, T content, boolean satisfiesConstraint) {
-		Response result = 
-				(Response) mock(Response.class);
+	public static <T> Answer makeMockResponse(int id, T content, boolean satisfiesConstraint) {
+		Answer result = 
+				(Answer) mock(Answer.class);
 		when(result.getId()).thenReturn(id);
 		when(result.getContent()).thenReturn(content);
 		when(result.satisfiesConstraint()).thenReturn(satisfiesConstraint);
 		return result;
 	}
-	public static <T> Response makeMockResponse(boolean satisfiesConstraint) {
-		Response result = 
-				(Response) mock(Response.class);
+	public static <T> Answer makeMockResponse(boolean satisfiesConstraint) {
+		Answer result = 
+				(Answer) mock(Answer.class);
 		when(result.getContent()).thenReturn("");
 		when(result.satisfiesConstraint()).thenReturn(satisfiesConstraint);
 		return result;

@@ -1,10 +1,10 @@
 package formfiller.entities;
 
-public abstract class AbstractResponse<T> implements Response {
+public abstract class AbstractAnswer<T> implements Answer {
 	int id;
 	T content;
 
-	public AbstractResponse(int id, T content) {
+	public AbstractAnswer(int id, T content) {
 		this.id = id;
 		this.content = content;
 	}

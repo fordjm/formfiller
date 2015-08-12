@@ -15,7 +15,7 @@ import de.bechte.junit.runners.context.HierarchicalContextRunner;
 import formfiller.entities.Constrainable;
 import formfiller.entities.Constraint;
 import formfiller.entities.FreeEntryFormat;
-import formfiller.entities.ResponseType;
+import formfiller.entities.AnswerType;
 import formfiller.entities.SelectionFormat;
 import formfiller.entities.ValueMaximum;
 import formfiller.entities.ValueMinimum;
@@ -75,8 +75,8 @@ public class AddConstraintTest {
 			addConstraint.execute();		
 			setConstraintsMap();
 			setConstraint(ContentConstraint.TYPE);
-			ResponseType responseType = (ResponseType) constraint;
-			assertTrue(constraint instanceof ResponseType);
+			AnswerType responseType = (AnswerType) constraint;
+			assertTrue(constraint instanceof AnswerType);
 			assertEquals(type, responseType.getType());
 		}
 	}

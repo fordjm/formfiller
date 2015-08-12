@@ -2,7 +2,7 @@ package formfiller.usecases;
 
 import java.util.Observable;
 
-public class PresentQuestionBoundary extends Observable {
+public class PresentableQuestionBoundary extends Observable {
 	PresentableQuestion presentableQuestion = null;
 	
 	public PresentableQuestion getQuestion(){

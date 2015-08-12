@@ -3,19 +3,21 @@ package formfiller.gateways;
 import java.util.ArrayList;
 import java.util.List;
 
+import formfiller.entities.EndPrompt;
 import formfiller.entities.NullPrompt;
 import formfiller.entities.Prompt;
 import formfiller.entities.Question;
+import formfiller.entities.StartPrompt;
 
 public class MockQuestionGateway implements QuestionGateway {
 	private Prompt currentQuestion;
-	private int currentIndex = 0;
+	private int currentIndex = -1;
 	@SuppressWarnings("serial")
 	private List<Question> questionSource;
 			
 	public MockQuestionGateway(){
 		questionSource = new ArrayList<Question>();
-		setCurrentQuestionToEmptyValue();
+		setCurrentQuestionToStartPrompt();
 	}
 
 	public boolean isEmpty(){
@@ -24,32 +26,42 @@ public class MockQuestionGateway implements QuestionGateway {
 	public void delete(Question question){
 		questionSource.remove(question);
 		if (isEmpty())
-			setCurrentQuestionToEmptyValue();
+			setCurrentQuestionToStartPrompt();
 	}
-	private void setCurrentQuestionToEmptyValue() {
-		currentQuestion = new NullPrompt();
+	private void setCurrentQuestionToStartPrompt() {
+		currentQuestion = new StartPrompt();
 	}
 	public Prompt getQuestion() {
 		return currentQuestion;
 	}	
 	public Prompt findQuestionByIndexOffset(int offset){
-		if (isEmpty()) return currentQuestion;
 		int requestedIndex = currentIndex + offset;
+		updateCurrentIndex(requestedIndex);
 		updateCurrentQuestion(requestedIndex);
 		return currentQuestion;
-	}
-	void updateCurrentQuestion(int requestedIndex) {
-		updateCurrentIndex(requestedIndex);
-		currentQuestion = questionSource.get(currentIndex);
 	}	
 	void updateCurrentIndex(int requestedIndex){
-		if (isLegalIndex(requestedIndex))
+		if (isAtStart(requestedIndex)) 
+			currentIndex = -1;
+		else if (isAtEnd(requestedIndex)) 
+			currentIndex = questionSource.size();
+		else
 			currentIndex = requestedIndex;
 	}
-	boolean isLegalIndex(int index) {
-		return index >= 0 && index < questionSource.size();
+	void updateCurrentQuestion(int requestedIndex) {
+		if (isAtStart(requestedIndex)) 
+			currentQuestion = new StartPrompt();
+		else if (isAtEnd(requestedIndex))
+			currentQuestion = new EndPrompt();
+		else
+			currentQuestion = questionSource.get(currentIndex);
 	}
-
+	boolean isAtStart(int index) {
+		return index < 0;
+	}
+	boolean isAtEnd(int index) {
+		return index >= questionSource.size();
+	}
 	public void save(Question question) {
 		questionSource.add(question);
 	}

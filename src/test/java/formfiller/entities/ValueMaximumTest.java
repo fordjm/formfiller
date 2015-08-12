@@ -20,7 +20,7 @@ public class ValueMaximumTest<T> {
 	}
 	
 	public class GivenAResponse{
-		Response response;
+		Answer response;
 		
 		public class GivenAnInvalidResponse{
 			@Before

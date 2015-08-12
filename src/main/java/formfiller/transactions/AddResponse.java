@@ -4,16 +4,16 @@ import java.util.Collection;
 import java.util.Map;
 
 import formfiller.entities.Constraint;
-import formfiller.entities.Response;
-import formfiller.entities.ResponseImpl;
+import formfiller.entities.Answer;
+import formfiller.entities.AnswerImpl;
 import formfiller.enums.ContentConstraint;
 import formfiller.persistence.FormWidget;
 
 public class AddResponse implements Transaction {
-	Response response;
+	Answer response;
 	public <T> AddResponse(T content) {
 		int id = FormWidget.getNextResponseId();
-		this.response = new ResponseImpl<T>(id, content);
+		this.response = new AnswerImpl<T>(id, content);
 	}
 	public void execute() {
 		wrapResponse();

@@ -3,19 +3,19 @@ package formfiller.gateways;
 import java.util.ArrayList;
 import java.util.List;
 
-import formfiller.entities.NullResponse;
-import formfiller.entities.Response;
+import formfiller.entities.NullAnswer;
+import formfiller.entities.Answer;
 
 public class MockResponseGateway implements ResponseGateway {
-	private Response currentResponse = (Response) new NullResponse();
+	private Answer currentResponse = (Answer) new NullAnswer();
 	private int currentIndex = -1;
-	List<Response> responses;
+	List<Answer> responses;
 	
 	public MockResponseGateway(){
-		responses = new ArrayList<Response>();
+		responses = new ArrayList<Answer>();
 	}
 	
-	public Response findResponseByIndexOffset(int offset){
+	public Answer findResponseByIndexOffset(int offset){
 		int requestedIndex = currentIndex  + offset;
 		updateCurrentResponse(requestedIndex);
 		return currentResponse;
@@ -31,11 +31,11 @@ public class MockResponseGateway implements ResponseGateway {
 	boolean isLegalIndex(int requestedIndex) {
 		return requestedIndex >= 0 && requestedIndex < responses.size();
 	}
-	public Response getResponse() {
+	public Answer getResponse() {
 		return currentResponse;
 	}
 
-	public void save(Response response) {
+	public void save(Answer response) {
 		responses.add(response);
 	}
 }

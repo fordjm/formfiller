@@ -2,16 +2,16 @@ package formfiller.entities;
 
 import formfiller.enums.ContentConstraint;
 
-public abstract class Constraint implements Response {
+public abstract class Constraint implements Answer {
 	ContentConstraint name;
-	Response response;
+	Answer response;
 	
 	public Constraint(ContentConstraint name){
 		this.name = name;
-		this.response = (Response) new NullResponse();		
+		this.response = (Answer) new NullAnswer();		
 	}
 
-	public void wrap(Response response) throws IllegalArgumentException{
+	public void wrap(Answer response) throws IllegalArgumentException{
 		if (response == null || response.getContent() == null)
 			throw new IllegalArgumentException(
 					"Constraint cannot wrap null responses or content.");
@@ -19,7 +19,7 @@ public abstract class Constraint implements Response {
 	}
 	
 	public boolean hasResponse(){
-		return !(response instanceof NullResponse);
+		return !(response instanceof NullAnswer);
 	}
 	
 	public ContentConstraint getName(){

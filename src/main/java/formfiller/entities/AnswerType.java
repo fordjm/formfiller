@@ -4,10 +4,10 @@ import java.lang.reflect.Type;
 
 import formfiller.enums.ContentConstraint;
 
-public class ResponseType extends Constraint {
+public class AnswerType extends Constraint {
 	Type type;
 
-	public ResponseType(Type type) {
+	public AnswerType(Type type) {
 		super(ContentConstraint.TYPE);
 		this.type = type;
 	}
