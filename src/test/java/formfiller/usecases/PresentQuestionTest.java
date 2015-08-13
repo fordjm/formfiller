@@ -8,6 +8,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
+import formfiller.boundaries.QuestionPresentation;
 import formfiller.gateways.ApplicationContext;
 import formfiller.utilities.TestSetup;
 import formfiller.utilities.TestUtil;
@@ -15,7 +16,6 @@ import formfiller.utilities.TestUtil;
 @RunWith(HierarchicalContextRunner.class)
 public class PresentQuestionTest {
 	private PresentQuestionUseCase presentQuestionUseCase;
-	private PresentableQuestion presentableQuestion;
 	
 	@Before
 	public void setupTest(){
@@ -25,10 +25,9 @@ public class PresentQuestionTest {
 	public class GivenNoQuestions{
 		@Test
 		public void whenPresentQuestionRuns_ThenGetQuestionGetsAStartPrompt(){
-			presentQuestionUseCase.requestQuestion();
-			presentableQuestion = ApplicationContext.presentQuestionBoundary.getQuestion();
-			assertThat(presentableQuestion.id, is("start"));
-			assertThat(presentableQuestion.content, 
+			presentQuestionUseCase.requestPresentableQuestion();
+			assertThat(QuestionPresentation.presentableQuestion.getId(), is("start"));
+			assertThat(QuestionPresentation.presentableQuestion.getContent(), 
 					is("You have reached the start of this form."));
 		}
 	}
@@ -40,11 +39,10 @@ public class PresentQuestionTest {
 		}
 		@Test
 		public void whenPresentQuestionRuns_ThenGetQuestionGetsGivenQuestion(){
-			presentQuestionUseCase.requestQuestion();
-			presentableQuestion = 
-					ApplicationContext.presentQuestionBoundary.getQuestion();
-			assertThat(presentableQuestion.id, is("name"));
-			assertThat(presentableQuestion.content, is("What is your name?"));
+			presentQuestionUseCase.requestPresentableQuestion();
+			assertThat(QuestionPresentation.presentableQuestion.getId(), is("name"));
+			assertThat(QuestionPresentation.presentableQuestion.getContent(), 
+					is("What is your name?"));
 		}
 	}
 }

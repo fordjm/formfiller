@@ -18,7 +18,7 @@ import formfiller.utilities.TestSetup;
 import formfiller.utilities.TestUtil;
 
 @RunWith(HierarchicalContextRunner.class)
-public class NavigationUseCaseTest {	
+public class NavigationTest {	
 	private NavigationUseCase useCase;
 	
 	@Before
@@ -29,8 +29,14 @@ public class NavigationUseCaseTest {
 	
 	public class GivenNoQuestions{
 		@Test
+		public void gettingPrevQuestionGetsStartPrompt(){
+			useCase.navigateToPrevQuestion();
+			assertThat(ApplicationContext.questionGateway.getQuestion(), 
+					is(instanceOf(StartPrompt.class)));
+		}
+		@Test
 		public void gettingCurrentQuestionGetsStartPrompt(){
-			useCase.navigateByIndexOffset(0);
+			useCase.navigateToCurrentQuestion();
 			assertThat(ApplicationContext.questionGateway.getQuestion(), 
 					is(instanceOf(StartPrompt.class)));
 		}
@@ -66,7 +72,17 @@ public class NavigationUseCaseTest {
 				assertThat(ApplicationContext.questionGateway.getQuestion(), 
 						is(instanceOf(EndPrompt.class)));
 			}
-			
+			public class GivenFormIsAtTheEnd{
+				@Before
+				public void givenFormIsAtTheEnd(){
+					navigateToNextQuestion(2);
+				}
+				@Test
+				public void gettingPrevQuestionGetsFirstQuestion(){
+					useCase.navigateToPrevQuestion();
+					assertEquals(question, ApplicationContext.questionGateway.getQuestion());
+				}
+			}
 		}
 		public class GivenAnswerIsRequired{
 			@Before

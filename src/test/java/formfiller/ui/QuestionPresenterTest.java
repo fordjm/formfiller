@@ -4,15 +4,14 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import formfiller.gateways.ApplicationContext;
-import formfiller.usecases.PresentableQuestion;
+import formfiller.boundaries.QuestionPresentation;
 
 public class QuestionPresenterTest {
-	private PresentableQuestion question;
 
 	@Before
 	public void setUp(){
-		question = new PresentableQuestion("id", "content");
+		QuestionPresentation.presentableQuestion.setId("id");
+		QuestionPresentation.presentableQuestion.setContent("content");
 	}
 
 	@Test
@@ -22,7 +21,7 @@ public class QuestionPresenterTest {
 		QuestionView consoleView = new ConsoleView();
 		questionPresenter.addObserver(consoleView);
 		//Mockito.verify(consoleView).displayQuestion();					TODO:  Make this work.
-		ApplicationContext.presentQuestionBoundary.setQuestion(question);
+		questionPresenter.presentQuestion();
 	}
 
 }

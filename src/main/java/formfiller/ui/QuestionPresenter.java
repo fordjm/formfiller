@@ -1,20 +1,15 @@
 package formfiller.ui;
 
 import java.util.Observable;
-import java.util.Observer;
 
-import formfiller.gateways.ApplicationContext;
-import formfiller.usecases.PresentableQuestion;
+import formfiller.boundaries.QuestionPresentation;
 
-public class QuestionPresenter extends Observable implements Observer {
-	PresentableQuestion question;
-	public QuestionPresenter(){
-		ApplicationContext.presentQuestionBoundary.addObserver(this);
-	}
+public class QuestionPresenter extends Observable implements QuestionPresentation {
+	public QuestionPresenter(){	}
 
-	public void update(Observable observable, Object input) {
+	public void presentQuestion() {
 		setChanged();
-		notifyObservers();
+		notifyObservers(presentableQuestion);
 	}
 	
 }

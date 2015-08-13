@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import formfiller.entities.EndPrompt;
-import formfiller.entities.NullPrompt;
 import formfiller.entities.Prompt;
 import formfiller.entities.Question;
 import formfiller.entities.StartPrompt;
@@ -12,7 +11,6 @@ import formfiller.entities.StartPrompt;
 public class MockQuestionGateway implements QuestionGateway {
 	private Prompt currentQuestion;
 	private int currentIndex = -1;
-	@SuppressWarnings("serial")
 	private List<Question> questionSource;
 			
 	public MockQuestionGateway(){

@@ -1,10 +1,8 @@
 package formfiller.usecases;
 
-public class PresentableQuestion {
-	public String id;
-	public String content;
-	public PresentableQuestion(String id, String content) {
-		this.id = id;
-		this.content = content;
-	}
+public interface PresentableQuestion {
+	public String getId();
+	public String getContent();
+	public void setId(String id);
+	public void setContent(String content);
 }
