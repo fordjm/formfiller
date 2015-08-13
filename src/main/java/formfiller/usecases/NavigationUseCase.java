@@ -3,7 +3,7 @@ package formfiller.usecases;
 import formfiller.entities.Prompt;
 import formfiller.gateways.ApplicationContext;
 
-public class NavigationUseCase {
+public class NavigationUseCase implements RequestNavigation {
 
 	public NavigationUseCase() { }
 
@@ -23,6 +23,9 @@ public class NavigationUseCase {
 	public boolean currentQuestionRequiresResponse(){
 		Prompt currentQuestion = ApplicationContext.questionGateway.getQuestion();
 		return currentQuestion.requiresAnswer();
+	}
+	public void requestNavigation() {
+		navigateByIndexOffset(navigationRequest.getOffset());
 	}
 	
 	public class ResponseRequired extends RuntimeException{ }
