@@ -6,27 +6,23 @@ import formfiller.ApplicationContext;
 public class NavigationUseCase implements NavigationRequestBoundary {
 
 	public NavigationUseCase() { }
-
-	public void navigateToPrevQuestion(){
-		navigateByIndexOffset(-1);
-	}
-	public void navigateToCurrentQuestion(){
-		navigateByIndexOffset(0);
-	}
-	public void navigateToNextQuestion(){
-		navigateByIndexOffset(1);
-	}
-	public void navigateByIndexOffset(int indexOffset) {		
-		if (currentQuestionRequiresResponse()) throw new ResponseRequired();
-		ApplicationContext.questionGateway.findQuestionByIndexOffset(indexOffset);
-	}	
-	public boolean currentQuestionRequiresResponse(){
-		Prompt currentQuestion = ApplicationContext.questionGateway.getQuestion();
-		return currentQuestion.requiresAnswer();
-	}
+	
 	public void requestNavigation(NavigationRequest navigationRequest) {
 		navigateByIndexOffset(navigationRequest.getOffset());
 	}
+	private void navigateByIndexOffset(int indexOffset) {	
+		Prompt currentQuestion = getCurrentQuestion();
+		if (indexOffset > 0 && currentQuestion.requiresAnswer() && 
+				!hasAnswer(currentQuestion)) throw new AnswerRequired();
+		ApplicationContext.questionGateway.findQuestionByIndexOffset(indexOffset);
+	}	
+	private Prompt getCurrentQuestion() {
+		return ApplicationContext.questionGateway.getQuestion();
+	}
+	private boolean hasAnswer(Prompt currentQuestion) {
+		// TODO:  Implement this for real somewhere.
+		return false;
+	}
 	
-	public class ResponseRequired extends RuntimeException{ }
+	public class AnswerRequired extends RuntimeException{ }
 }

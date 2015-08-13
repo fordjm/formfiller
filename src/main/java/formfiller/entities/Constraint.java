@@ -8,7 +8,7 @@ public abstract class Constraint implements Answer {
 	
 	public Constraint(ContentConstraint name){
 		this.name = name;
-		this.response = (Answer) new NullAnswer();		
+		this.response = (Answer) new NoAnswer();		
 	}
 
 	public void wrap(Answer response) throws IllegalArgumentException{
@@ -19,7 +19,7 @@ public abstract class Constraint implements Answer {
 	}
 	
 	public boolean hasResponse(){
-		return !(response instanceof NullAnswer);
+		return !(response instanceof NoAnswer);
 	}
 	
 	public ContentConstraint getName(){

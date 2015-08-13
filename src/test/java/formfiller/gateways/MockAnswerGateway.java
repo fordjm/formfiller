@@ -3,11 +3,11 @@ package formfiller.gateways;
 import java.util.ArrayList;
 import java.util.List;
 
-import formfiller.entities.NullAnswer;
+import formfiller.entities.NoAnswer;
 import formfiller.entities.Answer;
 
 public class MockAnswerGateway implements AnswerGateway {
-	private Answer currentResponse = (Answer) new NullAnswer();
+	private Answer currentResponse = (Answer) new NoAnswer();
 	private int currentIndex = -1;
 	List<Answer> responses;
 	

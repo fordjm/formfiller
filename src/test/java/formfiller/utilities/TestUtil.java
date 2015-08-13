@@ -3,10 +3,9 @@ package formfiller.utilities;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import formfiller.entities.Constraint;
-import formfiller.entities.Prompt;
-import formfiller.entities.Question;
 import formfiller.entities.Answer;
+import formfiller.entities.Constraint;
+import formfiller.entities.Question;
 import formfiller.enums.ContentConstraint;
 
 public class TestUtil {

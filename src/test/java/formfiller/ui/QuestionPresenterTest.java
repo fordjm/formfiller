@@ -1,6 +1,6 @@
 package formfiller.ui;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -9,7 +9,6 @@ import formfiller.entities.Prompt;
 import formfiller.usecases.presentQuestion.PresentableQuestion;
 import formfiller.usecases.presentQuestion.PresentableQuestionFactory;
 import formfiller.usecases.presentQuestion.PresentableQuestionFactoryImpl;
-import formfiller.utilities.TestSetup;
 import formfiller.utilities.TestUtil;
 
 public class QuestionPresenterTest {

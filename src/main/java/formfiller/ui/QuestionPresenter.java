@@ -7,6 +7,7 @@ import formfiller.usecases.presentQuestion.PresentableQuestion;
 
 public class QuestionPresenter extends Observable implements PresentQuestionResponseBoundary {
 	PresentableQuestion presentableQuestion;
+	
 	public QuestionPresenter(){	}
 
 	public void presentQuestion(PresentableQuestion presentableQuestion) {

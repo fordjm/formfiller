@@ -18,7 +18,7 @@ import org.junit.runner.RunWith;
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
 import formfiller.entities.Constraint;
 import formfiller.entities.NullPrompt;
-import formfiller.entities.NullAnswer;
+import formfiller.entities.NoAnswer;
 import formfiller.entities.Prompt;
 import formfiller.entities.Answer;
 import formfiller.enums.Cardinality;
@@ -39,7 +39,7 @@ public class FormWidgetTest {
 		assertEquals("", FormWidget.getPrompt().getContent());
 	}
 	static void assertResponseIsNullResponse() {
-		assertTrue(FormWidget.getResponse() instanceof NullAnswer);
+		assertTrue(FormWidget.getResponse() instanceof NoAnswer);
 		assertEquals(-1, FormWidget.getResponse().getId());
 		assertEquals("", FormWidget.getResponse().getContent());
 	}
@@ -173,7 +173,7 @@ public class FormWidgetTest {
 			public class GivenAnInvalidResponse{
 				@Before
 				public void givenAnInvalidResponse(){
-					addedResponse = new NullAnswer();
+					addedResponse = new NoAnswer();
 				}
 
 				@Test(expected = IllegalStateException.class)
@@ -201,7 +201,7 @@ public class FormWidgetTest {
 		public class GivenAnInvalidResponse{
 			@Before
 			public void givenAnInvalidResponse(){
-				addedResponse = new NullAnswer();
+				addedResponse = new NoAnswer();
 			}
 
 			@Test(expected = IllegalArgumentException.class)

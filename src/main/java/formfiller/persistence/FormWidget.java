@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import formfiller.entities.NullPrompt;
-import formfiller.entities.NullAnswer;
+import formfiller.entities.NoAnswer;
 import formfiller.entities.Prompt;
 import formfiller.entities.Answer;
 import formfiller.entities.AnswerImpl;
@@ -18,7 +18,7 @@ import formfiller.entities.Constraint;
 public class FormWidget {
 
 	private static Prompt prompt = new NullPrompt();
-	private static Answer response = new NullAnswer();
+	private static Answer response = new NoAnswer();
 	private static Map<ContentConstraint, Constraint> contentConstraints = 
 			new HashMap<ContentConstraint, Constraint>();
 	private static Cardinality responseCardinality = Cardinality.SINGLE;
@@ -54,7 +54,7 @@ public class FormWidget {
 	}
 
 	public static void addPrompt(Prompt prompt) throws IllegalStateException, IllegalArgumentException {
-		if (responseRequired && response instanceof NullAnswer)
+		if (responseRequired && response instanceof NoAnswer)
 			throw new IllegalStateException("Previous question requires a response!");
 		else if (prompt == null) 
 			throw new IllegalArgumentException("Cannot add nulls to FormWidget!");
@@ -101,7 +101,7 @@ public class FormWidget {
 	}
 	
 	private static boolean isANullResponse(Answer response){
-		return (response instanceof NullAnswer);
+		return (response instanceof NoAnswer);
 	}
 	
 	private static boolean hasAValidResponse(Answer response){
@@ -135,7 +135,7 @@ public class FormWidget {
 	}
 
 	public static void clearResponse() {
-		response = new NullAnswer();
+		response = new NoAnswer();
 	}
 
 	public static Map<ContentConstraint, Constraint> getConstraints() {

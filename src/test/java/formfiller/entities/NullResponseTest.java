@@ -6,13 +6,13 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class NullResponseTest {
-	private NullAnswer nullResponse;
+	private NoAnswer nullResponse;
 	private final int id = -1;
 	private final String content = "";
 	
 	@Before
 	public void givenANullResponse(){
-		nullResponse = new NullAnswer();
+		nullResponse = new NoAnswer();
 	}
 
 	@Test
