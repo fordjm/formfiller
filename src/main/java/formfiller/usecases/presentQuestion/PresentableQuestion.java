@@ -1,4 +1,4 @@
-package formfiller.usecases;
+package formfiller.usecases.presentQuestion;
 
 public interface PresentableQuestion {
 	public String getId();

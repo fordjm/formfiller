@@ -1,4 +1,4 @@
-package formfiller.usecases;
+package formfiller.usecases.navigation;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
@@ -8,7 +8,7 @@ import org.junit.Test;
 
 import formfiller.entities.Question;
 import formfiller.entities.StartPrompt;
-import formfiller.gateways.ApplicationContext;
+import formfiller.ApplicationContext;
 import formfiller.utilities.TestSetup;
 import formfiller.utilities.TestUtil;
 

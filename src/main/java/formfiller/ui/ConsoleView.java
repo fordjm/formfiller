@@ -2,19 +2,17 @@ package formfiller.ui;
 
 import java.util.Observable;
 
-import formfiller.usecases.PresentableQuestion;
-import formfiller.usecases.PresentableQuestionFactoryImpl.PresentableQuestionImpl;
+import formfiller.ApplicationContext;
+import formfiller.usecases.presentQuestion.PresentableQuestion;
 
 public class ConsoleView implements QuestionView {
 	PresentableQuestion question;
 
 	public void update(Observable presenter, Object input) {
-		if (input instanceof PresentableQuestionImpl){
-			question = (PresentableQuestionImpl) input;
-			displayQuestion();
-		}
+		displayQuestion();
 	}
 	public void displayQuestion() {
+		question = ApplicationContext.presentQuestionResponseBoundary.getPresentableQuestion();
 		System.out.println(question.getContent());
 	}
 

@@ -10,7 +10,7 @@ import org.junit.runner.RunWith;
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
 import formfiller.entities.Answer;
 import formfiller.entities.AnswerImpl;
-import formfiller.gateways.ApplicationContext;
+import formfiller.ApplicationContext;
 import formfiller.utilities.TestSetup;
 
 @RunWith(HierarchicalContextRunner.class)
@@ -34,8 +34,8 @@ public class PresentResponseTest<T> {
 		@Before
 		public void givenAResponse(){
 			Answer response = new AnswerImpl<String>(0, "Response content");
-			ApplicationContext.responseGateway.save(response);
-			ApplicationContext.responseGateway.findResponseByIndexOffset(1);
+			ApplicationContext.answerGateway.save(response);
+			ApplicationContext.answerGateway.findResponseByIndexOffset(1);
 		}
 		@Test
 		public void whenPresentResponseRuns_ThenItPresentsAResponse(){

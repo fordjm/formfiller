@@ -1,4 +1,4 @@
-package formfiller.usecases;
+package formfiller.usecases.navigation;
 
 public interface NavigationRequest {
 	public int getOffset();

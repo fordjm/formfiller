@@ -6,12 +6,12 @@ import java.util.List;
 import formfiller.entities.NullAnswer;
 import formfiller.entities.Answer;
 
-public class MockResponseGateway implements ResponseGateway {
+public class MockAnswerGateway implements AnswerGateway {
 	private Answer currentResponse = (Answer) new NullAnswer();
 	private int currentIndex = -1;
 	List<Answer> responses;
 	
-	public MockResponseGateway(){
+	public MockAnswerGateway(){
 		responses = new ArrayList<Answer>();
 	}
 	

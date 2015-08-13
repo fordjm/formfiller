@@ -1,4 +1,4 @@
-package formfiller.usecases;
+package formfiller.usecases.navigation;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
@@ -13,7 +13,8 @@ import de.bechte.junit.runners.context.HierarchicalContextRunner;
 import formfiller.entities.EndPrompt;
 import formfiller.entities.Question;
 import formfiller.entities.StartPrompt;
-import formfiller.gateways.ApplicationContext;
+import formfiller.usecases.navigation.NavigationUseCase;
+import formfiller.ApplicationContext;
 import formfiller.utilities.TestSetup;
 import formfiller.utilities.TestUtil;
 

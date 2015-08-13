@@ -1,17 +1,19 @@
-package formfiller.usecases;
+package formfiller.usecases.presentQuestion;
 
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import formfiller.boundaries.QuestionPresentation;
-import formfiller.gateways.ApplicationContext;
+import formfiller.ApplicationContext;
+import formfiller.usecases.presentQuestion.PresentQuestionController;
+import formfiller.usecases.presentQuestion.PresentableQuestion;
 import formfiller.utilities.TestSetup;
 import formfiller.utilities.TestUtil;
 
 public class PresentQuestionControllerTest {
 	PresentQuestionController controller;
+	PresentableQuestion presentableQuestion;
 	
 	@Before
 	public void setupTest(){
@@ -22,10 +24,10 @@ public class PresentQuestionControllerTest {
 	}
 	@Test
 	public void requestingPresentableQuestionPutsQuestionAtBoundary() {
-		controller.requestPresentableQuestion();
-		
-		assertEquals(QuestionPresentation.presentableQuestion.getId(), "name");
-		assertEquals(QuestionPresentation.presentableQuestion.getContent(), "What is your name?");
+		controller.requestQuestionPresentation();
+		presentableQuestion = ApplicationContext.presentQuestionResponseBoundary.getPresentableQuestion();
+		assertEquals(presentableQuestion.getId(), "name");
+		assertEquals(presentableQuestion.getContent(), "What is your name?");
 	}
 
 }

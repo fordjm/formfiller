@@ -1,27 +1,39 @@
 package formfiller.ui;
 
+import static org.junit.Assert.*;
+
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mockito;
 
-import formfiller.boundaries.QuestionPresentation;
+import formfiller.entities.Prompt;
+import formfiller.usecases.presentQuestion.PresentableQuestion;
+import formfiller.usecases.presentQuestion.PresentableQuestionFactory;
+import formfiller.usecases.presentQuestion.PresentableQuestionFactoryImpl;
+import formfiller.utilities.TestSetup;
+import formfiller.utilities.TestUtil;
 
 public class QuestionPresenterTest {
+	PresentableQuestion presentableQuestion;
+	Prompt mockQuestion;
+
+	PresentableQuestion makePresentableQuestion(Prompt requestedQuestion) {
+		PresentableQuestionFactory factory = new PresentableQuestionFactoryImpl();
+		PresentableQuestion result = factory.makePresentableQuestion();
+		result.setId(requestedQuestion.getId());
+		result.setContent(requestedQuestion.getContent());
+		return result;
+	}
 
 	@Before
 	public void setUp(){
-		QuestionPresentation.presentableQuestion.setId("id");
-		QuestionPresentation.presentableQuestion.setContent("content");
+		mockQuestion = TestUtil.makeMockNameQuestion();
+		presentableQuestion = makePresentableQuestion(mockQuestion);
 	}
-
 	@Test
-	public void canCreateQuestionPresenter() {
+	public void canPresentQuestion() {
 		QuestionPresenter questionPresenter = new QuestionPresenter();
-		//QuestionView consoleView = Mockito.mock(ConsoleView.class);
-		QuestionView consoleView = new ConsoleView();
-		questionPresenter.addObserver(consoleView);
-		//Mockito.verify(consoleView).displayQuestion();					TODO:  Make this work.
-		questionPresenter.presentQuestion();
+		questionPresenter.presentQuestion(presentableQuestion);
+		assertEquals(presentableQuestion, questionPresenter.getPresentableQuestion());
 	}
 
 }

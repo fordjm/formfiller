@@ -1,9 +1,9 @@
-package formfiller.usecases;
+package formfiller.usecases.navigation;
 
 import formfiller.entities.Prompt;
-import formfiller.gateways.ApplicationContext;
+import formfiller.ApplicationContext;
 
-public class NavigationUseCase implements RequestNavigation {
+public class NavigationUseCase implements NavigationRequestBoundary {
 
 	public NavigationUseCase() { }
 
@@ -24,7 +24,7 @@ public class NavigationUseCase implements RequestNavigation {
 		Prompt currentQuestion = ApplicationContext.questionGateway.getQuestion();
 		return currentQuestion.requiresAnswer();
 	}
-	public void requestNavigation() {
+	public void requestNavigation(NavigationRequest navigationRequest) {
 		navigateByIndexOffset(navigationRequest.getOffset());
 	}
 	

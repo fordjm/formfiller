@@ -1,11 +1,13 @@
 package formfiller.utilities;
-import formfiller.gateways.ApplicationContext;
+import formfiller.ApplicationContext;
 import formfiller.gateways.MockQuestionGateway;
-import formfiller.gateways.MockResponseGateway;
+import formfiller.gateways.MockAnswerGateway;
+import formfiller.ui.QuestionPresenter;
 
 public class TestSetup {
 	public static void setupContext(){
 		ApplicationContext.questionGateway = new MockQuestionGateway();
-		ApplicationContext.responseGateway = new MockResponseGateway();
+		ApplicationContext.answerGateway = new MockAnswerGateway();
+		ApplicationContext.presentQuestionResponseBoundary = new QuestionPresenter();
 	}
 }

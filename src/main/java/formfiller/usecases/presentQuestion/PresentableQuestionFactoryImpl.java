@@ -1,4 +1,4 @@
-package formfiller.usecases;
+package formfiller.usecases.presentQuestion;
 
 public class PresentableQuestionFactoryImpl implements PresentableQuestionFactory {
 	public PresentableQuestionImpl makePresentableQuestion(){

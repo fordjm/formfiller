@@ -1,11 +1,11 @@
 package formfiller.usecases;
 
 import formfiller.entities.Answer;
-import formfiller.gateways.ApplicationContext;
+import formfiller.ApplicationContext;
 
 public class PresentResponseUseCase {
 	public PresentableResponse presentResponse() {
-		Answer response = ApplicationContext.responseGateway.getResponse();
+		Answer response = ApplicationContext.answerGateway.getResponse();
 		return new PresentableResponse(response.getId(), response.getContent());
 	}
 }

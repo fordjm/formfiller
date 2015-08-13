@@ -1,4 +1,4 @@
-package formfiller.usecases;
+package formfiller.usecases.navigation;
 
 public class NavigationRequestFactoryImpl implements NavigationRequestFactory {
 
