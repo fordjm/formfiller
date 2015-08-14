@@ -8,6 +8,9 @@ public class EndPrompt implements Prompt {
 	public String getId() {
 		return "end";
 	}
+	public boolean hasAnswer() {
+		return false;
+	}
 	public boolean requiresAnswer() {
 		return false;
 	}

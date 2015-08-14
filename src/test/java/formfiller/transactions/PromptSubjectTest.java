@@ -12,7 +12,7 @@ import org.junit.runner.RunWith;
 
 import formfiller.entities.Prompt;
 import formfiller.persistence.FormWidget;
-import formfiller.utilities.TestUtil;
+import formfiller.utilities.MockCreation;
 
 @RunWith(HierarchicalContextRunner.class)
 public class PromptSubjectTest {
@@ -58,7 +58,7 @@ public class PromptSubjectTest {
 			}
 		}
 		public class WidgetHasAPromptContext{
-			Prompt prompt = TestUtil.makeMockNameQuestion();
+			Prompt prompt = MockCreation.makeMockNameQuestion();
 			Prompt newPrompt;
 			@Before
 			public void givenWidgetHasAPrompt(){

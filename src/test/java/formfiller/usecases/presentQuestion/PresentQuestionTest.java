@@ -15,7 +15,7 @@ import formfiller.usecases.presentQuestion.PresentQuestionUseCase;
 import formfiller.usecases.presentQuestion.PresentableQuestion;
 import formfiller.usecases.presentQuestion.PresentQuestionRequestFactoryImpl.PresentQuestionRequest;
 import formfiller.utilities.TestSetup;
-import formfiller.utilities.TestUtil;
+import formfiller.utilities.MockCreation;
 
 @RunWith(HierarchicalContextRunner.class)
 public class PresentQuestionTest {
@@ -43,7 +43,7 @@ public class PresentQuestionTest {
 	public class GivenAQuestion{
 		@Before
 		public void givenAQuestion() {
-			ApplicationContext.questionGateway.save(TestUtil.makeMockNameQuestion());
+			ApplicationContext.questionGateway.save(MockCreation.makeMockNameQuestion());
 			ApplicationContext.questionGateway.findQuestionByIndexOffset(1);
 		}
 		@Test

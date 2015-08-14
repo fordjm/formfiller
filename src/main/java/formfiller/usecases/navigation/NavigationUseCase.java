@@ -13,15 +13,11 @@ public class NavigationUseCase implements NavigationRequestBoundary {
 	private void navigateByIndexOffset(int indexOffset) {	
 		Prompt currentQuestion = getCurrentQuestion();
 		if (indexOffset > 0 && currentQuestion.requiresAnswer() && 
-				!hasAnswer(currentQuestion)) throw new AnswerRequired();
+				!currentQuestion.hasAnswer()) throw new AnswerRequired();
 		ApplicationContext.questionGateway.findQuestionByIndexOffset(indexOffset);
 	}	
 	private Prompt getCurrentQuestion() {
 		return ApplicationContext.questionGateway.getQuestion();
-	}
-	private boolean hasAnswer(Prompt currentQuestion) {
-		// TODO:  Implement this for real somewhere.
-		return false;
 	}
 	
 	public class AnswerRequired extends RuntimeException{ }

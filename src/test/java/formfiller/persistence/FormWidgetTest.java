@@ -17,13 +17,13 @@ import org.junit.runner.RunWith;
 
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
 import formfiller.entities.Constraint;
-import formfiller.entities.NullPrompt;
+import formfiller.entities.NoPrompt;
 import formfiller.entities.NoAnswer;
 import formfiller.entities.Prompt;
 import formfiller.entities.Answer;
 import formfiller.enums.Cardinality;
 import formfiller.enums.ContentConstraint;
-import formfiller.utilities.TestUtil;
+import formfiller.utilities.MockCreation;
 
 @RunWith(HierarchicalContextRunner.class)
 public class FormWidgetTest {
@@ -34,7 +34,7 @@ public class FormWidgetTest {
 	static Answer addedResponse;
 	static Answer newResponse;
 	static void assertPromptIsNullPrompt() {
-		assertTrue(FormWidget.getPrompt() instanceof NullPrompt);
+		assertTrue(FormWidget.getPrompt() instanceof NoPrompt);
 		assertEquals("", FormWidget.getPrompt().getId());
 		assertEquals("", FormWidget.getPrompt().getContent());
 	}
@@ -58,7 +58,7 @@ public class FormWidgetTest {
 		return makeMockPrompt("name", "What is your name?");
 	}
 	static Answer makeMockNameResponse() {
-		return TestUtil.makeMockResponse(0, "Joe", true);
+		return MockCreation.makeMockResponse(0, "Joe", true);
 	}
 	static Prompt makeMockPrompt(String id, String content){
 		Prompt result = mock(Prompt.class);
@@ -227,7 +227,7 @@ public class FormWidgetTest {
 			return makeMockPrompt("age", "What is your age?");
 		}
 		Answer makeMockAgeResponse(int age) {
-			return TestUtil.makeMockResponse(0, age, true);
+			return MockCreation.makeMockResponse(0, age, true);
 		}
 		@Before
 		public void givenValidPromptAdded(){
@@ -261,7 +261,7 @@ public class FormWidgetTest {
 				@Test(expected = IllegalStateException.class)
 				public void whenAddResponseRunsTwice_ThenItThrowsAnException(){
 					addedResponse = makeMockAgeResponse(47);
-					Answer secondResponse = TestUtil.makeMockResponse(1, 52, true);
+					Answer secondResponse = MockCreation.makeMockResponse(1, 52, true);
 					updateResponseFieldValues(addedResponse, secondResponse);
 				}				
 			}			

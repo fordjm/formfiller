@@ -8,11 +8,9 @@ public abstract class AbstractAnswer<T> implements Answer {
 		this.id = id;
 		this.content = content;
 	}
-
 	public int getId() {
 		return id;
 	}
-
 	public T getContent() {
 		return content;
 	}

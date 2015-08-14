@@ -1,18 +1,18 @@
 package formfiller.entities;
 
-public class NullPrompt implements Prompt {
+public class NoPrompt implements Prompt {
 	
-	public NullPrompt(){
+	public NoPrompt(){
 	}
-
 	public String getContent() {
 		return "";
 	}
-
 	public String getId() {
 		return "";
 	}
-
+	public boolean hasAnswer() {
+		return false;
+	}
 	public boolean requiresAnswer() {
 		return false;
 	}

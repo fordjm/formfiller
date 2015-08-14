@@ -5,24 +5,24 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 
-public class PromptImplTest {
+public class QuestionTest {
 	
-	Question promptImpl;
+	Question question;
 	final String id = "name";
 	final String content = "What is your name?";
 
 	@Before
 	public void givenAPromptImpl(){
-		promptImpl = new Question(id, content);
+		question = new Question(id, content);
 	}
 	
 	@Test
 	public void whenGetIdRuns_ThenIdEqualsGivenString(){
-		assertEquals(id, promptImpl.getId());
+		assertEquals(id, question.getId());
 	}
 	
 	@Test 
 	public void whenGetContentRuns_ThenContentEqualsGivenString(){
-		assertEquals(content, promptImpl.getContent());
+		assertEquals(content, question.getContent());
 	}
 }

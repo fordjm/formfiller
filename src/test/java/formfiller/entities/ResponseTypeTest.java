@@ -11,7 +11,7 @@ import org.junit.runner.RunWith;
 
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
 import formfiller.enums.ContentConstraint;
-import formfiller.utilities.TestUtil;
+import formfiller.utilities.MockCreation;
 
 @RunWith(HierarchicalContextRunner.class)
 public class ResponseTypeTest<T> {
@@ -62,7 +62,7 @@ public class ResponseTypeTest<T> {
 			responseId = id;
 			responseContent = content;
 			satisfiesConstraint = satisfied;
-			response = TestUtil.makeMockResponse(responseId, responseContent, 
+			response = MockCreation.makeMockResponse(responseId, responseContent, 
 					satisfiesConstraint);
 			return response;
 		}
@@ -93,7 +93,7 @@ public class ResponseTypeTest<T> {
 		public class GivenAnInvalidResponse{			
 			@Before
 			public void givenAnInvalidResponse(){
-				response = TestUtil.makeMockResponse(false);
+				response = MockCreation.makeMockResponse(false);
 				responseType.wrap(response);
 			}			
 			@Test
@@ -105,7 +105,7 @@ public class ResponseTypeTest<T> {
 		public class GivenAValidResponse{		
 			@Before
 			public void givenAValidResponse(){
-				response = TestUtil.makeMockNameResponse("Joe");
+				response = MockCreation.makeMockNameResponse("Joe");
 			}
 			
 			@Test

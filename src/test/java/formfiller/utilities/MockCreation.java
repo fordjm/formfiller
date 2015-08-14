@@ -8,7 +8,7 @@ import formfiller.entities.Constraint;
 import formfiller.entities.Question;
 import formfiller.enums.ContentConstraint;
 
-public class TestUtil {
+public class MockCreation {
 	public static <T> Constraint makeMockConstraint(int id, boolean satisfiesConstraint) {
 		Constraint result = mock(Constraint.class);
 		when(result.getName()).thenReturn(ContentConstraint.MOCK);

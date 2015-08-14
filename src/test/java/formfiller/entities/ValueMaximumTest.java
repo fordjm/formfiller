@@ -8,7 +8,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
-import formfiller.utilities.TestUtil;
+import formfiller.utilities.MockCreation;
 
 @RunWith(HierarchicalContextRunner.class)
 public class ValueMaximumTest<T> {
@@ -25,7 +25,7 @@ public class ValueMaximumTest<T> {
 		public class GivenAnInvalidResponse{
 			@Before
 			public void givenAnInvalidResponse(){
-				response = TestUtil.makeMockResponse(false);
+				response = MockCreation.makeMockResponse(false);
 				valueMaximum.wrap(response);
 			}
 			@Test
@@ -36,7 +36,7 @@ public class ValueMaximumTest<T> {
 		public class GivenAValidResponseLessThanMaximum{
 			@Before
 			public void givenAValidResponseLessThanMinimum(){
-				response = TestUtil.makeMockNameResponse("joe");
+				response = MockCreation.makeMockNameResponse("joe");
 				valueMaximum.wrap(response);
 			}
 			@Test
@@ -47,7 +47,7 @@ public class ValueMaximumTest<T> {
 		public class GivenAValidResponseGreaterThanMaximum{
 			@Before
 			public void givenAValidResponseGreaterThanMaximum(){
-				response = TestUtil.makeMockNameResponse("moe");
+				response = MockCreation.makeMockNameResponse("moe");
 				valueMaximum.wrap(response);
 			}
 			@Test

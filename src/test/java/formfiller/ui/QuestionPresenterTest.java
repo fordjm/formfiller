@@ -6,10 +6,11 @@ import org.junit.Before;
 import org.junit.Test;
 
 import formfiller.entities.Prompt;
+import formfiller.ui.consoleUi.QuestionPresenter;
 import formfiller.usecases.presentQuestion.PresentableQuestion;
 import formfiller.usecases.presentQuestion.PresentableQuestionFactory;
 import formfiller.usecases.presentQuestion.PresentableQuestionFactoryImpl;
-import formfiller.utilities.TestUtil;
+import formfiller.utilities.MockCreation;
 
 public class QuestionPresenterTest {
 	PresentableQuestion presentableQuestion;
@@ -25,7 +26,7 @@ public class QuestionPresenterTest {
 
 	@Before
 	public void setUp(){
-		mockQuestion = TestUtil.makeMockNameQuestion();
+		mockQuestion = MockCreation.makeMockNameQuestion();
 		presentableQuestion = makePresentableQuestion(mockQuestion);
 	}
 	@Test

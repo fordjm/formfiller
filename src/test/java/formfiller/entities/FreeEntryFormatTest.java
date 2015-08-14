@@ -9,7 +9,7 @@ import org.junit.runner.RunWith;
 
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
 import formfiller.enums.ContentConstraint;
-import formfiller.utilities.TestUtil;
+import formfiller.utilities.MockCreation;
 
 @RunWith(HierarchicalContextRunner.class)
 public class FreeEntryFormatTest {
@@ -60,7 +60,7 @@ public class FreeEntryFormatTest {
 		public class GivenAValidResponse{
 			@Before
 			public void givenAValidResponse(){
-				response = TestUtil.makeMockNameResponse("Joe");
+				response = MockCreation.makeMockNameResponse("Joe");
 				format.wrap(response);
 			}			
 			@Test

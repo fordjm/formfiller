@@ -1,4 +1,4 @@
-package formfiller.ui;
+package formfiller.ui.consoleUi;
 
 import java.util.Observable;
 

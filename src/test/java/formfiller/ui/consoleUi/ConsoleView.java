@@ -1,8 +1,9 @@
-package formfiller.ui;
+package formfiller.ui.consoleUi;
 
 import java.util.Observable;
 
 import formfiller.ApplicationContext;
+import formfiller.ui.QuestionView;
 import formfiller.usecases.presentQuestion.PresentableQuestion;
 
 public class ConsoleView implements QuestionView {

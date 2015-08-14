@@ -8,20 +8,19 @@ public class Question implements Prompt {
 	public Question(String id, String content) {
 		this.id = id;
 		this.content = content;
-	}
-	
+	}	
 	public String getContent(){
 		return content;
 	}
-
 	public String getId() {
 		return id;
 	}
-	
+	public boolean hasAnswer() {
+		return false;
+	}	
 	public void setResponseRequired(boolean requiresResponse){
 		this.requiresResponse = requiresResponse;
 	}
-
 	public boolean requiresAnswer() {
 		return requiresResponse;
 	}

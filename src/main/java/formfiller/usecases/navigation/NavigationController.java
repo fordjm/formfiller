@@ -1,16 +1,19 @@
 package formfiller.usecases.navigation;
 
+import formfiller.ui.Controller;
+import formfiller.ui.consoleUi.ParsedUserRequest;
 import formfiller.usecases.presentQuestion.PresentQuestionController;
 
-public class NavigationController {
+public class NavigationController implements Controller {
 
-	public void requestNavigation(int offset) {
+	public void handle(ParsedUserRequest parsedInput) {
+		int offset = Integer.parseInt(parsedInput.getParam());
 		NavigationRequest navigationRequest = makeNavigationRequest(offset);
 		NavigationUseCase useCase = new NavigationUseCase();
 		useCase.requestNavigation(navigationRequest);
 		
 		PresentQuestionController pqc = new PresentQuestionController();
-		pqc.requestQuestionPresentation();
+		pqc.handle(parsedInput);
 	}
 	
 	public NavigationRequest makeNavigationRequest(int offset){

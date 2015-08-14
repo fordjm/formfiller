@@ -8,7 +8,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
-import formfiller.utilities.TestUtil;
+import formfiller.utilities.MockCreation;
 
 @RunWith(HierarchicalContextRunner.class)
 public class ValueMinimumTest<T> {
@@ -25,7 +25,7 @@ public class ValueMinimumTest<T> {
 		public class GivenAnInvalidResponse{
 			@Before
 			public void givenAnInvalidResponse(){
-				response = TestUtil.makeMockResponse(false);
+				response = MockCreation.makeMockResponse(false);
 			}
 			@Test
 			public void whenSatisfiesConstraintRuns_ThenItReturnsFalse(){
@@ -35,7 +35,7 @@ public class ValueMinimumTest<T> {
 		public class GivenAValidResponseLessThanMinimum{
 			@Before
 			public void givenAValidResponseLessThanMinimum(){
-				response = TestUtil.makeMockNameResponse("joe");
+				response = MockCreation.makeMockNameResponse("joe");
 				valueMinimum.wrap(response);
 			}
 			@Test
@@ -46,7 +46,7 @@ public class ValueMinimumTest<T> {
 		public class GivenAValidResponseGreaterThanMinimum{
 			@Before
 			public void givenAValidResponseLessThanMinimum(){
-				response = TestUtil.makeMockNameResponse("moe");
+				response = MockCreation.makeMockNameResponse("moe");
 				valueMinimum.wrap(response);
 			}
 			@Test

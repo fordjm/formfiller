@@ -12,7 +12,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import formfiller.enums.ContentConstraint;
-import formfiller.utilities.TestUtil;
+import formfiller.utilities.MockCreation;
 
 public class SelectionFormatTest<T> {
 	List<T> selections;
@@ -81,7 +81,7 @@ public class SelectionFormatTest<T> {
 		public class GivenAnInvalidResponse{
 			@Before
 			public void givenAnInvalidResponse(){
-				response = TestUtil.makeMockResponse(false);
+				response = MockCreation.makeMockResponse(false);
 				format.wrap(response);
 			}		
 			@Test
@@ -97,7 +97,7 @@ public class SelectionFormatTest<T> {
 			public class GivenANonSelectionResponse{
 				@Before
 				public void givenAValidResponse(){
-					response = TestUtil.makeMockNameResponse("Joe");
+					response = MockCreation.makeMockNameResponse("Joe");
 					format.wrap(response);
 				}
 				@Test

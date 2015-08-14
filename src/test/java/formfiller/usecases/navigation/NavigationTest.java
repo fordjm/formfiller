@@ -17,7 +17,7 @@ import formfiller.entities.StartPrompt;
 import formfiller.usecases.navigation.NavigationUseCase;
 import formfiller.ApplicationContext;
 import formfiller.utilities.TestSetup;
-import formfiller.utilities.TestUtil;
+import formfiller.utilities.MockCreation;
 
 @RunWith(HierarchicalContextRunner.class)
 public class NavigationTest {	
@@ -88,7 +88,7 @@ public class NavigationTest {
 		public class GivenAnswerNotRequired{
 			@Before
 			public void givenAnswerNotRequired(){
-				question = TestUtil.makeMockNameQuestion();
+				question = MockCreation.makeMockNameQuestion();
 				ApplicationContext.questionGateway.save(question);
 			}
 			@Test
@@ -118,7 +118,7 @@ public class NavigationTest {
 		public class GivenAnswerIsRequired{
 			@Before
 			public void givenAnswerIsRequired(){
-				question = TestUtil.makeMockAgeQuestion();
+				question = MockCreation.makeMockAgeQuestion();
 				ApplicationContext.questionGateway.save(question);
 			}
 			@Test

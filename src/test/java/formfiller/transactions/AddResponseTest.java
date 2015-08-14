@@ -12,7 +12,7 @@ import formfiller.entities.FreeEntryFormat;
 import formfiller.entities.Prompt;
 import formfiller.entities.AnswerType;
 import formfiller.persistence.FormWidget;
-import formfiller.utilities.TestUtil;
+import formfiller.utilities.MockCreation;
 
 @RunWith(HierarchicalContextRunner.class)
 public class AddResponseTest<T> {
@@ -52,7 +52,7 @@ public class AddResponseTest<T> {
 		@Before
 		public void givenWidgetHasAPrompt(){
 			FormWidget.clear();
-			Prompt prompt = TestUtil.makeMockNameQuestion();
+			Prompt prompt = MockCreation.makeMockNameQuestion();
 			FormWidget.addPrompt(prompt);
 		}
 		public class GivenAnInvalidResponse{
@@ -82,7 +82,7 @@ public class AddResponseTest<T> {
 				Constraint mockConstraint;
 				@Before
 				public void givenAnUnsatisfiedConstraint(){
-					mockConstraint = TestUtil.makeMockConstraint(0, false);
+					mockConstraint = MockCreation.makeMockConstraint(0, false);
 					addConstraints(mockConstraint);
 				}
 				@Test(expected = IllegalArgumentException.class)
@@ -96,7 +96,7 @@ public class AddResponseTest<T> {
 				Constraint realConstraint = new FreeEntryFormat();
 				@Before
 				public void givenASatisfiedConstraint(){
-					mockConstraint = TestUtil.makeMockConstraint(0, true);
+					mockConstraint = MockCreation.makeMockConstraint(0, true);
 					addConstraints(realConstraint);
 				}
 				@Test
