@@ -1,24 +1,26 @@
 package formfiller.usecases.presentQuestion;
 
+import java.util.HashMap;
+
 import formfiller.Controller;
 import formfiller.ui.userRequestParser.ParsedUserRequest;
-import formfiller.usecases.presentQuestion.PresentQuestionRequestFactoryImpl.PresentQuestionRequest;
+import formfiller.usecases.Request;
+import formfiller.usecases.RequestBuilder;
+import formfiller.usecases.RequestBuilderImpl;
 
 public class PresentQuestionController implements Controller {
 
 	public void handle(ParsedUserRequest parsedInput) {
-		PresentQuestionRequest presentQuestionRequest = 
+		Request presentQuestionRequest = 
 				makePresentQuestionRequest();
 		PresentQuestionUseCase presentQuestionUseCase = 
 				new PresentQuestionUseCase();
-		presentQuestionUseCase.presentQuestion(presentQuestionRequest);
+		presentQuestionUseCase.execute(presentQuestionRequest);
 	}
 	
-	public PresentQuestionRequest makePresentQuestionRequest(){
-		PresentQuestionRequestFactoryImpl factory = 
-				new PresentQuestionRequestFactoryImpl();
-		PresentQuestionRequest result = 
-				factory.makePresentQuestionRequest();
+	public Request makePresentQuestionRequest(){
+		RequestBuilder requestBuilder = new RequestBuilderImpl();
+		Request result = requestBuilder.build("presentQuestion", new HashMap());
 		return result;
 	}
 

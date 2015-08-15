@@ -1,14 +1,20 @@
 package formfiller.usecases.navigation;
 
 import formfiller.entities.Prompt;
+import formfiller.usecases.Request;
+import formfiller.usecases.UseCase;
 import formfiller.ApplicationContext;
 
-public class NavigationUseCase implements NavigationRequestBoundary {
+public class NavigationUseCase implements NavigationRequestBoundary, UseCase {
 
 	public NavigationUseCase() { }
 	
-	public void requestNavigation(NavigationRequest navigationRequest) {
+	public void execute(Request request) {
+		// try goes here
+		NavigationRequest navigationRequest = (NavigationRequest) request;
+		// throwable code starts here (LocalNavigation object?)
 		navigateByIndexOffset(navigationRequest.getOffset());
+		// catch goes here
 	}
 	private void navigateByIndexOffset(int indexOffset) {	
 		Prompt currentQuestion = getCurrentQuestion();

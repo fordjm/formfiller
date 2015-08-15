@@ -13,14 +13,15 @@ import de.bechte.junit.runners.context.HierarchicalContextRunner;
 import formfiller.ApplicationContext;
 import formfiller.usecases.presentQuestion.PresentQuestionUseCase;
 import formfiller.usecases.presentQuestion.PresentableQuestion;
-import formfiller.usecases.presentQuestion.PresentQuestionRequestFactoryImpl.PresentQuestionRequest;
+import formfiller.usecases.Request;
+import formfiller.usecases.RequestBuilderImpl.PresentQuestionRequest;
 import formfiller.utilities.TestSetup;
 import formfiller.utilities.MockCreation;
 
 @RunWith(HierarchicalContextRunner.class)
 public class PresentQuestionTest {
 	private PresentQuestionUseCase presentQuestionUseCase;
-	private PresentQuestionRequest mockRequest;
+	private Request mockRequest;
 	private PresentableQuestion presentedQuestion;
 	
 	@Before
@@ -32,7 +33,7 @@ public class PresentQuestionTest {
 	public class GivenNoQuestions{
 		@Test
 		public void whenPresentQuestionRuns_ThenGetQuestionGetsAStartPrompt(){
-			presentQuestionUseCase.presentQuestion(mockRequest);
+			presentQuestionUseCase.execute(mockRequest);
 			presentedQuestion = 
 					ApplicationContext.presentQuestionResponseBoundary.getPresentableQuestion();
 			assertThat(presentedQuestion.getId(), is("start"));
@@ -48,7 +49,7 @@ public class PresentQuestionTest {
 		}
 		@Test
 		public void whenPresentQuestionRuns_ThenGetQuestionGetsGivenQuestion(){
-			presentQuestionUseCase.presentQuestion(mockRequest);
+			presentQuestionUseCase.execute(mockRequest);
 			presentedQuestion = 
 					ApplicationContext.presentQuestionResponseBoundary.getPresentableQuestion();
 			assertThat(presentedQuestion.getId(), is("name"));

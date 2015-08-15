@@ -1,8 +1,9 @@
 package formfiller.boundaries;
 
-import formfiller.usecases.presentQuestion.PresentQuestionRequestFactoryImpl.PresentQuestionRequest;
+import formfiller.usecases.Request;
 
 public interface PresentQuestionRequestBoundary {
 
-	public void presentQuestion(PresentQuestionRequest presentQuestionRequest);
+	public void execute(Request request);
+	
 }

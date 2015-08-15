@@ -18,7 +18,7 @@ import formfiller.utilities.TestSetup;
 
 public class NavigationControllerTest {
 	private NavigationController navigationController;
-	private ParsedUserRequest mockParsedInput;
+	private ParsedUserRequest mockParsedUserRequest;
 	private Question mockNameQuestion;
 	
 	@Before
@@ -30,22 +30,22 @@ public class NavigationControllerTest {
 	}
 	@Test
 	public void requestingPrevQuestionReturnsStartPrompt() {
-		mockParsedInput = RouterTestHelper.makeMockParsedInput("navigation", "-1");
-		navigationController.handle(mockParsedInput);
+		mockParsedUserRequest = RouterTestHelper.makeMockParsedInput("navigation", "-1");
+		navigationController.handle(mockParsedUserRequest);
 		assertThat(ApplicationContext.questionGateway.getQuestion(), 
 				is(instanceOf(StartPrompt.class)));
 	}
 	@Test
 	public void requestingCurrentQuestionReturnsStartPrompt() {
-		mockParsedInput = RouterTestHelper.makeMockParsedInput("navigation", "0");
-		navigationController.handle(mockParsedInput);
+		mockParsedUserRequest = RouterTestHelper.makeMockParsedInput("navigation", "0");
+		navigationController.handle(mockParsedUserRequest);
 		assertThat(ApplicationContext.questionGateway.getQuestion(), 
 				is(instanceOf(StartPrompt.class)));
 	}
 	@Test
 	public void requestingNextQuestionReturnsGivenQuestion() {
-		mockParsedInput = RouterTestHelper.makeMockParsedInput("navigation", "1");
-		navigationController.handle(mockParsedInput);
+		mockParsedUserRequest = RouterTestHelper.makeMockParsedInput("navigation", "1");
+		navigationController.handle(mockParsedUserRequest);
 		assertEquals(mockNameQuestion, ApplicationContext.questionGateway.getQuestion());
 	}
 

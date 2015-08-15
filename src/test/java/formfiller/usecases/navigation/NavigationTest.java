@@ -43,7 +43,7 @@ public class NavigationTest {
 			}
 			@Test
 			public void gettingQuestionGetsStartPrompt(){
-				useCase.requestNavigation(mockRequest);
+				useCase.execute(mockRequest);
 				assertThat(ApplicationContext.questionGateway.getQuestion(), 
 						is(instanceOf(StartPrompt.class)));
 			}
@@ -56,7 +56,7 @@ public class NavigationTest {
 			}
 			@Test
 			public void gettingQuestionGetsStartPrompt(){
-				useCase.requestNavigation(mockRequest);
+				useCase.execute(mockRequest);
 				assertThat(ApplicationContext.questionGateway.getQuestion(), 
 						is(instanceOf(StartPrompt.class)));
 			}
@@ -69,7 +69,7 @@ public class NavigationTest {
 			}
 			@Test
 			public void gettingQuestionGetsEndPrompt(){
-				useCase.requestNavigation(mockRequest);
+				useCase.execute(mockRequest);
 				assertThat(ApplicationContext.questionGateway.getQuestion(), 
 						is(instanceOf(EndPrompt.class)));
 			}
@@ -82,7 +82,7 @@ public class NavigationTest {
 		public void navigateByIndexOffsetLoop(int offset, int repetitions){
 			setMockRequestOffset(offset);
 			for (int i=0; i<repetitions; ++i)
-				useCase.requestNavigation(mockRequest);
+				useCase.execute(mockRequest);
 		}
 		
 		public class GivenAnswerNotRequired{
