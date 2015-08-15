@@ -11,8 +11,8 @@ import org.junit.Test;
 import formfiller.ApplicationContext;
 import formfiller.entities.Question;
 import formfiller.entities.StartPrompt;
-import formfiller.ui.RouterTestHelper;
-import formfiller.ui.consoleUi.ParsedUserRequest;
+import formfiller.ui.router.RouterTestHelper;
+import formfiller.ui.userRequestParser.ParsedUserRequest;
 import formfiller.utilities.MockCreation;
 import formfiller.utilities.TestSetup;
 

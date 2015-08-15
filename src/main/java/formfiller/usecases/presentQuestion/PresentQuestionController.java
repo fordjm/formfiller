@@ -1,7 +1,7 @@
 package formfiller.usecases.presentQuestion;
 
-import formfiller.ui.Controller;
-import formfiller.ui.consoleUi.ParsedUserRequest;
+import formfiller.Controller;
+import formfiller.ui.userRequestParser.ParsedUserRequest;
 import formfiller.usecases.presentQuestion.PresentQuestionRequestFactoryImpl.PresentQuestionRequest;
 
 public class PresentQuestionController implements Controller {

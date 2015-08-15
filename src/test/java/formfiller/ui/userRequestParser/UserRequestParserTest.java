@@ -1,12 +1,9 @@
-package formfiller.ui;
+package formfiller.ui.userRequestParser;
 
 import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
-
-import formfiller.ui.consoleUi.ConsoleUserRequestParser;
-import formfiller.ui.consoleUi.ParsedUserRequest;
 
 // Adapted from:
 // https://github.com/cleancoders/CleanCodeCaseStudy/blob/master/test/cleancoderscom/http/RequestParserTest.java

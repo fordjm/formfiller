@@ -1,6 +1,4 @@
-package formfiller.ui.consoleUi;
-
-import formfiller.ui.UserRequestParser;
+package formfiller.ui.userRequestParser;
 
 //Adapted from:
 //https://github.com/cleancoders/CleanCodeCaseStudy/blob/master/src/cleancoderscom/http/RequestParser.java

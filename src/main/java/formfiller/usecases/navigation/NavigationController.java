@@ -1,7 +1,7 @@
 package formfiller.usecases.navigation;
 
-import formfiller.ui.Controller;
-import formfiller.ui.consoleUi.ParsedUserRequest;
+import formfiller.Controller;
+import formfiller.ui.userRequestParser.ParsedUserRequest;
 import formfiller.usecases.presentQuestion.PresentQuestionController;
 
 public class NavigationController implements Controller {

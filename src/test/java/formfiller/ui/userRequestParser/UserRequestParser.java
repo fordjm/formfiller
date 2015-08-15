@@ -1,6 +1,4 @@
-package formfiller.ui;
-
-import formfiller.ui.consoleUi.ParsedUserRequest;
+package formfiller.ui.userRequestParser;
 
 public interface UserRequestParser {
 

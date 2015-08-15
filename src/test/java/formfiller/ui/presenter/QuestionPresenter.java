@@ -1,4 +1,4 @@
-package formfiller.ui.consoleUi;
+package formfiller.ui.presenter;
 
 import java.util.Observable;
 
@@ -10,14 +10,13 @@ public class QuestionPresenter extends Observable implements PresentQuestionResp
 	
 	public QuestionPresenter(){	}
 
-	public void presentQuestion(PresentableQuestion presentableQuestion) {
+	public PresentableQuestion getPresentableQuestion() {
+		return presentableQuestion;
+	}
+	public void setPresentableQuestion(PresentableQuestion presentableQuestion) {
 		this.presentableQuestion = presentableQuestion;
 		setChanged();
 		notifyObservers();
-	}
-
-	public PresentableQuestion getPresentableQuestion() {
-		return presentableQuestion;
 	}
 	
 }

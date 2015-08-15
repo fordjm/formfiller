@@ -1,12 +1,11 @@
-package formfiller.ui.consoleUi;
+package formfiller.ui.view;
 
 import java.util.Observable;
 
 import formfiller.ApplicationContext;
-import formfiller.ui.QuestionView;
 import formfiller.usecases.presentQuestion.PresentableQuestion;
 
-public class ConsoleView implements QuestionView {
+public class ConsoleQuestionView implements QuestionView {
 	PresentableQuestion question;
 
 	public void update(Observable presenter, Object input) {

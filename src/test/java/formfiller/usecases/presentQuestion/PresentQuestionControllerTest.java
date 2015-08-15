@@ -6,8 +6,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import formfiller.ApplicationContext;
-import formfiller.ui.RouterTestHelper;
-import formfiller.ui.consoleUi.ParsedUserRequest;
+import formfiller.ui.router.RouterTestHelper;
+import formfiller.ui.userRequestParser.ParsedUserRequest;
 import formfiller.utilities.MockCreation;
 import formfiller.utilities.TestSetup;
 

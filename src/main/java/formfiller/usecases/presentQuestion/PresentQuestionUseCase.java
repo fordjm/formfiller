@@ -16,7 +16,8 @@ public class PresentQuestionUseCase implements PresentQuestionRequestBoundary {
 		Prompt requestedQuestion = 
 				ApplicationContext.questionGateway.findQuestionByIndexOffset(0);
 		PresentableQuestion presentableQuestion = makePresentableQuestion(requestedQuestion);
-		ApplicationContext.presentQuestionResponseBoundary.presentQuestion(presentableQuestion);
+		ApplicationContext.presentQuestionResponseBoundary.
+				setPresentableQuestion(presentableQuestion);
 	}
 
 	PresentableQuestion makePresentableQuestion(Prompt requestedQuestion) {

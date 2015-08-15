@@ -1,8 +1,9 @@
-package formfiller.ui;
+package formfiller.ui.router;
 
 import org.mockito.Mockito;
 
-import formfiller.ui.consoleUi.ParsedUserRequest;
+import formfiller.Controller;
+import formfiller.ui.userRequestParser.ParsedUserRequest;
 import formfiller.usecases.navigation.NavigationController;
 import formfiller.usecases.presentQuestion.PresentQuestionController;
 

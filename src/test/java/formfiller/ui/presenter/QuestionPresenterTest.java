@@ -1,4 +1,4 @@
-package formfiller.ui;
+package formfiller.ui.presenter;
 
 import static org.junit.Assert.assertEquals;
 
@@ -6,7 +6,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import formfiller.entities.Prompt;
-import formfiller.ui.consoleUi.QuestionPresenter;
 import formfiller.usecases.presentQuestion.PresentableQuestion;
 import formfiller.usecases.presentQuestion.PresentableQuestionFactory;
 import formfiller.usecases.presentQuestion.PresentableQuestionFactoryImpl;
@@ -32,7 +31,7 @@ public class QuestionPresenterTest {
 	@Test
 	public void canPresentQuestion() {
 		QuestionPresenter questionPresenter = new QuestionPresenter();
-		questionPresenter.presentQuestion(presentableQuestion);
+		questionPresenter.setPresentableQuestion(presentableQuestion);
 		assertEquals(presentableQuestion, questionPresenter.getPresentableQuestion());
 	}
 

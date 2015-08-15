@@ -1,4 +1,4 @@
-package formfiller.ui;
+package formfiller.ui.router;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -6,8 +6,8 @@ import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
-import formfiller.ui.consoleUi.ParsedUserRequest;
-import formfiller.ui.consoleUi.Router;
+import formfiller.Controller;
+import formfiller.ui.userRequestParser.ParsedUserRequest;
 //Adapted from:
 //https://github.com/cleancoders/CleanCodeCaseStudy/blob/master/test/cleancoderscom/http/RouterTest.java
 //Retrieved 2015-08-14
