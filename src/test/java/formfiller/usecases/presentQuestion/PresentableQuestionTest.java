@@ -12,13 +12,11 @@ import formfiller.utilities.MockCreation;
 
 public class PresentableQuestionTest {
 	
-	private PresentableQuestionFactory factory;
 	private PresentableQuestion presentableQuestion;
 	
 	@Before
 	public void givenAPresentableQuestion(){
-		factory = new PresentableQuestionFactoryImpl();
-		presentableQuestion = factory.makePresentableQuestion();
+		presentableQuestion = new PresentableQuestionImpl();
 	}
 	@Test
 	public void test() {

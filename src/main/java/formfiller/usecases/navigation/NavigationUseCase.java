@@ -47,8 +47,7 @@ public class NavigationUseCase implements UseCase {
 	}
 	private PresentableNavigation makePresentableNavigation(
 			NavigationOutcome navigationOutcome, String message) {
-		PresentableNavigationFactory factory = new PresentableNavigationFactoryImpl();
-		return factory.makePresentableNavigation(navigationOutcome, message);
+		return new PresentableNavigationImpl(navigationOutcome, message);
 	}	
 	private Prompt getCurrentQuestion() {
 		return ApplicationContext.questionGateway.getQuestion();

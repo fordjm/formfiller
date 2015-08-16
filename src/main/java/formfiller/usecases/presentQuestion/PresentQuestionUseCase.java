@@ -21,8 +21,7 @@ public class PresentQuestionUseCase implements UseCase {
 	}
 
 	PresentableQuestion makePresentableQuestion(Prompt requestedQuestion) {
-		PresentableQuestionFactory factory = new PresentableQuestionFactoryImpl();
-		PresentableQuestion result = factory.makePresentableQuestion();
+		PresentableQuestion result = new PresentableQuestionImpl();
 		result.setId(requestedQuestion.getId());
 		result.setContent(requestedQuestion.getContent());
 		return result;

@@ -6,22 +6,20 @@ import formfiller.usecases.presentQuestion.PresentQuestionUseCase;
 public class UseCaseFactoryImpl implements UseCaseFactory {
 
 	public UseCase make(String useCaseName) {
-		switch(useCaseName){
-		case "presentQuestion": 
+		if (useCaseName.equalsIgnoreCase("presentQuestion"))
 			return makePresentQuestionUseCase();
-		case "navigation": 
+		else if (useCaseName.equalsIgnoreCase("navigation"))
 			return makeNavigationUseCase();
-		default:
-			return null;	// TODO:  Return NoUseCase object?  Throw exception?
-		}
+		else
+			throw new UnknownUseCase();
 	}
-
 	private UseCase makePresentQuestionUseCase() {
 		return new PresentQuestionUseCase();
 	}
-
 	private UseCase makeNavigationUseCase() {
 		return new NavigationUseCase();
 	}
+	
+	public class UnknownUseCase extends RuntimeException{ }
 
 }

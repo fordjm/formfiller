@@ -1,15 +1,14 @@
 package formfiller.ui.presenter;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.*;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import formfiller.usecases.navigation.NavigationOutcome;
 import formfiller.usecases.navigation.PresentableNavigation;
-import formfiller.usecases.navigation.PresentableNavigationFactory;
-import formfiller.usecases.navigation.PresentableNavigationFactoryImpl;
+import formfiller.usecases.navigation.PresentableNavigationImpl;
 
 public class NavigationPresenterTest {
 
@@ -31,8 +30,7 @@ public class NavigationPresenterTest {
 	}
 	private PresentableNavigation makePresentableNavigation(
 			NavigationOutcome navigationOutcome, String message) {
-		PresentableNavigationFactory factory = new PresentableNavigationFactoryImpl();
-		return factory.makePresentableNavigation(navigationOutcome, message);
+		return new PresentableNavigationImpl(navigationOutcome, message);
 	}	
 	
 	// TODO:  Improve these.
