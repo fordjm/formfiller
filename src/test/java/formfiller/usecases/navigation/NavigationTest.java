@@ -2,8 +2,7 @@ package formfiller.usecases.navigation;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 import org.junit.Before;
@@ -36,7 +35,9 @@ public class NavigationTest {
 	}
 	
 	public class GivenNoQuestions{
+		
 		public class GivenPrevQuestionRequest{
+			
 			@Before
 			public void givenPrevQuestionRequest(){
 				setMockRequestOffset(-1);
@@ -50,6 +51,7 @@ public class NavigationTest {
 		}
 		
 		public class GivenCurrentQuestionRequest{
+			
 			@Before
 			public void givenCurrentQuestionRequest(){
 				setMockRequestOffset(0);
@@ -60,9 +62,11 @@ public class NavigationTest {
 				assertThat(ApplicationContext.questionGateway.getQuestion(), 
 						is(instanceOf(StartPrompt.class)));
 			}
+			
 		}
 		
 		public class GivenNextQuestionRequest{
+			
 			@Before
 			public void givenNextQuestionRequest(){
 				setMockRequestOffset(1);
@@ -73,80 +77,158 @@ public class NavigationTest {
 				assertThat(ApplicationContext.questionGateway.getQuestion(), 
 						is(instanceOf(EndPrompt.class)));
 			}
+			
 		}
 	}
 	
 	public class GivenOneQuestion{
-		Question question;
+		Question mockQuestion;
 		
-		public void navigateByIndexOffsetLoop(int offset, int repetitions){
-			setMockRequestOffset(offset);
-			for (int i=0; i<repetitions; ++i)
-				useCase.execute(mockRequest);
+		private void navigateToFirstQuestion(){
+			setMockRequestOffset(1);
+			useCase.execute(mockRequest);
 		}
 		
 		public class GivenAnswerNotRequired{
+			
 			@Before
 			public void givenAnswerNotRequired(){
-				question = MockCreation.makeMockNameQuestion();
-				ApplicationContext.questionGateway.save(question);
+				mockQuestion = MockCreation.makeMockNameQuestion();
+				ApplicationContext.questionGateway.save(mockQuestion);
 			}
-			@Test
-			public void canNavigateToFirstQuestion() {
-				navigateByIndexOffsetLoop(1, 1);
-				assertEquals(question, ApplicationContext.questionGateway.getQuestion());
+			
+			public class GivenFirstNextQuestionRequest{
+				
+				@Before
+				public void givenNextQuestionRequest(){
+					setMockRequestOffset(1);
+				}
+				@Test
+				public void canNavigateToFirstQuestion() {
+					useCase.execute(mockRequest);
+					assertEquals(mockQuestion, ApplicationContext.questionGateway.getQuestion());
+				}
+				
 			}
-			@Test
-			public void canNavigateToEnd() {
-				navigateByIndexOffsetLoop(1, 2);
-				assertThat(ApplicationContext.questionGateway.getQuestion(), 
-						is(instanceOf(EndPrompt.class)));
+			
+			public class GivenSecondNextQuestionRequest{
+				
+				@Before
+				public void givenSecondNextQuestionRequest(){
+					navigateToFirstQuestion();
+					setMockRequestOffset(1);
+				}
+				@Test
+				public void canNavigateToEnd() {
+					useCase.execute(mockRequest);
+					assertThat(ApplicationContext.questionGateway.getQuestion(), 
+							is(instanceOf(EndPrompt.class)));
+				}
+				
 			}
+			
 			public class GivenFormIsAtTheEnd{
+				
 				@Before
 				public void givenFormIsAtTheEnd(){
-					navigateByIndexOffsetLoop(1, 2);
+					navigateToFirstQuestion();
+					setMockRequestOffset(1);
+					useCase.execute(mockRequest);
 				}
 				@Test
 				public void gettingPrevQuestionGetsGivenQuestion(){
-					navigateByIndexOffsetLoop(-1, 1);
-					assertEquals(question, ApplicationContext.questionGateway.getQuestion());
+					setMockRequestOffset(-1);
+					useCase.execute(mockRequest);
+					assertEquals(mockQuestion, ApplicationContext.questionGateway.getQuestion());
 				}
+				
 			}
 		}
 		
 		public class GivenAnswerIsRequired{
+			private PresentableNavigation presentedNavigation;
+			
+			private PresentableNavigation updatePresentedNavigation() {
+				return presentedNavigation = ApplicationContext.navigationResponseBoundary.getPresentableNavigation();
+			}
+			
 			@Before
 			public void givenAnswerIsRequired(){
-				question = MockCreation.makeMockAgeQuestion();
-				ApplicationContext.questionGateway.save(question);
+				mockQuestion = MockCreation.makeMockAgeQuestion();
+				ApplicationContext.questionGateway.save(mockQuestion);
 			}
-			@Test
-			public void canNavigateToGivenQuestion() {
-				navigateByIndexOffsetLoop(1, 1);
-				assertEquals(question, ApplicationContext.questionGateway.getQuestion());
-			}
-			public class GivenCurrentQuestionRequiresAnswer{
+			
+			public class GivenFirstNextQuestionRequest{
+				
 				@Before
-				public void givenCurrentQuestionRequiresAnswer(){
-					navigateByIndexOffsetLoop(1, 1);
+				public void givenFirstNextQuestionRequest(){
+					setMockRequestOffset(1);
 				}
-				@Test(expected=NavigationUseCase.AnswerRequired.class)
+				@Test
+				public void canNavigateToGivenQuestion() {
+					useCase.execute(mockRequest);
+					assertEquals(mockQuestion, ApplicationContext.questionGateway.getQuestion());
+				}
+				
+			}		
+
+			public class GivenSecondNextQuestionRequest{
+
+				private String getFailedNavigationResult(){
+					return "Sorry, you cannot move ahead.  The current question requires a response.";
+				}
+				
+				@Before
+				public void givenSecondNextQuestionRequest(){
+					navigateToFirstQuestion();
+					setMockRequestOffset(1);
+				}
+				@Test
 				public void cannotNavigateToEnd() {
-					navigateByIndexOffsetLoop(1, 1);
+					useCase.execute(mockRequest);
+					updatePresentedNavigation();
+					
+					assertTrue(presentedNavigation.failed());
+					assertEquals(getFailedNavigationResult(), presentedNavigation.getMessage());
+					assertEquals(mockQuestion, ApplicationContext.questionGateway.getQuestion());
+				}
+				
+			}
+			
+			public class GivenCurrentQuestionRequest {
+				
+				@Before
+				public void givenCurrentQuestionRequest(){
+					navigateToFirstQuestion();
+					setMockRequestOffset(0);
 				}
 				@Test
 				public void canRepeatQuestion() {
-					navigateByIndexOffsetLoop(0, 1);
-					assertEquals(question, ApplicationContext.questionGateway.getQuestion());
+					useCase.execute(mockRequest);
+					updatePresentedNavigation();
+					
+					assertFalse(presentedNavigation.failed());
+					assertEquals(mockQuestion, ApplicationContext.questionGateway.getQuestion());
+				}
+				
+			}
+			
+			public class GivenPrevQuestionRequest {
+				
+				@Before
+				public void givenPrevQuestionRequest(){
+					navigateToFirstQuestion();
+					setMockRequestOffset(-1);
 				}
 				@Test
 				public void canGoBackToStart() {
-					navigateByIndexOffsetLoop(-1, 1);
+					setMockRequestOffset(-1);
+					useCase.execute(mockRequest);
 					assertThat(ApplicationContext.questionGateway.getQuestion(), 
 							is(instanceOf(StartPrompt.class)));
 				}
-			}			
+				
+			}
 		}
 	}
 }

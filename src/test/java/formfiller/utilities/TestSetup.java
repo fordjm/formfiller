@@ -2,6 +2,7 @@ package formfiller.utilities;
 import formfiller.ApplicationContext;
 import formfiller.entities.Question;
 import formfiller.gateways.MockQuestionGateway;
+import formfiller.ui.presenter.NavigationPresenter;
 import formfiller.ui.presenter.QuestionPresenter;
 import formfiller.gateways.MockAnswerGateway;
 
@@ -10,6 +11,7 @@ public class TestSetup {
 	public static void setupContext(){
 		ApplicationContext.questionGateway = new MockQuestionGateway();
 		ApplicationContext.answerGateway = new MockAnswerGateway();
+		ApplicationContext.navigationResponseBoundary = new NavigationPresenter();
 		ApplicationContext.presentQuestionResponseBoundary = new QuestionPresenter();
 	}
 	public static void setupSampleQuestions(){

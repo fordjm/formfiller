@@ -1,12 +1,15 @@
 package formfiller;
 
+import formfiller.ui.presenter.NavigationPresenter;
 import formfiller.ui.presenter.QuestionPresenter;
 import formfiller.ui.router.Router;
 import formfiller.ui.userRequestParser.ConsoleUserRequestParser;
 import formfiller.ui.userRequestParser.ParsedUserRequest;
 import formfiller.ui.userRequestParser.UserRequestParser;
 import formfiller.ui.view.ConsoleAnswerView;
+import formfiller.ui.view.ConsoleNavigationView;
 import formfiller.ui.view.ConsoleQuestionView;
+import formfiller.ui.view.NavigationView;
 import formfiller.ui.view.QuestionView;
 import formfiller.ui.view.UserRequestSource;
 import formfiller.usecases.navigation.NavigationController;
@@ -14,6 +17,7 @@ import formfiller.usecases.presentQuestion.PresentQuestionController;
 import formfiller.utilities.TestSetup;
 
 public class Main {
+	private static NavigationPresenter navigationPresenter;
 	private static QuestionPresenter questionPresenter;
 	private static UserRequestSource userRequestSource;
 	private static UserRequestParser userRequestParser;
@@ -32,6 +36,8 @@ public class Main {
 		System.out.println("Please enter a user request.");
 	}
 	private static void setupClassVariables() {
+		navigationPresenter = makeNavigationPresenter(new ConsoleNavigationView());
+		ApplicationContext.navigationResponseBoundary = navigationPresenter;
 		questionPresenter = makeQuestionPresenter(new ConsoleQuestionView());
 		ApplicationContext.presentQuestionResponseBoundary = questionPresenter;
 		userRequestSource = new ConsoleAnswerView();
@@ -42,6 +48,11 @@ public class Main {
 		Router result = new Router();
 		result.addMethod("presentQuestion", new PresentQuestionController());
 		result.addMethod("navigation", new NavigationController());
+		return result;
+	}
+	private static NavigationPresenter makeNavigationPresenter(NavigationView navigationView){
+		NavigationPresenter result = new NavigationPresenter();
+		result.addObserver(navigationView);
 		return result;
 	}
 	private static QuestionPresenter makeQuestionPresenter(QuestionView questionView){

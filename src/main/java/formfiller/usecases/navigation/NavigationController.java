@@ -1,7 +1,9 @@
 package formfiller.usecases.navigation;
 
 import java.util.HashMap;
+import java.util.Scanner;
 
+import formfiller.ApplicationContext;
 import formfiller.Controller;
 import formfiller.ui.userRequestParser.ParsedUserRequest;
 import formfiller.usecases.Request;
@@ -21,8 +23,7 @@ public class NavigationController implements Controller {
 		UseCase useCase = useCaseFactory.make("navigation");
 		useCase.execute(navigationRequest);
 		
-		PresentQuestionController pqc = new PresentQuestionController();
-		pqc.handle(parsedInput);
+		invokePresentQuestionController(parsedInput);
 	}
 	
 	public Request makeNavigationRequest(int offset){
@@ -35,4 +36,9 @@ public class NavigationController implements Controller {
 		result.put("offset", offset);
 		return result;
 	}
+	private void invokePresentQuestionController(ParsedUserRequest parsedInput){
+		PresentQuestionController pqc = new PresentQuestionController();
+		pqc.handle(parsedInput);
+	}
+	
 }

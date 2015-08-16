@@ -4,29 +4,25 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mockito;
 
 import formfiller.entities.Prompt;
 import formfiller.usecases.presentQuestion.PresentableQuestion;
-import formfiller.usecases.presentQuestion.PresentableQuestionFactory;
-import formfiller.usecases.presentQuestion.PresentableQuestionFactoryImpl;
-import formfiller.utilities.MockCreation;
 
 public class QuestionPresenterTest {
 	PresentableQuestion presentableQuestion;
 	Prompt mockQuestion;
 
-	PresentableQuestion makePresentableQuestion(Prompt requestedQuestion) {
-		PresentableQuestionFactory factory = new PresentableQuestionFactoryImpl();
-		PresentableQuestion result = factory.makePresentableQuestion();
-		result.setId(requestedQuestion.getId());
-		result.setContent(requestedQuestion.getContent());
+	PresentableQuestion makeMockPresentableQuestion(String id, String content) {
+		PresentableQuestion result = Mockito.mock(PresentableQuestion.class);
+		Mockito.when(result.getId()).thenReturn(id);
+		Mockito.when(result.getContent()).thenReturn(content);
 		return result;
 	}
 
 	@Before
 	public void setUp(){
-		mockQuestion = MockCreation.makeMockNameQuestion();
-		presentableQuestion = makePresentableQuestion(mockQuestion);
+		presentableQuestion = makeMockPresentableQuestion("name", "What is your name?");
 	}
 	@Test
 	public void canPresentQuestion() {

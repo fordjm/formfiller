@@ -1,5 +1,6 @@
 package formfiller;
 
+import formfiller.boundaries.NavigationResponseBoundary;
 import formfiller.boundaries.PresentQuestionResponseBoundary;
 import formfiller.gateways.AnswerGateway;
 import formfiller.gateways.QuestionGateway;
@@ -10,5 +11,6 @@ import formfiller.gateways.QuestionGateway;
 public class ApplicationContext {
 	public static QuestionGateway questionGateway;
 	public static AnswerGateway answerGateway;
+	public static NavigationResponseBoundary navigationResponseBoundary;
 	public static PresentQuestionResponseBoundary presentQuestionResponseBoundary;
 }
