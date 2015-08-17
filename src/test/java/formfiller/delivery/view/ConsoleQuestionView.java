@@ -4,15 +4,15 @@ import java.util.Observable;
 
 import formfiller.ApplicationContext;
 import formfiller.boundaryCrossers.PresentableQuestion;
-import formfiller.delivery.PresentQuestionView;
+import formfiller.delivery.View;
 
-public class ConsoleQuestionView implements PresentQuestionView {
+public class ConsoleQuestionView implements View {
 	PresentableQuestion question;
 
 	public void update(Observable presenter, Object input) {
-		displayQuestion();
+		displayPresentableResponse();
 	}
-	public void displayQuestion() {
+	public void displayPresentableResponse() {
 		question = ApplicationContext.questionPresenter.getPresentableResponse();
 		System.out.println(question.getMessage());
 	}

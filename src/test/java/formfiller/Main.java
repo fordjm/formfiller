@@ -1,24 +1,19 @@
 package formfiller;
 
-import formfiller.delivery.NavigationView;
-import formfiller.delivery.PresentQuestionView;
 import formfiller.delivery.UserRequestSource;
 import formfiller.delivery.controller.NavigationController;
 import formfiller.delivery.controller.PresentQuestionController;
-import formfiller.delivery.presenter.NavigationPresenterImpl;
-import formfiller.delivery.presenter.QuestionPresenterImpl;
 import formfiller.delivery.router.Router;
 import formfiller.delivery.userRequestParser.ConsoleUserRequestParser;
 import formfiller.delivery.userRequestParser.ParsedUserRequest;
 import formfiller.delivery.userRequestParser.UserRequestParser;
 import formfiller.delivery.view.ConsoleAnswerView;
+import formfiller.delivery.view.ConsoleHandleUnfoundControllerView;
 import formfiller.delivery.view.ConsoleNavigationView;
 import formfiller.delivery.view.ConsoleQuestionView;
 import formfiller.utilities.TestSetup;
 
 public class Main {
-	private static NavigationPresenterImpl navigationPresenter;
-	private static QuestionPresenterImpl questionPresenter;
 	private static UserRequestSource userRequestSource;
 	private static UserRequestParser userRequestParser;
 	private static Router router;
@@ -36,10 +31,11 @@ public class Main {
 		System.out.print("Please enter a user request:  ");
 	}
 	private static void setupClassVariables() {
-		navigationPresenter = makeNavigationPresenter(new ConsoleNavigationView());
-		ApplicationContext.navigationPresenter = navigationPresenter;
-		questionPresenter = makeQuestionPresenter(new ConsoleQuestionView());
-		ApplicationContext.questionPresenter = questionPresenter;
+		ApplicationContext.handleUnfoundControllerPresenter.addObserver(
+				new ConsoleHandleUnfoundControllerView());
+		ApplicationContext.navigationPresenter.addObserver(new ConsoleNavigationView());
+		ApplicationContext.questionPresenter.addObserver(new ConsoleQuestionView());
+		
 		userRequestSource = new ConsoleAnswerView();
 		userRequestParser = new ConsoleUserRequestParser();
 		router = makeRouter();
@@ -48,16 +44,6 @@ public class Main {
 		Router result = new Router();
 		result.addMethod("presentQuestion", new PresentQuestionController());
 		result.addMethod("navigation", new NavigationController());
-		return result;
-	}
-	private static NavigationPresenterImpl makeNavigationPresenter(NavigationView navigationView){
-		NavigationPresenterImpl result = new NavigationPresenterImpl();
-		result.addObserver(navigationView);
-		return result;
-	}
-	private static QuestionPresenterImpl makeQuestionPresenter(PresentQuestionView questionView){
-		QuestionPresenterImpl result = new QuestionPresenterImpl();
-		result.addObserver(questionView);
 		return result;
 	}
 	private static void routeUserRequests(Router router) {

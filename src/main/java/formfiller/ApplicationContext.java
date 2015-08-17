@@ -3,7 +3,6 @@ package formfiller;
 import formfiller.boundaries.HandleUnfoundControllerPresenter;
 import formfiller.boundaries.NavigationPresenter;
 import formfiller.boundaries.QuestionPresenter;
-import formfiller.delivery.presenter.AbstractPresenter;
 import formfiller.gateways.AnswerGateway;
 import formfiller.gateways.QuestionGateway;
 
@@ -15,5 +14,5 @@ public class ApplicationContext {
 	public static AnswerGateway answerGateway;
 	public static NavigationPresenter navigationPresenter;
 	public static QuestionPresenter questionPresenter;
-	public static HandleUnfoundControllerPresenter handleErrorPresenter;
+	public static HandleUnfoundControllerPresenter handleUnfoundControllerPresenter;
 }

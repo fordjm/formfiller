@@ -1,50 +1,21 @@
 package formfiller.delivery.view;
 
 import java.util.Observable;
-import java.util.Scanner;
 
 import formfiller.ApplicationContext;
 import formfiller.boundaryCrossers.PresentableNavigation;
-import formfiller.delivery.NavigationView;
+import formfiller.delivery.View;
 import formfiller.enums.ActionOutcome;
 
-public class ConsoleNavigationView implements NavigationView {
+public class ConsoleNavigationView implements View {
 
 	public void update(Observable observable, Object input) {
-		displayNavigation();
+		displayPresentableResponse();
 	}
-	public void displayNavigation() {
+	public void displayPresentableResponse() {
 		PresentableNavigation presentableNavigation = 
 				ApplicationContext.navigationPresenter.getPresentableResponse();
-		if (presentableNavigation.getOutcome() == ActionOutcome.FAILED){
-			String errorMessage = presentableNavigation.getMessage();
-			outputSystemMessage(errorMessage);
-
-			respondToNavigationError(presentableNavigation);
-		}
-	}
-	private void outputSystemMessage(String systemMessage) {
-		System.out.println(systemMessage);
-	}
-	
-	// TODO:  	Get this code out of here!
-	//			Make the Scanner a singleton.
-	//			Move "repeat" to a VUI class.  Doesn't make sense in console UI.
-	private void respondToNavigationError(PresentableNavigation presentableNavigation){
-		Scanner stdIn = new Scanner(System.in);
-		boolean readyToContinue = false;
-		
-		while (!readyToContinue) {
-			String responseToError = "";
-			outputSystemMessage("Please input 'repeat' to repeat the error message or "
-					+ "'continue' to continue.");
-			responseToError = stdIn.nextLine();
-			if (responseToError.equalsIgnoreCase("continue"))
-				break;
-			else if (responseToError.equalsIgnoreCase("repeat"))
-				outputSystemMessage(presentableNavigation.getMessage());
-			else
-				outputSystemMessage("I'm sorry, I didn't understand.");
-		}
+		if (presentableNavigation.getOutcome() == ActionOutcome.FAILED)
+			System.out.println(presentableNavigation.getMessage());
 	}
 }

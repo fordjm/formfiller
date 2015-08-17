@@ -12,7 +12,7 @@ public class HandleUnfoundControllerUseCase implements UseCase {
 		HandleUnfoundControllerRequest handleUnfoundControllerRequest = 
 				(HandleUnfoundControllerRequest) request;
 		String message = handleUnfoundControllerRequest.getMessage();
-		ApplicationContext.handleErrorPresenter.
+		ApplicationContext.handleUnfoundControllerPresenter.
 				setPresentableResponse(makePresentableUnfoundControllerResponse(message));
 	}
 	

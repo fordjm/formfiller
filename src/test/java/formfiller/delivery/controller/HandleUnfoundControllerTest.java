@@ -20,7 +20,7 @@ public class HandleUnfoundControllerTest {
 	
 	private PresentableHandleUnfoundController getPresentableUnfoundControllerResponse(){
 		PresentableHandleUnfoundController result = 
-				ApplicationContext.handleErrorPresenter.getPresentableResponse();
+				ApplicationContext.handleUnfoundControllerPresenter.getPresentableResponse();
 		return result;
 	}
 	

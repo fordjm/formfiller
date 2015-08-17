@@ -12,7 +12,7 @@ public class TestSetup {
 	public static void setupContext(){
 		ApplicationContext.questionGateway = new MockQuestionGateway();
 		ApplicationContext.answerGateway = new MockAnswerGateway();
-		ApplicationContext.handleErrorPresenter = new HandleUnfoundControllerPresenterImpl();
+		ApplicationContext.handleUnfoundControllerPresenter = new HandleUnfoundControllerPresenterImpl();
 		ApplicationContext.navigationPresenter = new NavigationPresenterImpl();
 		ApplicationContext.questionPresenter = new QuestionPresenterImpl();
 	}
