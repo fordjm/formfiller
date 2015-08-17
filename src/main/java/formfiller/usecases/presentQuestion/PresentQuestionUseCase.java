@@ -1,11 +1,11 @@
 package formfiller.usecases.presentQuestion;
 
 import formfiller.ApplicationContext;
+import formfiller.boundaries.UseCase;
 import formfiller.boundaryCrossers.PresentableQuestion;
 import formfiller.boundaryCrossers.PresentableQuestion;
 import formfiller.entities.Prompt;
 import formfiller.usecases.Request;
-import formfiller.usecases.UseCase;
 
 // As presented in the Clean Coders Java Case Study codecast
 // https://cleancoders.com/episode/case-study-episode-1/show
@@ -18,8 +18,8 @@ public class PresentQuestionUseCase implements UseCase {
 		Prompt requestedQuestion = 
 				ApplicationContext.questionGateway.findQuestionByIndexOffset(0);
 		PresentableQuestion presentableQuestion = makePresentableQuestion(requestedQuestion);
-		ApplicationContext.presentQuestionResponseBoundary.
-				setPresentableQuestion(presentableQuestion);
+		ApplicationContext.questionPresenter.
+				setPresentableResponse(presentableQuestion);
 	}
 
 	PresentableQuestion makePresentableQuestion(Prompt requestedQuestion) {

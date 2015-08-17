@@ -2,8 +2,7 @@ package formfiller.boundaryCrossers;
 
 import formfiller.enums.ActionOutcome;
 
-public class PresentableQuestion implements PresentableResponse {
-	
+public class PresentableQuestion implements PresentableResponse {	
 	public String id;
 	public String message;
 	public ActionOutcome outcome;

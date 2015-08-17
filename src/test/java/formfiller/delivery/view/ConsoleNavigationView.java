@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 import formfiller.ApplicationContext;
 import formfiller.boundaryCrossers.PresentableNavigation;
+import formfiller.delivery.NavigationView;
 import formfiller.enums.ActionOutcome;
 
 public class ConsoleNavigationView implements NavigationView {
@@ -14,7 +15,7 @@ public class ConsoleNavigationView implements NavigationView {
 	}
 	public void displayNavigation() {
 		PresentableNavigation presentableNavigation = 
-				ApplicationContext.navigationResponseBoundary.getPresentableResponse();
+				ApplicationContext.navigationPresenter.getPresentableResponse();
 		if (presentableNavigation.getOutcome() == ActionOutcome.FAILED){
 			String errorMessage = presentableNavigation.getMessage();
 			outputSystemMessage(errorMessage);

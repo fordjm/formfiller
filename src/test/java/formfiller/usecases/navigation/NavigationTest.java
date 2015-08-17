@@ -152,7 +152,7 @@ public class NavigationTest {
 			
 			private PresentableNavigation updatePresentedNavigation() {
 				return presentedNavigation = 
-						ApplicationContext.navigationResponseBoundary.getPresentableResponse();
+						ApplicationContext.navigationPresenter.getPresentableResponse();
 			}
 			
 			@Before

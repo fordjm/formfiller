@@ -1,5 +1,6 @@
 package formfiller.usecases;
 
+import formfiller.boundaries.UseCase;
 import formfiller.usecases.handleUnfoundController.HandleUnfoundControllerUseCase;
 import formfiller.usecases.navigation.NavigationUseCase;
 import formfiller.usecases.presentQuestion.PresentQuestionUseCase;

@@ -6,6 +6,7 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import formfiller.boundaries.UseCase;
 import formfiller.usecases.UseCaseFactoryImpl.UnknownUseCase;
 import formfiller.usecases.navigation.NavigationUseCase;
 import formfiller.usecases.presentQuestion.PresentQuestionUseCase;

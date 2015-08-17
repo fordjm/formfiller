@@ -1,11 +1,12 @@
 package formfiller;
 
+import formfiller.delivery.NavigationView;
 import formfiller.delivery.PresentQuestionView;
 import formfiller.delivery.UserRequestSource;
 import formfiller.delivery.controller.NavigationController;
 import formfiller.delivery.controller.PresentQuestionController;
-import formfiller.delivery.presenter.NavigationPresenter;
-import formfiller.delivery.presenter.QuestionPresenter;
+import formfiller.delivery.presenter.NavigationPresenterImpl;
+import formfiller.delivery.presenter.QuestionPresenterImpl;
 import formfiller.delivery.router.Router;
 import formfiller.delivery.userRequestParser.ConsoleUserRequestParser;
 import formfiller.delivery.userRequestParser.ParsedUserRequest;
@@ -13,12 +14,11 @@ import formfiller.delivery.userRequestParser.UserRequestParser;
 import formfiller.delivery.view.ConsoleAnswerView;
 import formfiller.delivery.view.ConsoleNavigationView;
 import formfiller.delivery.view.ConsoleQuestionView;
-import formfiller.delivery.view.NavigationView;
 import formfiller.utilities.TestSetup;
 
 public class Main {
-	private static NavigationPresenter navigationPresenter;
-	private static QuestionPresenter questionPresenter;
+	private static NavigationPresenterImpl navigationPresenter;
+	private static QuestionPresenterImpl questionPresenter;
 	private static UserRequestSource userRequestSource;
 	private static UserRequestParser userRequestParser;
 	private static Router router;
@@ -37,9 +37,9 @@ public class Main {
 	}
 	private static void setupClassVariables() {
 		navigationPresenter = makeNavigationPresenter(new ConsoleNavigationView());
-		ApplicationContext.navigationResponseBoundary = navigationPresenter;
+		ApplicationContext.navigationPresenter = navigationPresenter;
 		questionPresenter = makeQuestionPresenter(new ConsoleQuestionView());
-		ApplicationContext.presentQuestionResponseBoundary = questionPresenter;
+		ApplicationContext.questionPresenter = questionPresenter;
 		userRequestSource = new ConsoleAnswerView();
 		userRequestParser = new ConsoleUserRequestParser();
 		router = makeRouter();
@@ -50,13 +50,13 @@ public class Main {
 		result.addMethod("navigation", new NavigationController());
 		return result;
 	}
-	private static NavigationPresenter makeNavigationPresenter(NavigationView navigationView){
-		NavigationPresenter result = new NavigationPresenter();
+	private static NavigationPresenterImpl makeNavigationPresenter(NavigationView navigationView){
+		NavigationPresenterImpl result = new NavigationPresenterImpl();
 		result.addObserver(navigationView);
 		return result;
 	}
-	private static QuestionPresenter makeQuestionPresenter(PresentQuestionView questionView){
-		QuestionPresenter result = new QuestionPresenter();
+	private static QuestionPresenterImpl makeQuestionPresenter(PresentQuestionView questionView){
+		QuestionPresenterImpl result = new QuestionPresenterImpl();
 		result.addObserver(questionView);
 		return result;
 	}

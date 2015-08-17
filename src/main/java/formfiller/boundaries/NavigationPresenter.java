@@ -2,7 +2,7 @@ package formfiller.boundaries;
 
 import formfiller.boundaryCrossers.PresentableNavigation;
 
-public interface NavigationResponseBoundary extends Presenter {
+public interface NavigationPresenter extends Presenter {
 
 	PresentableNavigation getPresentableResponse();
 	void setPresentableResponse(PresentableNavigation presentableNavigation);

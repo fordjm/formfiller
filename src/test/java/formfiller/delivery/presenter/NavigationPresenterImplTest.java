@@ -9,9 +9,9 @@ import org.junit.Test;
 import formfiller.boundaryCrossers.PresentableNavigation;
 import formfiller.enums.ActionOutcome;
 
-public class NavigationPresenterTest {
+public class NavigationPresenterImplTest {
 
-	private NavigationPresenter presenter;
+	private NavigationPresenterImpl presenter;
 	private PresentableNavigation presentableNavigation;
 
 	// TODO:  Replace these with mocks. (Move them to a new PresentableNavigationTest class)
@@ -35,7 +35,7 @@ public class NavigationPresenterTest {
 	// TODO:  Improve these.
 	@Before
 	public void setUp(){
-		presenter = new NavigationPresenter();
+		presenter = new NavigationPresenterImpl();
 	}
 	@Test
 	public void canPresentSuccessfulNavigation() {		

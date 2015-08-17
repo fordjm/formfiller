@@ -1,8 +1,8 @@
 package formfiller.utilities;
 import formfiller.ApplicationContext;
-import formfiller.delivery.presenter.HandleUnfoundControllerPresenter;
-import formfiller.delivery.presenter.NavigationPresenter;
-import formfiller.delivery.presenter.QuestionPresenter;
+import formfiller.delivery.presenter.HandleUnfoundControllerPresenterImpl;
+import formfiller.delivery.presenter.NavigationPresenterImpl;
+import formfiller.delivery.presenter.QuestionPresenterImpl;
 import formfiller.entities.Question;
 import formfiller.gateways.MockQuestionGateway;
 import formfiller.gateways.MockAnswerGateway;
@@ -12,9 +12,9 @@ public class TestSetup {
 	public static void setupContext(){
 		ApplicationContext.questionGateway = new MockQuestionGateway();
 		ApplicationContext.answerGateway = new MockAnswerGateway();
-		ApplicationContext.handleErrorResponseBoundary = new HandleUnfoundControllerPresenter();
-		ApplicationContext.navigationResponseBoundary = new NavigationPresenter();
-		ApplicationContext.presentQuestionResponseBoundary = new QuestionPresenter();
+		ApplicationContext.handleErrorPresenter = new HandleUnfoundControllerPresenterImpl();
+		ApplicationContext.navigationPresenter = new NavigationPresenterImpl();
+		ApplicationContext.questionPresenter = new QuestionPresenterImpl();
 	}
 	public static void setupSampleQuestions(){
 		setupContext();

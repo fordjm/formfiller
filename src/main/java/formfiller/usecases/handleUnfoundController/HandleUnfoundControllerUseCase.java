@@ -1,10 +1,10 @@
 package formfiller.usecases.handleUnfoundController;
 
 import formfiller.ApplicationContext;
+import formfiller.boundaries.UseCase;
 import formfiller.boundaryCrossers.PresentableHandleUnfoundController;
 import formfiller.enums.ActionOutcome;
 import formfiller.usecases.Request;
-import formfiller.usecases.UseCase;
 
 public class HandleUnfoundControllerUseCase implements UseCase {	
 
@@ -12,7 +12,7 @@ public class HandleUnfoundControllerUseCase implements UseCase {
 		HandleUnfoundControllerRequest handleUnfoundControllerRequest = 
 				(HandleUnfoundControllerRequest) request;
 		String message = handleUnfoundControllerRequest.getMessage();
-		ApplicationContext.handleErrorResponseBoundary.
+		ApplicationContext.handleErrorPresenter.
 				setPresentableResponse(makePresentableUnfoundControllerResponse(message));
 	}
 	

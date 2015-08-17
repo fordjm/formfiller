@@ -4,12 +4,12 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 import formfiller.ApplicationContext;
+import formfiller.boundaries.UseCase;
 import formfiller.delivery.Controller;
 import formfiller.delivery.userRequestParser.ParsedUserRequest;
 import formfiller.usecases.Request;
 import formfiller.usecases.RequestBuilder;
 import formfiller.usecases.RequestBuilderImpl;
-import formfiller.usecases.UseCase;
 import formfiller.usecases.UseCaseFactory;
 import formfiller.usecases.UseCaseFactoryImpl;
 

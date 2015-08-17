@@ -2,9 +2,9 @@ package formfiller.boundaries;
 
 import formfiller.boundaryCrossers.PresentableQuestion;
 
-public interface PresentQuestionResponseBoundary {
+public interface QuestionPresenter extends Presenter {
 
 	public PresentableQuestion getPresentableResponse();
-	public void setPresentableQuestion(PresentableQuestion presentableQuestion);
+	public void setPresentableResponse(PresentableQuestion presentableQuestion);
 	
 }

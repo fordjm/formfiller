@@ -1,4 +1,6 @@
-package formfiller.usecases;
+package formfiller.boundaries;
+
+import formfiller.usecases.Request;
 
 public interface UseCase {
 	
