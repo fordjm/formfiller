@@ -15,7 +15,7 @@ public class MockAnswerGateway implements AnswerGateway {
 		responses = new ArrayList<Answer>();
 	}
 	
-	public Answer findResponseByIndexOffset(int offset){
+	public Answer findAnswerByIndexOffset(int offset){
 		int requestedIndex = currentIndex  + offset;
 		updateCurrentResponse(requestedIndex);
 		return currentResponse;
@@ -31,7 +31,7 @@ public class MockAnswerGateway implements AnswerGateway {
 	boolean isLegalIndex(int requestedIndex) {
 		return requestedIndex >= 0 && requestedIndex < responses.size();
 	}
-	public Answer getResponse() {
+	public Answer getAnswer() {
 		return currentResponse;
 	}
 

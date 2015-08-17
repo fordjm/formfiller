@@ -6,6 +6,8 @@ import static org.junit.Assert.assertThat;
 import org.junit.Before;
 import org.junit.Test;
 
+import formfiller.boundaryCrossers.PresentableQuestion;
+import formfiller.boundaryCrossers.PresentableQuestion;
 import formfiller.entities.Question;
 import formfiller.utilities.MockCreation;
 
@@ -16,17 +18,17 @@ public class PresentableQuestionTest {
 	
 	@Before
 	public void givenAPresentableQuestion(){
-		presentableQuestion = new PresentableQuestionImpl();
+		presentableQuestion = new PresentableQuestion();
 	}
 	@Test
 	public void test() {
 		Question mockQuestion = MockCreation.makeMockNameQuestion();
 		
 		presentableQuestion.setId(mockQuestion.getId());
-		presentableQuestion.setContent(mockQuestion.getContent());
+		presentableQuestion.setMessage(mockQuestion.getContent());
 		
 		assertThat(presentableQuestion.getId(), is(mockQuestion.getId()));
-		assertThat(presentableQuestion.getContent(), is(mockQuestion.getContent()));
+		assertThat(presentableQuestion.getMessage(), is(mockQuestion.getContent()));
 		
 	}
 

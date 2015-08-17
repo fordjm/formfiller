@@ -11,8 +11,8 @@ import org.mockito.Mockito;
 
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
 import formfiller.ApplicationContext;
+import formfiller.boundaryCrossers.PresentableQuestion;
 import formfiller.usecases.presentQuestion.PresentQuestionUseCase;
-import formfiller.usecases.presentQuestion.PresentableQuestion;
 import formfiller.usecases.Request;
 import formfiller.usecases.RequestBuilderImpl.PresentQuestionRequest;
 import formfiller.utilities.TestSetup;
@@ -35,9 +35,9 @@ public class PresentQuestionTest {
 		public void whenPresentQuestionRuns_ThenGetQuestionGetsAStartPrompt(){
 			presentQuestionUseCase.execute(mockRequest);
 			presentedQuestion = 
-					ApplicationContext.presentQuestionResponseBoundary.getPresentableQuestion();
+					ApplicationContext.presentQuestionResponseBoundary.getPresentableResponse();
 			assertThat(presentedQuestion.getId(), is("start"));
-			assertThat(presentedQuestion.getContent(), 
+			assertThat(presentedQuestion.getMessage(), 
 					is("You have reached the start of this form."));
 		}
 	}
@@ -51,9 +51,9 @@ public class PresentQuestionTest {
 		public void whenPresentQuestionRuns_ThenGetQuestionGetsGivenQuestion(){
 			presentQuestionUseCase.execute(mockRequest);
 			presentedQuestion = 
-					ApplicationContext.presentQuestionResponseBoundary.getPresentableQuestion();
+					ApplicationContext.presentQuestionResponseBoundary.getPresentableResponse();
 			assertThat(presentedQuestion.getId(), is("name"));
-			assertThat(presentedQuestion.getContent(), is("What is your name?"));
+			assertThat(presentedQuestion.getMessage(), is("What is your name?"));
 		}
 	}
 }

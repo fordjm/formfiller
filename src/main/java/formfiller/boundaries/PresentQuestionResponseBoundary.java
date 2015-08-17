@@ -1,10 +1,10 @@
 package formfiller.boundaries;
 
-import formfiller.usecases.presentQuestion.PresentableQuestion;
+import formfiller.boundaryCrossers.PresentableQuestion;
 
 public interface PresentQuestionResponseBoundary {
 
-	public PresentableQuestion getPresentableQuestion();
+	public PresentableQuestion getPresentableResponse();
 	public void setPresentableQuestion(PresentableQuestion presentableQuestion);
 	
 }

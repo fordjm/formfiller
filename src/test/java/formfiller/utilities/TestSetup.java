@@ -1,9 +1,10 @@
 package formfiller.utilities;
 import formfiller.ApplicationContext;
+import formfiller.delivery.presenter.HandleUnfoundControllerPresenter;
+import formfiller.delivery.presenter.NavigationPresenter;
+import formfiller.delivery.presenter.QuestionPresenter;
 import formfiller.entities.Question;
 import formfiller.gateways.MockQuestionGateway;
-import formfiller.ui.presenter.NavigationPresenter;
-import formfiller.ui.presenter.QuestionPresenter;
 import formfiller.gateways.MockAnswerGateway;
 
 // TODO:  Credit CleanCoders JCS TestSetup
@@ -11,6 +12,7 @@ public class TestSetup {
 	public static void setupContext(){
 		ApplicationContext.questionGateway = new MockQuestionGateway();
 		ApplicationContext.answerGateway = new MockAnswerGateway();
+		ApplicationContext.handleErrorResponseBoundary = new HandleUnfoundControllerPresenter();
 		ApplicationContext.navigationResponseBoundary = new NavigationPresenter();
 		ApplicationContext.presentQuestionResponseBoundary = new QuestionPresenter();
 	}

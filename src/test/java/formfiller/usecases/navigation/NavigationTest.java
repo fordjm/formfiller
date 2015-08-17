@@ -13,8 +13,10 @@ import de.bechte.junit.runners.context.HierarchicalContextRunner;
 import formfiller.entities.EndPrompt;
 import formfiller.entities.Question;
 import formfiller.entities.StartPrompt;
+import formfiller.enums.ActionOutcome;
 import formfiller.usecases.navigation.NavigationUseCase;
 import formfiller.ApplicationContext;
+import formfiller.boundaryCrossers.PresentableNavigation;
 import formfiller.utilities.TestSetup;
 import formfiller.utilities.MockCreation;
 
@@ -149,7 +151,8 @@ public class NavigationTest {
 			private PresentableNavigation presentedNavigation;
 			
 			private PresentableNavigation updatePresentedNavigation() {
-				return presentedNavigation = ApplicationContext.navigationResponseBoundary.getPresentableNavigation();
+				return presentedNavigation = 
+						ApplicationContext.navigationResponseBoundary.getPresentableResponse();
 			}
 			
 			@Before
@@ -188,7 +191,7 @@ public class NavigationTest {
 					useCase.execute(mockRequest);
 					updatePresentedNavigation();
 					
-					assertTrue(presentedNavigation.failed());
+					assertThat(presentedNavigation.getOutcome(), is(ActionOutcome.FAILED));
 					assertEquals(getFailedNavigationResult(), presentedNavigation.getMessage());
 					assertEquals(mockQuestion, ApplicationContext.questionGateway.getQuestion());
 				}
@@ -207,7 +210,7 @@ public class NavigationTest {
 					useCase.execute(mockRequest);
 					updatePresentedNavigation();
 					
-					assertFalse(presentedNavigation.failed());
+					assertThat(presentedNavigation.getOutcome(), is(ActionOutcome.SUCCEEDED));
 					assertEquals(mockQuestion, ApplicationContext.questionGateway.getQuestion());
 				}
 				

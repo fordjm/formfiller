@@ -1,19 +1,19 @@
 package formfiller;
 
-import formfiller.ui.presenter.NavigationPresenter;
-import formfiller.ui.presenter.QuestionPresenter;
-import formfiller.ui.router.Router;
-import formfiller.ui.userRequestParser.ConsoleUserRequestParser;
-import formfiller.ui.userRequestParser.ParsedUserRequest;
-import formfiller.ui.userRequestParser.UserRequestParser;
-import formfiller.ui.view.ConsoleAnswerView;
-import formfiller.ui.view.ConsoleNavigationView;
-import formfiller.ui.view.ConsoleQuestionView;
-import formfiller.ui.view.NavigationView;
-import formfiller.ui.view.QuestionView;
-import formfiller.ui.view.UserRequestSource;
-import formfiller.usecases.navigation.NavigationController;
-import formfiller.usecases.presentQuestion.PresentQuestionController;
+import formfiller.delivery.PresentQuestionView;
+import formfiller.delivery.UserRequestSource;
+import formfiller.delivery.controller.NavigationController;
+import formfiller.delivery.controller.PresentQuestionController;
+import formfiller.delivery.presenter.NavigationPresenter;
+import formfiller.delivery.presenter.QuestionPresenter;
+import formfiller.delivery.router.Router;
+import formfiller.delivery.userRequestParser.ConsoleUserRequestParser;
+import formfiller.delivery.userRequestParser.ParsedUserRequest;
+import formfiller.delivery.userRequestParser.UserRequestParser;
+import formfiller.delivery.view.ConsoleAnswerView;
+import formfiller.delivery.view.ConsoleNavigationView;
+import formfiller.delivery.view.ConsoleQuestionView;
+import formfiller.delivery.view.NavigationView;
 import formfiller.utilities.TestSetup;
 
 public class Main {
@@ -33,7 +33,7 @@ public class Main {
 		}
 	}
 	private static void outputCheapHackyStartPrompt() {
-		System.out.println("Please enter a user request.");
+		System.out.print("Please enter a user request:  ");
 	}
 	private static void setupClassVariables() {
 		navigationPresenter = makeNavigationPresenter(new ConsoleNavigationView());
@@ -55,7 +55,7 @@ public class Main {
 		result.addObserver(navigationView);
 		return result;
 	}
-	private static QuestionPresenter makeQuestionPresenter(QuestionView questionView){
+	private static QuestionPresenter makeQuestionPresenter(PresentQuestionView questionView){
 		QuestionPresenter result = new QuestionPresenter();
 		result.addObserver(questionView);
 		return result;

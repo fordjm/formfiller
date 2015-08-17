@@ -1,6 +1,8 @@
 package formfiller.usecases.presentQuestion;
 
 import formfiller.ApplicationContext;
+import formfiller.boundaryCrossers.PresentableQuestion;
+import formfiller.boundaryCrossers.PresentableQuestion;
 import formfiller.entities.Prompt;
 import formfiller.usecases.Request;
 import formfiller.usecases.UseCase;
@@ -21,9 +23,9 @@ public class PresentQuestionUseCase implements UseCase {
 	}
 
 	PresentableQuestion makePresentableQuestion(Prompt requestedQuestion) {
-		PresentableQuestion result = new PresentableQuestionImpl();
+		PresentableQuestion result = new PresentableQuestion();
 		result.setId(requestedQuestion.getId());
-		result.setContent(requestedQuestion.getContent());
+		result.setMessage(requestedQuestion.getContent());
 		return result;
 	}
 }

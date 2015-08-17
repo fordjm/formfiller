@@ -1,10 +1,10 @@
 package formfiller.boundaries;
 
-import formfiller.usecases.navigation.PresentableNavigation;
+import formfiller.boundaryCrossers.PresentableNavigation;
 
-public interface NavigationResponseBoundary {
+public interface NavigationResponseBoundary extends Presenter {
 
-	PresentableNavigation getPresentableNavigation();
-	void setPresentableNavigation(PresentableNavigation presentableNavigation);
+	PresentableNavigation getPresentableResponse();
+	void setPresentableResponse(PresentableNavigation presentableNavigation);
 
 }

@@ -1,5 +1,6 @@
 package formfiller;
 
+import formfiller.boundaries.HandleUnfoundControllerResponseBoundary;
 import formfiller.boundaries.NavigationResponseBoundary;
 import formfiller.boundaries.PresentQuestionResponseBoundary;
 import formfiller.gateways.AnswerGateway;
@@ -13,4 +14,5 @@ public class ApplicationContext {
 	public static AnswerGateway answerGateway;
 	public static NavigationResponseBoundary navigationResponseBoundary;
 	public static PresentQuestionResponseBoundary presentQuestionResponseBoundary;
+	public static HandleUnfoundControllerResponseBoundary handleErrorResponseBoundary;
 }
