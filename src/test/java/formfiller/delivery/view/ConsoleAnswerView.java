@@ -7,7 +7,8 @@ import formfiller.delivery.UserRequestSource;
 import formfiller.usecases.PresentableAnswer;
 
 public class ConsoleAnswerView implements UserRequestSource {
-	Scanner stdIn = new Scanner(System.in);
+	private Scanner stdIn = new Scanner(System.in);
+	private boolean wasDisplayed = false;
 	
 	// Should almost definitely be in ViewModel.
 	// Is ViewModel/View split possible for ConsoleView?
@@ -19,8 +20,15 @@ public class ConsoleAnswerView implements UserRequestSource {
 	}
 	public void displayPresentableResponse() {
 		String answerMessage = answerMessage(presentableAnswer());
-		if (answerMessage.length() > 0)
+		if (answerMessage.length() > 0){
+			wasDisplayed = true;
 			System.out.println("Your current answer is: " + answerMessage);
+		}
+		else
+			wasDisplayed = false;
+	}
+	public boolean wasDisplayed() {
+		return wasDisplayed;
 	}
 	private PresentableAnswer presentableAnswer(){
 		return (PresentableAnswer) 
