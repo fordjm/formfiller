@@ -11,12 +11,12 @@ import org.mockito.Mockito;
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
 import formfiller.ApplicationContext;
 import formfiller.boundaries.Presenter;
+import formfiller.boundaryCrossers.PresentableAnswer;
 import formfiller.delivery.presenter.AnswerPresenter;
-import formfiller.usecases.PresentableAnswer;
 
 @RunWith(HierarchicalContextRunner.class)
-public class ConsoleAnswerViewTest {
-	private ConsoleAnswerView consoleAnswerView;
+public class ConsolePresentAnswerViewTest {
+	private ConsolePresentAnswerView consoleAnswerView;
 	
 	private PresentableAnswer presentableAnswer(String message){
 		PresentableAnswer result = new PresentableAnswer();
@@ -36,7 +36,7 @@ public class ConsoleAnswerViewTest {
 		
 		@Before
 		public void setUp() {
-			consoleAnswerView = new ConsoleAnswerView();
+			consoleAnswerView = new ConsolePresentAnswerView();
 			answerPresenter = makeMockPresenter();
 		}
 

@@ -6,12 +6,12 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class NullPromptTest<T> {
-	private NoPrompt nullPrompt;
+	private NoQuestion nullPrompt;
 	private final String emptyString = "";
 	
 	@Before
 	public void givenANullPrompt(){
-		nullPrompt = new NoPrompt();
+		nullPrompt = new NoQuestion();
 	}
 	
 	@Test

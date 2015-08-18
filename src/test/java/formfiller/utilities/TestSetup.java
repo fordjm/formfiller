@@ -5,14 +5,14 @@ import formfiller.delivery.presenter.HandleUnfoundControllerPresenter;
 import formfiller.delivery.presenter.NavigationPresenter;
 import formfiller.delivery.presenter.QuestionPresenter;
 import formfiller.entities.Question;
-import formfiller.gateways.MockQuestionGateway;
-import formfiller.gateways.MockAnswerGateway;
+import formfiller.gateways.InMemoryQuestionGateway;
+import formfiller.gateways.InMemoryAnswerGateway;
 
 // TODO:  Credit CleanCoders JCS TestSetup
 public class TestSetup {
 	public static void setupContext(){
-		ApplicationContext.questionGateway = new MockQuestionGateway();
-		ApplicationContext.answerGateway = new MockAnswerGateway();
+		ApplicationContext.questionGateway = new InMemoryQuestionGateway();
+		ApplicationContext.answerGateway = new InMemoryAnswerGateway();
 		ApplicationContext.answerPresenter = new AnswerPresenter();
 		ApplicationContext.handleUnfoundControllerPresenter = new HandleUnfoundControllerPresenter();
 		ApplicationContext.navigationPresenter = new NavigationPresenter();

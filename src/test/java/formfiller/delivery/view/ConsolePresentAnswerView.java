@@ -3,15 +3,16 @@ import java.util.Observable;
 import java.util.Scanner;
 
 import formfiller.ApplicationContext;
+import formfiller.boundaryCrossers.PresentableAnswer;
 import formfiller.delivery.UserRequestSource;
-import formfiller.usecases.PresentableAnswer;
 
-public class ConsoleAnswerView implements UserRequestSource {
+public class ConsolePresentAnswerView implements UserRequestSource {
 	private Scanner stdIn = new Scanner(System.in);
 	private boolean wasDisplayed = false;
 	
 	// Should almost definitely be in ViewModel.
 	// Is ViewModel/View split possible for ConsoleView?
+	// TODO:	Split user request gathering out of the answer view.
 	public String getUserRequestString() {
 		return stdIn.nextLine();
 	}

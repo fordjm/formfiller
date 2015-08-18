@@ -4,14 +4,12 @@ import formfiller.ApplicationContext;
 import formfiller.boundaries.UseCase;
 import formfiller.boundaryCrossers.PresentableQuestion;
 import formfiller.entities.Prompt;
-import formfiller.usecases.Request;
+import formfiller.request.Request;
 
 // As presented in the Clean Coders Java Case Study codecast
 // https://cleancoders.com/episode/case-study-episode-1/show
 // Retrieved 2015-08-06
 public class PresentQuestionUseCase implements UseCase {
-	
-	public PresentQuestionUseCase(){ }	
 
 	// Isolating the request that we never use.
 	public void execute(Request request){
@@ -19,8 +17,7 @@ public class PresentQuestionUseCase implements UseCase {
 	}
 
 	protected void execute(){
-		Prompt requestedQuestion = 
-				ApplicationContext.questionGateway.getQuestion();
+		Prompt requestedQuestion = ApplicationContext.questionGateway.getQuestion();
 		PresentableQuestion presentableQuestion = makePresentableQuestion(requestedQuestion);
 		ApplicationContext.questionPresenter.present(presentableQuestion);
 	}

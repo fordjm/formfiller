@@ -1,6 +1,6 @@
 package formfiller.usecases.navigation;
 
-import formfiller.usecases.Request;
+import formfiller.request.Request;
 
 public interface NavigationRequest extends Request {
 	public int getOffset();

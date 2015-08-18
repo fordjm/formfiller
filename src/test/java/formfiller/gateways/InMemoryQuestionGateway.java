@@ -8,12 +8,12 @@ import formfiller.entities.Prompt;
 import formfiller.entities.Question;
 import formfiller.entities.StartPrompt;
 
-public class MockQuestionGateway implements QuestionGateway {
+public class InMemoryQuestionGateway implements QuestionGateway {
 	private Prompt currentQuestion;
 	private int currentIndex = -1;
 	private List<Question> questionSource;
 			
-	public MockQuestionGateway(){
+	public InMemoryQuestionGateway(){
 		questionSource = new ArrayList<Question>();
 		setCurrentQuestionToStartPrompt();
 	}

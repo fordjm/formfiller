@@ -6,7 +6,7 @@ import formfiller.ApplicationContext;
 import formfiller.boundaryCrossers.PresentableQuestion;
 import formfiller.delivery.View;
 
-public class ConsoleQuestionView implements View {
+public class ConsolePresentQuestionView implements View {
 	PresentableQuestion question;
 
 	public void update(Observable presenter, Object input) {

@@ -1,4 +1,4 @@
-package formfiller.usecases;
+package formfiller.request;
 
 import java.util.HashMap;
 

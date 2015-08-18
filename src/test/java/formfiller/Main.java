@@ -7,10 +7,10 @@ import formfiller.delivery.controller.PresentQuestionController;
 import formfiller.delivery.router.Router;
 import formfiller.delivery.userRequestParser.ConsoleUserRequestParser;
 import formfiller.delivery.userRequestParser.ParsedUserRequest;
-import formfiller.delivery.view.ConsoleAnswerView;
+import formfiller.delivery.view.ConsolePresentAnswerView;
 import formfiller.delivery.view.ConsoleHandleUnfoundControllerView;
 import formfiller.delivery.view.ConsoleNavigationView;
-import formfiller.delivery.view.ConsoleQuestionView;
+import formfiller.delivery.view.ConsolePresentQuestionView;
 import formfiller.utilities.TestSetup;
 
 public class Main {
@@ -34,9 +34,9 @@ public class Main {
 		ApplicationContext.handleUnfoundControllerPresenter.addObserver(
 				new ConsoleHandleUnfoundControllerView());
 		ApplicationContext.navigationPresenter.addObserver(new ConsoleNavigationView());
-		ApplicationContext.questionPresenter.addObserver(new ConsoleQuestionView());
+		ApplicationContext.questionPresenter.addObserver(new ConsolePresentQuestionView());
 		
-		userRequestSource = new ConsoleAnswerView();
+		userRequestSource = new ConsolePresentAnswerView();
 		userRequestParser = new ConsoleUserRequestParser();
 		router = makeRouter();
 	}

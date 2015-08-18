@@ -4,7 +4,7 @@ import formfiller.ApplicationContext;
 import formfiller.boundaries.UseCase;
 import formfiller.boundaryCrossers.PresentableHandleUnfoundController;
 import formfiller.enums.ActionOutcome;
-import formfiller.usecases.Request;
+import formfiller.request.Request;
 
 public class HandleUnfoundControllerUseCase implements UseCase {	
 

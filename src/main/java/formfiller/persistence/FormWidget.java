@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import formfiller.entities.NoPrompt;
+import formfiller.entities.NoQuestion;
 import formfiller.entities.NoAnswer;
 import formfiller.entities.Prompt;
 import formfiller.entities.Answer;
@@ -17,7 +17,7 @@ import formfiller.entities.Constraint;
 
 public class FormWidget {
 
-	private static Prompt prompt = new NoPrompt();
+	private static Prompt prompt = new NoQuestion();
 	private static Answer response = new NoAnswer();
 	private static Map<ContentConstraint, Constraint> contentConstraints = 
 			new HashMap<ContentConstraint, Constraint>();
@@ -46,7 +46,7 @@ public class FormWidget {
 	}
 	
 	public static boolean hasPrompt(){
-		return !(prompt instanceof NoPrompt);
+		return !(prompt instanceof NoQuestion);
 	}
 	
 	public static void setCardinality(Cardinality c){
@@ -119,7 +119,7 @@ public class FormWidget {
 	}
 
 	private static void clearPrompt() {
-		prompt = new NoPrompt();
+		prompt = new NoQuestion();
 	}
 
 	private static void clearRequired() {

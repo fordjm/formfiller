@@ -12,9 +12,9 @@ import org.mockito.Mockito;
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
 import formfiller.ApplicationContext;
 import formfiller.boundaryCrossers.PresentableQuestion;
+import formfiller.request.Request;
+import formfiller.request.RequestBuilderImpl.PresentQuestionRequest;
 import formfiller.usecases.presentQuestion.PresentQuestionUseCase;
-import formfiller.usecases.Request;
-import formfiller.usecases.RequestBuilderImpl.PresentQuestionRequest;
 import formfiller.utilities.TestSetup;
 import formfiller.utilities.MockCreation;
 

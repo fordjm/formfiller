@@ -1,6 +1,6 @@
 package formfiller.usecases.handleUnfoundController;
 
-import formfiller.usecases.Request;
+import formfiller.request.Request;
 
 public interface HandleUnfoundControllerRequest extends Request {
 	public String getMessage();

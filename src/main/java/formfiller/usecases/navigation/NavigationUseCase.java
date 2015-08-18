@@ -5,7 +5,7 @@ import formfiller.boundaries.UseCase;
 import formfiller.boundaryCrossers.PresentableNavigation;
 import formfiller.entities.Prompt;
 import formfiller.enums.ActionOutcome;
-import formfiller.usecases.Request;
+import formfiller.request.Request;
 
 public class NavigationUseCase implements UseCase {
 	

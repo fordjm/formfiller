@@ -1,8 +1,8 @@
 package formfiller.entities;
 
-public class NoPrompt implements Prompt {
+public class NoQuestion implements Prompt {
 	
-	public NoPrompt(){
+	public NoQuestion(){
 	}
 	public String getContent() {
 		return "";

@@ -1,4 +1,4 @@
-package formfiller.usecases;
+package formfiller.request;
 
 public interface Request {
 

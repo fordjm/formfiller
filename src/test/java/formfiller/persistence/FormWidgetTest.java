@@ -17,7 +17,7 @@ import org.junit.runner.RunWith;
 
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
 import formfiller.entities.Constraint;
-import formfiller.entities.NoPrompt;
+import formfiller.entities.NoQuestion;
 import formfiller.entities.NoAnswer;
 import formfiller.entities.Prompt;
 import formfiller.entities.Answer;
@@ -34,7 +34,7 @@ public class FormWidgetTest {
 	static Answer addedResponse;
 	static Answer newResponse;
 	static void assertPromptIsNullPrompt() {
-		assertTrue(FormWidget.getPrompt() instanceof NoPrompt);
+		assertTrue(FormWidget.getPrompt() instanceof NoQuestion);
 		assertEquals("", FormWidget.getPrompt().getId());
 		assertEquals("", FormWidget.getPrompt().getContent());
 	}
