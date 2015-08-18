@@ -13,9 +13,10 @@ public class ConsoleNavigationView implements View {
 		displayPresentableResponse();
 	}
 	public void displayPresentableResponse() {
-		PresentableNavigation presentableNavigation = 
+		PresentableNavigation presentableNavigation = (PresentableNavigation)
 				ApplicationContext.navigationPresenter.getPresentableResponse();
 		if (presentableNavigation.getOutcome() == ActionOutcome.FAILED)
 			System.out.println(presentableNavigation.getMessage());
 	}
+	
 }

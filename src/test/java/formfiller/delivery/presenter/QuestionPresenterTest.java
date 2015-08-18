@@ -26,7 +26,7 @@ public class QuestionPresenterTest {
 	}
 	@Test
 	public void canPresentQuestion() {
-		QuestionPresenterImpl questionPresenter = new QuestionPresenterImpl();
+		QuestionPresenter questionPresenter = new QuestionPresenter();
 		questionPresenter.setPresentableResponse(presentableQuestion);
 		assertEquals(presentableQuestion, questionPresenter.getPresentableResponse());
 	}

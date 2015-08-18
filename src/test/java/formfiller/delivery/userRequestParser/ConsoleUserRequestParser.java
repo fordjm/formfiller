@@ -1,5 +1,7 @@
 package formfiller.delivery.userRequestParser;
 
+import formfiller.delivery.UserRequestParser;
+
 //Adapted from:
 //https://github.com/cleancoders/CleanCodeCaseStudy/blob/master/src/cleancoderscom/http/RequestParser.java
 //Retrieved 2015-08-14

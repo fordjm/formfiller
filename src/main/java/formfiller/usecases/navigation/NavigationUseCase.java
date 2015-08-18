@@ -26,7 +26,7 @@ public class NavigationUseCase implements UseCase {
 			presentableNavigation = makeSucceededPresentableNavigation();
 		}
 		ApplicationContext.navigationPresenter.
-				setPresentableResponse(presentableNavigation);
+				present(presentableNavigation);
 	}
 	private boolean isIndexAdvancing(int indexOffset) {
 		return indexOffset > 0;
@@ -41,17 +41,19 @@ public class NavigationUseCase implements UseCase {
 	
 	// TODO:  Replace real PresentableNavigations with mocks
 	private PresentableNavigation makeFailedPresentableNavigation() {
-		return makePresentableNavigation(
-				ActionOutcome.FAILED, getAnswerRequiredMessage());
+		return makePresentableNavigation(getAnswerRequiredMessage(), 
+				ActionOutcome.FAILED);
 	}
 	private PresentableNavigation makeSucceededPresentableNavigation() {
-		return makePresentableNavigation(
-				ActionOutcome.SUCCEEDED, "");
+		return makePresentableNavigation("", ActionOutcome.SUCCEEDED);
 	}
-	private PresentableNavigation makePresentableNavigation(
-			ActionOutcome navigationOutcome, String message) {
-		return new PresentableNavigation(message, navigationOutcome);
-	}	
+	private PresentableNavigation makePresentableNavigation(String message, 
+			ActionOutcome outcome) {
+		PresentableNavigation result = new PresentableNavigation();
+		result.setMessage(message);
+		result.setOutcome(outcome);
+		return result;
+	}
 	private Prompt getCurrentQuestion() {
 		return ApplicationContext.questionGateway.getQuestion();
 	}

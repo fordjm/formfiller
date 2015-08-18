@@ -19,7 +19,7 @@ public class HandleUnfoundControllerTest {
 	private ParsedUserRequest request;
 	
 	private PresentableHandleUnfoundController getPresentableUnfoundControllerResponse(){
-		PresentableHandleUnfoundController result = 
+		PresentableHandleUnfoundController result = (PresentableHandleUnfoundController)
 				ApplicationContext.handleUnfoundControllerPresenter.getPresentableResponse();
 		return result;
 	}
@@ -31,8 +31,7 @@ public class HandleUnfoundControllerTest {
 		request = RouterTestHelper.makeMockParsedRequest("");
 	}
 	@Test
-	public void canHandle() {
-		
+	public void canHandle() {		
 		controller.handle(request);
 		
 		assertThat(getPresentableUnfoundControllerResponse().getOutcome(), 

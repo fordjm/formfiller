@@ -34,7 +34,7 @@ public class PresentQuestionTest {
 		@Test
 		public void whenPresentQuestionRuns_ThenGetQuestionGetsAStartPrompt(){
 			presentQuestionUseCase.execute(mockRequest);
-			presentedQuestion = 
+			presentedQuestion = (PresentableQuestion)
 					ApplicationContext.questionPresenter.getPresentableResponse();
 			assertThat(presentedQuestion.getId(), is("start"));
 			assertThat(presentedQuestion.getMessage(), 
@@ -50,7 +50,7 @@ public class PresentQuestionTest {
 		@Test
 		public void whenPresentQuestionRuns_ThenGetQuestionGetsGivenQuestion(){
 			presentQuestionUseCase.execute(mockRequest);
-			presentedQuestion = 
+			presentedQuestion = (PresentableQuestion)
 					ApplicationContext.questionPresenter.getPresentableResponse();
 			assertThat(presentedQuestion.getId(), is("name"));
 			assertThat(presentedQuestion.getMessage(), is("What is your name?"));

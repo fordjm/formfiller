@@ -13,7 +13,8 @@ public class ConsoleHandleUnfoundControllerView implements View {
 	}
 	public void displayPresentableResponse() {
 		PresentableHandleUnfoundController presentableHandleUnfoundController = 
-				ApplicationContext.handleUnfoundControllerPresenter.getPresentableResponse();
+				(PresentableHandleUnfoundController)
+						ApplicationContext.handleUnfoundControllerPresenter.getPresentableResponse();
 		System.out.println(presentableHandleUnfoundController.getMessage());
 	}
 

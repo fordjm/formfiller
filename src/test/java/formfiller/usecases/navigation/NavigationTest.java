@@ -151,7 +151,7 @@ public class NavigationTest {
 			private PresentableNavigation presentedNavigation;
 			
 			private PresentableNavigation updatePresentedNavigation() {
-				return presentedNavigation = 
+				return presentedNavigation = (PresentableNavigation)
 						ApplicationContext.navigationPresenter.getPresentableResponse();
 			}
 			

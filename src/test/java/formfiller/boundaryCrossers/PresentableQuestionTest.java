@@ -1,4 +1,4 @@
-package formfiller.usecases.presentQuestion;
+package formfiller.boundaryCrossers;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -6,8 +6,6 @@ import static org.junit.Assert.assertThat;
 import org.junit.Before;
 import org.junit.Test;
 
-import formfiller.boundaryCrossers.PresentableQuestion;
-import formfiller.boundaryCrossers.PresentableQuestion;
 import formfiller.entities.Question;
 import formfiller.utilities.MockCreation;
 

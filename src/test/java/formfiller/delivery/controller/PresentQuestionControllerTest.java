@@ -17,6 +17,10 @@ public class PresentQuestionControllerTest {
 	ParsedUserRequest mockParsedInput;
 	PresentableQuestion presentableQuestion;
 	
+	private PresentableQuestion presentableQuestion(){
+		return (PresentableQuestion) ApplicationContext.questionPresenter.getPresentableResponse();
+	}
+	
 	@Before
 	public void setupTest(){
 		TestSetup.setupContext();
@@ -28,7 +32,7 @@ public class PresentQuestionControllerTest {
 	@Test
 	public void requestingPresentableQuestionPutsQuestionAtBoundary() {
 		presentQuestionController.handle(mockParsedInput);
-		presentableQuestion = ApplicationContext.questionPresenter.getPresentableResponse();
+		presentableQuestion = presentableQuestion();
 		assertEquals(presentableQuestion.getId(), "name");
 		assertEquals(presentableQuestion.getMessage(), "What is your name?");
 	}

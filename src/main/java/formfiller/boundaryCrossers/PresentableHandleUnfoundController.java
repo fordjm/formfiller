@@ -17,4 +17,5 @@ public class PresentableHandleUnfoundController implements PresentableResponse{
 	public String getMessage() {
 		return message;
 	}
+	
 }

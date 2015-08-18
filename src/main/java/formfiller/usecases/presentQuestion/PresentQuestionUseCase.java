@@ -3,7 +3,6 @@ package formfiller.usecases.presentQuestion;
 import formfiller.ApplicationContext;
 import formfiller.boundaries.UseCase;
 import formfiller.boundaryCrossers.PresentableQuestion;
-import formfiller.boundaryCrossers.PresentableQuestion;
 import formfiller.entities.Prompt;
 import formfiller.usecases.Request;
 
@@ -14,18 +13,23 @@ public class PresentQuestionUseCase implements UseCase {
 	
 	public PresentQuestionUseCase(){ }	
 
+	// Isolating the request that we never use.
 	public void execute(Request request){
-		Prompt requestedQuestion = 
-				ApplicationContext.questionGateway.findQuestionByIndexOffset(0);
-		PresentableQuestion presentableQuestion = makePresentableQuestion(requestedQuestion);
-		ApplicationContext.questionPresenter.
-				setPresentableResponse(presentableQuestion);
+		execute();
 	}
 
+	protected void execute(){
+		Prompt requestedQuestion = 
+				ApplicationContext.questionGateway.getQuestion();
+		PresentableQuestion presentableQuestion = makePresentableQuestion(requestedQuestion);
+		ApplicationContext.questionPresenter.
+				present(presentableQuestion);
+	}
 	PresentableQuestion makePresentableQuestion(Prompt requestedQuestion) {
 		PresentableQuestion result = new PresentableQuestion();
 		result.setId(requestedQuestion.getId());
 		result.setMessage(requestedQuestion.getContent());
 		return result;
 	}
+	
 }

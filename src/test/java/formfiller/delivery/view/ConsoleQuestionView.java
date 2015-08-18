@@ -13,7 +13,8 @@ public class ConsoleQuestionView implements View {
 		displayPresentableResponse();
 	}
 	public void displayPresentableResponse() {
-		question = ApplicationContext.questionPresenter.getPresentableResponse();
+		question = (PresentableQuestion) 
+				ApplicationContext.questionPresenter.getPresentableResponse();
 		System.out.println(question.getMessage());
 	}
 

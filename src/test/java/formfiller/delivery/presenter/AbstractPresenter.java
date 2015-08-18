@@ -15,11 +15,14 @@ public abstract class AbstractPresenter extends Observable implements Presenter 
 	public PresentableResponse getPresentableResponse() {
 		return presentableResponse;
 	}	
-	public void setPresentableResponse(PresentableResponse presentableResponse){
+	public void present(PresentableResponse presentableResponse){
+		if (presentableResponse == null) 
+			throw new IllegalPresentableResponse();
 		setPresentableResponseFieldValue(presentableResponse);
 		setChanged();
 		notifyObservers();
 	}
 	protected abstract void setPresentableResponseFieldValue(PresentableResponse presentableResponse);
 
+	public class IllegalPresentableResponse extends RuntimeException { }
 }

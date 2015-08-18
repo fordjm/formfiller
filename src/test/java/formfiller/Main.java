@@ -1,12 +1,12 @@
 package formfiller;
 
+import formfiller.delivery.UserRequestParser;
 import formfiller.delivery.UserRequestSource;
 import formfiller.delivery.controller.NavigationController;
 import formfiller.delivery.controller.PresentQuestionController;
 import formfiller.delivery.router.Router;
 import formfiller.delivery.userRequestParser.ConsoleUserRequestParser;
 import formfiller.delivery.userRequestParser.ParsedUserRequest;
-import formfiller.delivery.userRequestParser.UserRequestParser;
 import formfiller.delivery.view.ConsoleAnswerView;
 import formfiller.delivery.view.ConsoleHandleUnfoundControllerView;
 import formfiller.delivery.view.ConsoleNavigationView;

@@ -1,19 +1,18 @@
 package formfiller.delivery.presenter;
 
-import formfiller.boundaries.QuestionPresenter;
 import formfiller.boundaryCrossers.PresentableQuestion;
 import formfiller.boundaryCrossers.PresentableResponse;
 
-public class QuestionPresenterImpl extends AbstractPresenter implements QuestionPresenter {
+public class QuestionPresenter extends AbstractPresenter {
 	PresentableQuestion presentableQuestion;
 	
-	public QuestionPresenterImpl(){	}
+	public QuestionPresenter(){	}
 
 	public PresentableQuestion getPresentableResponse() {
 		return presentableQuestion;
 	}
 	public void setPresentableResponse(PresentableQuestion presentableQuestion) {
-		super.setPresentableResponse(presentableQuestion);
+		super.present(presentableQuestion);
 	}
 	protected void setPresentableResponseFieldValue(PresentableResponse presentableResponse) {
 		presentableQuestion = (PresentableQuestion) presentableResponse;
