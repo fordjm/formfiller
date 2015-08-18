@@ -2,7 +2,6 @@ package formfiller.usecases.navigation;
 
 import formfiller.ApplicationContext;
 import formfiller.boundaries.UseCase;
-import formfiller.boundaryCrossers.PresentableHandleUnfoundController;
 import formfiller.boundaryCrossers.PresentableNavigation;
 import formfiller.entities.Prompt;
 import formfiller.enums.ActionOutcome;
@@ -25,8 +24,7 @@ public class NavigationUseCase implements UseCase {
 			ApplicationContext.questionGateway.findQuestionByIndexOffset(indexOffset);
 			presentableNavigation = makeSucceededPresentableNavigation();
 		}
-		ApplicationContext.navigationPresenter.
-				present(presentableNavigation);
+		ApplicationContext.navigationPresenter.present(presentableNavigation);
 	}
 	private boolean isIndexAdvancing(int indexOffset) {
 		return indexOffset > 0;

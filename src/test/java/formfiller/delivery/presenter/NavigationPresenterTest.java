@@ -10,6 +10,7 @@ import org.mockito.Mockito;
 
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
 import formfiller.boundaryCrossers.PresentableNavigation;
+import formfiller.delivery.AbstractPresenter;
 import formfiller.enums.ActionOutcome;
 
 @RunWith(HierarchicalContextRunner.class)
@@ -35,13 +36,9 @@ public class NavigationPresenterTest {
 		presenter = new NavigationPresenter();
 	}
 	
-	public class GivenANullPresentableNavigation {
-		
-		@Test(expected = AbstractPresenter.IllegalPresentableResponse.class)
-		public void setPresentableResponseThrowsException(){
-			presenter.setPresentableResponse(null);
-		}
-		
+	@Test(expected = AbstractPresenter.IllegalPresentableResponse.class)
+	public void settingPresentableResponseToNullThrowsException(){
+		presenter.present(null);
 	}
 	
 	public class GivenAPresentableNavigation {
@@ -52,7 +49,7 @@ public class NavigationPresenterTest {
 		}
 		@Test
 		public void getPresentableResponseReturnsGivenPresentableNavigation(){
-			presenter.setPresentableResponse(presentableNavigation);
+			presenter.present(presentableNavigation);
 			
 			PresentableNavigation presentableResponse = presenter.getPresentableResponse();
 			

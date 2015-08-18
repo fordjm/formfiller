@@ -1,5 +1,6 @@
 package formfiller.utilities;
 import formfiller.ApplicationContext;
+import formfiller.delivery.presenter.AnswerPresenter;
 import formfiller.delivery.presenter.HandleUnfoundControllerPresenter;
 import formfiller.delivery.presenter.NavigationPresenter;
 import formfiller.delivery.presenter.QuestionPresenter;
@@ -12,6 +13,7 @@ public class TestSetup {
 	public static void setupContext(){
 		ApplicationContext.questionGateway = new MockQuestionGateway();
 		ApplicationContext.answerGateway = new MockAnswerGateway();
+		ApplicationContext.answerPresenter = new AnswerPresenter();
 		ApplicationContext.handleUnfoundControllerPresenter = new HandleUnfoundControllerPresenter();
 		ApplicationContext.navigationPresenter = new NavigationPresenter();
 		ApplicationContext.questionPresenter = new QuestionPresenter();

@@ -22,8 +22,7 @@ public class PresentQuestionUseCase implements UseCase {
 		Prompt requestedQuestion = 
 				ApplicationContext.questionGateway.getQuestion();
 		PresentableQuestion presentableQuestion = makePresentableQuestion(requestedQuestion);
-		ApplicationContext.questionPresenter.
-				present(presentableQuestion);
+		ApplicationContext.questionPresenter.present(presentableQuestion);
 	}
 	PresentableQuestion makePresentableQuestion(Prompt requestedQuestion) {
 		PresentableQuestion result = new PresentableQuestion();

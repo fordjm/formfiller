@@ -1,12 +1,8 @@
 package formfiller.usecases;
 
-public class PresentableAnswer<T> {
-	public Integer id;
-	public T content;
-	
-	public PresentableAnswer(int id, T content){
-		this.id = id;
-		this.content = content;
-	}
+import formfiller.delivery.AbstractPresentableResponse;
+
+// TODO:	Extends how, exactly? (will have format and such)
+public class PresentableAnswer extends AbstractPresentableResponse {
 	
 }

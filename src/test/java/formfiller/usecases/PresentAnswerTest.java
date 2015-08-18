@@ -22,27 +22,8 @@ public class PresentAnswerTest<T> {
 		TestSetup.setupContext();
 		presentAnswerUseCase = new PresentAnswerUseCase();
 	}
-	public class GivenNoAnswer{
-		@Test
-		public void whenPresentAnswerRuns_ThenItPresentsNoAnswers(){
-			PresentableAnswer<T> presentableAnswer = presentAnswerUseCase.presentAnswer();
-			assertThat(presentableAnswer.id, is(-1));
-			assertThat(presentableAnswer.content, is(equalTo((Object) "")));
-		}		
-	}	
-	public class GivenAnAnswer{
-		@Before
-		public void givenAnAnswer(){
-			Answer answer = new AnswerImpl<String>(0, "Response content");
-			ApplicationContext.answerGateway.save(answer);
-			ApplicationContext.answerGateway.findAnswerByIndexOffset(1);
-		}
-		@Test
-		public void whenPresentAnswerRuns_ThenItPresentsAnAnswer(){
-			PresentableAnswer<T> presentableResponse = 
-					presentAnswerUseCase.presentAnswer();
-			assertThat(presentableResponse.id, is(0));
-			assertThat(presentableResponse.content, is(equalTo((Object) "Response content")));
-		}
+	@Test
+	public void executingDummyUseCaseDoesNothing(){
+		presentAnswerUseCase.execute(null);
 	}
 }

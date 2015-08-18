@@ -22,7 +22,10 @@ public class HandleUnfoundControllerUseCase implements UseCase {
 	}
 	private PresentableHandleUnfoundController makePresentableUnfoundControllerResponse(
 			ActionOutcome outcome, String message) {
-		return new PresentableHandleUnfoundController(outcome, message);
+		PresentableHandleUnfoundController result = new PresentableHandleUnfoundController();
+		result.setMessage(message);
+		result.setOutcome(outcome);
+		return result;
 	}	
 
 }

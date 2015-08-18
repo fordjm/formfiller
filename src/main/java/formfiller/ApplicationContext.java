@@ -10,7 +10,8 @@ import formfiller.gateways.QuestionGateway;
 public class ApplicationContext {
 	public static QuestionGateway questionGateway;
 	public static AnswerGateway answerGateway;
+	public static Presenter answerPresenter;
+	public static Presenter handleUnfoundControllerPresenter;
 	public static Presenter navigationPresenter;
 	public static Presenter questionPresenter;
-	public static Presenter handleUnfoundControllerPresenter;
 }
