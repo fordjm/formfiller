@@ -16,7 +16,7 @@ import formfiller.entities.StartPrompt;
 import formfiller.enums.ActionOutcome;
 import formfiller.usecases.navigation.NavigationUseCase;
 import formfiller.ApplicationContext;
-import formfiller.boundaryCrossers.PresentableNavigation;
+import formfiller.delivery.PresentableResponseImpl;
 import formfiller.utilities.TestSetup;
 import formfiller.utilities.MockCreation;
 
@@ -47,6 +47,7 @@ public class NavigationTest {
 			@Test
 			public void gettingQuestionGetsStartPrompt(){
 				useCase.execute(mockRequest);
+				assertEquals(useCase, ApplicationContext.executedUseCases.peek().getUseCase());
 				assertThat(ApplicationContext.questionGateway.getQuestion(), 
 						is(instanceOf(StartPrompt.class)));
 			}
@@ -148,10 +149,10 @@ public class NavigationTest {
 		}
 		
 		public class GivenAnswerIsRequired{
-			private PresentableNavigation presentedNavigation;
+			private PresentableResponseImpl presentedNavigation;
 			
-			private PresentableNavigation updatePresentedNavigation() {
-				return presentedNavigation = (PresentableNavigation)
+			private PresentableResponseImpl updatePresentedNavigation() {
+				return presentedNavigation = (PresentableResponseImpl)
 						ApplicationContext.navigationPresenter.getPresentableResponse();
 			}
 			

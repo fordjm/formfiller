@@ -2,29 +2,37 @@ package formfiller.usecases.navigation;
 
 import formfiller.ApplicationContext;
 import formfiller.boundaries.UseCase;
-import formfiller.boundaryCrossers.PresentableNavigation;
+import formfiller.boundaryCrossers.PresentableResponse;
+import formfiller.delivery.PresentableResponseImpl;
+import formfiller.entities.ExecutedUseCaseImpl;
 import formfiller.entities.Prompt;
 import formfiller.enums.ActionOutcome;
 import formfiller.request.Request;
 
 public class NavigationUseCase implements UseCase {
-	
-	public NavigationUseCase() { }
+	private ActionOutcome outcome;
+	private String message;
 	
 	public void execute(Request request) {
 		NavigationRequest navigationRequest = (NavigationRequest) request;
 		navigateByIndexOffset(navigationRequest.getOffset());
+		ApplicationContext.executedUseCases.push(
+				new ExecutedUseCaseImpl(this, outcome, message));
 	}
+	
 	private void navigateByIndexOffset(int indexOffset) {	
-		PresentableNavigation presentableNavigation;
+		PresentableResponse presentableResponse;
 		if (isIndexAdvancing(indexOffset) && isAnswerRequiredButAbsent()){
-			presentableNavigation = makeFailedPresentableNavigation();
+			setOutcome(ActionOutcome.FAILED);
+			setMessage(getAnswerRequiredMessage());
 		}
 		else{
+			setOutcome(ActionOutcome.SUCCEEDED);
 			ApplicationContext.questionGateway.findQuestionByIndexOffset(indexOffset);
-			presentableNavigation = makeSucceededPresentableNavigation();
+			setMessage("");
 		}
-		ApplicationContext.navigationPresenter.present(presentableNavigation);
+		presentableResponse = makePresentableNavigation();
+		ApplicationContext.navigationPresenter.present(presentableResponse);
 	}
 	private boolean isIndexAdvancing(int indexOffset) {
 		return indexOffset > 0;
@@ -36,27 +44,23 @@ public class NavigationUseCase implements UseCase {
 				!currentQuestion.hasAnswer();
 		return result;
 	}
-	
-	// TODO:  Replace real PresentableNavigations with mocks
-	private PresentableNavigation makeFailedPresentableNavigation() {
-		return makePresentableNavigation(getAnswerRequiredMessage(), 
-				ActionOutcome.FAILED);
-	}
-	private PresentableNavigation makeSucceededPresentableNavigation() {
-		return makePresentableNavigation("", ActionOutcome.SUCCEEDED);
-	}
-	private PresentableNavigation makePresentableNavigation(String message, 
-			ActionOutcome outcome) {
-		PresentableNavigation result = new PresentableNavigation();
-		result.setMessage(message);
-		result.setOutcome(outcome);
-		return result;
-	}
 	private Prompt getCurrentQuestion() {
 		return ApplicationContext.questionGateway.getQuestion();
 	}
 	private String getAnswerRequiredMessage(){
 		return "Sorry, you cannot move ahead.  "
 				+ "The current question requires a response.";
+	}
+	private void setOutcome(ActionOutcome actionOutcome) {
+		outcome = actionOutcome;
+	}	
+	private void setMessage(String message) {
+		this.message = message;
+	}
+	private PresentableResponse makePresentableNavigation() {
+		PresentableResponse result = new PresentableResponseImpl();
+		result.setMessage(message);
+		result.setOutcome(outcome);
+		return result;
 	}
 }

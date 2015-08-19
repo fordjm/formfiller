@@ -1,20 +1,20 @@
 package formfiller.delivery.presenter;
 
-import formfiller.boundaryCrossers.PresentableNavigation;
+import formfiller.delivery.PresentableResponseImpl;
 import formfiller.boundaryCrossers.PresentableResponse;
 import formfiller.delivery.AbstractPresenter;
 
 public class NavigationPresenter extends AbstractPresenter {
-	PresentableNavigation presentableNavigation;
+	PresentableResponseImpl presentableNavigation;
 
-	public PresentableNavigation getPresentableResponse() {
+	public PresentableResponseImpl getPresentableResponse() {
 		return presentableNavigation;
 	}
-	public void present(PresentableNavigation presentableNavigation) {
+	public void present(PresentableResponseImpl presentableNavigation) {
 		super.present(presentableNavigation);
 	}	
 	protected void setPresentableResponseFieldValue(PresentableResponse presentableResponse) {
-		presentableNavigation = (PresentableNavigation) presentableResponse;
+		presentableNavigation = (PresentableResponseImpl) presentableResponse;
 	}
 
 }

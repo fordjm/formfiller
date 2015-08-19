@@ -3,7 +3,7 @@ package formfiller.delivery.view;
 import java.util.Observable;
 
 import formfiller.ApplicationContext;
-import formfiller.boundaryCrossers.PresentableHandleUnfoundController;
+import formfiller.boundaryCrossers.PresentableResponse;
 import formfiller.delivery.View;
 
 public class ConsoleHandleUnfoundControllerView implements View {
@@ -12,9 +12,8 @@ public class ConsoleHandleUnfoundControllerView implements View {
 		displayPresentableResponse();
 	}
 	public void displayPresentableResponse() {
-		PresentableHandleUnfoundController presentableHandleUnfoundController = 
-				(PresentableHandleUnfoundController)
-						ApplicationContext.handleUnfoundControllerPresenter.getPresentableResponse();
+		PresentableResponse presentableHandleUnfoundController = 
+				ApplicationContext.handleUnfoundControllerPresenter.getPresentableResponse();
 		System.out.println(presentableHandleUnfoundController.getMessage());
 	}
 

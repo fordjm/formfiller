@@ -7,7 +7,7 @@ import formfiller.entities.NoAnswer;
 import formfiller.entities.Answer;
 
 public class InMemoryAnswerGateway implements AnswerGateway {
-	private Answer currentResponse = (Answer) new NoAnswer();
+	private Answer currentResponse = new NoAnswer();
 	private int currentIndex = -1;
 	List<Answer> responses;
 	

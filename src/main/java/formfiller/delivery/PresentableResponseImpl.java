@@ -1,12 +1,11 @@
-package formfiller.boundaryCrossers;
+package formfiller.delivery;
 
+import formfiller.boundaryCrossers.PresentableResponse;
 import formfiller.enums.ActionOutcome;
 
-public class PresentableNavigation implements PresentableResponse {
+public class PresentableResponseImpl implements PresentableResponse {
 	String message = "";
-	ActionOutcome outcome;
-
-	public PresentableNavigation() { }
+	ActionOutcome outcome = ActionOutcome.NO_OUTCOME;
 
 	public String getMessage() {
 		return message;

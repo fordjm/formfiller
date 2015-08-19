@@ -7,7 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import formfiller.ApplicationContext;
-import formfiller.boundaryCrossers.PresentableHandleUnfoundController;
+import formfiller.boundaryCrossers.PresentableResponse;
 import formfiller.delivery.router.RouterTestHelper;
 import formfiller.delivery.userRequestParser.ParsedUserRequest;
 import formfiller.enums.ActionOutcome;
@@ -18,8 +18,8 @@ public class HandleUnfoundControllerTest {
 	private HandleUnfoundController controller;
 	private ParsedUserRequest request;
 	
-	private PresentableHandleUnfoundController getPresentableUnfoundControllerResponse(){
-		PresentableHandleUnfoundController result = (PresentableHandleUnfoundController)
+	private PresentableResponse getPresentableUnfoundControllerResponse(){
+		PresentableResponse result = 
 				ApplicationContext.handleUnfoundControllerPresenter.getPresentableResponse();
 		return result;
 	}

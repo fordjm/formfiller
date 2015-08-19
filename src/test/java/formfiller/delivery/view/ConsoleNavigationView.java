@@ -3,7 +3,7 @@ package formfiller.delivery.view;
 import java.util.Observable;
 
 import formfiller.ApplicationContext;
-import formfiller.boundaryCrossers.PresentableNavigation;
+import formfiller.boundaryCrossers.PresentableResponse;
 import formfiller.delivery.View;
 import formfiller.enums.ActionOutcome;
 
@@ -13,7 +13,7 @@ public class ConsoleNavigationView implements View {
 		displayPresentableResponse();
 	}
 	public void displayPresentableResponse() {
-		PresentableNavigation presentableNavigation = (PresentableNavigation)
+		PresentableResponse presentableNavigation = 
 				ApplicationContext.navigationPresenter.getPresentableResponse();
 		if (presentableNavigation.getOutcome() == ActionOutcome.FAILED)
 			System.out.println(presentableNavigation.getMessage());

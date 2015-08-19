@@ -9,23 +9,23 @@ import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
-import formfiller.boundaryCrossers.PresentableNavigation;
+import formfiller.boundaryCrossers.PresentableResponse;
 import formfiller.delivery.AbstractPresenter;
+import formfiller.delivery.PresentableResponseImpl;
 import formfiller.enums.ActionOutcome;
 
 @RunWith(HierarchicalContextRunner.class)
 public class NavigationPresenterTest {
-
 	private NavigationPresenter presenter;
-	private PresentableNavigation presentableNavigation;
+	private PresentableResponse presentableNavigation;
 
-	PresentableNavigation makeMockPresentableNavigationSucceeded() {
+	PresentableResponse makeMockPresentableNavigationSucceeded() {
 		return makeMockPresentableNavigation("", 
 				ActionOutcome.SUCCEEDED);
 	}
-	private PresentableNavigation makeMockPresentableNavigation(String message, 
+	private PresentableResponse makeMockPresentableNavigation(String message, 
 			ActionOutcome outcome) {
-		PresentableNavigation result = Mockito.mock(PresentableNavigation.class);
+		PresentableResponseImpl result = Mockito.mock(PresentableResponseImpl.class);
 		Mockito.when(result.getMessage()).thenReturn(message);
 		Mockito.when(result.getOutcome()).thenReturn(outcome);
 		return result;
@@ -41,7 +41,7 @@ public class NavigationPresenterTest {
 		presenter.present(null);
 	}
 	
-	public class GivenAPresentableNavigation {
+	public class GivenAPresentableResponse {
 		
 		@Before
 		public void givenAPresentableNavigationSucceeded(){
@@ -51,7 +51,7 @@ public class NavigationPresenterTest {
 		public void getPresentableResponseReturnsGivenPresentableNavigation(){
 			presenter.present(presentableNavigation);
 			
-			PresentableNavigation presentableResponse = presenter.getPresentableResponse();
+			PresentableResponse presentableResponse = presenter.getPresentableResponse();
 			
 			assertThat(presentableResponse, is(presentableNavigation));
 		}

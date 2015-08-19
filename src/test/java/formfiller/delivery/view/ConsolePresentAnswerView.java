@@ -22,11 +22,14 @@ public class ConsolePresentAnswerView implements UserRequestSource {
 	public void displayPresentableResponse() {
 		String answerMessage = answerMessage(presentableAnswer());
 		if (answerMessage.length() > 0){
-			wasDisplayed = true;
+			setWasDisplayed(true);
 			System.out.println("Your current answer is: " + answerMessage);
 		}
 		else
-			wasDisplayed = false;
+			setWasDisplayed(false);
+	}
+	private void setWasDisplayed(boolean wasDisplayed) {
+		this.wasDisplayed = wasDisplayed;
 	}
 	public boolean wasDisplayed() {
 		return wasDisplayed;
