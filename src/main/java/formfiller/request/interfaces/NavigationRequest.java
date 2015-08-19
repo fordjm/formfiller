@@ -1,4 +1,4 @@
-package formfiller.request;
+package formfiller.request.interfaces;
 
 public interface NavigationRequest extends Request {
 	public int getOffset();

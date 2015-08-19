@@ -12,8 +12,8 @@ import org.mockito.Mockito;
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
 import formfiller.ApplicationContext;
 import formfiller.boundaryCrossers.PresentableQuestion;
-import formfiller.request.Request;
-import formfiller.request.PresentQuestionRequestImpl;
+import formfiller.request.implementations.RequestImpl;
+import formfiller.request.interfaces.Request;
 import formfiller.usecases.presentQuestion.PresentQuestionUseCase;
 import formfiller.utilities.TestSetup;
 import formfiller.utilities.MockCreation;
@@ -27,7 +27,7 @@ public class PresentQuestionTest {
 	@Before
 	public void setupTest(){
 		TestSetup.setupContext();
-		mockRequest = Mockito.mock(PresentQuestionRequestImpl.class);
+		mockRequest = Mockito.mock(RequestImpl.class);
 		presentQuestionUseCase = new PresentQuestionUseCase();
 	}
 	public class GivenNoQuestions{
@@ -42,6 +42,7 @@ public class PresentQuestionTest {
 		}
 	}
 	public class GivenAQuestion{
+		
 		@Before
 		public void givenAQuestion() {
 			ApplicationContext.questionGateway.save(MockCreation.makeMockNameQuestion());
@@ -55,5 +56,6 @@ public class PresentQuestionTest {
 			assertThat(presentedQuestion.getId(), is("name"));
 			assertThat(presentedQuestion.getMessage(), is("What is your name?"));
 		}
+		
 	}
 }

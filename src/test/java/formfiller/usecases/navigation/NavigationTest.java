@@ -14,7 +14,7 @@ import formfiller.entities.EndPrompt;
 import formfiller.entities.Question;
 import formfiller.entities.StartPrompt;
 import formfiller.enums.ActionOutcome;
-import formfiller.request.NavigationRequest;
+import formfiller.request.interfaces.NavigationRequest;
 import formfiller.usecases.navigation.NavigationUseCase;
 import formfiller.ApplicationContext;
 import formfiller.delivery.PresentableResponseImpl;

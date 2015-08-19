@@ -4,9 +4,9 @@ import java.util.HashMap;
 
 import formfiller.delivery.Controller;
 import formfiller.delivery.userRequestParser.ParsedUserRequest;
-import formfiller.request.Request;
-import formfiller.request.RequestBuilder;
-import formfiller.request.RequestBuilderImpl;
+import formfiller.request.builder.RequestBuilder;
+import formfiller.request.builder.RequestBuilderImpl;
+import formfiller.request.interfaces.Request;
 import formfiller.usecases.presentQuestion.PresentQuestionUseCase;
 
 public class PresentQuestionController implements Controller {

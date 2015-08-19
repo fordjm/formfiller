@@ -8,6 +8,13 @@ import java.util.HashMap;
 import org.junit.Before;
 import org.junit.Test;
 
+import formfiller.request.builder.RequestBuilderImpl;
+import formfiller.request.implementations.HandleUnfoundControllerRequestImpl;
+import formfiller.request.implementations.NavigationRequestImpl;
+import formfiller.request.implementations.RequestImpl;
+import formfiller.request.interfaces.NavigationRequest;
+import formfiller.request.interfaces.Request;
+
 public class RequestBuilderImplTest {
 	private RequestBuilderImpl impl;
 	
@@ -26,25 +33,33 @@ public class RequestBuilderImplTest {
 	public void canBuildPresentQuestionRequest() {
 		Request presentQuestionRequest = 
 				impl.build("presentQuestion", makeArgsHashmap());
+		String name = presentQuestionRequest.getName();
+		
 		assertThat(presentQuestionRequest, 
-				is(instanceOf(PresentQuestionRequestImpl.class)));
+				is(instanceOf(RequestImpl.class)));
+		assertThat(name, is("PresentQuestion"));
 	}
 	@Test
 	public void canBuildPresentAnswerRequest() {
 		Request presentAnswerRequest = 
 				impl.build("presentAnswer", makeArgsHashmap());
+		String name = presentAnswerRequest.getName();
+		
 		assertThat(presentAnswerRequest, 
-				is(instanceOf(PresentAnswerRequestImpl.class)));
+				is(instanceOf(RequestImpl.class)));
+		assertThat(name, is("PresentAnswer"));
 	}
 	@Test
 	public void canBuildNavigationRequest() {
 		Request navigationRequest = 
 				impl.build("navigation", makeArgsHashmap("offset", 1));
+		String name = navigationRequest.getName();
 		NavigationRequest castNavigationRequest = (NavigationRequest) 
 				navigationRequest;
 		
 		assertThat(navigationRequest, 
 				is(instanceOf(NavigationRequestImpl.class)));
+		assertThat(name, is("Navigation"));
 		assertThat(castNavigationRequest.getOffset(), is(1));
 	}
 	@Test

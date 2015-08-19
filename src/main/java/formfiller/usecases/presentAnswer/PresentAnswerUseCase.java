@@ -4,7 +4,7 @@ import formfiller.ApplicationContext;
 import formfiller.boundaries.UseCase;
 import formfiller.boundaryCrossers.PresentableAnswer;
 import formfiller.entities.Answer;
-import formfiller.request.Request;
+import formfiller.request.interfaces.Request;
 
 public class PresentAnswerUseCase implements UseCase {
 	

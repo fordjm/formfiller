@@ -1,6 +1,8 @@
 package formfiller.request;
 
-public class NoRequestImpl extends AbstractRequest {
+import formfiller.request.implementations.RequestImpl;
+
+public class NoRequestImpl extends RequestImpl {
 	String name = "NoRequest";
 	
 }

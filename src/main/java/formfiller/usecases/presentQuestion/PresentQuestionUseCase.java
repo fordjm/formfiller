@@ -4,7 +4,7 @@ import formfiller.ApplicationContext;
 import formfiller.boundaries.UseCase;
 import formfiller.boundaryCrossers.PresentableQuestion;
 import formfiller.entities.Prompt;
-import formfiller.request.Request;
+import formfiller.request.interfaces.Request;
 
 // As presented in the Clean Coders Java Case Study codecast
 // https://cleancoders.com/episode/case-study-episode-1/show

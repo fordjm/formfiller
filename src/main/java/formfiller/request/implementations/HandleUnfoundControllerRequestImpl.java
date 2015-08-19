@@ -1,8 +1,8 @@
-package formfiller.request;
+package formfiller.request.implementations;
 
 import formfiller.usecases.handleUnfoundController.HandleUnfoundControllerRequest;
 
-public class HandleUnfoundControllerRequestImpl extends AbstractRequest 
+public class HandleUnfoundControllerRequestImpl extends RequestImpl 
 		implements HandleUnfoundControllerRequest{
 	String name = "HandleUnfoundControllerRequest";
 	private String message;
