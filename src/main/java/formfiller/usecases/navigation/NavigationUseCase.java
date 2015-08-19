@@ -7,6 +7,7 @@ import formfiller.delivery.PresentableResponseImpl;
 import formfiller.entities.ExecutedUseCaseImpl;
 import formfiller.entities.Prompt;
 import formfiller.enums.ActionOutcome;
+import formfiller.request.NavigationRequest;
 import formfiller.request.Request;
 
 public class NavigationUseCase implements UseCase {

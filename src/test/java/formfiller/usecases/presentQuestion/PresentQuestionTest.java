@@ -13,7 +13,7 @@ import de.bechte.junit.runners.context.HierarchicalContextRunner;
 import formfiller.ApplicationContext;
 import formfiller.boundaryCrossers.PresentableQuestion;
 import formfiller.request.Request;
-import formfiller.request.RequestBuilderImpl.PresentQuestionRequest;
+import formfiller.request.PresentQuestionRequestImpl;
 import formfiller.usecases.presentQuestion.PresentQuestionUseCase;
 import formfiller.utilities.TestSetup;
 import formfiller.utilities.MockCreation;
@@ -27,7 +27,7 @@ public class PresentQuestionTest {
 	@Before
 	public void setupTest(){
 		TestSetup.setupContext();
-		mockRequest = Mockito.mock(PresentQuestionRequest.class);
+		mockRequest = Mockito.mock(PresentQuestionRequestImpl.class);
 		presentQuestionUseCase = new PresentQuestionUseCase();
 	}
 	public class GivenNoQuestions{

@@ -4,6 +4,6 @@ import java.util.HashMap;
 
 public interface RequestBuilder {
 	
-	public Request build(String requestName, HashMap args);
+	public <K,V> Request build(String requestName, HashMap<K,V> args);
 	
 }

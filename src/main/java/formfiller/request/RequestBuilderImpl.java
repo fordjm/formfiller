@@ -3,65 +3,39 @@ package formfiller.request;
 import java.util.HashMap;
 
 import formfiller.usecases.handleUnfoundController.HandleUnfoundControllerRequest;
-import formfiller.usecases.navigation.NavigationRequest;
 
 // TODO:  Figure out what requests have in common.
 //		  Make this a real builder, not a factory.
 public class RequestBuilderImpl implements RequestBuilder {
 
-	@Override
-	public Request build(String requestName, HashMap args) {
+	public <K,V> Request build(String requestName, HashMap<K,V> args) {
 		if(requestName.equalsIgnoreCase("handleUnfoundController"))
 			return makeHandleUnfoundControllerRequest(args); 
 		else if(requestName.equalsIgnoreCase("presentQuestion"))
 			return makePresentQuestionRequest(args);
+		else if(requestName.equalsIgnoreCase("presentAnswer"))
+			return makePresentAnswerRequest(args);
 		else if(requestName.equalsIgnoreCase("navigation"))
 			return makeNavigationRequest(args);
 		else
-			return null;
+			return new NoRequestImpl();
 	}
 
-	private Request makeHandleUnfoundControllerRequest(HashMap args) {
+	private <K,V> Request makeHandleUnfoundControllerRequest(HashMap<K,V> args) {
 		HandleUnfoundControllerRequest result = new HandleUnfoundControllerRequestImpl();
 		result.setMessage((String) args.get("message"));
 		return result;
 	}
-	public class HandleUnfoundControllerRequestImpl implements HandleUnfoundControllerRequest{
-		private String message;
-		
-		private HandleUnfoundControllerRequestImpl(){ }
-
-		public String getMessage() {
-			return message;
-		}
-		public void setMessage(String message) {
-			this.message = message;
-		}
-	}
-
-	private Request makePresentQuestionRequest(HashMap args) {
-		return new PresentQuestionRequest();
+	private <K,V> Request makePresentQuestionRequest(HashMap<K,V> args) {
+		return new PresentQuestionRequestImpl();
 	}	
-	public class PresentQuestionRequest implements Request{		
-		private PresentQuestionRequest(){ }
+	private <K,V> Request makePresentAnswerRequest(HashMap<K,V> args) {
+		return new PresentAnswerRequestImpl();
 	}
-
-	private Request makeNavigationRequest(HashMap args) {
+	private <K,V> Request makeNavigationRequest(HashMap<K,V> args) {
 		NavigationRequest result = new NavigationRequestImpl();
-		result.setOffset((int)args.get("offset")); 
+		result.setOffset((int) args.get("offset")); 
 		return result;
-	}
-	public class NavigationRequestImpl implements NavigationRequest {
-		private int offset = -1;
-		
-		private NavigationRequestImpl(){ }
-
-		public int getOffset() {
-			return offset;
-		}
-		public void setOffset(int offset) {
-			this.offset = offset;
-		}
 	}
 
 }
