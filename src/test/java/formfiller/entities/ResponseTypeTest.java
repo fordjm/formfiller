@@ -105,7 +105,7 @@ public class ResponseTypeTest<T> {
 		public class GivenAValidResponse{		
 			@Before
 			public void givenAValidResponse(){
-				response = MockCreation.makeMockNameResponse("Joe");
+				response = MockCreation.makeMockNameAnswer("Joe");
 			}
 			
 			@Test

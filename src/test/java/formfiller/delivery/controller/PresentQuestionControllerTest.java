@@ -4,20 +4,25 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
+import de.bechte.junit.runners.context.HierarchicalContextRunner;
 import formfiller.ApplicationContext;
 import formfiller.boundaryCrossers.PresentableQuestion;
 import formfiller.delivery.router.RouterTestHelper;
 import formfiller.delivery.userRequestParser.ParsedUserRequest;
+import formfiller.entities.Prompt;
 import formfiller.utilities.MockCreation;
 import formfiller.utilities.TestSetup;
 
+@RunWith(HierarchicalContextRunner.class)
 public class PresentQuestionControllerTest {
 	PresentQuestionController presentQuestionController;
 	ParsedUserRequest mockParsedInput;
 	PresentableQuestion presentableQuestion;
+	Prompt foundQuestion;
 	
-	private PresentableQuestion presentableQuestion(){
+	private PresentableQuestion getPresentableQuestion(){
 		return (PresentableQuestion) ApplicationContext.questionPresenter.getPresentableResponse();
 	}
 	
@@ -26,15 +31,19 @@ public class PresentQuestionControllerTest {
 		TestSetup.setupContext();
 		mockParsedInput = RouterTestHelper.makeMockParsedRequest("presentQuestion");
 		ApplicationContext.questionGateway.save(MockCreation.makeMockNameQuestion());
-		ApplicationContext.currentQuestionState.findQuestionByIndexOffset(1);
 		presentQuestionController = new PresentQuestionController();
 	}
-	@Test
-	public void requestingPresentableQuestionPutsQuestionAtBoundary() {
-		presentQuestionController.handle(mockParsedInput);
-		presentableQuestion = presentableQuestion();
-		assertEquals(presentableQuestion.getId(), "name");
-		assertEquals(presentableQuestion.getMessage(), "What is your name?");
+	
+	public class GivenAQuestion {
+		@Test
+		public void requestingPresentableQuestionPutsQuestionAtBoundary() {
+			foundQuestion = ApplicationContext.questionGateway.findQuestionByIndex(0);
+			
+			presentQuestionController.handle(mockParsedInput);
+			
+			assertEquals(getPresentableQuestion().getId(), foundQuestion.getId());
+			assertEquals(getPresentableQuestion().getMessage(), foundQuestion.getContent());
+		}
 	}
-
+	
 }

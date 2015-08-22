@@ -19,7 +19,7 @@ public class AnswerStateTest {
 	@Before
 	public void setUp() {
 		TestSetup.setupContext();
-		ApplicationContext.answerGateway.save(MockCreation.makeMockNameResponse("myName"));
+		ApplicationContext.answerGateway.save(MockCreation.makeMockNameAnswer("myName"));
 		ApplicationContext.answerGateway.save(MockCreation.makeMockAgeResponse(67));
 		answerIndex = 0;
 		answerState = new AnswerState(answerIndex);

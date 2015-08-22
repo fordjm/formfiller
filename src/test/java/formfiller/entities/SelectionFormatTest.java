@@ -97,7 +97,7 @@ public class SelectionFormatTest<T> {
 			public class GivenANonSelectionResponse{
 				@Before
 				public void givenAValidResponse(){
-					response = MockCreation.makeMockNameResponse("Joe");
+					response = MockCreation.makeMockNameAnswer("Joe");
 					format.wrap(response);
 				}
 				@Test

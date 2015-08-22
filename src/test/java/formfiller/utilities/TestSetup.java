@@ -23,8 +23,8 @@ public class TestSetup {
 		ApplicationContext.navigationPresenter = new NavigationPresenter();
 		ApplicationContext.questionPresenter = new QuestionPresenter();
 		ApplicationContext.executedUseCases = new Stack<ExecutedUseCase>();
-		ApplicationContext.currentQuestionState = new QuestionState(-1);
-		ApplicationContext.currentAnswerState = new AnswerState(-1);
+		ApplicationContext.currentQuestionState = new QuestionState(0);
+		ApplicationContext.currentAnswerState = new AnswerState(0);
 	}
 	public static void setupSampleQuestions(){
 		setupContext();

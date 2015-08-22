@@ -36,7 +36,7 @@ public class ValueMaximumTest<T> {
 		public class GivenAValidResponseLessThanMaximum{
 			@Before
 			public void givenAValidResponseLessThanMinimum(){
-				response = MockCreation.makeMockNameResponse("joe");
+				response = MockCreation.makeMockNameAnswer("joe");
 				valueMaximum.wrap(response);
 			}
 			@Test
@@ -47,7 +47,7 @@ public class ValueMaximumTest<T> {
 		public class GivenAValidResponseGreaterThanMaximum{
 			@Before
 			public void givenAValidResponseGreaterThanMaximum(){
-				response = MockCreation.makeMockNameResponse("moe");
+				response = MockCreation.makeMockNameAnswer("moe");
 				valueMaximum.wrap(response);
 			}
 			@Test

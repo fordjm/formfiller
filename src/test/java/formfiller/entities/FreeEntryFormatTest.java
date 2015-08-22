@@ -60,7 +60,7 @@ public class FreeEntryFormatTest {
 		public class GivenAValidResponse{
 			@Before
 			public void givenAValidResponse(){
-				response = MockCreation.makeMockNameResponse("Joe");
+				response = MockCreation.makeMockNameAnswer("Joe");
 				format.wrap(response);
 			}			
 			@Test

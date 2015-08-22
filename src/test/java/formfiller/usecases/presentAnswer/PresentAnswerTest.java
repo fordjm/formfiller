@@ -47,11 +47,10 @@ public class PresentAnswerTest {
 
 		@Before
 		public void givenAnAnswer(){
-			ApplicationContext.answerGateway.save(MockCreation.makeMockNameResponse("nameAnswer"));
-			ApplicationContext.currentAnswerState.findAnswerByIndexOffset(1);
+			ApplicationContext.answerGateway.save(MockCreation.makeMockNameAnswer("nameAnswer"));
 		}
 		@Test
-		public void executingDummyUseCaseDoesNothing(){
+		public void presentingAnswerPresentsTheGivenAnswer(){
 			presentAnswerUseCase.execute(null);
 			PresentableAnswer presentedAnswer = getCurrentPresentableAnswer();
 

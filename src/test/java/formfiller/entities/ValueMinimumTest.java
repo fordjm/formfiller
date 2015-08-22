@@ -35,7 +35,7 @@ public class ValueMinimumTest<T> {
 		public class GivenAValidResponseLessThanMinimum{
 			@Before
 			public void givenAValidResponseLessThanMinimum(){
-				response = MockCreation.makeMockNameResponse("joe");
+				response = MockCreation.makeMockNameAnswer("joe");
 				valueMinimum.wrap(response);
 			}
 			@Test
@@ -46,7 +46,7 @@ public class ValueMinimumTest<T> {
 		public class GivenAValidResponseGreaterThanMinimum{
 			@Before
 			public void givenAValidResponseLessThanMinimum(){
-				response = MockCreation.makeMockNameResponse("moe");
+				response = MockCreation.makeMockNameAnswer("moe");
 				valueMinimum.wrap(response);
 			}
 			@Test

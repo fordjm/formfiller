@@ -43,7 +43,7 @@ public class InMemoryAnswerGatewayTest {
 		@Before
 		public void givenAnAnswer(){
 			ApplicationContext.answerGateway.save(
-					MockCreation.makeMockNameResponse("nameAnswer"));
+					MockCreation.makeMockNameAnswer("nameAnswer"));
 			ApplicationContext.currentAnswerState.findAnswerByIndexOffset(1);
 		}
 		@Test

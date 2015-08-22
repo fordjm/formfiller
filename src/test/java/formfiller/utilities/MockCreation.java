@@ -29,7 +29,7 @@ public class MockCreation {
 		when (result.requiresAnswer()).thenReturn(isRequired);
 		return result;
 	}
-	public static Answer makeMockNameResponse(String name) {
+	public static Answer makeMockNameAnswer(String name) {
 		return makeMockResponse(0, name, true);
 	}
 	public static Answer makeMockAgeResponse(int age) {

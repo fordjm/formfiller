@@ -12,6 +12,7 @@ import org.mockito.Mockito;
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
 import formfiller.ApplicationContext;
 import formfiller.boundaryCrossers.PresentableQuestion;
+import formfiller.entities.Prompt;
 import formfiller.request.implementations.RequestImpl;
 import formfiller.request.interfaces.Request;
 import formfiller.usecases.presentQuestion.PresentQuestionUseCase;
@@ -22,7 +23,15 @@ import formfiller.utilities.MockCreation;
 public class PresentQuestionTest {
 	private PresentQuestionUseCase presentQuestionUseCase;
 	private Request mockRequest;
-	private PresentableQuestion presentedQuestion;
+	Prompt foundQuestion;
+
+	private Prompt findQuestionByIndex(int index) {
+		return ApplicationContext.questionGateway.findQuestionByIndex(index);
+	}
+	private PresentableQuestion getPresentableQuestion() {
+		return (PresentableQuestion)
+				ApplicationContext.questionPresenter.getPresentableResponse();
+	}
 	
 	@Before
 	public void setupTest(){
@@ -31,30 +40,32 @@ public class PresentQuestionTest {
 		presentQuestionUseCase = new PresentQuestionUseCase();
 	}
 	public class GivenNoQuestions{
+		
 		@Test
 		public void whenPresentQuestionRuns_ThenGetQuestionGetsAStartPrompt(){
+			foundQuestion = findQuestionByIndex(0);
+			
 			presentQuestionUseCase.execute(mockRequest);
-			presentedQuestion = (PresentableQuestion)
-					ApplicationContext.questionPresenter.getPresentableResponse();
-			assertThat(presentedQuestion.getId(), is("start"));
-			assertThat(presentedQuestion.getMessage(), 
-					is("You have reached the start of this form."));
+			
+			assertThat(getPresentableQuestion().getId(), is(foundQuestion.getId()));
+			assertThat(getPresentableQuestion().getMessage(), is(foundQuestion.getContent()));
 		}
+		
 	}
 	public class GivenAQuestion{
 		
 		@Before
 		public void givenAQuestion() {
 			ApplicationContext.questionGateway.save(MockCreation.makeMockNameQuestion());
-			ApplicationContext.currentQuestionState.findQuestionByIndexOffset(1);
 		}
 		@Test
 		public void whenPresentQuestionRuns_ThenGetQuestionGetsGivenQuestion(){
+			foundQuestion = findQuestionByIndex(0);
+			
 			presentQuestionUseCase.execute(mockRequest);
-			presentedQuestion = (PresentableQuestion)
-					ApplicationContext.questionPresenter.getPresentableResponse();
-			assertThat(presentedQuestion.getId(), is("name"));
-			assertThat(presentedQuestion.getMessage(), is("What is your name?"));
+			
+			assertThat(getPresentableQuestion().getId(), is(foundQuestion.getId()));
+			assertThat(getPresentableQuestion().getMessage(), is(foundQuestion.getContent()));
 		}
 		
 	}

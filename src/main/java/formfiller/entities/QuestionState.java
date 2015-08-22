@@ -4,23 +4,20 @@ import formfiller.ApplicationContext;
 
 public class QuestionState {
 	private int questionIndex;
-	private Prompt currentQuestion;
 	
 	public QuestionState(int questionIndex){
 		this.questionIndex = questionIndex;
-		currentQuestion = 
-				ApplicationContext.questionGateway.findQuestionByIndex(questionIndex);
+				
 	}
 	
 	public Prompt getQuestion() {
-		return currentQuestion;
+		return ApplicationContext.questionGateway.findQuestionByIndex(questionIndex);
 	}
 	public Prompt findQuestionByIndexOffset(int offset){
-		if (offset == 0) return currentQuestion;
+		if (offset == 0) return getQuestion();
 		int requestedIndex = computeRequestedIndex(offset);
 		updateCurrentIndex(requestedIndex);
-		updateCurrentQuestion(requestedIndex);
-		return currentQuestion;
+		return ApplicationContext.questionGateway.findQuestionByIndex(requestedIndex);
 	}
 
 	private int computeRequestedIndex(int offset) {
@@ -33,14 +30,6 @@ public class QuestionState {
 			questionIndex = ApplicationContext.questionGateway.numQuestions();
 		else
 			questionIndex = requestedIndex;
-	}
-	void updateCurrentQuestion(int requestedIndex) {
-		if (isAtStart(requestedIndex)) 
-			currentQuestion = Question.START;
-		else if (isAtEnd(requestedIndex))
-			currentQuestion = Question.END;
-		else
-			currentQuestion = ApplicationContext.questionGateway.findQuestionByIndex(requestedIndex);
 	}
 	boolean isAtStart(int index) {
 		return index < 0;
