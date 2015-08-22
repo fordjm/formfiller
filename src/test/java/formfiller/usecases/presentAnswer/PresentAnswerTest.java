@@ -48,7 +48,7 @@ public class PresentAnswerTest {
 		@Before
 		public void givenAnAnswer(){
 			ApplicationContext.answerGateway.save(MockCreation.makeMockNameResponse("nameAnswer"));
-			ApplicationContext.answerGateway.findAnswerByIndexOffset(1);
+			ApplicationContext.currentAnswerState.findAnswerByIndexOffset(1);
 		}
 		@Test
 		public void executingDummyUseCaseDoesNothing(){

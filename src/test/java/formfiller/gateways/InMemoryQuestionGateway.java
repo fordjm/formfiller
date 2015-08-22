@@ -3,10 +3,8 @@ package formfiller.gateways;
 import java.util.ArrayList;
 import java.util.List;
 
-import formfiller.entities.EndPrompt;
 import formfiller.entities.Prompt;
 import formfiller.entities.Question;
-import formfiller.entities.StartPrompt;
 
 public class InMemoryQuestionGateway implements QuestionGateway {
 	private List<Question> questionSource;
@@ -21,11 +19,13 @@ public class InMemoryQuestionGateway implements QuestionGateway {
 	public void delete(Question question){
 		questionSource.remove(question);
 	}
+	
+	// TODO:	Should this throw an exception?
 	public Prompt findQuestionByIndex(int index){
 		if (isAtStart(index)) 
-			return new StartPrompt();
+			return Question.START;
 		else if (isAtEnd(index))
-			return new EndPrompt();
+			return Question.END;
 		else
 			return questionSource.get(index);
 	}

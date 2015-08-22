@@ -2,17 +2,14 @@ package formfiller.entities;
 
 import formfiller.ApplicationContext;
 
-public class FormState {
+public class QuestionState {
 	private int questionIndex;
 	private Prompt currentQuestion;
 	
-	public FormState(int questionIndex){
+	public QuestionState(int questionIndex){
 		this.questionIndex = questionIndex;
-		setCurrentQuestionToStartPrompt();
-	}
-
-	private void setCurrentQuestionToStartPrompt() {
-		currentQuestion = new StartPrompt();
+		currentQuestion = 
+				ApplicationContext.questionGateway.findQuestionByIndex(questionIndex);
 	}
 	
 	public Prompt getQuestion() {
@@ -20,10 +17,14 @@ public class FormState {
 	}
 	public Prompt findQuestionByIndexOffset(int offset){
 		if (offset == 0) return currentQuestion;
-		int requestedIndex = questionIndex + offset;
+		int requestedIndex = computeRequestedIndex(offset);
 		updateCurrentIndex(requestedIndex);
 		updateCurrentQuestion(requestedIndex);
 		return currentQuestion;
+	}
+
+	private int computeRequestedIndex(int offset) {
+		return questionIndex + offset;
 	}	
 	void updateCurrentIndex(int requestedIndex){
 		if (isAtStart(requestedIndex)) 
@@ -35,9 +36,9 @@ public class FormState {
 	}
 	void updateCurrentQuestion(int requestedIndex) {
 		if (isAtStart(requestedIndex)) 
-			currentQuestion = new StartPrompt();
+			currentQuestion = Question.START;
 		else if (isAtEnd(requestedIndex))
-			currentQuestion = new EndPrompt();
+			currentQuestion = Question.END;
 		else
 			currentQuestion = ApplicationContext.questionGateway.findQuestionByIndex(requestedIndex);
 	}

@@ -32,6 +32,9 @@ public class MockCreation {
 	public static Answer makeMockNameResponse(String name) {
 		return makeMockResponse(0, name, true);
 	}
+	public static Answer makeMockAgeResponse(int age) {
+		return makeMockResponse(0, age, true);
+	}
 	public static <T> Answer makeMockResponse(int id, T content, boolean satisfiesConstraint) {
 		Answer result = 
 				(Answer) mock(Answer.class);

@@ -6,8 +6,9 @@ import formfiller.delivery.presenter.AnswerPresenter;
 import formfiller.delivery.presenter.HandleUnfoundControllerPresenter;
 import formfiller.delivery.presenter.NavigationPresenter;
 import formfiller.delivery.presenter.QuestionPresenter;
+import formfiller.entities.AnswerState;
 import formfiller.entities.ExecutedUseCase;
-import formfiller.entities.FormState;
+import formfiller.entities.QuestionState;
 import formfiller.entities.Question;
 import formfiller.gateways.InMemoryQuestionGateway;
 import formfiller.gateways.InMemoryAnswerGateway;
@@ -15,7 +16,6 @@ import formfiller.gateways.InMemoryAnswerGateway;
 // TODO:  Credit CleanCoders JCS TestSetup
 public class TestSetup {
 	public static void setupContext(){
-		ApplicationContext.currentFormState = new FormState(-1);
 		ApplicationContext.answerGateway = new InMemoryAnswerGateway();
 		ApplicationContext.questionGateway = new InMemoryQuestionGateway();
 		ApplicationContext.answerPresenter = new AnswerPresenter();
@@ -23,6 +23,8 @@ public class TestSetup {
 		ApplicationContext.navigationPresenter = new NavigationPresenter();
 		ApplicationContext.questionPresenter = new QuestionPresenter();
 		ApplicationContext.executedUseCases = new Stack<ExecutedUseCase>();
+		ApplicationContext.currentQuestionState = new QuestionState(-1);
+		ApplicationContext.currentAnswerState = new AnswerState(-1);
 	}
 	public static void setupSampleQuestions(){
 		setupContext();

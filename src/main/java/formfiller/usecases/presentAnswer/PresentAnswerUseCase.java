@@ -14,7 +14,7 @@ public class PresentAnswerUseCase implements UseCase {
 	}
 
 	protected void execute() {
-		Answer requestedAnswer = ApplicationContext.answerGateway.getAnswer();
+		Answer requestedAnswer = ApplicationContext.currentAnswerState.getAnswer();
 		PresentableAnswer presentableAnswer = makePresentableAnswer(requestedAnswer);
 		ApplicationContext.answerPresenter.present(presentableAnswer);
 	}

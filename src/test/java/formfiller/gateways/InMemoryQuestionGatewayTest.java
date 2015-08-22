@@ -25,7 +25,7 @@ public class InMemoryQuestionGatewayTest {
 	
 	@Before
 	public void setUp(){
-		TestSetup.setupContext();		
+		TestSetup.setupContext();	
 	}
 
 	public class GivenNoQuestions {
@@ -40,17 +40,18 @@ public class InMemoryQuestionGatewayTest {
 	}
 	
 	public class GivenAQuestion {
+		Question mockQuestion;
 		
 		@Before
 		public void givenAQuestion(){
-			ApplicationContext.questionGateway.save(
-					MockCreation.makeMockNameQuestion());
+			mockQuestion = MockCreation.makeMockNameQuestion();
+			ApplicationContext.questionGateway.save(mockQuestion);
 		}
 		@Test
 		public void test(){
 			question = ApplicationContext.questionGateway.findQuestionByIndex(0);
 			
-			assertThatQuestionIsInstanceOfClass(Question.class);
+			assertEquals(question, mockQuestion);
 		}
 		
 	}

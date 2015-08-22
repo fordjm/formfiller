@@ -32,21 +32,21 @@ public class NavigationControllerTest {
 	public void requestingPrevQuestionReturnsStartPrompt() {
 		mockParsedUserRequest = RouterTestHelper.makeMockParsedRequest("navigation", "-1");
 		navigationController.handle(mockParsedUserRequest);
-		assertThat(ApplicationContext.currentFormState.getQuestion(), 
+		assertThat(ApplicationContext.currentQuestionState.getQuestion(), 
 				is(instanceOf(StartPrompt.class)));
 	}
 	@Test
 	public void requestingCurrentQuestionReturnsStartPrompt() {
 		mockParsedUserRequest = RouterTestHelper.makeMockParsedRequest("navigation", "0");
 		navigationController.handle(mockParsedUserRequest);
-		assertThat(ApplicationContext.currentFormState.getQuestion(), 
+		assertThat(ApplicationContext.currentQuestionState.getQuestion(), 
 				is(instanceOf(StartPrompt.class)));
 	}
 	@Test
 	public void requestingNextQuestionReturnsGivenQuestion() {
 		mockParsedUserRequest = RouterTestHelper.makeMockParsedRequest("navigation", "1");
 		navigationController.handle(mockParsedUserRequest);
-		assertEquals(mockNameQuestion, ApplicationContext.currentFormState.getQuestion());
+		assertEquals(mockNameQuestion, ApplicationContext.currentQuestionState.getQuestion());
 	}
 
 }

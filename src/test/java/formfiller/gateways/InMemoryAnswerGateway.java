@@ -3,39 +3,26 @@ package formfiller.gateways;
 import java.util.ArrayList;
 import java.util.List;
 
-import formfiller.entities.NoAnswer;
 import formfiller.entities.Answer;
+import formfiller.entities.AnswerImpl;
 
 public class InMemoryAnswerGateway implements AnswerGateway {
-	private Answer currentResponse = new NoAnswer();
-	private int currentIndex = -1;
-	List<Answer> responses;
+	List<Answer> answers;
 	
 	public InMemoryAnswerGateway(){
-		responses = new ArrayList<Answer>();
+		answers = new ArrayList<Answer>();
 	}
-	
-	public Answer findAnswerByIndexOffset(int offset){
-		int requestedIndex = currentIndex  + offset;
-		updateCurrentResponse(requestedIndex);
-		return currentResponse;
-	}
-	void updateCurrentResponse(int requestedIndex) {
-		updateCurrentIndex(requestedIndex);
-		currentResponse = responses.get(currentIndex);
-	}
-	void updateCurrentIndex(int requestedIndex){
-		if (isLegalIndex(requestedIndex))
-			currentIndex = requestedIndex;
+	public Answer findAnswerByIndex(int index) {
+		if (!isLegalIndex(index)) return AnswerImpl.NONE;
+		return answers.get(index);
 	}
 	boolean isLegalIndex(int requestedIndex) {
-		return requestedIndex >= 0 && requestedIndex < responses.size();
+		return requestedIndex >= 0 && requestedIndex < answers.size();
 	}
-	public Answer getAnswer() {
-		return currentResponse;
+	public int numResponses() {
+		return answers.size();
 	}
-
 	public void save(Answer response) {
-		responses.add(response);
+		answers.add(response);
 	}
 }

@@ -3,8 +3,9 @@ package formfiller;
 import java.util.Stack;
 
 import formfiller.boundaries.Presenter;
+import formfiller.entities.AnswerState;
 import formfiller.entities.ExecutedUseCase;
-import formfiller.entities.FormState;
+import formfiller.entities.QuestionState;
 import formfiller.gateways.AnswerGateway;
 import formfiller.gateways.QuestionGateway;
 
@@ -19,5 +20,6 @@ public class ApplicationContext {
 	public static Presenter handleUnfoundControllerPresenter;
 	public static Presenter navigationPresenter;
 	public static Presenter questionPresenter;
-	public static FormState currentFormState;
+	public static QuestionState currentQuestionState;
+	public static AnswerState currentAnswerState;
 }
