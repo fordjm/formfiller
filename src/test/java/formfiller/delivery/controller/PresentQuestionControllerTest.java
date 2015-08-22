@@ -26,7 +26,7 @@ public class PresentQuestionControllerTest {
 		TestSetup.setupContext();
 		mockParsedInput = RouterTestHelper.makeMockParsedRequest("presentQuestion");
 		ApplicationContext.questionGateway.save(MockCreation.makeMockNameQuestion());
-		ApplicationContext.questionGateway.findQuestionByIndexOffset(1);
+		ApplicationContext.currentFormState.findQuestionByIndexOffset(1);
 		presentQuestionController = new PresentQuestionController();
 	}
 	@Test

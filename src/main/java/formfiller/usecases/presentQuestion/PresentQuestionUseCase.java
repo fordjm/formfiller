@@ -17,7 +17,7 @@ public class PresentQuestionUseCase implements UseCase {
 	}
 
 	protected void execute(){
-		Prompt requestedQuestion = ApplicationContext.questionGateway.getQuestion();
+		Prompt requestedQuestion = ApplicationContext.currentFormState.getQuestion();
 		PresentableQuestion presentableQuestion = makePresentableQuestion(requestedQuestion);
 		ApplicationContext.questionPresenter.present(presentableQuestion);
 	}

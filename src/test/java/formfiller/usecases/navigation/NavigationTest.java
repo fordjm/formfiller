@@ -49,7 +49,7 @@ public class NavigationTest {
 			public void gettingQuestionGetsStartPrompt(){
 				useCase.execute(mockRequest);
 				assertEquals(useCase, ApplicationContext.executedUseCases.peek().getUseCase());
-				assertThat(ApplicationContext.questionGateway.getQuestion(), 
+				assertThat(ApplicationContext.currentFormState.getQuestion(), 
 						is(instanceOf(StartPrompt.class)));
 			}
 		}
@@ -63,7 +63,7 @@ public class NavigationTest {
 			@Test
 			public void gettingQuestionGetsStartPrompt(){
 				useCase.execute(mockRequest);
-				assertThat(ApplicationContext.questionGateway.getQuestion(), 
+				assertThat(ApplicationContext.currentFormState.getQuestion(), 
 						is(instanceOf(StartPrompt.class)));
 			}
 			
@@ -78,7 +78,7 @@ public class NavigationTest {
 			@Test
 			public void gettingQuestionGetsEndPrompt(){
 				useCase.execute(mockRequest);
-				assertThat(ApplicationContext.questionGateway.getQuestion(), 
+				assertThat(ApplicationContext.currentFormState.getQuestion(), 
 						is(instanceOf(EndPrompt.class)));
 			}
 			
@@ -110,7 +110,7 @@ public class NavigationTest {
 				@Test
 				public void canNavigateToFirstQuestion() {
 					useCase.execute(mockRequest);
-					assertEquals(mockQuestion, ApplicationContext.questionGateway.getQuestion());
+					assertEquals(mockQuestion, ApplicationContext.currentFormState.getQuestion());
 				}
 				
 			}
@@ -125,7 +125,7 @@ public class NavigationTest {
 				@Test
 				public void canNavigateToEnd() {
 					useCase.execute(mockRequest);
-					assertThat(ApplicationContext.questionGateway.getQuestion(), 
+					assertThat(ApplicationContext.currentFormState.getQuestion(), 
 							is(instanceOf(EndPrompt.class)));
 				}
 				
@@ -143,7 +143,7 @@ public class NavigationTest {
 				public void gettingPrevQuestionGetsGivenQuestion(){
 					setMockRequestOffset(-1);
 					useCase.execute(mockRequest);
-					assertEquals(mockQuestion, ApplicationContext.questionGateway.getQuestion());
+					assertEquals(mockQuestion, ApplicationContext.currentFormState.getQuestion());
 				}
 				
 			}
@@ -172,7 +172,7 @@ public class NavigationTest {
 				@Test
 				public void canNavigateToGivenQuestion() {
 					useCase.execute(mockRequest);
-					assertEquals(mockQuestion, ApplicationContext.questionGateway.getQuestion());
+					assertEquals(mockQuestion, ApplicationContext.currentFormState.getQuestion());
 				}
 				
 			}		
@@ -195,7 +195,7 @@ public class NavigationTest {
 					
 					assertThat(presentedNavigation.getOutcome(), is(ActionOutcome.FAILED));
 					assertEquals(getFailedNavigationResult(), presentedNavigation.getMessage());
-					assertEquals(mockQuestion, ApplicationContext.questionGateway.getQuestion());
+					assertEquals(mockQuestion, ApplicationContext.currentFormState.getQuestion());
 				}
 				
 			}
@@ -213,7 +213,7 @@ public class NavigationTest {
 					updatePresentedNavigation();
 					
 					assertThat(presentedNavigation.getOutcome(), is(ActionOutcome.SUCCEEDED));
-					assertEquals(mockQuestion, ApplicationContext.questionGateway.getQuestion());
+					assertEquals(mockQuestion, ApplicationContext.currentFormState.getQuestion());
 				}
 				
 			}
@@ -229,7 +229,7 @@ public class NavigationTest {
 				public void canGoBackToStart() {
 					setMockRequestOffset(-1);
 					useCase.execute(mockRequest);
-					assertThat(ApplicationContext.questionGateway.getQuestion(), 
+					assertThat(ApplicationContext.currentFormState.getQuestion(), 
 							is(instanceOf(StartPrompt.class)));
 				}
 				

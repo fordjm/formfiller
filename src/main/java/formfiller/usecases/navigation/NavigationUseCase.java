@@ -29,7 +29,7 @@ public class NavigationUseCase implements UseCase {
 		}
 		else{
 			setOutcome(ActionOutcome.SUCCEEDED);
-			ApplicationContext.questionGateway.findQuestionByIndexOffset(indexOffset);
+			ApplicationContext.currentFormState.findQuestionByIndexOffset(indexOffset);
 			setMessage("");
 		}
 		presentableResponse = makePresentableNavigation();
@@ -46,7 +46,7 @@ public class NavigationUseCase implements UseCase {
 		return result;
 	}
 	private Prompt getCurrentQuestion() {
-		return ApplicationContext.questionGateway.getQuestion();
+		return ApplicationContext.currentFormState.getQuestion();
 	}
 	private String getAnswerRequiredMessage(){
 		return "Sorry, you cannot move ahead.  "

@@ -46,7 +46,7 @@ public class PresentQuestionTest {
 		@Before
 		public void givenAQuestion() {
 			ApplicationContext.questionGateway.save(MockCreation.makeMockNameQuestion());
-			ApplicationContext.questionGateway.findQuestionByIndexOffset(1);
+			ApplicationContext.currentFormState.findQuestionByIndexOffset(1);
 		}
 		@Test
 		public void whenPresentQuestionRuns_ThenGetQuestionGetsGivenQuestion(){

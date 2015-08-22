@@ -19,12 +19,6 @@ import formfiller.utilities.TestSetup;
 public class InMemoryQuestionGatewayTest {
 	private Prompt question;
 
-	private QuestionGateway getQuestionGatewayFromApplicationContext() {
-		return ApplicationContext.questionGateway;
-	}
-	private Prompt getQuestionFromQuestionGateway(QuestionGateway questionGateway) {
-		return questionGateway.getQuestion();
-	}
 	private void assertThatQuestionIsInstanceOfClass(Class<?> clazz) {
 		assertThat(question, is(instanceOf(clazz)));
 	}
@@ -38,26 +32,23 @@ public class InMemoryQuestionGatewayTest {
 		
 		@Test
 		public void test() {
-			QuestionGateway questionGateway = getQuestionGatewayFromApplicationContext();
-			question = getQuestionFromQuestionGateway(questionGateway);
+			question = ApplicationContext.questionGateway.findQuestionByIndex(0);
 			
 			assertThatQuestionIsInstanceOfClass(NoQuestion.class);
 		}
 		
 	}
 	
-	public class GivenAnQuestion {
+	public class GivenAQuestion {
 		
 		@Before
-		public void givenAnQuestion(){
+		public void givenAQuestion(){
 			ApplicationContext.questionGateway.save(
 					MockCreation.makeMockNameQuestion());
-			ApplicationContext.questionGateway.findQuestionByIndexOffset(1);
 		}
 		@Test
 		public void test(){
-			QuestionGateway questionGateway = getQuestionGatewayFromApplicationContext();
-			question = getQuestionFromQuestionGateway(questionGateway);
+			question = ApplicationContext.questionGateway.findQuestionByIndex(0);
 			
 			assertThatQuestionIsInstanceOfClass(Question.class);
 		}

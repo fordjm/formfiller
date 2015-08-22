@@ -7,7 +7,7 @@ import formfiller.entities.Question;
 // https://cleancoders.com/episode/case-study-episode-1/show
 // Retrieved 2015-08-06
 public interface QuestionGateway {
-	public Prompt findQuestionByIndexOffset(int offset);
-	public Prompt getQuestion();
 	public void save(Question question);
+	public Prompt findQuestionByIndex(int requestedIndex);
+	public int numQuestions();
 }
