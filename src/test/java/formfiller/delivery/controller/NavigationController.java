@@ -1,9 +1,7 @@
 package formfiller.delivery.controller;
 
 import java.util.HashMap;
-import java.util.Scanner;
 
-import formfiller.ApplicationContext;
 import formfiller.boundaries.UseCase;
 import formfiller.delivery.Controller;
 import formfiller.delivery.userRequestParser.ParsedUserRequest;
@@ -25,16 +23,16 @@ public class NavigationController implements Controller {
 	}	
 	protected Request makeNavigationRequest(int offset){
 		RequestBuilder requestBuilder = new RequestBuilderImpl();
-		Request result = requestBuilder.build("navigation", makeArgsHashmap(offset));
+		Request result = requestBuilder.build("navigation", makeArgsHashmap("offset", offset));
 		return result;
 	}
 	protected UseCase makeNavigationUseCase(ParsedUserRequest parsedUserRequest){		
 		UseCaseFactory useCaseFactory = new UseCaseFactoryImpl();
 		return useCaseFactory.make("navigation");
 	}
-	private HashMap makeArgsHashmap(int offset){
-		HashMap result = new HashMap();
-		result.put("offset", offset);
+	private <K,V> HashMap<K,V> makeArgsHashmap(K key, V value){
+		HashMap<K,V> result = new HashMap<K,V>();
+		result.put(key, value);
 		return result;
 	}
 	private void invokePresentQuestionController(ParsedUserRequest parsedInput){

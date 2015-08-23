@@ -1,6 +1,5 @@
-package formfiller.delivery;
+package formfiller.boundaryCrossers;
 
-import formfiller.boundaryCrossers.PresentableResponse;
 import formfiller.enums.ActionOutcome;
 
 public class PresentableResponseImpl implements PresentableResponse {

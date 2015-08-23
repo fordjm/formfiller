@@ -9,6 +9,10 @@ public class ExecutedUseCaseImpl implements ExecutedUseCase {
 	String message = "";
 
 	public ExecutedUseCaseImpl(UseCase useCase, ActionOutcome outcome, String message) {
+		if (useCase == null) throw new IllegalUseCase();
+		if (outcome == null) throw new IllegalOutcome();
+		if (message == null) message = "";
+		
 		this.useCase = useCase;
 		this.outcome = outcome;
 		this.message = message;
@@ -30,6 +34,8 @@ public class ExecutedUseCaseImpl implements ExecutedUseCase {
 	}
 	
 	public class IllegalOutcome extends RuntimeException { }
+	
+	public class IllegalUseCase extends RuntimeException { }
 
 
 }

@@ -1,7 +1,5 @@
 package formfiller.boundaryCrossers;
 
-import formfiller.delivery.PresentableResponseImpl;
-
 public class PresentableAnswer extends PresentableResponseImpl {
 	int id = -1;
 

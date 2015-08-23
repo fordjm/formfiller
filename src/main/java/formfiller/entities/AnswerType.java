@@ -19,8 +19,8 @@ public class AnswerType extends Constraint {
 	@Override
 	protected boolean isConstraintSatisfied() {
 		return responseTypeMatchesGivenType(
-				response.getContent(), type) && 
-				response.satisfiesConstraint();
+				answer.getContent(), type) && 
+				answer.satisfiesConstraint();
 	}
 	
 	private <T> boolean responseTypeMatchesGivenType(

@@ -10,8 +10,7 @@ import org.mockito.Mockito;
 
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
 import formfiller.boundaryCrossers.PresentableResponse;
-import formfiller.delivery.AbstractPresenter;
-import formfiller.delivery.PresentableResponseImpl;
+import formfiller.boundaryCrossers.PresentableResponseImpl;
 import formfiller.enums.ActionOutcome;
 
 @RunWith(HierarchicalContextRunner.class)
@@ -19,10 +18,6 @@ public class NavigationPresenterTest {
 	private NavigationPresenter presenter;
 	private PresentableResponse presentableNavigation;
 
-	PresentableResponse makeMockPresentableNavigationSucceeded() {
-		return makeMockPresentableNavigation("", 
-				ActionOutcome.SUCCEEDED);
-	}
 	private PresentableResponse makeMockPresentableNavigation(String message, 
 			ActionOutcome outcome) {
 		PresentableResponseImpl result = Mockito.mock(PresentableResponseImpl.class);
@@ -45,7 +40,7 @@ public class NavigationPresenterTest {
 		
 		@Before
 		public void givenAPresentableNavigationSucceeded(){
-			presentableNavigation = makeMockPresentableNavigationSucceeded();
+			presentableNavigation = makeMockPresentableNavigation("", ActionOutcome.SUCCEEDED);
 		}
 		@Test
 		public void getPresentableResponseReturnsGivenPresentableNavigation(){

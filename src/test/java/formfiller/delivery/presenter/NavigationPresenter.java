@@ -1,8 +1,7 @@
 package formfiller.delivery.presenter;
 
-import formfiller.delivery.PresentableResponseImpl;
 import formfiller.boundaryCrossers.PresentableResponse;
-import formfiller.delivery.AbstractPresenter;
+import formfiller.boundaryCrossers.PresentableResponseImpl;
 
 public class NavigationPresenter extends AbstractPresenter {
 	PresentableResponseImpl presentableNavigation;

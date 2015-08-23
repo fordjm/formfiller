@@ -3,6 +3,7 @@ package formfiller;
 import formfiller.delivery.UserRequestParser;
 import formfiller.delivery.UserRequestSource;
 import formfiller.delivery.controller.NavigationController;
+import formfiller.delivery.controller.PresentAnswerController;
 import formfiller.delivery.controller.PresentQuestionController;
 import formfiller.delivery.router.Router;
 import formfiller.delivery.userRequestParser.ConsoleUserRequestParser;
@@ -43,6 +44,7 @@ public class Main {
 	private static Router makeRouter(){
 		Router result = new Router();
 		result.addMethod("presentQuestion", new PresentQuestionController());
+		result.addMethod("presentAnswer", new PresentAnswerController());
 		result.addMethod("navigation", new NavigationController());
 		return result;
 	}

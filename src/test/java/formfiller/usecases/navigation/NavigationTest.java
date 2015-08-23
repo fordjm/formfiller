@@ -15,7 +15,7 @@ import formfiller.enums.ActionOutcome;
 import formfiller.request.interfaces.NavigationRequest;
 import formfiller.usecases.navigation.NavigationUseCase;
 import formfiller.ApplicationContext;
-import formfiller.delivery.PresentableResponseImpl;
+import formfiller.boundaryCrossers.PresentableResponseImpl;
 import formfiller.utilities.TestSetup;
 import formfiller.utilities.MockCreation;
 

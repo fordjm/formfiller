@@ -14,8 +14,8 @@ public class SelectionFormat<T> extends Constraint {
 	
 	@Override
 	protected boolean isConstraintSatisfied() {
-		return selections.size() > 0 && selections.contains(response.getContent()) && 
-				response.satisfiesConstraint();
+		return selections.size() > 0 && selections.contains(answer.getContent()) && 
+				answer.satisfiesConstraint();
 	}
 
 	public List<T> getSelections() {

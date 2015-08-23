@@ -18,6 +18,18 @@ import formfiller.request.interfaces.Request;
 public class RequestBuilderImplTest {
 	private RequestBuilderImpl impl;
 	
+	private <K,V> Request buildRequest(String requestName, HashMap<K,V> args) {
+		return impl.build(requestName, args);
+	}
+	private <K,V> HashMap<K,V> makeArgsHashmap() {
+		return new HashMap<K,V>();
+	}
+	private <K,V> HashMap<K,V> makeArgsHashmap(K key, V value) {
+		HashMap<K,V> result = new HashMap<K,V>();
+		result.put(key, value);
+		return result;
+	}
+	
 	@Before
 	public void setUp() {
 		impl = new RequestBuilderImpl();
@@ -25,14 +37,15 @@ public class RequestBuilderImplTest {
 	@Test
 	public void canBuildHandleUnfoundControllerRequest() {
 		Request handleUnfoundControllerRequest = 
-				impl.build("handleUnfoundController", makeArgsHashmap());
+				buildRequest("handleUnfoundController", makeArgsHashmap());
+		
 		assertThat(handleUnfoundControllerRequest, 
 				is(instanceOf(HandleUnfoundControllerRequestImpl.class)));
 	}
 	@Test
 	public void canBuildPresentQuestionRequest() {
 		Request presentQuestionRequest = 
-				impl.build("presentQuestion", makeArgsHashmap());
+				buildRequest("presentQuestion", makeArgsHashmap());
 		String name = presentQuestionRequest.getName();
 		
 		assertThat(presentQuestionRequest, 
@@ -42,7 +55,7 @@ public class RequestBuilderImplTest {
 	@Test
 	public void canBuildPresentAnswerRequest() {
 		Request presentAnswerRequest = 
-				impl.build("presentAnswer", makeArgsHashmap());
+				buildRequest("presentAnswer", makeArgsHashmap());
 		String name = presentAnswerRequest.getName();
 		
 		assertThat(presentAnswerRequest, 
@@ -52,7 +65,7 @@ public class RequestBuilderImplTest {
 	@Test
 	public void canBuildNavigationRequest() {
 		Request navigationRequest = 
-				impl.build("navigation", makeArgsHashmap("offset", 1));
+				buildRequest("navigation", makeArgsHashmap("offset", 1));
 		String name = navigationRequest.getName();
 		NavigationRequest castNavigationRequest = (NavigationRequest) 
 				navigationRequest;
@@ -65,16 +78,10 @@ public class RequestBuilderImplTest {
 	@Test
 	public void canBuildNoRequest() {
 		Request noRequest = impl.build("unknown", makeArgsHashmap());
-		assertThat(noRequest, 
-				is(instanceOf(NoRequestImpl.class)));
-	}
-	private <K,V> HashMap<K,V> makeArgsHashmap() {
-		return new HashMap<K,V>();
-	}
-	private <K,V> HashMap<K,V> makeArgsHashmap(K key, V value) {
-		HashMap<K,V> result = new HashMap<K,V>();
-		result.put(key, value);
-		return result;
+		
+		noRequest.setName("newName");
+		
+		assertThat(noRequest.getName(), is("NoRequest"));
 	}
 
 }

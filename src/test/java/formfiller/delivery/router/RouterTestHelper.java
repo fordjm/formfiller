@@ -3,7 +3,7 @@ package formfiller.delivery.router;
 import org.mockito.Mockito;
 
 import formfiller.delivery.Controller;
-import formfiller.delivery.controller.HandleUnfoundController;
+import formfiller.delivery.controller.HandleUnfoundControllerController;
 import formfiller.delivery.controller.NavigationController;
 import formfiller.delivery.controller.PresentQuestionController;
 import formfiller.delivery.userRequestParser.ParsedUserRequest;
@@ -26,7 +26,7 @@ public class RouterTestHelper {
 		return Mockito.mock(NavigationController.class);
 	}
 	public static Controller makeMockNotFoundController() {
-		return Mockito.mock(HandleUnfoundController.class);
+		return Mockito.mock(HandleUnfoundControllerController.class);
 	}
 	
 }

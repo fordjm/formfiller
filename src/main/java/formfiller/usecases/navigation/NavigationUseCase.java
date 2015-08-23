@@ -3,7 +3,7 @@ package formfiller.usecases.navigation;
 import formfiller.ApplicationContext;
 import formfiller.boundaries.UseCase;
 import formfiller.boundaryCrossers.PresentableResponse;
-import formfiller.delivery.PresentableResponseImpl;
+import formfiller.boundaryCrossers.PresentableResponseImpl;
 import formfiller.entities.ExecutedUseCaseImpl;
 import formfiller.entities.Prompt;
 import formfiller.enums.ActionOutcome;

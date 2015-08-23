@@ -10,7 +10,7 @@ import org.mockito.Mockito;
 
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
 import formfiller.ApplicationContext;
-import formfiller.delivery.PresentableResponseImpl;
+import formfiller.boundaryCrossers.PresentableResponseImpl;
 import formfiller.entities.ExecutedUseCase;
 import formfiller.enums.ActionOutcome;
 

@@ -11,7 +11,7 @@ import formfiller.request.interfaces.Request;
 import formfiller.usecases.UseCaseFactory;
 import formfiller.usecases.UseCaseFactoryImpl;
 
-public class HandleUnfoundController implements Controller {
+public class HandleUnfoundControllerController implements Controller {
 
 	public void handle(ParsedUserRequest parsedUserRequest) {
 		String message = unfoundControllerMessage(parsedUserRequest);

@@ -2,7 +2,6 @@ package formfiller.request.builder;
 
 import java.util.HashMap;
 
-import formfiller.request.NoRequestImpl;
 import formfiller.request.interfaces.Request;
 
 public class RequestBuilderImpl implements RequestBuilder {
@@ -17,31 +16,38 @@ public class RequestBuilderImpl implements RequestBuilder {
 		else if(requestName.equalsIgnoreCase("navigation"))
 			return buildNavigationRequest(args);
 		else
-			return new NoRequestImpl();
+			return getNoRequest();
 	}
 
 	private <K,V> Request buildHandleUnfoundControllerRequest(HashMap<K,V> args) {
 		HandleUnfoundControllerRequestBuilder builder = 
 				new HandleUnfoundControllerRequestBuilder();
 		builder.buildMessage((String) args.get("message"));
-		return getFinishedRequest(builder);
+		return finishBuildingRequest(builder);
 	}
 	private <K,V> Request buildPresentQuestionRequest(HashMap<K,V> args) {
 		PresentQuestionRequestBuilder builder = new PresentQuestionRequestBuilder();
-		return getFinishedRequest(builder);
+		return finishBuildingRequest(builder);
 	}	
 	private <K,V> Request buildPresentAnswerRequest(HashMap<K,V> args) {
 		PresentAnswerRequestBuilder builder = new PresentAnswerRequestBuilder();
-		return getFinishedRequest(builder);
+		return finishBuildingRequest(builder);
 	}
 	private <K,V> Request buildNavigationRequest(HashMap<K,V> args) {
 		NavigationRequestBuilder builder = new NavigationRequestBuilder();
 		builder.buildOffset((int) args.get("offset"));
-		return getFinishedRequest(builder);
+		return finishBuildingRequest(builder);
 	}
-	private Request getFinishedRequest(AbstractRequestBuilder builder){
+	private Request finishBuildingRequest(AbstractRequestBuilder builder){
 		builder.buildName();
 		return builder.getRequest();
+	}
+	private Request getNoRequest() {
+		return new Request(){
+			public String getName() {
+				return "NoRequest";
+			}
+			public void setName(String name) { }};
 	}
 
 }

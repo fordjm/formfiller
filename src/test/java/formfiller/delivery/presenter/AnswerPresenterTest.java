@@ -9,7 +9,6 @@ import org.junit.runner.RunWith;
 
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
 import formfiller.boundaryCrossers.PresentableAnswer;
-import formfiller.delivery.AbstractPresenter;
 
 @RunWith(HierarchicalContextRunner.class)
 public class AnswerPresenterTest {

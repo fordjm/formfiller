@@ -4,8 +4,29 @@ public class Question implements Prompt {
 	String id;
 	String content;
 	boolean requiresAnswer;
-	public static final Prompt START = new StartPrompt();
-	public static final Prompt END = new EndPrompt();
+	public static final Prompt START = getStartPrompt();
+	public static final Prompt END = getEndPrompt();
+
+	private static NoQuestion getStartPrompt() {
+		return new NoQuestion(){
+			public String getContent() {
+				return "You have reached the start of this form.";
+			}
+			public String getId() {
+				return "start";
+			}
+		};
+	}
+	private static NoQuestion getEndPrompt() {
+		return new NoQuestion(){
+			public String getContent() {
+				return "You have reached the end of this form.";
+			}
+			public String getId() {
+				return "end";
+			}
+		};
+	}
 
 	public Question(String id, String content) {
 		this.id = id;

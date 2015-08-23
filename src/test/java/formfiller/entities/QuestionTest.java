@@ -1,6 +1,7 @@
 package formfiller.entities;
 
-import static org.junit.Assert.assertEquals;
+import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -12,17 +13,15 @@ public class QuestionTest {
 	final String content = "What is your name?";
 
 	@Before
-	public void givenAPromptImpl(){
+	public void givenAQuestion(){
 		question = new Question(id, content);
+		question.setResponseRequired(false);
 	}
-	
 	@Test
-	public void whenGetIdRuns_ThenIdEqualsGivenString(){
-		assertEquals(id, question.getId());
-	}
-	
-	@Test 
-	public void whenGetContentRuns_ThenContentEqualsGivenString(){
-		assertEquals(content, question.getContent());
+	public void questionFieldsHaveExpectedValues(){
+		assertThat(question.getId(), is(id));
+		assertThat(question.getContent(), is(content));
+		assertThat(question.hasAnswer(), is(false));
+		assertThat(question.requiresAnswer(), is(false));
 	}
 }

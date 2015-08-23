@@ -1,6 +1,6 @@
 package formfiller.request.implementations;
 
-import formfiller.usecases.handleUnfoundController.HandleUnfoundControllerRequest;
+import formfiller.request.interfaces.HandleUnfoundControllerRequest;
 
 public class HandleUnfoundControllerRequestImpl extends RequestImpl 
 		implements HandleUnfoundControllerRequest{

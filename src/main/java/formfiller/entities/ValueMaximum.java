@@ -12,11 +12,11 @@ public class ValueMaximum<T> extends Constraint {
 
 	@Override
 	protected boolean isConstraintSatisfied() {
-		return isLegalValue() && response.satisfiesConstraint();
+		return isLegalValue() && answer.satisfiesConstraint();
 	}
 	
 	protected boolean isLegalValue(){
-		T content = response.getContent();
+		T content = answer.getContent();
 		return isComparable(content) && isLessOrEqualToMaximum(content);
 	}
 	

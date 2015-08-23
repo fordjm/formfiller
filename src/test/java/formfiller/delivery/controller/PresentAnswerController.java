@@ -7,21 +7,21 @@ import formfiller.delivery.userRequestParser.ParsedUserRequest;
 import formfiller.request.builder.RequestBuilder;
 import formfiller.request.builder.RequestBuilderImpl;
 import formfiller.request.interfaces.Request;
-import formfiller.usecases.presentQuestion.PresentQuestionUseCase;
+import formfiller.usecases.presentAnswer.PresentAnswerUseCase;
 
-public class PresentQuestionController implements Controller {
+public class PresentAnswerController implements Controller {
 
-	public void handle(ParsedUserRequest parsedInput) {
+	public void handle(ParsedUserRequest parsedUserRequest) {
 		Request presentQuestionRequest = 
-				makePresentQuestionRequest();
-		PresentQuestionUseCase presentQuestionUseCase = 
-				new PresentQuestionUseCase();
+				makePresentAnswerRequest();
+		PresentAnswerUseCase presentQuestionUseCase = 
+				new PresentAnswerUseCase();
 		presentQuestionUseCase.execute(presentQuestionRequest);
 	}
 	
-	public <K,V> Request makePresentQuestionRequest(){
+	public <K,V> Request makePresentAnswerRequest(){
 		RequestBuilder requestBuilder = new RequestBuilderImpl();
-		return requestBuilder.build("presentQuestion", new HashMap<K,V>());
+		return requestBuilder.build("presentAnswer", new HashMap<K,V>());
 	}
 
 }

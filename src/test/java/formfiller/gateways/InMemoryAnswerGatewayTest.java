@@ -1,7 +1,8 @@
 package formfiller.gateways;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.*;
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -10,7 +11,7 @@ import org.junit.runner.RunWith;
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
 import formfiller.ApplicationContext;
 import formfiller.entities.Answer;
-import formfiller.entities.NoAnswer;
+import formfiller.entities.AnswerImpl;
 import formfiller.utilities.MockCreation;
 import formfiller.utilities.TestSetup;
 
@@ -33,7 +34,7 @@ public class InMemoryAnswerGatewayTest {
 		public void test() {			
 			answer = ApplicationContext.answerGateway.findAnswerByIndex(0);
 			
-			assertThatAnswerIsInstanceOfClass(NoAnswer.class);
+			assertThat(answer, is(AnswerImpl.NONE));
 		}
 		
 	}

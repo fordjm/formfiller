@@ -18,8 +18,7 @@ import formfiller.utilities.TestSetup;
 @RunWith(HierarchicalContextRunner.class)
 public class PresentQuestionControllerTest {
 	PresentQuestionController presentQuestionController;
-	ParsedUserRequest mockParsedInput;
-	PresentableQuestion presentableQuestion;
+	ParsedUserRequest mockParsedUserRequest;
 	Prompt foundQuestion;
 	
 	private PresentableQuestion getPresentableQuestion(){
@@ -29,7 +28,7 @@ public class PresentQuestionControllerTest {
 	@Before
 	public void setupTest(){
 		TestSetup.setupContext();
-		mockParsedInput = RouterTestHelper.makeMockParsedRequest("presentQuestion");
+		mockParsedUserRequest = RouterTestHelper.makeMockParsedRequest("presentQuestion");
 		ApplicationContext.questionGateway.save(MockCreation.makeMockNameQuestion());
 		presentQuestionController = new PresentQuestionController();
 	}
@@ -39,7 +38,7 @@ public class PresentQuestionControllerTest {
 		public void requestingPresentableQuestionPutsQuestionAtBoundary() {
 			foundQuestion = ApplicationContext.questionGateway.findQuestionByIndex(0);
 			
-			presentQuestionController.handle(mockParsedInput);
+			presentQuestionController.handle(mockParsedUserRequest);
 			
 			assertEquals(getPresentableQuestion().getId(), foundQuestion.getId());
 			assertEquals(getPresentableQuestion().getMessage(), foundQuestion.getContent());

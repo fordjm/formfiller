@@ -11,9 +11,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
+import formfiller.entities.AnswerImpl;
 import formfiller.entities.Constraint;
 import formfiller.entities.NoQuestion;
-import formfiller.entities.NoAnswer;
 import formfiller.enums.Cardinality;
 import formfiller.enums.ContentConstraint;
 import formfiller.persistence.FormWidget;
@@ -28,7 +28,7 @@ public class ClearWidgetTest {
 		assertEquals("", FormWidget.getPrompt().getContent());
 	}
 	static void assertGetResponseGetsANullResponse() {
-		assertTrue(FormWidget.getResponse() instanceof NoAnswer);
+		assertTrue(FormWidget.getResponse().equals(AnswerImpl.NONE));
 		assertThat(FormWidget.getResponse().getId(), is(-1));
 		assertEquals("", FormWidget.getResponse().getContent());
 	}

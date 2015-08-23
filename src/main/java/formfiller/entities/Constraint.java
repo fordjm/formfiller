@@ -4,22 +4,22 @@ import formfiller.enums.ContentConstraint;
 
 public abstract class Constraint implements Answer {
 	ContentConstraint name;
-	Answer response;
+	Answer answer;
 	
 	public Constraint(ContentConstraint name){
 		this.name = name;
-		this.response = (Answer) new NoAnswer();		
+		this.answer = AnswerImpl.NONE;		
 	}
 
 	public void wrap(Answer response) throws IllegalArgumentException{
 		if (response == null || response.getContent() == null)
 			throw new IllegalArgumentException(
 					"Constraint cannot wrap null responses or content.");
-		this.response = response;
+		this.answer = response;
 	}
 	
 	public boolean hasResponse(){
-		return !(response instanceof NoAnswer);
+		return !(answer.equals(AnswerImpl.NONE));
 	}
 	
 	public ContentConstraint getName(){
@@ -27,11 +27,11 @@ public abstract class Constraint implements Answer {
 	}
 
 	public int getId() {
-		return response.getId();
+		return answer.getId();
 	}
 
 	public <T> T getContent() {
-		return response.getContent();
+		return answer.getContent();
 	}
 	
 	public boolean satisfiesConstraint(){

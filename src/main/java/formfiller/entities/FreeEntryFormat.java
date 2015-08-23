@@ -10,6 +10,6 @@ public class FreeEntryFormat extends Constraint {
 
 	@Override
 	public boolean isConstraintSatisfied() {
-		return response.satisfiesConstraint();
+		return answer.satisfiesConstraint();
 	}
 }

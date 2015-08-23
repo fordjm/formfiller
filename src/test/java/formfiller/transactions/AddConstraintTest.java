@@ -1,6 +1,7 @@
 package formfiller.transactions;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.lang.reflect.Type;
 import java.util.Arrays;
@@ -12,10 +13,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
-import formfiller.entities.Constrainable;
+import formfiller.entities.AnswerType;
 import formfiller.entities.Constraint;
 import formfiller.entities.FreeEntryFormat;
-import formfiller.entities.AnswerType;
 import formfiller.entities.SelectionFormat;
 import formfiller.entities.ValueMaximum;
 import formfiller.entities.ValueMinimum;

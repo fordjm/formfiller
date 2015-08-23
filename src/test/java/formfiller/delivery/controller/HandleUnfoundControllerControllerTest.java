@@ -13,9 +13,9 @@ import formfiller.delivery.userRequestParser.ParsedUserRequest;
 import formfiller.enums.ActionOutcome;
 import formfiller.utilities.TestSetup;
 
-public class HandleUnfoundControllerTest {
+public class HandleUnfoundControllerControllerTest {
 
-	private HandleUnfoundController controller;
+	private HandleUnfoundControllerController controller;
 	private ParsedUserRequest request;
 	
 	private PresentableResponse getPresentableUnfoundControllerResponse(){
@@ -27,7 +27,7 @@ public class HandleUnfoundControllerTest {
 	@Before
 	public void setUp() {
 		TestSetup.setupContext();
-		controller = new HandleUnfoundController();
+		controller = new HandleUnfoundControllerController();
 		request = RouterTestHelper.makeMockParsedRequest("");
 	}
 	@Test

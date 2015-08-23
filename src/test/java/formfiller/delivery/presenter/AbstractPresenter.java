@@ -1,9 +1,10 @@
-package formfiller.delivery;
+package formfiller.delivery.presenter;
 
 import java.util.Observable;
 
 import formfiller.boundaries.Presenter;
 import formfiller.boundaryCrossers.PresentableResponse;
+import formfiller.delivery.View;
 
 public abstract class AbstractPresenter extends Observable implements Presenter {
 
