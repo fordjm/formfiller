@@ -16,15 +16,14 @@ public class AnswerType extends Constraint {
 		return type;
 	}
 
-	@Override
 	protected boolean isConstraintSatisfied() {
 		return responseTypeMatchesGivenType(
 				answer.getContent(), type) && 
 				answer.satisfiesConstraint();
 	}
 	
-	private <T> boolean responseTypeMatchesGivenType(
-			T content, Type type){
+	private boolean responseTypeMatchesGivenType(
+			Object content, Type type){
 		Class<? extends Object> responseClass = content.getClass();		
 		return responseClass.equals(type);
 	}

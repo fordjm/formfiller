@@ -77,7 +77,7 @@ public class ResponseTypeTest<T> {
 		}
 		
 		public void assertResponseDataIsConsistent(int responseId, T responseContent){
-			T content = responseType.getContent();
+			Object content = responseType.getContent();
 			assertSame(responseId, responseType.getId());
 			assertSame(responseContent, content);
 			assertSame(type, content.getClass());

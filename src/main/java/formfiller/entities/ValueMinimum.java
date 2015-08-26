@@ -3,9 +3,9 @@ package formfiller.entities;
 import formfiller.enums.ContentConstraint;
 
 public class ValueMinimum<T> extends Constraint {
-	T minimum;
+	Object minimum;
 
-	public ValueMinimum(T minimum) {
+	public ValueMinimum(Object minimum) {
 		super(ContentConstraint.VALUE_MINIMUM);
 		this.minimum = minimum;
 	}
@@ -16,16 +16,16 @@ public class ValueMinimum<T> extends Constraint {
 	}
 	
 	protected boolean isLegalValue(){
-		T content = answer.getContent();
+		Object content = answer.getContent();
 		return isComparable(content) && isGreaterOrEqualToMinimum(content);
 	}
 	
-	protected boolean isComparable(T content){
+	protected boolean isComparable(Object content){
 		return content instanceof Comparable;
 	}
 	
-	protected boolean isGreaterOrEqualToMinimum(T content){
-		Comparable<T> castContent = (Comparable<T>) content;
+	protected boolean isGreaterOrEqualToMinimum(Object content){
+		Comparable<Object> castContent = (Comparable<Object>) content;
 		return castContent.compareTo(minimum) >= 0;
 	}
 }

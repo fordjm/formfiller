@@ -5,20 +5,20 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-public class ResponseImplTest<T> {
-	public abstract static class GivenAResponseImpl<T>{
+public class ResponseImplTest {
+	public abstract static class GivenAResponseImpl{
 		int id;
-		T content;
-		AnswerImpl<T> response;
+		Object content;
+		AnswerImpl response;
 		
 		public abstract int getId();
-		public abstract T getContent();
+		public abstract Object getContent();
 		
 		@Before
 		public void givenAResponseImpl(){
 			id = getId();
 			content = getContent();
-			response = new AnswerImpl<T>(id, content);
+			response = new AnswerImpl(id, content);
 		}
 		
 		void assertResponseDataIsConsistent(){
@@ -27,13 +27,13 @@ public class ResponseImplTest<T> {
 		}
 		
 		@Test
-		public void whenFieldValuesAreCompared_ThenValuesAreConsistent(){
+		public void whenFieldValuesAreCompared_ObjecthenValuesAreConsistent(){
 			assertResponseDataIsConsistent();
 		}
 		
 	}
 	
-	public static class GivenAnIllegalIdAndLegalContent<T> extends GivenAResponseImpl<T>{
+	public static class GivenAnIllegalIdAndLegalContent extends GivenAResponseImpl{
 
 		@Override
 		public int getId() {
@@ -41,17 +41,17 @@ public class ResponseImplTest<T> {
 		}
 
 		@Override
-		public T getContent() {
-			return (T) "";
+		public Object getContent() {
+			return (Object) "";
 		}
 		
 		@Test
-		public void whenSatisfiesConstraintRuns_ThenItReturnsFalse(){
+		public void whenSatisfiesConstraintRuns_ObjecthenItReturnsFalse(){
 			assertFalse(response.satisfiesConstraint());
 		}
 	}
 	
-	public static class GivenALegalIdAndIllegalContent<T> extends GivenAResponseImpl<T>{
+	public static class GivenALegalIdAndIllegalContent extends GivenAResponseImpl{
 
 		@Override
 		public int getId() {
@@ -59,17 +59,17 @@ public class ResponseImplTest<T> {
 		}
 
 		@Override
-		public T getContent() {
+		public Object getContent() {
 			return null;
 		}
 		
 		@Test
-		public void whenSatisfiesConstraintRuns_ThenItReturnsFalse(){
+		public void whenSatisfiesConstraintRuns_ObjecthenItReturnsFalse(){
 			assertFalse(response.satisfiesConstraint());
 		}		
 	}
 	
-	public static class GivenALegalIdAndLegalContent<T> extends GivenAResponseImpl<T>{
+	public static class GivenALegalIdAndLegalContent extends GivenAResponseImpl{
 
 		@Override
 		public int getId() {
@@ -77,12 +77,12 @@ public class ResponseImplTest<T> {
 		}
 
 		@Override
-		public T getContent() {
-			return (T) "Joe";
+		public Object getContent() {
+			return (Object) "Joe";
 		}
 		
 		@Test
-		public void whenSatisfiesConstraintRuns_ThenItReturnsTrue(){
+		public void whenSatisfiesConstraintRuns_ObjecthenItReturnsObjectrue(){
 			assertTrue(response.satisfiesConstraint());
 		}			
 	}

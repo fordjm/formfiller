@@ -30,7 +30,7 @@ public abstract class Constraint implements Answer {
 		return answer.getId();
 	}
 
-	public <T> T getContent() {
+	public Object getContent() {
 		return answer.getContent();
 	}
 	

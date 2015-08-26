@@ -1,6 +1,6 @@
 package formfiller.entities;
 
-public class AnswerImpl<T> extends AbstractAnswer<T> {
+public class AnswerImpl extends AbstractAnswer {
 	public static final Answer NONE = getNoAnswer();
 
 	private static Answer getNoAnswer() {
@@ -16,11 +16,11 @@ public class AnswerImpl<T> extends AbstractAnswer<T> {
 			} };
 	}
 
-	public AnswerImpl(T content){
+	public AnswerImpl(Object content){
 		super(0, content);
 	}
 
-	public AnswerImpl(int id, T content){
+	public AnswerImpl(int id, Object content){
 		super(id, content);
 	}
 

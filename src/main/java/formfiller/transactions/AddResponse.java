@@ -11,9 +11,9 @@ import formfiller.persistence.FormWidget;
 
 public class AddResponse implements Transaction {
 	Answer response;
-	public <T> AddResponse(T content) {
+	public AddResponse(Object content) {
 		int id = FormWidget.getNextResponseId();
-		this.response = new AnswerImpl<T>(id, content);
+		this.response = new AnswerImpl(id, content);
 	}
 	public void execute() {
 		wrapResponse();

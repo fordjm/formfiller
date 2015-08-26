@@ -47,18 +47,18 @@ public class AddConstraintTest {
 		}		
 	}
 	public class SelectionFormatContext<T>{
-		List<T> selections;
+		List<Object> selections;
 		@Before
 		public void givenASelectionFormat(){
-			selections = Arrays.asList((T) "a", (T) "b", (T) "c");
-			addConstraint = new AddSelectionFormat<T>(selections);
+			selections = Arrays.asList((Object) "a", (Object) "b", (Object) "c");
+			addConstraint = new AddSelectionFormat<Object>(selections);
 		}
 		@Test
 		public void whenAddConstraintExecutes_ThenFormWidgetHasConstraint(){
 			addConstraint.execute();		
 			setConstraintsMap();		
 			setConstraint(ContentConstraint.FORMAT);
-			SelectionFormat<T> selectionFormat = (SelectionFormat<T>) constraint;
+			SelectionFormat selectionFormat = (SelectionFormat) constraint;
 			assertTrue(constraint instanceof SelectionFormat);
 			assertEquals(selections, selectionFormat.getSelections());
 		}
