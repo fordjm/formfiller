@@ -24,7 +24,7 @@ public class AnswerState {
 	}
 	boolean isLegalIndex(int requestedIndex) {
 		return requestedIndex >= 0 && 
-				requestedIndex < ApplicationContext.answerGateway.numResponses();
+				requestedIndex < ApplicationContext.answerGateway.numAnswers();
 	}
 
 }
