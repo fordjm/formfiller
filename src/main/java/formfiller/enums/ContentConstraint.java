@@ -1,9 +1,10 @@
 package formfiller.enums;
 
 public enum ContentConstraint {
-	FORMAT,
+	NONE,
+	MOCK,
+	SELECTION,
 	TYPE,
 	VALUE_MAXIMUM,
-	VALUE_MINIMUM,
-	MOCK;
+	VALUE_MINIMUM;
 }

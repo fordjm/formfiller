@@ -4,17 +4,17 @@ import java.util.List;
 
 import formfiller.enums.ContentConstraint;
 
-public class SelectionFormat<T> extends Constraint {
+public class SelectionConstraint<T> extends Constraint {
 	private List<T> selections;
 	
-	public SelectionFormat(List<T> selections) throws IllegalArgumentException {
-		super(ContentConstraint.FORMAT);
+	public SelectionConstraint(List<T> selections) throws IllegalArgumentException {
+		super(ContentConstraint.SELECTION);
 		this.selections = selections;
 	}
 	
-	@Override
 	protected boolean isConstraintSatisfied() {
-		return selections.size() > 0 && selections.contains(answer.getContent()) && 
+		return selections.size() > 0 && 
+				selections.contains(answer.getContent()) && 
 				answer.satisfiesConstraint();
 	}
 

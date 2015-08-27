@@ -15,8 +15,8 @@ import org.junit.runner.RunWith;
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
 import formfiller.entities.AnswerType;
 import formfiller.entities.Constraint;
-import formfiller.entities.FreeEntryFormat;
-import formfiller.entities.SelectionFormat;
+import formfiller.entities.NoConstraint;
+import formfiller.entities.SelectionConstraint;
 import formfiller.entities.ValueMaximum;
 import formfiller.entities.ValueMinimum;
 import formfiller.enums.ContentConstraint;
@@ -36,14 +36,14 @@ public class AddConstraintTest {
 	public class FreeEntryFormatContext<T>{
 		@Before
 		public void givenAFreeEntryFormat(){
-			addConstraint = new AddFreeEntryFormat();
+			addConstraint = new AddNoConstraint();
 		}
 		@Test
 		public void whenAddConstraintExecutes_ThenFormWidgetHasConstraint(){
 			addConstraint.execute();		
 			setConstraintsMap();		
-			setConstraint(ContentConstraint.FORMAT);
-			assertTrue(constraint instanceof FreeEntryFormat);
+			setConstraint(ContentConstraint.NONE);
+			assertTrue(constraint instanceof NoConstraint);
 		}		
 	}
 	public class SelectionFormatContext<T>{
@@ -51,15 +51,15 @@ public class AddConstraintTest {
 		@Before
 		public void givenASelectionFormat(){
 			selections = Arrays.asList((Object) "a", (Object) "b", (Object) "c");
-			addConstraint = new AddSelectionFormat<Object>(selections);
+			addConstraint = new AddSelectionConstraint<Object>(selections);
 		}
 		@Test
 		public void whenAddConstraintExecutes_ThenFormWidgetHasConstraint(){
 			addConstraint.execute();		
 			setConstraintsMap();		
-			setConstraint(ContentConstraint.FORMAT);
-			SelectionFormat selectionFormat = (SelectionFormat) constraint;
-			assertTrue(constraint instanceof SelectionFormat);
+			setConstraint(ContentConstraint.SELECTION);
+			SelectionConstraint selectionFormat = (SelectionConstraint) constraint;
+			assertTrue(constraint instanceof SelectionConstraint);
 			assertEquals(selections, selectionFormat.getSelections());
 		}
 	}

@@ -3,18 +3,18 @@ package formfiller.transactions;
 import java.util.List;
 
 import formfiller.entities.Constraint;
-import formfiller.entities.SelectionFormat;
+import formfiller.entities.SelectionConstraint;
 import formfiller.enums.ContentConstraint;
 
-public class AddSelectionFormat<T> extends AddConstraint {
+public class AddSelectionConstraint<T> extends AddConstraint {
 	private List<T> selections;
 
-	public AddSelectionFormat(List<T> selections) {
-		super(ContentConstraint.FORMAT);
+	public AddSelectionConstraint(List<T> selections) {
+		super(ContentConstraint.SELECTION);
 		this.selections = selections;
 	}
 
 	protected Constraint makeConstraint() {
-		return new SelectionFormat<T>(selections);
+		return new SelectionConstraint<T>(selections);
 	}
 }

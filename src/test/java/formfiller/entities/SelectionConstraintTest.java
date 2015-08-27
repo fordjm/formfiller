@@ -18,9 +18,9 @@ import formfiller.enums.ContentConstraint;
 import formfiller.utilities.MockCreation;
 
 @RunWith(HierarchicalContextRunner.class)
-public class SelectionFormatTest {
+public class SelectionConstraintTest {
 	List<String> selections;
-	SelectionFormat<String> format;	
+	SelectionConstraint<String> selectionConstraint;	
 	List<String> makeSelectionsList(String... selections){
 		return Arrays.asList(selections);
 	}
@@ -28,24 +28,24 @@ public class SelectionFormatTest {
 	@Before
 	public void givenASelectionFormat(){
 		selections = makeSelectionsList("a", "b", "c");
-		format = new SelectionFormat<String>(selections);
+		selectionConstraint = new SelectionConstraint<String>(selections);
 	}
 	
 	public class GivenANewSelectionFormat {
 		@Test
 		public void whenGetNameRuns_ThenItReturnsCorrectName(){
-			assertSame(ContentConstraint.FORMAT, format.getName());
+			assertSame(ContentConstraint.SELECTION, selectionConstraint.getName());
 		}	
 		@Test
 		public void whenGetSelectionsRuns_ThenItReturnsGivenSelections(){
-			assertSame(selections, format.getSelections());			
+			assertSame(selections, selectionConstraint.getSelections());			
 		}
 		@Test
 		public void whenFormatIsNew_ThenItWrapsANullResponse(){
-			assertFalse(format.hasResponse());
-			assertSame(-1, format.getId());
-			assertSame("", format.getContent());
-			assertFalse(format.satisfiesConstraint());
+			assertFalse(selectionConstraint.hasResponse());
+			assertSame(-1, selectionConstraint.getId());
+			assertSame("", selectionConstraint.getContent());
+			assertFalse(selectionConstraint.satisfiesConstraint());
 		}
 	}	
 
@@ -63,13 +63,13 @@ public class SelectionFormatTest {
 			return result;
 		}		
 		private void assertFormatHasResponse(){
-			assertTrue(format.hasResponse());
+			assertTrue(selectionConstraint.hasResponse());
 		}
 		private void assertConstraintIsSatisfied(boolean flag){
 			if (flag)
-				assertTrue(format.satisfiesConstraint());
+				assertTrue(selectionConstraint.satisfiesConstraint());
 			else
-				assertFalse(format.satisfiesConstraint());
+				assertFalse(selectionConstraint.satisfiesConstraint());
 		}
 
 		public class GivenANullToWrap {		
@@ -79,21 +79,21 @@ public class SelectionFormatTest {
 			}		
 			@Test(expected = IllegalArgumentException.class)
 			public void whenWrappingNull_ThenIllegalArgumentExceptionIsThrown(){
-				format.wrap(answer);
+				selectionConstraint.wrap(answer);
 			}
 		}		
 		public class GivenAnInvalidResponse{
 			@Before
 			public void givenAnInvalidResponse(){
 				answer = MockCreation.makeMockResponse(false);
-				format.wrap(answer);
+				selectionConstraint.wrap(answer);
 			}		
 			@Test
 			public void whenResponseIsInvalid_ThenConstraintIsUnsatisfied(){
 				assertFormatHasResponse();
-				assertSame(answer.getId(), format.getId());
-				assertSame(answer.getContent(), format.getContent());
-				assertSame(answer.satisfiesConstraint(), format.satisfiesConstraint());
+				assertSame(answer.getId(), selectionConstraint.getId());
+				assertSame(answer.getContent(), selectionConstraint.getContent());
+				assertSame(answer.satisfiesConstraint(), selectionConstraint.satisfiesConstraint());
 				assertConstraintIsSatisfied(false);
 			}
 		}
@@ -102,14 +102,14 @@ public class SelectionFormatTest {
 				@Before
 				public void givenAValidResponse(){
 					answer = MockCreation.makeMockNameAnswer("Joe");
-					format.wrap(answer);
+					selectionConstraint.wrap(answer);
 				}
 				@Test
 				public void whenResponseIsValid_ThenConstraintIsUnsatisfied(){
 					assertFormatHasResponse();
-					assertSame(answer.getId(), format.getId());					
-					assertSame(answer.getContent(), format.getContent());
-					assertNotSame(answer.satisfiesConstraint(), format.satisfiesConstraint());
+					assertSame(answer.getId(), selectionConstraint.getId());					
+					assertSame(answer.getContent(), selectionConstraint.getContent());
+					assertNotSame(answer.satisfiesConstraint(), selectionConstraint.satisfiesConstraint());
 					assertConstraintIsSatisfied(false);
 				}
 			}
@@ -117,14 +117,14 @@ public class SelectionFormatTest {
 				@Before
 				public void givenASelectionResponse(){
 					answer = makeMockAnswer(0, "b", true);
-					format.wrap(answer);
+					selectionConstraint.wrap(answer);
 				}
 				@Test
 				public void whenFormatWrapsSelectionResponse_ThenConstraintIsSatisfied(){
 					assertFormatHasResponse();
-					assertSame(answer.getId(), format.getId());
-					assertSame(answer.getContent(), format.getContent());
-					assertSame(answer.satisfiesConstraint(), format.satisfiesConstraint());
+					assertSame(answer.getId(), selectionConstraint.getId());
+					assertSame(answer.getContent(), selectionConstraint.getContent());
+					assertSame(answer.satisfiesConstraint(), selectionConstraint.satisfiesConstraint());
 					assertConstraintIsSatisfied(true);
 				}
 			}

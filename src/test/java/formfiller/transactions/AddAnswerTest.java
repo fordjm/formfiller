@@ -8,17 +8,17 @@ import org.junit.runner.RunWith;
 
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
 import formfiller.entities.Constraint;
-import formfiller.entities.FreeEntryFormat;
+import formfiller.entities.NoConstraint;
 import formfiller.entities.Prompt;
 import formfiller.entities.AnswerType;
 import formfiller.persistence.FormWidget;
 import formfiller.utilities.MockCreation;
 
 @RunWith(HierarchicalContextRunner.class)
-public class AddResponseTest<T> {
-	static Transaction addResponse;
+public class AddAnswerTest<T> {
+	static Transaction addAnswer;
 	void makeAddResponse(T content){
-		addResponse = new AddResponse(content);
+		addAnswer = new AddResponse(content);
 	}
 	public class WidgetHasNoPromptContext{
 		@Before
@@ -32,7 +32,7 @@ public class AddResponseTest<T> {
 			}
 			@Test(expected = IllegalStateException.class)
 			public void whenAddResponseRuns_ThenItThrowsAnException(){
-				addResponse.execute();
+				addAnswer.execute();
 			}
 		}
 		public class GivenAValidResponse{
@@ -43,7 +43,7 @@ public class AddResponseTest<T> {
 			}
 			@Test(expected = IllegalStateException.class)
 			public void whenAddResponseRuns_ThenItThrowsAnException(){
-				addResponse.execute();
+				addAnswer.execute();
 				assertNotSame(validContent, FormWidget.getResponse().getContent());
 			}	
 		}
@@ -62,7 +62,7 @@ public class AddResponseTest<T> {
 			}
 			@Test(expected = IllegalArgumentException.class)
 			public void whenAddResponseRuns_ThenItThrowsAnException(){
-				addResponse.execute();
+				addAnswer.execute();
 			}
 		}
 		public class GivenAValidResponse{
@@ -74,7 +74,7 @@ public class AddResponseTest<T> {
 			public class GivenNoConstraints{
 				@Test
 				public void whenAddResponseRuns_ThenItAddsANewResponse(){
-					addResponse.execute();
+					addAnswer.execute();
 					assertSame(validContent, FormWidget.getResponse().getContent());
 				}	
 			}
@@ -87,13 +87,13 @@ public class AddResponseTest<T> {
 				}
 				@Test(expected = IllegalArgumentException.class)
 				public void whenAddResponseRuns_ThenItThrowsAnException(){
-					addResponse.execute();
+					addAnswer.execute();
 				}
 			}
 			// TODO:  Figure out proper constraint mocking.
 			public class GivenASatisfiedConstraint{
 				Constraint mockConstraint;
-				Constraint realConstraint = new FreeEntryFormat();
+				Constraint realConstraint = new NoConstraint();
 				@Before
 				public void givenASatisfiedConstraint(){
 					mockConstraint = MockCreation.makeMockConstraint(0, true);
@@ -101,7 +101,7 @@ public class AddResponseTest<T> {
 				}
 				@Test
 				public void whenAddResponseRuns_ThenItAddsANewResponse(){
-					addResponse.execute();
+					addAnswer.execute();
 					assertSame(validContent, FormWidget.getResponse().getContent());
 				}
 			}
@@ -110,7 +110,7 @@ public class AddResponseTest<T> {
 					FormWidget.addConstraint(constraint);
 			}
 			public class GivenTwoConstraintsWhereOneIsUnsatisfied{
-				Constraint format = new FreeEntryFormat();
+				Constraint format = new NoConstraint();
 				Constraint responseType = new AnswerType(Double.class);
 				@Before
 				public void givenTwoConstraintsWhereOneIsUnsatisfied(){
@@ -118,7 +118,7 @@ public class AddResponseTest<T> {
 				}
 				@Test(expected = IllegalArgumentException.class)
 				public void whenAddResponseRuns_ThenItThrowsAnException(){
-					addResponse.execute();
+					addAnswer.execute();
 				}
 			}
 		}

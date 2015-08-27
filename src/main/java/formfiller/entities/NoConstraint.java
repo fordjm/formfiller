@@ -2,13 +2,12 @@ package formfiller.entities;
 
 import formfiller.enums.ContentConstraint;
 
-public class FreeEntryFormat extends Constraint {
+public class NoConstraint extends Constraint {
 
-	public FreeEntryFormat() {
-		super(ContentConstraint.FORMAT);
+	public NoConstraint() {
+		super(ContentConstraint.NONE);
 	}
 
-	@Override
 	public boolean isConstraintSatisfied() {
 		return answer.satisfiesConstraint();
 	}

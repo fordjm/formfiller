@@ -12,33 +12,33 @@ import formfiller.enums.ContentConstraint;
 import formfiller.utilities.MockCreation;
 
 @RunWith(HierarchicalContextRunner.class)
-public class FreeEntryFormatTest {
-	FreeEntryFormat format;
+public class NoConstraintTest {
+	NoConstraint noConstraint;
 	
 	public <T> void assertResponseDataIsConsistent(int responseId, T responseContent, boolean satisfiesConstraint){
-		assertSame(responseId, format.getId());
-		assertSame(responseContent, format.getContent());
-		assertSame(satisfiesConstraint, format.satisfiesConstraint());
+		assertSame(responseId, noConstraint.getId());
+		assertSame(responseContent, noConstraint.getContent());
+		assertSame(satisfiesConstraint, noConstraint.satisfiesConstraint());
 	}
 	
 	@Before
 	public void setUp(){
-		format = new FreeEntryFormat();
+		noConstraint = new NoConstraint();
 	}
 	
 	@Test
 	public void whenGetNameRuns_ThenItReturnsCorrectName(){
-		assertEquals(ContentConstraint.FORMAT, 
-				format.getName());
+		assertEquals(ContentConstraint.NONE, 
+				noConstraint.getName());
 	}
 	
 	public class GivenANewFreeEntryFormat {		
 		@Test
 		public void whenFormatIsNew_ThenItWrapsANullResponse(){
-			assertFalse(format.hasResponse());
-			assertSame(-1, format.getId());
-			assertSame("", format.getContent());
-			assertFalse(format.satisfiesConstraint());
+			assertFalse(noConstraint.hasResponse());
+			assertSame(-1, noConstraint.getId());
+			assertSame("", noConstraint.getContent());
+			assertFalse(noConstraint.satisfiesConstraint());
 		}
 	}
 	
@@ -53,21 +53,21 @@ public class FreeEntryFormatTest {
 			
 			@Test
 			public void whenSatisfiesConstraintRuns_ThenItReturnsFalse(){
-				assertThat(format.hasResponse(), is(equalTo(false)));
-				assertThat(format.isConstraintSatisfied(), is(false));
+				assertThat(noConstraint.hasResponse(), is(equalTo(false)));
+				assertThat(noConstraint.isConstraintSatisfied(), is(false));
 			}
 		}
 		public class GivenAValidResponse{
 			@Before
 			public void givenAValidResponse(){
 				response = MockCreation.makeMockNameAnswer("Joe");
-				format.wrap(response);
+				noConstraint.wrap(response);
 			}			
 			@Test
 			public void whenSatisfiesConstraintRuns_ThenItReturnsFalse(){
-				assertThat(format.hasResponse(), is(equalTo(true)));
+				assertThat(noConstraint.hasResponse(), is(equalTo(true)));
 				assertResponseDataIsConsistent(response.getId(), response.getContent(), response.satisfiesConstraint());
-				assertThat(format.isConstraintSatisfied(), is(true));
+				assertThat(noConstraint.isConstraintSatisfied(), is(true));
 			}
 		}
 	}
