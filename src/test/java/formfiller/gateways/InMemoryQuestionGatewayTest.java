@@ -12,8 +12,7 @@ import formfiller.ApplicationContext;
 import formfiller.entities.Question;
 import formfiller.entities.NoQuestion;
 import formfiller.entities.Prompt;
-import formfiller.utilities.MockCreation;
-import formfiller.utilities.TestSetup;
+import formfiller.utilities.*;
 
 @RunWith(HierarchicalContextRunner.class)
 public class InMemoryQuestionGatewayTest {
@@ -44,7 +43,7 @@ public class InMemoryQuestionGatewayTest {
 		
 		@Before
 		public void givenAQuestion(){
-			mockQuestion = MockCreation.makeMockNameQuestion();
+			mockQuestion = QuestionMocker.makeMockNameQuestion();
 			ApplicationContext.questionGateway.save(mockQuestion);
 		}
 		@Test

@@ -10,11 +10,9 @@ import org.junit.runner.RunWith;
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
 import formfiller.ApplicationContext;
 import formfiller.boundaryCrossers.PresentableAnswer;
-import formfiller.delivery.router.RouterTestHelper;
 import formfiller.delivery.userRequestParser.ParsedUserRequest;
 import formfiller.entities.Answer;
-import formfiller.utilities.MockCreation;
-import formfiller.utilities.TestSetup;
+import formfiller.utilities.*;
 
 @RunWith(HierarchicalContextRunner.class)
 public class PresentAnswerControllerTest {
@@ -29,8 +27,8 @@ public class PresentAnswerControllerTest {
 	@Before
 	public void setupTest(){
 		TestSetup.setupContext();
-		mockParsedUserRequest = RouterTestHelper.makeMockParsedRequest("presentAnswer");
-		ApplicationContext.answerGateway.save(MockCreation.makeMockNameAnswer("myName"));
+		mockParsedUserRequest = ParsedUserRequestMocker.makeMockParsedUserRequest("presentAnswer");
+		ApplicationContext.answerGateway.save(AnswerMocker.makeMockNameAnswer("myName"));
 		controller = new PresentAnswerController();
 	}
 	

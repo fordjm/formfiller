@@ -8,10 +8,9 @@ import org.junit.Test;
 
 import formfiller.ApplicationContext;
 import formfiller.boundaryCrossers.PresentableResponse;
-import formfiller.delivery.router.RouterTestHelper;
 import formfiller.delivery.userRequestParser.ParsedUserRequest;
 import formfiller.enums.ActionOutcome;
-import formfiller.utilities.TestSetup;
+import formfiller.utilities.*;
 
 public class HandleUnfoundControllerControllerTest {
 
@@ -28,7 +27,7 @@ public class HandleUnfoundControllerControllerTest {
 	public void setUp() {
 		TestSetup.setupContext();
 		controller = new HandleUnfoundControllerController();
-		request = RouterTestHelper.makeMockParsedRequest("");
+		request = ParsedUserRequestMocker.makeMockParsedUserRequest("");
 	}
 	@Test
 	public void canHandle() {		

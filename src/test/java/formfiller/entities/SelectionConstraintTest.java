@@ -15,7 +15,7 @@ import org.mockito.Mockito;
 
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
 import formfiller.enums.ContentConstraint;
-import formfiller.utilities.MockCreation;
+import formfiller.utilities.AnswerMocker;
 
 @RunWith(HierarchicalContextRunner.class)
 public class SelectionConstraintTest {
@@ -85,7 +85,7 @@ public class SelectionConstraintTest {
 		public class GivenAnInvalidResponse{
 			@Before
 			public void givenAnInvalidResponse(){
-				answer = MockCreation.makeMockResponse(false);
+				answer = AnswerMocker.makeMockAnswer(false);
 				selectionConstraint.wrap(answer);
 			}		
 			@Test
@@ -101,7 +101,7 @@ public class SelectionConstraintTest {
 			public class GivenANonSelectionResponse{
 				@Before
 				public void givenAValidResponse(){
-					answer = MockCreation.makeMockNameAnswer("Joe");
+					answer = AnswerMocker.makeMockNameAnswer("Joe");
 					selectionConstraint.wrap(answer);
 				}
 				@Test

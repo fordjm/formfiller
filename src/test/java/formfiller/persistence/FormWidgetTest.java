@@ -23,7 +23,7 @@ import formfiller.entities.Answer;
 import formfiller.entities.AnswerImpl;
 import formfiller.enums.Cardinality;
 import formfiller.enums.ContentConstraint;
-import formfiller.utilities.MockCreation;
+import formfiller.utilities.AnswerMocker;
 
 @RunWith(HierarchicalContextRunner.class)
 public class FormWidgetTest {
@@ -58,7 +58,7 @@ public class FormWidgetTest {
 		return makeMockPrompt("name", "What is your name?");
 	}
 	static Answer makeMockNameResponse() {
-		return MockCreation.makeMockResponse(0, "Joe", true);
+		return AnswerMocker.makeMockAnswer(0, "Joe", true);
 	}
 	static Prompt makeMockPrompt(String id, String content){
 		Prompt result = mock(Prompt.class);
@@ -227,7 +227,7 @@ public class FormWidgetTest {
 			return makeMockPrompt("age", "What is your age?");
 		}
 		Answer makeMockAgeResponse(int age) {
-			return MockCreation.makeMockResponse(0, age, true);
+			return AnswerMocker.makeMockAnswer(0, age, true);
 		}
 		@Before
 		public void givenValidPromptAdded(){
@@ -261,7 +261,7 @@ public class FormWidgetTest {
 				@Test(expected = IllegalStateException.class)
 				public void whenAddResponseRunsTwice_ThenItThrowsAnException(){
 					addedResponse = makeMockAgeResponse(47);
-					Answer secondResponse = MockCreation.makeMockResponse(1, 52, true);
+					Answer secondResponse = AnswerMocker.makeMockAnswer(1, 52, true);
 					updateResponseFieldValues(addedResponse, secondResponse);
 				}				
 			}			

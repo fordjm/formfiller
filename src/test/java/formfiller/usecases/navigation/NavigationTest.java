@@ -16,8 +16,7 @@ import formfiller.request.interfaces.NavigationRequest;
 import formfiller.usecases.navigation.NavigationUseCase;
 import formfiller.ApplicationContext;
 import formfiller.boundaryCrossers.PresentableResponseImpl;
-import formfiller.utilities.TestSetup;
-import formfiller.utilities.MockCreation;
+import formfiller.utilities.*;
 
 @RunWith(HierarchicalContextRunner.class)
 public class NavigationTest {	
@@ -103,7 +102,7 @@ public class NavigationTest {
 			
 			@Before
 			public void givenAnswerNotRequired(){
-				mockQuestion = MockCreation.makeMockNameQuestion();
+				mockQuestion = QuestionMocker.makeMockNameQuestion();
 				ApplicationContext.questionGateway.save(mockQuestion);
 			}
 			@Test
@@ -159,7 +158,7 @@ public class NavigationTest {
 			
 			@Before
 			public void givenAnswerIsRequired(){
-				mockQuestion = MockCreation.makeMockAgeQuestion();
+				mockQuestion = QuestionMocker.makeMockAgeQuestion();
 				ApplicationContext.questionGateway.save(mockQuestion);
 			}	
 

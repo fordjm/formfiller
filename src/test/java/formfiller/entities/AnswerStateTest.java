@@ -7,7 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import formfiller.ApplicationContext;
-import formfiller.utilities.MockCreation;
+import formfiller.utilities.AnswerMocker;
 import formfiller.utilities.TestSetup;
 
 public class AnswerStateTest {
@@ -19,8 +19,8 @@ public class AnswerStateTest {
 	@Before
 	public void setUp() {
 		TestSetup.setupContext();
-		ApplicationContext.answerGateway.save(MockCreation.makeMockNameAnswer("myName"));
-		ApplicationContext.answerGateway.save(MockCreation.makeMockAgeResponse(67));
+		ApplicationContext.answerGateway.save(AnswerMocker.makeMockNameAnswer("myName"));
+		ApplicationContext.answerGateway.save(AnswerMocker.makeMockAgeAnswer(67));
 		answerIndex = 0;
 		answerState = new AnswerState(answerIndex);
 	}

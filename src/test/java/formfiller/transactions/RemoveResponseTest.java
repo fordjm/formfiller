@@ -9,7 +9,7 @@ import org.junit.runner.RunWith;
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
 import formfiller.entities.Answer;
 import formfiller.persistence.FormWidget;
-import formfiller.utilities.MockCreation;
+import formfiller.utilities.*;
 
 @RunWith(HierarchicalContextRunner.class)
 public class RemoveResponseTest {
@@ -34,8 +34,8 @@ public class RemoveResponseTest {
 			@Before
 			public void givenWidgetHasAResponse() throws Exception {
 				// Line 39 brings more support for mocking FormWidget.
-				FormWidget.addPrompt(MockCreation.makeMockNameQuestion());
-				mockResponse = MockCreation.makeMockResponse(0, "Response", true);
+				FormWidget.addPrompt(QuestionMocker.makeMockNameQuestion());
+				mockResponse = AnswerMocker.makeMockAnswer(0, "Response", true);
 				FormWidget.addResponse(mockResponse);
 			}
 			@Test

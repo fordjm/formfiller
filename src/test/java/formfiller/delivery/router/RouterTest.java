@@ -8,6 +8,7 @@ import org.mockito.Mockito;
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
 import formfiller.delivery.Controller;
 import formfiller.delivery.userRequestParser.ParsedUserRequest;
+import formfiller.utilities.*;
 //Adapted from:
 //https://github.com/cleancoders/CleanCodeCaseStudy/blob/master/test/cleancoderscom/http/RouterTest.java
 //Retrieved 2015-08-14
@@ -31,8 +32,9 @@ public class RouterTest {
 	public class GivenAPresentQuestionRequest{
 		@Before
 		public void givenAPresentQuestionRequest(){
-			mockParsedRequest = RouterTestHelper.makeMockParsedRequest("presentQuestion");
-			mockController = RouterTestHelper.makeMockPresentQuestionController();
+			mockParsedRequest = 
+					ParsedUserRequestMocker.makeMockParsedUserRequest("presentQuestion");
+			mockController = ControllerMocker.makeMockPresentQuestionController();
 		}
 		@Test
 		public void canRoutePresentQuestionRequest() {
@@ -45,8 +47,9 @@ public class RouterTest {
 	public class GivenANavigationRequest{
 		@Before
 		public void givenANavigationRequest(){
-			mockParsedRequest = RouterTestHelper.makeMockParsedRequest("navigation", "1");
-			mockController = RouterTestHelper.makeMockNavigationController();
+			mockParsedRequest = 
+					ParsedUserRequestMocker.makeMockParsedUserRequest("navigation", "1");
+			mockController = ControllerMocker.makeMockNavigationController();
 		}
 		@Test
 		public void canRouteNavigationRequest() {

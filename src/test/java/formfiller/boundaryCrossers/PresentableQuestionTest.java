@@ -7,7 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import formfiller.entities.Question;
-import formfiller.utilities.MockCreation;
+import formfiller.utilities.*;
 
 
 public class PresentableQuestionTest {
@@ -20,7 +20,7 @@ public class PresentableQuestionTest {
 	}
 	@Test
 	public void test() {
-		Question mockQuestion = MockCreation.makeMockNameQuestion();
+		Question mockQuestion = QuestionMocker.makeMockNameQuestion();
 		
 		presentableQuestion.setId(mockQuestion.getId());
 		presentableQuestion.setMessage(mockQuestion.getContent());

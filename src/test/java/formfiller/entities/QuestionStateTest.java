@@ -9,8 +9,7 @@ import org.junit.runner.RunWith;
 
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
 import formfiller.ApplicationContext;
-import formfiller.utilities.MockCreation;
-import formfiller.utilities.TestSetup;
+import formfiller.utilities.*;
 
 @RunWith(HierarchicalContextRunner.class)
 public class QuestionStateTest {
@@ -20,8 +19,8 @@ public class QuestionStateTest {
 	@Before
 	public void setUp() {
 		TestSetup.setupContext();
-		ApplicationContext.questionGateway.save(MockCreation.makeMockNameQuestion());
-		ApplicationContext.questionGateway.save(MockCreation.makeMockAgeQuestion());
+		ApplicationContext.questionGateway.save(QuestionMocker.makeMockNameQuestion());
+		ApplicationContext.questionGateway.save(QuestionMocker.makeMockAgeQuestion());
 		questionIndex = 0;
 		questionState = new QuestionState(questionIndex);
 	}

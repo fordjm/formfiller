@@ -16,14 +16,13 @@ import formfiller.entities.Prompt;
 import formfiller.request.implementations.RequestImpl;
 import formfiller.request.interfaces.Request;
 import formfiller.usecases.presentQuestion.PresentQuestionUseCase;
-import formfiller.utilities.TestSetup;
-import formfiller.utilities.MockCreation;
+import formfiller.utilities.*;
 
 @RunWith(HierarchicalContextRunner.class)
 public class PresentQuestionTest {
 	private PresentQuestionUseCase presentQuestionUseCase;
 	private Request mockRequest;
-	Prompt foundQuestion;
+	private Prompt foundQuestion;
 
 	private Prompt findQuestionByIndex(int index) {
 		return ApplicationContext.questionGateway.findQuestionByIndex(index);
@@ -56,7 +55,7 @@ public class PresentQuestionTest {
 		
 		@Before
 		public void givenAQuestion() {
-			ApplicationContext.questionGateway.save(MockCreation.makeMockNameQuestion());
+			ApplicationContext.questionGateway.save(QuestionMocker.makeMockNameQuestion());
 		}
 		@Test
 		public void whenPresentQuestionRuns_ThenGetQuestionGetsGivenQuestion(){

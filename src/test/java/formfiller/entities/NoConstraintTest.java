@@ -9,7 +9,7 @@ import org.junit.runner.RunWith;
 
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
 import formfiller.enums.ContentConstraint;
-import formfiller.utilities.MockCreation;
+import formfiller.utilities.AnswerMocker;
 
 @RunWith(HierarchicalContextRunner.class)
 public class NoConstraintTest {
@@ -60,7 +60,7 @@ public class NoConstraintTest {
 		public class GivenAValidResponse{
 			@Before
 			public void givenAValidResponse(){
-				response = MockCreation.makeMockNameAnswer("Joe");
+				response = AnswerMocker.makeMockNameAnswer("Joe");
 				noConstraint.wrap(response);
 			}			
 			@Test

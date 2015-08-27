@@ -12,7 +12,7 @@ import de.bechte.junit.runners.context.HierarchicalContextRunner;
 import formfiller.ApplicationContext;
 import formfiller.entities.Answer;
 import formfiller.entities.AnswerImpl;
-import formfiller.utilities.MockCreation;
+import formfiller.utilities.AnswerMocker;
 import formfiller.utilities.TestSetup;
 
 @RunWith(HierarchicalContextRunner.class)
@@ -44,7 +44,7 @@ public class InMemoryAnswerGatewayTest {
 		@Before
 		public void givenAnAnswer(){
 			ApplicationContext.answerGateway.save(
-					MockCreation.makeMockNameAnswer("nameAnswer"));
+					AnswerMocker.makeMockNameAnswer("nameAnswer"));
 			ApplicationContext.currentAnswerState.findAnswerByIndexOffset(1);
 		}
 		@Test

@@ -3,7 +3,6 @@ package formfiller.transactions;
 import static org.junit.Assert.*;
 
 import org.junit.Before;
-import org.junit.BeforeClass;
 
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
 
@@ -12,7 +11,7 @@ import org.junit.runner.RunWith;
 
 import formfiller.entities.Prompt;
 import formfiller.persistence.FormWidget;
-import formfiller.utilities.MockCreation;
+import formfiller.utilities.*;
 
 @RunWith(HierarchicalContextRunner.class)
 public class PromptSubjectTest {
@@ -58,7 +57,7 @@ public class PromptSubjectTest {
 			}
 		}
 		public class WidgetHasAPromptContext{
-			Prompt prompt = MockCreation.makeMockNameQuestion();
+			Prompt prompt = QuestionMocker.makeMockNameQuestion();
 			Prompt newPrompt;
 			@Before
 			public void givenWidgetHasAPrompt(){
