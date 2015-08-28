@@ -15,6 +15,10 @@ public class QuestionMocker {
 		return makeMockQuestion("age", "What is your age?", true);
 	}
 	
+	public static Question makeMockBirthDateQuestion() {
+		return makeMockQuestion("birthDate", "What is your birth date?", false);
+	}
+	
 	public static Question makeMockQuestion(String id, String content, boolean isRequired){
 		Question result = mock(Question.class);
 		when (result.getId()).thenReturn(id);

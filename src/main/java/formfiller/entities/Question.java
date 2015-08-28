@@ -4,8 +4,8 @@ public class Question implements Prompt {
 	String id;
 	String content;
 	boolean requiresAnswer;
-	public static final Prompt START = getStartPrompt();
-	public static final Prompt END = getEndPrompt();
+	public static final NoQuestion START = getStartPrompt();
+	public static final NoQuestion END = getEndPrompt();
 
 	private static NoQuestion getStartPrompt() {
 		return new NoQuestion(){

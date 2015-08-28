@@ -20,7 +20,7 @@ import formfiller.utilities.*;
 
 @RunWith(HierarchicalContextRunner.class)
 public class NavigationTest {	
-	private NavigationUseCase useCase;
+	private NavigationUseCase navigationUseCase;
 	private NavigationRequest mockRequest;
 	private Prompt foundQuestion;
 	
@@ -34,8 +34,13 @@ public class NavigationTest {
 	@Before
 	public void setUp(){
 		TestSetup.setupContext();
-		useCase = new NavigationUseCase();
+		navigationUseCase = new NavigationUseCase();
 		mockRequest = mock(NavigationRequest.class);		
+	}
+	
+	@Test(expected = NavigationUseCase.NullExecution.class)
+	public void cannotExecuteNull() {
+		navigationUseCase.execute(null);
 	}
 	
 	public class GivenNoQuestions{
@@ -50,9 +55,9 @@ public class NavigationTest {
 			public void gettingQuestionGetsStartPrompt(){
 				foundQuestion = findQuestionByIndex(-1);
 				
-				useCase.execute(mockRequest);
+				navigationUseCase.execute(mockRequest);
 				
-				assertEquals(useCase, ApplicationContext.executedUseCases.peek().getUseCase());
+				assertEquals(navigationUseCase, ApplicationContext.executedUseCases.peek().getUseCase());
 				assertThat(ApplicationContext.currentQuestionState.getQuestion(), 
 						is(foundQuestion));
 			}
@@ -68,7 +73,7 @@ public class NavigationTest {
 			public void gettingQuestionGetsStartPrompt(){
 				foundQuestion = findQuestionByIndex(0);
 				
-				useCase.execute(mockRequest);
+				navigationUseCase.execute(mockRequest);
 				
 				assertThat(ApplicationContext.currentQuestionState.getQuestion(), 
 						is(foundQuestion));
@@ -86,7 +91,7 @@ public class NavigationTest {
 			public void gettingQuestionGetsEndPrompt(){
 				foundQuestion = findQuestionByIndex(0);
 				
-				useCase.execute(mockRequest);
+				navigationUseCase.execute(mockRequest);
 				
 				assertThat(ApplicationContext.currentQuestionState.getQuestion(), 
 						is(foundQuestion));
@@ -120,7 +125,7 @@ public class NavigationTest {
 				public void canNavigateToFirstQuestion() {
 					foundQuestion = findQuestionByIndex(1);
 					
-					useCase.execute(mockRequest);
+					navigationUseCase.execute(mockRequest);
 					
 					assertThat(ApplicationContext.currentQuestionState.getQuestion(), 
 							is(foundQuestion));
@@ -133,14 +138,14 @@ public class NavigationTest {
 				@Before
 				public void givenFormIsAtTheEnd(){
 					setMockRequestOffset(1);
-					useCase.execute(mockRequest);
+					navigationUseCase.execute(mockRequest);
 				}
 				@Test
 				public void gettingPrevQuestionGetsGivenQuestion(){
 					foundQuestion = findQuestionByIndex(0);					
 					setMockRequestOffset(-1);
 					
-					useCase.execute(mockRequest);
+					navigationUseCase.execute(mockRequest);
 					
 					assertEquals(foundQuestion, 
 							ApplicationContext.currentQuestionState.getQuestion());
@@ -176,7 +181,7 @@ public class NavigationTest {
 				public void cannotNavigateToEnd() {
 					foundQuestion = findQuestionByIndex(0);		
 					
-					useCase.execute(mockRequest);
+					navigationUseCase.execute(mockRequest);
 					
 					assertThat(getPresentedNavigation().getOutcome(), is(ActionOutcome.FAILED));
 					assertEquals(getFailedNavigationResult(), getPresentedNavigation().getMessage());
@@ -195,7 +200,7 @@ public class NavigationTest {
 				public void canRepeatQuestion() {
 					foundQuestion = findQuestionByIndex(0);	
 					
-					useCase.execute(mockRequest);
+					navigationUseCase.execute(mockRequest);
 					
 					assertThat(getPresentedNavigation().getOutcome(), is(ActionOutcome.SUCCEEDED));
 					assertEquals(foundQuestion, ApplicationContext.currentQuestionState.getQuestion());
@@ -214,7 +219,7 @@ public class NavigationTest {
 					foundQuestion = findQuestionByIndex(-1);
 					setMockRequestOffset(-1);
 					
-					useCase.execute(mockRequest);
+					navigationUseCase.execute(mockRequest);
 					
 					assertThat(ApplicationContext.currentQuestionState.getQuestion(), 
 							is(foundQuestion));

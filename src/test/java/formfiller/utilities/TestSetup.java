@@ -2,6 +2,7 @@ package formfiller.utilities;
 import java.util.Stack;
 
 import formfiller.ApplicationContext;
+import formfiller.Navigator;
 import formfiller.delivery.presenter.AnswerPresenter;
 import formfiller.delivery.presenter.HandleUnfoundControllerPresenter;
 import formfiller.delivery.presenter.NavigationPresenter;
@@ -12,6 +13,7 @@ import formfiller.entities.QuestionState;
 import formfiller.entities.Question;
 import formfiller.gateways.InMemoryQuestionGateway;
 import formfiller.gateways.InMemoryAnswerGateway;
+import formfiller.gateways.InMemoryFormComponentGateway;
 
 // TODO:  Credit CleanCoders JCS TestSetup
 public class TestSetup {
@@ -25,6 +27,8 @@ public class TestSetup {
 		ApplicationContext.executedUseCases = new Stack<ExecutedUseCase>();
 		ApplicationContext.currentQuestionState = new QuestionState(0);
 		ApplicationContext.currentAnswerState = new AnswerState(0);
+		ApplicationContext.navigator = new Navigator();
+		ApplicationContext.formComponentGateway = new InMemoryFormComponentGateway();
 	}
 	public static void setupSampleQuestions(){
 		setupContext();

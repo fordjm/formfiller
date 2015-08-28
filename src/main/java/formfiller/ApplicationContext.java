@@ -7,6 +7,7 @@ import formfiller.entities.AnswerState;
 import formfiller.entities.ExecutedUseCase;
 import formfiller.entities.QuestionState;
 import formfiller.gateways.AnswerGateway;
+import formfiller.gateways.InMemoryFormComponentGateway;
 import formfiller.gateways.QuestionGateway;
 
 // As presented in the Clean Coders Java Case Study codecast
@@ -22,4 +23,6 @@ public class ApplicationContext {
 	public static Presenter questionPresenter;
 	public static QuestionState currentQuestionState;
 	public static AnswerState currentAnswerState;
+	public static Navigator navigator;
+	public static InMemoryFormComponentGateway formComponentGateway;
 }

@@ -9,7 +9,7 @@ import org.junit.Test;
 import formfiller.entities.FormComponent;
 import formfiller.utilities.FormComponentMocker;
 
-public class FormComponentGatewayTest {
+public class InMemoryFormComponentGatewayTest {
 
 	private InMemoryFormComponentGateway gateway;
 

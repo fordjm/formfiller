@@ -15,6 +15,7 @@ public class NavigationUseCase implements UseCase {
 	private String message;
 	
 	public void execute(Request request) {
+		if (request == null) throw new NullExecution();
 		NavigationRequest navigationRequest = (NavigationRequest) request;
 		navigateByIndexOffset(navigationRequest.getOffset());
 		ApplicationContext.executedUseCases.push(
@@ -64,4 +65,6 @@ public class NavigationUseCase implements UseCase {
 		result.setOutcome(outcome);
 		return result;
 	}
+	
+	public class NullExecution extends RuntimeException { }
 }
