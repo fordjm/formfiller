@@ -1,15 +1,17 @@
 package formfiller.request.implementations;
 
+import formfiller.gateways.Transporter.Direction;
 import formfiller.request.interfaces.NavigationRequest;
 
 public class NavigationRequestImpl extends RequestImpl implements NavigationRequest{
-	public int offset;
+	public Direction direction;
 
-	public int getOffset() {
-		return offset;
+	public Direction getDirection() {
+		return direction;
 	}
-	public void setOffset(int offset) {
-		this.offset = offset;
+
+	public void setDirection(Direction direction) {
+		this.direction = direction;
 	}
 	
 }

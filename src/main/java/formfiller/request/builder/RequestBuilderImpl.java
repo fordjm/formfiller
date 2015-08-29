@@ -2,6 +2,7 @@ package formfiller.request.builder;
 
 import java.util.HashMap;
 
+import formfiller.gateways.Transporter.Direction;
 import formfiller.request.interfaces.Request;
 
 public class RequestBuilderImpl implements RequestBuilder {
@@ -35,7 +36,7 @@ public class RequestBuilderImpl implements RequestBuilder {
 	}
 	private <K,V> Request buildNavigationRequest(HashMap<K,V> args) {
 		NavigationRequestBuilder builder = new NavigationRequestBuilder();
-		builder.buildOffset((int) args.get("offset"));
+		builder.buildDirection((Direction) args.get("direction")); 
 		return finishBuildingRequest(builder);
 	}
 	private Request finishBuildingRequest(AbstractRequestBuilder builder){

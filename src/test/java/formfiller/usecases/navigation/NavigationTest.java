@@ -14,6 +14,7 @@ import formfiller.entities.FormComponent;
 import formfiller.entities.Prompt;
 import formfiller.entities.Question;
 import formfiller.enums.ActionOutcome;
+import formfiller.gateways.Transporter.Direction;
 import formfiller.request.interfaces.NavigationRequest;
 import formfiller.usecases.navigation.NavigationUseCase;
 import formfiller.ApplicationContext;
@@ -26,9 +27,8 @@ public class NavigationTest {
 	private NavigationRequest mockRequest;
 	private FormComponent foundFormComponent;
 	
-	// TODO:	Change index to Navigation.Direction
-	void setMockRequestOffset(int offset){
-		when(mockRequest.getOffset()).thenReturn(offset);
+	void setMockRequestDirection(Direction direction){
+		when(mockRequest.getDirection()).thenReturn(direction);
 	}
 	
 	private Prompt findQuestionByIndex(int index) {
@@ -52,7 +52,7 @@ public class NavigationTest {
 	}
 	
 	private FormComponent getCurrentFormComponent() {
-		return ApplicationContext.formComponentGateway.navigator.getCurrent();
+		return ApplicationContext.formComponentGateway.transporter.getCurrent();
 	}
 
 	public class GivenNoQuestions{
@@ -61,7 +61,7 @@ public class NavigationTest {
 			
 			@Before
 			public void givenPrevQuestionRequest(){
-				setMockRequestOffset(-1);
+				setMockRequestDirection(Direction.BACKWARD);
 			}
 			@Test
 			public void gettingQuestionGetsStartPrompt(){			
@@ -78,7 +78,7 @@ public class NavigationTest {
 			
 			@Before
 			public void givenCurrentQuestionRequest(){
-				setMockRequestOffset(0);
+				setMockRequestDirection(Direction.IN_PLACE);
 			}
 			@Test
 			public void gettingQuestionGetsStartPrompt(){
@@ -95,7 +95,7 @@ public class NavigationTest {
 			
 			@Before
 			public void givenNextQuestionRequest(){
-				setMockRequestOffset(1);
+				setMockRequestDirection(Direction.FORWARD);
 			}
 			@Test
 			public void gettingQuestionGetsEndPrompt(){
@@ -136,7 +136,7 @@ public class NavigationTest {
 				
 				@Before
 				public void givenNextQuestionRequest(){
-					setMockRequestOffset(1);
+					setMockRequestDirection(Direction.FORWARD);
 				}
 				@Test
 				public void canNavigateToFirstQuestion() {
@@ -153,13 +153,13 @@ public class NavigationTest {
 				
 				@Before
 				public void givenFormIsAtTheEnd(){
-					setMockRequestOffset(1);
+					setMockRequestDirection(Direction.FORWARD);
 					navigationUseCase.execute(mockRequest);
 				}
 				@Test
 				public void gettingPrevQuestionGetsGivenQuestion(){
 					foundFormComponent = findFormComponentByIndex(0);
-					setMockRequestOffset(-1);
+					setMockRequestDirection(Direction.BACKWARD);
 					
 					navigationUseCase.execute(mockRequest);
 					
@@ -192,7 +192,7 @@ public class NavigationTest {
 				
 				@Before
 				public void givenANextQuestionRequest(){
-					setMockRequestOffset(1);
+					setMockRequestDirection(Direction.FORWARD);
 				}
 				@Test
 				public void cannotNavigateToEnd() {	
@@ -211,7 +211,7 @@ public class NavigationTest {
 				
 				@Before
 				public void givenCurrentQuestionRequest(){
-					setMockRequestOffset(0);
+					setMockRequestDirection(Direction.IN_PLACE);
 				}
 				@Test
 				public void canRepeatQuestion() {
@@ -229,12 +229,12 @@ public class NavigationTest {
 				
 				@Before
 				public void givenPrevQuestionRequest(){
-					setMockRequestOffset(-1);
+					setMockRequestDirection(Direction.BACKWARD);
 				}
 				@Test
 				public void canGoBackToStart() {
 					foundFormComponent = findFormComponentByIndex(-1);
-					setMockRequestOffset(-1);
+					setMockRequestDirection(Direction.BACKWARD);
 					
 					navigationUseCase.execute(mockRequest);
 					

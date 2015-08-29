@@ -21,7 +21,7 @@ public class NavigationControllerTest {
 	}
 	
 	private FormComponent getCurrentFormComponent() {
-		return ApplicationContext.formComponentGateway.navigator.getCurrent();
+		return ApplicationContext.formComponentGateway.transporter.getCurrent();
 	}
 	
 	@Before
@@ -35,7 +35,7 @@ public class NavigationControllerTest {
 	public void requestingPrevQuestionReturnsStartPrompt() {
 		foundFormComponent = findFormComponentByIndex(-1);
 		mockParsedUserRequest = 
-				ParsedUserRequestMocker.makeMockParsedUserRequest("navigation", "-1");
+				ParsedUserRequestMocker.makeMockParsedUserRequest("navigation", "backward");
 		
 		navigationController.handle(mockParsedUserRequest);
 		
@@ -46,7 +46,7 @@ public class NavigationControllerTest {
 	public void requestingCurrentQuestionReturnsStartPrompt() {
 		foundFormComponent = findFormComponentByIndex(0);
 		mockParsedUserRequest = 
-				ParsedUserRequestMocker.makeMockParsedUserRequest("navigation", "0");
+				ParsedUserRequestMocker.makeMockParsedUserRequest("navigation", "in place");
 		
 		navigationController.handle(mockParsedUserRequest);
 		
@@ -57,7 +57,7 @@ public class NavigationControllerTest {
 	public void requestingNextQuestionReturnsGivenQuestion() {
 		foundFormComponent = findFormComponentByIndex(1);
 		mockParsedUserRequest = 
-				ParsedUserRequestMocker.makeMockParsedUserRequest("navigation", "1");
+				ParsedUserRequestMocker.makeMockParsedUserRequest("navigation", "forward");
 		
 		navigationController.handle(mockParsedUserRequest);
 		

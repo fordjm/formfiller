@@ -8,6 +8,7 @@ import java.util.HashMap;
 import org.junit.Before;
 import org.junit.Test;
 
+import formfiller.gateways.Transporter.Direction;
 import formfiller.request.builder.RequestBuilderImpl;
 import formfiller.request.implementations.HandleUnfoundControllerRequestImpl;
 import formfiller.request.implementations.NavigationRequestImpl;
@@ -65,7 +66,7 @@ public class RequestBuilderImplTest {
 	@Test
 	public void canBuildNavigationRequest() {
 		Request navigationRequest = 
-				buildRequest("navigation", makeArgsHashmap("offset", 1));
+				buildRequest("navigation", makeArgsHashmap("direction", Direction.FORWARD));
 		String name = navigationRequest.getName();
 		NavigationRequest castNavigationRequest = (NavigationRequest) 
 				navigationRequest;
@@ -73,7 +74,7 @@ public class RequestBuilderImplTest {
 		assertThat(navigationRequest, 
 				is(instanceOf(NavigationRequestImpl.class)));
 		assertThat(name, is("Navigation"));
-		assertThat(castNavigationRequest.getOffset(), is(1));
+		assertThat(castNavigationRequest.getDirection(), is(Direction.FORWARD));
 	}
 	@Test
 	public void canBuildNoRequest() {

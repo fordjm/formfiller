@@ -5,25 +5,28 @@ import java.util.HashMap;
 import formfiller.boundaries.UseCase;
 import formfiller.delivery.Controller;
 import formfiller.delivery.userRequestParser.ParsedUserRequest;
+import formfiller.gateways.Transporter.Direction;
 import formfiller.request.builder.RequestBuilder;
 import formfiller.request.builder.RequestBuilderImpl;
 import formfiller.request.interfaces.Request;
 import formfiller.usecases.UseCaseFactory;
 import formfiller.usecases.UseCaseFactoryImpl;
+import formfiller.utilities.*;
 
 public class NavigationController implements Controller {
 
 	public void handle(ParsedUserRequest parsedInput) {
-		int offset = Integer.parseInt(parsedInput.getParam());
-		Request navigationRequest = makeNavigationRequest(offset);
+		Direction direction = DirectionParser.parseDirection(parsedInput.getParam());
+		Request navigationRequest = makeNavigationRequest(direction);
 		UseCase useCase = makeNavigationUseCase(parsedInput);
 		useCase.execute(navigationRequest);
 		
 		invokePresentQuestionController(parsedInput);
 	}	
-	protected Request makeNavigationRequest(int offset){
+	protected Request makeNavigationRequest(Direction direction){
 		RequestBuilder requestBuilder = new RequestBuilderImpl();
-		Request result = requestBuilder.build("navigation", makeArgsHashmap("offset", offset));
+		Request result = requestBuilder.build("navigation", 
+				makeArgsHashmap("direction", direction));
 		return result;
 	}
 	protected UseCase makeNavigationUseCase(ParsedUserRequest parsedUserRequest){		
@@ -39,5 +42,4 @@ public class NavigationController implements Controller {
 		PresentQuestionController pqc = new PresentQuestionController();
 		pqc.handle(parsedInput);
 	}
-	
 }
