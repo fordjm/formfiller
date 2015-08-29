@@ -4,7 +4,7 @@ import formfiller.ApplicationContext;
 import formfiller.entities.FormComponent;
 
 public class Transporter {
-	public enum Direction { BACKWARD, FORWARD, IN_PLACE }
+	public enum Direction { BACKWARD, FORWARD, NONE }
 	public final Navigator navigator = new Navigator();
 	
 	int currentIndex = 0;

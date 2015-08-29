@@ -78,7 +78,7 @@ public class NavigationTest {
 			
 			@Before
 			public void givenCurrentQuestionRequest(){
-				setMockRequestDirection(Direction.IN_PLACE);
+				setMockRequestDirection(Direction.NONE);
 			}
 			@Test
 			public void gettingQuestionGetsStartPrompt(){
@@ -211,7 +211,7 @@ public class NavigationTest {
 				
 				@Before
 				public void givenCurrentQuestionRequest(){
-					setMockRequestDirection(Direction.IN_PLACE);
+					setMockRequestDirection(Direction.NONE);
 				}
 				@Test
 				public void canRepeatQuestion() {

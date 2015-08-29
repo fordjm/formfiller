@@ -85,7 +85,7 @@ public class TransporterTest {
 		
 		@Test
 		public void movingInPlace_ReturnsTheGivenFormComponent(){
-			transporter.move(Transporter.Direction.IN_PLACE);
+			transporter.move(Transporter.Direction.NONE);
 			
 			currentFormComponent = transporter.getCurrent();
 			

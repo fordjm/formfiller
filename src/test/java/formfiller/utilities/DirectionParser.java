@@ -6,7 +6,7 @@ public class DirectionParser {
 	
 	public static Direction parseDirection(String input){
 		if (input.equalsIgnoreCase("forward")) return Direction.FORWARD;
-		else if (input.equalsIgnoreCase("in place")) return Direction.IN_PLACE;
+		else if (input.equalsIgnoreCase("none")) return Direction.NONE;
 		else return Direction.BACKWARD;
 	}
 }

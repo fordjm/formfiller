@@ -46,7 +46,7 @@ public class NavigationControllerTest {
 	public void requestingCurrentQuestionReturnsStartPrompt() {
 		foundFormComponent = findFormComponentByIndex(0);
 		mockParsedUserRequest = 
-				ParsedUserRequestMocker.makeMockParsedUserRequest("navigation", "in place");
+				ParsedUserRequestMocker.makeMockParsedUserRequest("navigation", "none");
 		
 		navigationController.handle(mockParsedUserRequest);
 		
