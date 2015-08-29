@@ -9,7 +9,7 @@ import formfiller.entities.FormComponent;
 
 public class InMemoryFormComponentGateway implements Gateway<FormComponent> {
 	// TODO:	Extract Navigator interface and rename InMemoryNavigator
-	public final Navigator navigator = new Navigator();
+	public final Transporter navigator = new Transporter();
 	
 	Map<String, FormComponent> formComponents = new HashMap<String, FormComponent>();
 	List<String> orderedElements = new ArrayList<String>();

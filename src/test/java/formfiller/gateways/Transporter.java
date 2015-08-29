@@ -3,7 +3,7 @@ package formfiller.gateways;
 import formfiller.ApplicationContext;
 import formfiller.entities.FormComponent;
 
-public class Navigator {
+public class Transporter {
 	public enum Direction { BACKWARD, FORWARD, IN_PLACE }
 	
 	int currentIndex = 0;

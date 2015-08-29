@@ -8,7 +8,7 @@ import formfiller.entities.ExecutedUseCaseImpl;
 import formfiller.entities.FormComponent;
 import formfiller.entities.Prompt;
 import formfiller.enums.ActionOutcome;
-import formfiller.gateways.Navigator;
+import formfiller.gateways.Transporter;
 import formfiller.request.interfaces.NavigationRequest;
 import formfiller.request.interfaces.Request;
 
@@ -18,33 +18,28 @@ public class NavigationUseCase implements UseCase {
 	
 	public void execute(Request request) {
 		if (request == null) throw new NullExecution();
+		
 		NavigationRequest navigationRequest = (NavigationRequest) request;
-		navigateByIndexOffset(navigationRequest.getOffset());
+		int offset = navigationRequest.getOffset();
+		if (isMoveLegal(offset)) {
+			navigateByIndexOffset(offset);
+			handleNavigationOutcome(ActionOutcome.SUCCEEDED);
+		}
+		else 
+			handleNavigationOutcome(ActionOutcome.FAILED);
+		presentNavigationResponse();
 		ApplicationContext.executedUseCases.push(
 				new ExecutedUseCaseImpl(this, outcome, message));
 	}
 	
-	private Navigator.Direction getNavigatorDirection(int indexOffset){
-		if (indexOffset > 0) return Navigator.Direction.FORWARD;
-		else if (indexOffset == 0) return Navigator.Direction.IN_PLACE;
-		else return Navigator.Direction.BACKWARD;
+	private Transporter.Direction getNavigatorDirection(int indexOffset){
+		if (indexOffset > 0) return Transporter.Direction.FORWARD;
+		else if (indexOffset == 0) return Transporter.Direction.IN_PLACE;
+		else return Transporter.Direction.BACKWARD;
 	} 
 	
-	//	TODO:	Move to NavigationValidator
-	private void navigateByIndexOffset(int indexOffset) {	
-		PresentableResponse presentableResponse;
-		if (isIndexAdvancing(indexOffset) && isAnswerRequiredButAbsent()){
-			setOutcome(ActionOutcome.FAILED);
-			setMessage(getAnswerRequiredMessage());
-		}
-		else{
-			setOutcome(ActionOutcome.SUCCEEDED);	
-			Navigator.Direction direction = getNavigatorDirection(indexOffset);
-			ApplicationContext.formComponentGateway.navigator.move(direction);
-			setMessage("");
-		}
-		presentableResponse = makePresentableNavigation();
-		ApplicationContext.navigationPresenter.present(presentableResponse);
+	private boolean isMoveLegal(int indexOffset) {
+		return !isIndexAdvancing(indexOffset) || !isAnswerRequiredButAbsent();
 	}
 	
 	private boolean isIndexAdvancing(int indexOffset) {
@@ -52,9 +47,8 @@ public class NavigationUseCase implements UseCase {
 	}
 	
 	private boolean isAnswerRequiredButAbsent(){
-		boolean result;
 		Prompt currentQuestion = getCurrentQuestion();
-		result = currentQuestion.requiresAnswer() && 
+		boolean result = currentQuestion.requiresAnswer() && 
 				!currentQuestion.hasAnswer();
 		return result;
 	}
@@ -67,6 +61,11 @@ public class NavigationUseCase implements UseCase {
 		return ApplicationContext.formComponentGateway.navigator.getCurrent();
 	}
 	
+	private void handleNavigationOutcome(ActionOutcome actionOutcome) {
+		setOutcome(actionOutcome);
+		setMessage(this.outcome);
+	}
+	
 	private String getAnswerRequiredMessage(){
 		return "Sorry, you cannot move ahead.  "
 				+ "The current question requires a response.";
@@ -76,8 +75,23 @@ public class NavigationUseCase implements UseCase {
 		outcome = actionOutcome;
 	}	
 	
-	private void setMessage(String message) {
-		this.message = message;
+	private void setMessage(ActionOutcome outcome) {
+		if (outcome == ActionOutcome.SUCCEEDED || 
+					outcome == ActionOutcome.NO_OUTCOME)
+			this.message = "";
+		else
+			this.message = getAnswerRequiredMessage();
+	}
+
+	private void navigateByIndexOffset(int indexOffset) {
+		Transporter.Direction direction = getNavigatorDirection(indexOffset);
+		ApplicationContext.formComponentGateway.navigator.move(direction);
+	}
+
+	//	TODO:	Successful navigation presentation is current form component.
+	private void presentNavigationResponse() {
+		PresentableResponse presentableResponse = makePresentableNavigation();
+		ApplicationContext.navigationPresenter.present(presentableResponse);
 	}
 	
 	private PresentableResponse makePresentableNavigation() {

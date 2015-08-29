@@ -17,39 +17,39 @@ import formfiller.utilities.QuestionMocker;
 import formfiller.utilities.TestSetup;
 
 @RunWith(HierarchicalContextRunner.class)
-public class NavigatorTest {
-	private Navigator navigator;
+public class TransporterTest {
+	private Transporter transporter;
 	private FormComponent currentFormComponent;
 	
 	@Before
 	public void setUp() {
 		TestSetup.setupContext();
-		navigator = new Navigator();		
+		transporter = new Transporter();		
 	}
 	
 	public class GivenNoFormComponents {
 
 		@Test
 		public void gettingCurrent_ReturnsFormComponentDotEnd() {	
-			FormComponent currentFormComponent = navigator.getCurrent();
+			FormComponent currentFormComponent = transporter.getCurrent();
 			
 			assertThat(currentFormComponent.id, is("end"));
 		}
 		
 		@Test
 		public void movingBackward_ReturnsFormComponentDotStart(){
-			navigator.move(Navigator.Direction.BACKWARD);
+			transporter.move(Transporter.Direction.BACKWARD);
 			
-			currentFormComponent = navigator.getCurrent();
+			currentFormComponent = transporter.getCurrent();
 			
 			assertThat(currentFormComponent.id, is("start"));
 		}
 		
 		@Test
 		public void movingForward_ReturnsFormComponentDotEnd(){
-			navigator.move(Navigator.Direction.FORWARD);
+			transporter.move(Transporter.Direction.FORWARD);
 			
-			currentFormComponent = navigator.getCurrent();
+			currentFormComponent = transporter.getCurrent();
 			
 			assertThat(currentFormComponent.id, is("end"));
 		}
@@ -76,27 +76,27 @@ public class NavigatorTest {
 		
 		@Test
 		public void movingBackward_ReturnsFormComponentDotStart(){
-			navigator.move(Navigator.Direction.BACKWARD);
+			transporter.move(Transporter.Direction.BACKWARD);
 			
-			currentFormComponent = navigator.getCurrent();
+			currentFormComponent = transporter.getCurrent();
 			
 			assertThat(currentFormComponent.id, is("start"));
 		}
 		
 		@Test
 		public void movingInPlace_ReturnsTheGivenFormComponent(){
-			navigator.move(Navigator.Direction.IN_PLACE);
+			transporter.move(Transporter.Direction.IN_PLACE);
 			
-			currentFormComponent = navigator.getCurrent();
+			currentFormComponent = transporter.getCurrent();
 			
 			assertThat(currentFormComponent.id, is("name"));
 		}
 		
 		@Test
 		public void movingForward_ReturnsQuestionDotEnd(){
-			navigator.move(Navigator.Direction.FORWARD);
+			transporter.move(Transporter.Direction.FORWARD);
 			
-			currentFormComponent = navigator.getCurrent();
+			currentFormComponent = transporter.getCurrent();
 			
 			assertThat(currentFormComponent.id, is("end"));
 		}
