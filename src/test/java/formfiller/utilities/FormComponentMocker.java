@@ -17,8 +17,8 @@ public class FormComponentMocker {
 	public static FormComponent makeMockFormComponent(Prompt question, Answer answer) {
 		FormComponent result = Mockito.mock(FormComponent.class);
 		result.id = question.getId();
-		result.setQuestion(question);
-		result.setAnswer(answer);
+		result.question = question;
+		result.answer = answer;
 		return result;
 	}
 }

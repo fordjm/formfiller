@@ -5,18 +5,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import formfiller.entities.AnswerImpl;
 import formfiller.entities.FormComponent;
-import formfiller.entities.NoQuestion;
-import formfiller.entities.Question;
 
 public class InMemoryFormComponentGateway implements Gateway<FormComponent> {
+	// TODO:	Extract Navigator interface and rename InMemoryNavigator
+	public final Navigator navigator = new Navigator();
+	
 	Map<String, FormComponent> formComponents = new HashMap<String, FormComponent>();
 	List<String> orderedElements = new ArrayList<String>();
 	
 	public FormComponent findByIndex(int index){
 		if (!isLegalIndex(index))
-			return makeIllegalIndexComponent(index);
+			return getIllegalIndexComponent(index);
 		
 		return getFormComponentAtIndex(index);			
 	}
@@ -26,7 +26,7 @@ public class InMemoryFormComponentGateway implements Gateway<FormComponent> {
 				requestedIndex < orderedElements.size();
 	}
 	
-	private FormComponent makeIllegalIndexComponent(int index){
+	private FormComponent getIllegalIndexComponent(int index){
 		if (index < 0) 
 			return FormComponent.START;
 		else

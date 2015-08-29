@@ -8,13 +8,21 @@ import org.junit.Test;
 
 import formfiller.ApplicationContext;
 import formfiller.delivery.userRequestParser.ParsedUserRequest;
-import formfiller.entities.Prompt;
+import formfiller.entities.FormComponent;
 import formfiller.utilities.*;
 
 public class NavigationControllerTest {
 	private NavigationController navigationController;
 	private ParsedUserRequest mockParsedUserRequest;
-	private Prompt foundQuestion;
+	private FormComponent foundFormComponent;
+
+	private FormComponent findFormComponentByIndex(int index) {
+		return ApplicationContext.formComponentGateway.findByIndex(index);
+	}
+	
+	private FormComponent getCurrentFormComponent() {
+		return ApplicationContext.formComponentGateway.navigator.getCurrent();
+	}
 	
 	@Before
 	public void setupTest(){
@@ -22,38 +30,38 @@ public class NavigationControllerTest {
 		navigationController = new NavigationController();
 		ApplicationContext.questionGateway.save(QuestionMocker.makeMockNameQuestion());
 	}
+	
 	@Test
 	public void requestingPrevQuestionReturnsStartPrompt() {
-		foundQuestion = ApplicationContext.questionGateway.findQuestionByIndex(-1);		
+		foundFormComponent = findFormComponentByIndex(-1);
 		mockParsedUserRequest = 
 				ParsedUserRequestMocker.makeMockParsedUserRequest("navigation", "-1");
 		
 		navigationController.handle(mockParsedUserRequest);
 		
-		assertThat(ApplicationContext.currentQuestionState.getQuestion(), 
-				is(foundQuestion));
+		assertThat(getCurrentFormComponent(), is(foundFormComponent));
 	}
+
 	@Test
 	public void requestingCurrentQuestionReturnsStartPrompt() {
-		foundQuestion = ApplicationContext.questionGateway.findQuestionByIndex(0);
+		foundFormComponent = findFormComponentByIndex(0);
 		mockParsedUserRequest = 
 				ParsedUserRequestMocker.makeMockParsedUserRequest("navigation", "0");
 		
 		navigationController.handle(mockParsedUserRequest);
 		
-		assertThat(ApplicationContext.currentQuestionState.getQuestion(), 
-				is(foundQuestion));
+		assertThat(getCurrentFormComponent(), is(foundFormComponent));
 	}
+	
 	@Test
 	public void requestingNextQuestionReturnsGivenQuestion() {
-		foundQuestion = ApplicationContext.questionGateway.findQuestionByIndex(1);
+		foundFormComponent = findFormComponentByIndex(1);
 		mockParsedUserRequest = 
 				ParsedUserRequestMocker.makeMockParsedUserRequest("navigation", "1");
 		
 		navigationController.handle(mockParsedUserRequest);
 		
-		assertThat(ApplicationContext.currentQuestionState.getQuestion(), 
-				is(foundQuestion));
+		assertThat(getCurrentFormComponent(), is(foundFormComponent));
 	}
 
 }

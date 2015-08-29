@@ -23,6 +23,5 @@ public class ApplicationContext {
 	public static Presenter questionPresenter;
 	public static QuestionState currentQuestionState;
 	public static AnswerState currentAnswerState;
-	public static Navigator navigator;
 	public static InMemoryFormComponentGateway formComponentGateway;
 }

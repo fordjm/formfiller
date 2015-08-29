@@ -1,4 +1,4 @@
-package formfiller.entities;
+package formfiller.gateways;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
@@ -9,7 +9,9 @@ import org.junit.runner.RunWith;
 
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
 import formfiller.ApplicationContext;
-import formfiller.Navigator;
+import formfiller.entities.AnswerImpl;
+import formfiller.entities.FormComponent;
+import formfiller.entities.Prompt;
 import formfiller.utilities.FormComponentMocker;
 import formfiller.utilities.QuestionMocker;
 import formfiller.utilities.TestSetup;
@@ -28,10 +30,10 @@ public class NavigatorTest {
 	public class GivenNoFormComponents {
 
 		@Test
-		public void gettingCurrent_ReturnsStartFormComponent() {	
+		public void gettingCurrent_ReturnsFormComponentDotEnd() {	
 			FormComponent currentFormComponent = navigator.getCurrent();
 			
-			assertThat(currentFormComponent.id, is("start"));
+			assertThat(currentFormComponent.id, is("end"));
 		}
 		
 		@Test
@@ -67,11 +69,6 @@ public class NavigatorTest {
 			return FormComponentMocker.makeMockFormComponent(question, AnswerImpl.NONE);
 		}
 		
-		private void move(Navigator.Direction direction, int times){
-			for (int i=0; i<times; ++i)
-				navigator.move(direction);
-		}
-		
 		@Before
 		public void givenAFormComponent(){
 			addQuestionToFormComponentGateway();
@@ -87,8 +84,8 @@ public class NavigatorTest {
 		}
 		
 		@Test
-		public void movingForwardOnce_ReturnsTheGivenFormComponent(){
-			navigator.move(Navigator.Direction.FORWARD);
+		public void movingInPlace_ReturnsTheGivenFormComponent(){
+			navigator.move(Navigator.Direction.IN_PLACE);
 			
 			currentFormComponent = navigator.getCurrent();
 			
@@ -96,8 +93,8 @@ public class NavigatorTest {
 		}
 		
 		@Test
-		public void movingForwardTwice_ReturnsQuestionDotEnd(){
-			move(Navigator.Direction.FORWARD, 2);
+		public void movingForward_ReturnsQuestionDotEnd(){
+			navigator.move(Navigator.Direction.FORWARD);
 			
 			currentFormComponent = navigator.getCurrent();
 			

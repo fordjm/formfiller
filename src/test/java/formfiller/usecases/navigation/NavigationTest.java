@@ -9,6 +9,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
+import formfiller.entities.AnswerImpl;
+import formfiller.entities.FormComponent;
 import formfiller.entities.Prompt;
 import formfiller.entities.Question;
 import formfiller.enums.ActionOutcome;
@@ -22,13 +24,19 @@ import formfiller.utilities.*;
 public class NavigationTest {	
 	private NavigationUseCase navigationUseCase;
 	private NavigationRequest mockRequest;
-	private Prompt foundQuestion;
+	private FormComponent foundFormComponent;
 	
+	// TODO:	Change index to Navigation.Direction
 	void setMockRequestOffset(int offset){
 		when(mockRequest.getOffset()).thenReturn(offset);
 	}
+	
 	private Prompt findQuestionByIndex(int index) {
 		return ApplicationContext.questionGateway.findQuestionByIndex(index);
+	}
+	
+	private FormComponent findFormComponentByIndex(int index){
+		return ApplicationContext.formComponentGateway.findByIndex(index);
 	}
 	
 	@Before
@@ -43,6 +51,10 @@ public class NavigationTest {
 		navigationUseCase.execute(null);
 	}
 	
+	private FormComponent getCurrentFormComponent() {
+		return ApplicationContext.formComponentGateway.navigator.getCurrent();
+	}
+
 	public class GivenNoQuestions{
 		
 		public class GivenPrevQuestionRequest{
@@ -52,14 +64,13 @@ public class NavigationTest {
 				setMockRequestOffset(-1);
 			}
 			@Test
-			public void gettingQuestionGetsStartPrompt(){
-				foundQuestion = findQuestionByIndex(-1);
+			public void gettingQuestionGetsStartPrompt(){			
+				foundFormComponent = findFormComponentByIndex(-1);
 				
 				navigationUseCase.execute(mockRequest);
 				
 				assertEquals(navigationUseCase, ApplicationContext.executedUseCases.peek().getUseCase());
-				assertThat(ApplicationContext.currentQuestionState.getQuestion(), 
-						is(foundQuestion));
+				assertThat(getCurrentFormComponent(), is(foundFormComponent));
 			}
 		}
 		
@@ -71,12 +82,11 @@ public class NavigationTest {
 			}
 			@Test
 			public void gettingQuestionGetsStartPrompt(){
-				foundQuestion = findQuestionByIndex(0);
+				foundFormComponent = findFormComponentByIndex(0);
 				
 				navigationUseCase.execute(mockRequest);
 				
-				assertThat(ApplicationContext.currentQuestionState.getQuestion(), 
-						is(foundQuestion));
+				assertThat(getCurrentFormComponent(), is(foundFormComponent));
 			}
 			
 		}
@@ -89,12 +99,11 @@ public class NavigationTest {
 			}
 			@Test
 			public void gettingQuestionGetsEndPrompt(){
-				foundQuestion = findQuestionByIndex(0);
+				foundFormComponent = findFormComponentByIndex(0);
 				
 				navigationUseCase.execute(mockRequest);
 				
-				assertThat(ApplicationContext.currentQuestionState.getQuestion(), 
-						is(foundQuestion));
+				assertThat(getCurrentFormComponent(), is(foundFormComponent));
 			}
 			
 		}
@@ -102,17 +111,25 @@ public class NavigationTest {
 	
 	public class GivenOneQuestion{
 		Question mockQuestion;
+		FormComponent mockFormComponent;
+		
+		private FormComponent makeMockFormComponent(Prompt question){
+			return FormComponentMocker.makeMockFormComponent(question, AnswerImpl.NONE);
+		}
 		
 		public class GivenAnswerNotRequired{
 			
 			@Before
 			public void givenAnswerNotRequired(){
 				mockQuestion = QuestionMocker.makeMockNameQuestion();
-				ApplicationContext.questionGateway.save(mockQuestion);
+				mockFormComponent = makeMockFormComponent(mockQuestion);
+				ApplicationContext.questionGateway.save(mockQuestion);	//
+				ApplicationContext.formComponentGateway.save(mockFormComponent);
 			}
 			@Test
 			public void questionExistsAtIndexZero(){
-				assertEquals(mockQuestion, findQuestionByIndex(0));
+				assertEquals(mockQuestion, findQuestionByIndex(0));	//
+				assertEquals(mockFormComponent, findFormComponentByIndex(0));
 			}
 			
 			public class GivenANextQuestionRequest{
@@ -123,12 +140,11 @@ public class NavigationTest {
 				}
 				@Test
 				public void canNavigateToFirstQuestion() {
-					foundQuestion = findQuestionByIndex(1);
+					foundFormComponent = findFormComponentByIndex(1);
 					
 					navigationUseCase.execute(mockRequest);
 					
-					assertThat(ApplicationContext.currentQuestionState.getQuestion(), 
-							is(foundQuestion));
+					assertThat(getCurrentFormComponent(), is(foundFormComponent));
 				}
 				
 			}
@@ -142,13 +158,12 @@ public class NavigationTest {
 				}
 				@Test
 				public void gettingPrevQuestionGetsGivenQuestion(){
-					foundQuestion = findQuestionByIndex(0);					
+					foundFormComponent = findFormComponentByIndex(0);
 					setMockRequestOffset(-1);
 					
 					navigationUseCase.execute(mockRequest);
 					
-					assertEquals(foundQuestion, 
-							ApplicationContext.currentQuestionState.getQuestion());
+					assertThat(getCurrentFormComponent(), is(foundFormComponent));
 				}
 				
 			}
@@ -156,6 +171,7 @@ public class NavigationTest {
 		
 		public class GivenAnswerIsRequired{
 			
+			//	TODO:	Don't test PresentedNavigation.  Test ExecutedUseCase.
 			private PresentableResponseImpl getPresentedNavigation() {
 				return (PresentableResponseImpl)
 						ApplicationContext.navigationPresenter.getPresentableResponse();
@@ -164,7 +180,8 @@ public class NavigationTest {
 			@Before
 			public void givenAnswerIsRequired(){
 				mockQuestion = QuestionMocker.makeMockAgeQuestion();
-				ApplicationContext.questionGateway.save(mockQuestion);
+				mockFormComponent = makeMockFormComponent(mockQuestion);
+				ApplicationContext.formComponentGateway.save(mockFormComponent);
 			}	
 
 			public class GivenANextQuestionRequest{
@@ -178,14 +195,14 @@ public class NavigationTest {
 					setMockRequestOffset(1);
 				}
 				@Test
-				public void cannotNavigateToEnd() {
-					foundQuestion = findQuestionByIndex(0);		
+				public void cannotNavigateToEnd() {	
+					foundFormComponent = findFormComponentByIndex(0);
 					
 					navigationUseCase.execute(mockRequest);
 					
 					assertThat(getPresentedNavigation().getOutcome(), is(ActionOutcome.FAILED));
 					assertEquals(getFailedNavigationResult(), getPresentedNavigation().getMessage());
-					assertEquals(foundQuestion, ApplicationContext.currentQuestionState.getQuestion());
+					assertThat(getCurrentFormComponent(), is(foundFormComponent));
 				}
 				
 			}
@@ -198,12 +215,12 @@ public class NavigationTest {
 				}
 				@Test
 				public void canRepeatQuestion() {
-					foundQuestion = findQuestionByIndex(0);	
+					foundFormComponent = findFormComponentByIndex(0);
 					
 					navigationUseCase.execute(mockRequest);
 					
-					assertThat(getPresentedNavigation().getOutcome(), is(ActionOutcome.SUCCEEDED));
-					assertEquals(foundQuestion, ApplicationContext.currentQuestionState.getQuestion());
+					assertThat(getPresentedNavigation().getOutcome(), is(ActionOutcome.SUCCEEDED));	//
+					assertThat(getCurrentFormComponent(), is(foundFormComponent));
 				}
 				
 			}
@@ -216,13 +233,12 @@ public class NavigationTest {
 				}
 				@Test
 				public void canGoBackToStart() {
-					foundQuestion = findQuestionByIndex(-1);
+					foundFormComponent = findFormComponentByIndex(-1);
 					setMockRequestOffset(-1);
 					
 					navigationUseCase.execute(mockRequest);
 					
-					assertThat(ApplicationContext.currentQuestionState.getQuestion(), 
-							is(foundQuestion));
+					assertThat(getCurrentFormComponent(), is(foundFormComponent));
 				}
 				
 			}

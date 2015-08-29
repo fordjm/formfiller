@@ -1,13 +1,13 @@
-package formfiller;
+package formfiller.gateways;
 
+import formfiller.ApplicationContext;
 import formfiller.entities.FormComponent;
 
 public class Navigator {
-	public enum Direction { BACKWARD, FORWARD }
+	public enum Direction { BACKWARD, FORWARD, IN_PLACE }
 	
-	int currentIndex = -1;
+	int currentIndex = 0;
 	boolean isFinished = false;
-	FormComponent current;
 	
 	public void move(Direction direction){
 		if (!moveChangesPosition(direction)) return;
@@ -16,20 +16,17 @@ public class Navigator {
 			++currentIndex;
 		else
 			--currentIndex;
-		setCurrent();		
 	}
 
 	private boolean moveChangesPosition(Direction direction) {
-		if (direction == Direction.BACKWARD && currentIndex <= 0)
+		if (direction == Direction.IN_PLACE) 
+			return false;
+		else if (direction == Direction.BACKWARD && currentIndex < 0)
 			return false;
 		else if (direction == Direction.FORWARD && isFinished)
 			return false;
 		else
 			return true;
-	}
-
-	private void setCurrent() {
-		current = getCurrent();
 	}
 
 	public FormComponent getCurrent() {
