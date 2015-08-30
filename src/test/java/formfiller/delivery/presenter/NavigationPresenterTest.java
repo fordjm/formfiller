@@ -45,7 +45,7 @@ public class NavigationPresenterTest {
 		presenter = new NavigationPresenter();
 	}
 	
-	@Test(expected = AbstractPresenter.IllegalPresentableResponse.class)
+	@Test(expected = AbstractPresenter.NullPresentableResponse.class)
 	public void presentingNullThrowsException(){
 		presenter.present(null);
 	}

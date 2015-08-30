@@ -1,11 +1,11 @@
 package formfiller.boundaries;
 
 import formfiller.boundaryCrossers.PresentableResponse;
-import formfiller.delivery.View;
+import formfiller.delivery.ViewModel;
 
 public interface Presenter {
 	
-	void addObserver(View view);
+	void addObserver(ViewModel view);
 	PresentableResponse getPresentableResponse();
 	void present(PresentableResponse presentableResponse);
 	

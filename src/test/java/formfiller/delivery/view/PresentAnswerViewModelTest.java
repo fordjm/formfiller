@@ -10,65 +10,61 @@ import org.mockito.Mockito;
 
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
 import formfiller.ApplicationContext;
-import formfiller.boundaries.Presenter;
 import formfiller.boundaryCrossers.PresentableAnswer;
 import formfiller.delivery.presenter.AnswerPresenter;
 
 @RunWith(HierarchicalContextRunner.class)
-public class ConsolePresentAnswerViewTest {
-	private ConsolePresentAnswerView consoleAnswerView;
+public class PresentAnswerViewModelTest {
+	private PresentAnswerViewModel consoleAnswerView;
 	
-	private PresentableAnswer presentableAnswer(String message){
+	private PresentableAnswer makePresentableAnswer(String message){
 		PresentableAnswer result = new PresentableAnswer();
 		result.setMessage(message);
 		return result;
 	}
+	
 	private AnswerPresenter makeMockPresenter() {
 		AnswerPresenter result = Mockito.mock(AnswerPresenter.class);
 		return result;
 	}
-	private void assignPresentableResponse(Presenter presenter, PresentableAnswer presentableAnswer) {
-		Mockito.when(presenter.getPresentableResponse()).thenReturn(presentableAnswer);
-	}
 	
 	public class GivenAPresentableAnswer {
 		private AnswerPresenter answerPresenter;
+		private PresentableAnswer presentableAnswer;
 		
 		@Before
 		public void setUp() {
-			consoleAnswerView = new ConsolePresentAnswerView();
+			consoleAnswerView = new PresentAnswerViewModel();
 			answerPresenter = makeMockPresenter();
 		}
 
 		public class GivenAnEmptyStringResponse {
+			
 			@Before
 			public void givenAnEmptyStringResponse(){
-				assignPresentableResponse(answerPresenter, presentableAnswer(""));
-				ApplicationContext.answerPresenter = answerPresenter;
+				presentableAnswer = makePresentableAnswer("");
 			}
+			
 			@Test
 			public void doesNotPresentEmptyResponse() {
-				consoleAnswerView.update(answerPresenter, null);
-				Mockito.verify(answerPresenter).getPresentableResponse();
+				consoleAnswerView.update(answerPresenter, presentableAnswer);
 				assertThat(consoleAnswerView.wasDisplayed(), is(false));
-			}	
-			
+			}				
 		}
 		
 		public class GivenANonEmptyResponse {
 			
 			@Before
 			public void givenANonEmptyResponse(){
-				assignPresentableResponse(answerPresenter, presentableAnswer("message"));
+				presentableAnswer = makePresentableAnswer("message");
 				ApplicationContext.answerPresenter = answerPresenter;				
 			}
+			
 			@Test
 			public void doesDisplayNonEmptyResponse() {
-				consoleAnswerView.update(answerPresenter, null);
-				Mockito.verify(answerPresenter).getPresentableResponse();
+				consoleAnswerView.update(answerPresenter, presentableAnswer);
 				assertThat(consoleAnswerView.wasDisplayed(), is(true));
-			}
-			
+			}			
 		}		
 	}
 

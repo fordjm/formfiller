@@ -20,7 +20,7 @@ public class AnswerPresenterTest {
 		answerPresenter = new AnswerPresenter();
 	}
 	
-	@Test(expected = AbstractPresenter.IllegalPresentableResponse.class)
+	@Test(expected = AbstractPresenter.NullPresentableResponse.class)
 	public void settingPresentableResponseToNullThrowsException(){
 		answerPresenter.present(null);
 	}

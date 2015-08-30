@@ -4,21 +4,25 @@ import java.util.Observable;
 
 import formfiller.boundaries.Presenter;
 import formfiller.boundaryCrossers.PresentableResponse;
-import formfiller.delivery.View;
+import formfiller.delivery.ViewModel;
 
 public abstract class AbstractPresenter extends Observable implements Presenter {
 
-	public void addObserver(View view){
+	public void addObserver(ViewModel view){
 		super.addObserver(view);
 	}	
+	
 	public void present(PresentableResponse presentableResponse){
 		if (presentableResponse == null) 
-			throw new IllegalPresentableResponse();
+			throw new NullPresentableResponse();
+		
 		setPresentableResponseFieldValue(presentableResponse);
 		setChanged();
-		notifyObservers();
+		notifyObservers(presentableResponse);
 	}
+	
 	protected abstract void setPresentableResponseFieldValue(PresentableResponse presentableResponse);
 
-	public class IllegalPresentableResponse extends RuntimeException { }
+	@SuppressWarnings("serial")
+	public class NullPresentableResponse extends RuntimeException { }
 }

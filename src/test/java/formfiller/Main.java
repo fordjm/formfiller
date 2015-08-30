@@ -6,10 +6,10 @@ import formfiller.delivery.controller.NavigationController;
 import formfiller.delivery.router.Router;
 import formfiller.delivery.userRequestParser.ConsoleUserRequestParser;
 import formfiller.delivery.userRequestParser.ParsedUserRequest;
-import formfiller.delivery.view.ConsolePresentAnswerView;
-import formfiller.delivery.view.ConsoleHandleUnfoundControllerView;
-import formfiller.delivery.view.ConsoleNavigationView;
-import formfiller.delivery.view.ConsolePresentQuestionView;
+import formfiller.delivery.view.PresentAnswerViewModel;
+import formfiller.delivery.view.HandleUnfoundControllerViewModel;
+import formfiller.delivery.view.NavigationViewModel;
+import formfiller.delivery.view.PresentQuestionViewModel;
 import formfiller.utilities.TestSetup;
 
 public class Main {
@@ -33,11 +33,11 @@ public class Main {
 	
 	private static void setupClassVariables() {
 		ApplicationContext.handleUnfoundControllerPresenter.addObserver(
-				new ConsoleHandleUnfoundControllerView());
-		ApplicationContext.navigationPresenter.addObserver(new ConsoleNavigationView());
-		ApplicationContext.questionPresenter.addObserver(new ConsolePresentQuestionView());
+				new HandleUnfoundControllerViewModel());
+		ApplicationContext.navigationPresenter.addObserver(new NavigationViewModel());
+		ApplicationContext.questionPresenter.addObserver(new PresentQuestionViewModel());
 		
-		userRequestSource = new ConsolePresentAnswerView();
+		userRequestSource = new PresentAnswerViewModel();
 		userRequestParser = new ConsoleUserRequestParser();
 		router = makeRouter();
 	}
@@ -49,7 +49,7 @@ public class Main {
 	}
 	
 	private static void routeUserRequests(Router router) {
-		String userRequestString = userRequestSource.getUserRequestString();
+		String userRequestString = userRequestSource.getUserRequestInput();
 		ParsedUserRequest parsedRequest = userRequestParser.parse(userRequestString);
 		router.route(parsedRequest);
 	}	

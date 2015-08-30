@@ -1,5 +1,5 @@
 package formfiller.delivery;
 
-public interface UserRequestSource extends View {
-	public String getUserRequestString();
+public interface UserRequestSource {
+	public String getUserRequestInput();
 }

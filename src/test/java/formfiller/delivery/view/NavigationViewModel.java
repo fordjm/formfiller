@@ -2,25 +2,24 @@ package formfiller.delivery.view;
 
 import java.util.Observable;
 
-import formfiller.ApplicationContext;
 import formfiller.boundaryCrossers.PresentableResponse;
-import formfiller.delivery.View;
+import formfiller.delivery.ViewModel;
 import formfiller.enums.ActionOutcome;
 
-public class ConsoleNavigationView implements View {
+public class NavigationViewModel implements ViewModel {
 
 	public void update(Observable observable, Object input) {
-		outputPresentableResponse();
+		outputPresentableResponse(input);
 	}
 	
-	public void outputPresentableResponse() {
+	public void outputPresentableResponse(Object input) {
 		PresentableResponse presentableNavigation = 
-				ApplicationContext.navigationPresenter.getPresentableResponse();
+				(PresentableResponse) input;
 		if (presentableNavigation.getOutcome() == ActionOutcome.FAILED)
 			outputFailedNavigation(presentableNavigation);
 	}
 	
 	private void outputFailedNavigation(PresentableResponse presentableNavigation) {
-		System.out.println(presentableNavigation.getMessage());
+		ConsoleView.output(presentableNavigation.getMessage());
 	}	
 }
