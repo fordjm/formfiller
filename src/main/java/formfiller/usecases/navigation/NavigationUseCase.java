@@ -6,7 +6,7 @@ import formfiller.boundaryCrossers.PresentableResponse;
 import formfiller.boundaryCrossers.PresentableResponseImpl;
 import formfiller.entities.ExecutedUseCaseImpl;
 import formfiller.enums.ActionOutcome;
-import formfiller.gateways.Navigator;
+import formfiller.gateways.NavigationValidator;
 import formfiller.gateways.Transporter;
 import formfiller.gateways.Transporter.Direction;
 import formfiller.request.interfaces.NavigationRequest;
@@ -16,8 +16,8 @@ public class NavigationUseCase implements UseCase {
 	private ActionOutcome outcome;
 	private String message;
 
-	private Navigator getNavigator(){
-		return getTransporter().navigator;
+	private NavigationValidator getNavigator(){
+		return getTransporter().navigationValidator;
 	}
 	
 	private Transporter getTransporter(){
@@ -29,7 +29,7 @@ public class NavigationUseCase implements UseCase {
 		
 		NavigationRequest navigationRequest = (NavigationRequest) request;
 		Transporter.Direction direction = navigationRequest.getDirection();
-		Navigator navigator = getNavigator();
+		NavigationValidator navigator = getNavigator();
 		
 		if (navigator.isMoveLegal(direction)) {
 			executeMove(direction);

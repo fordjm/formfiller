@@ -5,7 +5,9 @@ import formfiller.entities.FormComponent;
 
 public class Transporter {
 	public enum Direction { BACKWARD, FORWARD, NONE }
-	public final Navigator navigator = new Navigator();
+	
+	public final NavigationValidator navigationValidator = 
+			new NavigationValidator();
 	
 	int currentIndex = 0;
 	boolean isFinished = false;
@@ -16,12 +18,23 @@ public class Transporter {
 	}
 	
 	public void move(Direction direction){
-		if (!navigator.moveChangesPosition(direction, currentIndex, isFinished)) 
+		if (!moveChangesPosition(direction)) 
 			return;
 		
 		if (direction == Direction.FORWARD)
 			++currentIndex;
 		else
 			--currentIndex;
+	}
+
+	private boolean moveChangesPosition(Direction direction) {
+		if (direction == Direction.NONE) 
+			return false;
+		else if (direction == Direction.BACKWARD && currentIndex < 0)
+			return false;
+		else if (direction == Direction.FORWARD && isFinished)
+			return false;
+		else
+			return true;
 	}
 }
