@@ -12,19 +12,20 @@ import formfiller.ApplicationContext;
 import formfiller.entities.AnswerImpl;
 import formfiller.entities.FormComponent;
 import formfiller.entities.Prompt;
+import formfiller.gateways.InMemoryTransporter.Direction;
 import formfiller.utilities.FormComponentMocker;
 import formfiller.utilities.QuestionMocker;
 import formfiller.utilities.TestSetup;
 
 @RunWith(HierarchicalContextRunner.class)
-public class TransporterTest {
+public class InMemoryTransporterTest {
 	private Transporter transporter;
 	private FormComponent currentFormComponent;
 	
 	@Before
 	public void setUp() {
 		TestSetup.setupContext();
-		transporter = new Transporter();		
+		transporter = new InMemoryTransporter();		
 	}
 	
 	public class GivenNoFormComponents {
@@ -38,7 +39,7 @@ public class TransporterTest {
 		
 		@Test
 		public void movingBackward_ReturnsFormComponentDotStart(){
-			transporter.move(Transporter.Direction.BACKWARD);
+			transporter.move(Direction.BACKWARD);
 			
 			currentFormComponent = transporter.getCurrent();
 			
@@ -47,7 +48,7 @@ public class TransporterTest {
 		
 		@Test
 		public void movingForward_ReturnsFormComponentDotEnd(){
-			transporter.move(Transporter.Direction.FORWARD);
+			transporter.move(Direction.FORWARD);
 			
 			currentFormComponent = transporter.getCurrent();
 			
@@ -76,7 +77,7 @@ public class TransporterTest {
 		
 		@Test
 		public void movingBackward_ReturnsFormComponentDotStart(){
-			transporter.move(Transporter.Direction.BACKWARD);
+			transporter.move(Direction.BACKWARD);
 			
 			currentFormComponent = transporter.getCurrent();
 			
@@ -85,7 +86,7 @@ public class TransporterTest {
 		
 		@Test
 		public void movingInPlace_ReturnsTheGivenFormComponent(){
-			transporter.move(Transporter.Direction.NONE);
+			transporter.move(Direction.NONE);
 			
 			currentFormComponent = transporter.getCurrent();
 			
@@ -94,7 +95,7 @@ public class TransporterTest {
 		
 		@Test
 		public void movingForward_ReturnsQuestionDotEnd(){
-			transporter.move(Transporter.Direction.FORWARD);
+			transporter.move(Direction.FORWARD);
 			
 			currentFormComponent = transporter.getCurrent();
 			

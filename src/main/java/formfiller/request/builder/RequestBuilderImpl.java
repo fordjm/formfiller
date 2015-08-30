@@ -2,7 +2,7 @@ package formfiller.request.builder;
 
 import java.util.HashMap;
 
-import formfiller.gateways.Transporter.Direction;
+import formfiller.gateways.InMemoryTransporter.Direction;
 import formfiller.request.interfaces.Request;
 
 public class RequestBuilderImpl implements RequestBuilder {

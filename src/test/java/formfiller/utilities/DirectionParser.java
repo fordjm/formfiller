@@ -1,6 +1,6 @@
 package formfiller.utilities;
 
-import formfiller.gateways.Transporter.Direction;
+import formfiller.gateways.InMemoryTransporter.Direction;
 
 public class DirectionParser {
 	

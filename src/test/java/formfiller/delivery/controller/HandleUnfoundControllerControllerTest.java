@@ -13,7 +13,6 @@ import formfiller.enums.ActionOutcome;
 import formfiller.utilities.*;
 
 public class HandleUnfoundControllerControllerTest {
-
 	private HandleUnfoundControllerController controller;
 	private ParsedUserRequest request;
 	
@@ -29,6 +28,7 @@ public class HandleUnfoundControllerControllerTest {
 		controller = new HandleUnfoundControllerController();
 		request = ParsedUserRequestMocker.makeMockParsedUserRequest("");
 	}
+	
 	@Test
 	public void canHandle() {		
 		controller.handle(request);
@@ -38,5 +38,4 @@ public class HandleUnfoundControllerControllerTest {
 		assertThat(getPresentableUnfoundControllerResponse().getMessage(), 
 				is("Request was not found."));
 	}
-
 }

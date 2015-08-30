@@ -5,63 +5,87 @@ import static org.junit.Assert.assertThat;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mockito;
 
 import formfiller.ApplicationContext;
 import formfiller.delivery.userRequestParser.ParsedUserRequest;
 import formfiller.entities.FormComponent;
+import formfiller.gateways.InMemoryFormComponentGateway;
 import formfiller.utilities.*;
 
 public class NavigationControllerTest {
 	private NavigationController navigationController;
 	private ParsedUserRequest mockParsedUserRequest;
-	private FormComponent foundFormComponent;
+	private FormComponent formComponentFoundAtIndex;
+	FormComponent currentComponent;
+
+	private void updateFormComponentFoundAtIndex(int index) {
+		formComponentFoundAtIndex = findFormComponentByIndex(index);
+	}
+	
+	private InMemoryFormComponentGateway getInMemoryFormComponentGateway(){
+		InMemoryFormComponentGateway result = (InMemoryFormComponentGateway)
+				ApplicationContext.formComponentGateway;		
+		return result;
+	}
 
 	private FormComponent findFormComponentByIndex(int index) {
-		return ApplicationContext.formComponentGateway.findByIndex(index);
+		return getInMemoryFormComponentGateway().findByIndex(index);
 	}
 	
 	private FormComponent getCurrentFormComponent() {
-		return ApplicationContext.formComponentGateway.transporter.getCurrent();
+		return getInMemoryFormComponentGateway().transporter.getCurrent();
+	}
+	
+	private FormComponent makeMockFormComponent() {
+		FormComponent result = Mockito.mock(FormComponent.class);
+		result.id = "name";
+		result.question = QuestionMocker.makeMockNameQuestion();
+		result.answer = AnswerMocker.makeMockNameAnswer("myName");
+		return result;
 	}
 	
 	@Before
 	public void setupTest(){
 		TestSetup.setupContext();
+		ApplicationContext.formComponentGateway.save(makeMockFormComponent());
 		navigationController = new NavigationController();
-		ApplicationContext.questionGateway.save(QuestionMocker.makeMockNameQuestion());
 	}
-	
+
 	@Test
-	public void requestingPrevQuestionReturnsStartPrompt() {
-		foundFormComponent = findFormComponentByIndex(-1);
+	public void movingBackward_ReturnsStartComponent() {
+		updateFormComponentFoundAtIndex(-1);
 		mockParsedUserRequest = 
 				ParsedUserRequestMocker.makeMockParsedUserRequest("navigation", "backward");
 		
 		navigationController.handle(mockParsedUserRequest);
 		
-		assertThat(getCurrentFormComponent(), is(foundFormComponent));
+		assertThat(getCurrentFormComponent(), is(formComponentFoundAtIndex));
+		assertThat(getCurrentFormComponent().id, is("start"));
 	}
 
 	@Test
 	public void requestingCurrentQuestionReturnsStartPrompt() {
-		foundFormComponent = findFormComponentByIndex(0);
+		updateFormComponentFoundAtIndex(0);
 		mockParsedUserRequest = 
 				ParsedUserRequestMocker.makeMockParsedUserRequest("navigation", "none");
 		
 		navigationController.handle(mockParsedUserRequest);
 		
-		assertThat(getCurrentFormComponent(), is(foundFormComponent));
+		assertThat(getCurrentFormComponent(), is(formComponentFoundAtIndex));
+		assertThat(getCurrentFormComponent().id, is("name"));
 	}
 	
 	@Test
 	public void requestingNextQuestionReturnsGivenQuestion() {
-		foundFormComponent = findFormComponentByIndex(1);
+		updateFormComponentFoundAtIndex(1);
 		mockParsedUserRequest = 
 				ParsedUserRequestMocker.makeMockParsedUserRequest("navigation", "forward");
 		
 		navigationController.handle(mockParsedUserRequest);
 		
-		assertThat(getCurrentFormComponent(), is(foundFormComponent));
+		assertThat(getCurrentFormComponent(), is(formComponentFoundAtIndex));
+		assertThat(getCurrentFormComponent().id, is("end"));
 	}
 
 }

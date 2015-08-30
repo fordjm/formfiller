@@ -1,6 +1,6 @@
 package formfiller.request.implementations;
 
-import formfiller.gateways.Transporter.Direction;
+import formfiller.gateways.InMemoryTransporter.Direction;
 import formfiller.request.interfaces.NavigationRequest;
 
 public class NavigationRequestImpl extends RequestImpl implements NavigationRequest{

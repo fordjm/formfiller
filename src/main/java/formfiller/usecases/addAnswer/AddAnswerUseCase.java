@@ -17,7 +17,7 @@ public class AddAnswerUseCase implements UseCase {
 		if (content == "") return;
 		//		Then add the answer at the Gateway and tell the user.
 		Answer answer = new AnswerImpl(content);
-		ApplicationContext.answerGateway.save(questionId, answer);
+		ApplicationContext.formComponentGateway.find(questionId).setAnswer(answer);
 		//	Otherwise, inform the user why the answer could not be added.
 	}
 

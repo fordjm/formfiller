@@ -14,7 +14,8 @@ import formfiller.entities.Prompt;
 import formfiller.enums.ActionOutcome;
 import formfiller.gateways.NavigationValidator;
 import formfiller.gateways.Transporter;
-import formfiller.gateways.Transporter.Direction;
+import formfiller.gateways.InMemoryTransporter;
+import formfiller.gateways.InMemoryTransporter.Direction;
 import formfiller.request.interfaces.NavigationRequest;
 import formfiller.request.interfaces.Request;
 
@@ -23,18 +24,18 @@ public class NavigationUseCase implements UseCase {
 	private String message;
 
 	private NavigationValidator getNavigationValidator(){
-		return getTransporter().navigationValidator;
+		return getTransporter().getNavigationValidator();
 	}
 	
 	private Transporter getTransporter(){
-		return ApplicationContext.formComponentGateway.transporter;
+		return ApplicationContext.formComponentGateway.getTransporter();
 	}
 	
 	public void execute(Request request) {
 		if (request == null) throw new NullExecution();
 		
 		NavigationRequest navigationRequest = (NavigationRequest) request;
-		Transporter.Direction direction = navigationRequest.getDirection();
+		InMemoryTransporter.Direction direction = navigationRequest.getDirection();
 		NavigationValidator navigator = getNavigationValidator();
 		
 		if (navigator.isMoveLegal(direction)) {
@@ -67,7 +68,7 @@ public class NavigationUseCase implements UseCase {
 	}
 
 	private void executeMove(Direction direction) {
-		ApplicationContext.formComponentGateway.transporter.move(direction);
+		ApplicationContext.formComponentGateway.getTransporter().move(direction);
 	}
 
 	private void presentNavigationResponse() {
@@ -91,7 +92,7 @@ public class NavigationUseCase implements UseCase {
 	private PresentableResponse makePresentableFormComponent() {
 		PresentableFormComponent result = new PresentableFormComponent();
 		FormComponent current = ApplicationContext.formComponentGateway.
-				transporter.getCurrent();
+				getTransporter().getCurrent();
 		PresentableQuestion question = makePresentableQuestion(current.question);
 		PresentableAnswer answer = makePresentableAnswer(current.answer);
 		result.setQuestion(question);

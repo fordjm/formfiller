@@ -1,6 +1,6 @@
 package formfiller.request.builder;
 
-import formfiller.gateways.Transporter;
+import formfiller.gateways.InMemoryTransporter;
 import formfiller.request.implementations.NavigationRequestImpl;
 import formfiller.request.interfaces.NavigationRequest;
 import formfiller.request.interfaces.Request;
@@ -16,7 +16,7 @@ public class NavigationRequestBuilder implements RequestBuilderFunctions {
 		navigationRequest.setName("Navigation");
 	}
 	
-	public void buildDirection(Transporter.Direction direction){
+	public void buildDirection(InMemoryTransporter.Direction direction){
 		navigationRequest.setDirection(direction);
 	}
 

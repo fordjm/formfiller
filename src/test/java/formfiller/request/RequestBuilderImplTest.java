@@ -8,7 +8,7 @@ import java.util.HashMap;
 import org.junit.Before;
 import org.junit.Test;
 
-import formfiller.gateways.Transporter.Direction;
+import formfiller.gateways.InMemoryTransporter.Direction;
 import formfiller.request.builder.RequestBuilderImpl;
 import formfiller.request.implementations.HandleUnfoundControllerRequestImpl;
 import formfiller.request.implementations.NavigationRequestImpl;

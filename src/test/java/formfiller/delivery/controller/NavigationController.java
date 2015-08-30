@@ -5,7 +5,7 @@ import java.util.HashMap;
 import formfiller.boundaries.UseCase;
 import formfiller.delivery.Controller;
 import formfiller.delivery.userRequestParser.ParsedUserRequest;
-import formfiller.gateways.Transporter.Direction;
+import formfiller.gateways.InMemoryTransporter.Direction;
 import formfiller.request.builder.RequestBuilder;
 import formfiller.request.builder.RequestBuilderImpl;
 import formfiller.request.interfaces.Request;

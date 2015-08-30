@@ -7,12 +7,11 @@ import java.util.Map;
 
 import formfiller.entities.FormComponent;
 
-public class InMemoryFormComponentGateway implements Gateway<FormComponent> {
-	// TODO:	Extract Navigator interface and rename InMemoryNavigator
-	public final Transporter transporter = new Transporter();
-	
-	Map<String, FormComponent> formComponents = new HashMap<String, FormComponent>();
-	List<String> orderedElements = new ArrayList<String>();
+public class InMemoryFormComponentGateway implements FormComponentGateway {
+	// TODO:	Extract Transporter interface and rename InMemoryTransporter
+	public final InMemoryTransporter transporter = new InMemoryTransporter();	
+	private Map<String, FormComponent> formComponents = new HashMap<String, FormComponent>();
+	private List<String> orderedElements = new ArrayList<String>();
 	
 	public FormComponent findByIndex(int index){
 		if (!isLegalIndex(index))
@@ -38,12 +37,19 @@ public class InMemoryFormComponentGateway implements Gateway<FormComponent> {
 		return formComponents.get(id);
 	}
 
+	public Transporter getTransporter(){
+		return transporter;
+	}
+	
 	public FormComponent find(String id) {
 		if (id == null) throw new NullFind();
 		
 		return formComponents.get(id);
 	}
 
+	/* (non-Javadoc)
+	 * @see formfiller.gateways.FormComponentGateway#save(formfiller.entities.FormComponent)
+	 */
 	public void save(FormComponent formComponent) {
 		if (formComponent == null) throw new NullSave();
 		
@@ -51,7 +57,9 @@ public class InMemoryFormComponentGateway implements Gateway<FormComponent> {
 		orderedElements.add(formComponent.id);
 	}
 
+	@SuppressWarnings("serial")
 	public class NullFind extends RuntimeException { }
 
+	@SuppressWarnings("serial")
 	public class NullSave extends RuntimeException { }
 }

@@ -3,7 +3,7 @@ package formfiller.gateways;
 import formfiller.ApplicationContext;
 import formfiller.entities.FormComponent;
 import formfiller.entities.Prompt;
-import formfiller.gateways.Transporter.Direction;
+import formfiller.gateways.InMemoryTransporter.Direction;
 
 public class NavigationValidator {
 	
@@ -32,6 +32,6 @@ public class NavigationValidator {
 	}
 
 	private Transporter getTransporter(){
-		return ApplicationContext.formComponentGateway.transporter;
+		return ApplicationContext.formComponentGateway.getTransporter();
 	}
 }

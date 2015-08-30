@@ -14,8 +14,10 @@ import formfiller.entities.FormComponent;
 import formfiller.entities.Prompt;
 import formfiller.entities.Question;
 import formfiller.enums.ActionOutcome;
+import formfiller.gateways.InMemoryTransporter.Direction;
+import formfiller.gateways.FormComponentGateway;
+import formfiller.gateways.InMemoryFormComponentGateway;
 import formfiller.gateways.Transporter;
-import formfiller.gateways.Transporter.Direction;
 import formfiller.request.interfaces.NavigationRequest;
 import formfiller.usecases.navigation.NavigationUseCase;
 import formfiller.ApplicationContext;
@@ -33,7 +35,17 @@ public class NavigationTest {
 	}
 	
 	private FormComponent findFormComponentByIndex(int index){
-		return ApplicationContext.formComponentGateway.findByIndex(index);
+		return getInMemoryFormComponentGateway().findByIndex(index);
+	}
+	
+	private InMemoryFormComponentGateway getInMemoryFormComponentGateway(){
+		InMemoryFormComponentGateway result = (InMemoryFormComponentGateway)
+				getFormComponentGatewayFromContext();		
+		return result;
+	}
+
+	private FormComponentGateway getFormComponentGatewayFromContext() {
+		return ApplicationContext.formComponentGateway;
 	}
 	
 	private FormComponent makeMockFormComponent(Prompt question){
@@ -53,7 +65,7 @@ public class NavigationTest {
 	}
 	
 	private FormComponent getCurrentFormComponent() {
-		return ApplicationContext.formComponentGateway.transporter.getCurrent();
+		return getFormComponentGatewayFromContext().getTransporter().getCurrent();
 	}
 
 	private void setFoundFormComponentToIndex(int index) {
@@ -129,8 +141,8 @@ public class NavigationTest {
 			mockNameFormComponent = makeMockFormComponent(mockQuestion);
 			setMockQuestion(QuestionMocker.makeMockAgeQuestion());
 			mockAgeFormComponent = makeMockFormComponent(mockQuestion);
-			ApplicationContext.formComponentGateway.save(mockNameFormComponent);
-			ApplicationContext.formComponentGateway.save(mockAgeFormComponent);
+			getFormComponentGatewayFromContext().save(mockNameFormComponent);
+			getFormComponentGatewayFromContext().save(mockAgeFormComponent);
 		}
 		
 		@Test
@@ -143,7 +155,8 @@ public class NavigationTest {
 			
 			@Test
 			public void gettingCurrent_ReturnsMockNameFormComponent(){
-				Transporter transporter = ApplicationContext.formComponentGateway.transporter;
+				Transporter transporter = getFormComponentGatewayFromContext().getTransporter();
+				
 				assertThat(transporter.getCurrent().id, is("name"));
 				assertThat(transporter.getCurrent().question.requiresAnswer(), is(false));
 			}
@@ -192,7 +205,8 @@ public class NavigationTest {
 			
 			@Test
 			public void gettingCurrent_ReturnsMockAgeFormComponent(){
-				Transporter transporter = ApplicationContext.formComponentGateway.transporter;
+				Transporter transporter = getFormComponentGatewayFromContext().getTransporter();
+				
 				assertThat(transporter.getCurrent().id, is("age"));
 				assertThat(transporter.getCurrent().question.requiresAnswer(), is(true));
 			}

@@ -3,7 +3,7 @@ package formfiller.gateways;
 import formfiller.ApplicationContext;
 import formfiller.entities.FormComponent;
 
-public class Transporter {
+public class InMemoryTransporter implements Transporter {
 	public enum Direction { BACKWARD, FORWARD, NONE }
 	
 	public final NavigationValidator navigationValidator = 
@@ -13,8 +13,17 @@ public class Transporter {
 	boolean isFinished = false;
 
 	public FormComponent getCurrent() {
-		return ApplicationContext.formComponentGateway.
-				findByIndex(currentIndex);
+		return getInMemoryFormComponentGateway().findByIndex(currentIndex);
+	}
+	
+	private InMemoryFormComponentGateway getInMemoryFormComponentGateway(){
+		InMemoryFormComponentGateway result = (InMemoryFormComponentGateway)
+				ApplicationContext.formComponentGateway;		
+		return result;
+	}
+	
+	public NavigationValidator getNavigationValidator(){
+		return navigationValidator;
 	}
 	
 	public void move(Direction direction){
