@@ -22,9 +22,11 @@ public class RequestBuilderImplTest {
 	private <K,V> Request buildRequest(String requestName, HashMap<K,V> args) {
 		return impl.build(requestName, args);
 	}
+	
 	private <K,V> HashMap<K,V> makeArgsHashmap() {
 		return new HashMap<K,V>();
 	}
+	
 	private <K,V> HashMap<K,V> makeArgsHashmap(K key, V value) {
 		HashMap<K,V> result = new HashMap<K,V>();
 		result.put(key, value);
@@ -35,6 +37,7 @@ public class RequestBuilderImplTest {
 	public void setUp() {
 		impl = new RequestBuilderImpl();
 	}
+	
 	@Test
 	public void canBuildHandleUnfoundControllerRequest() {
 		Request handleUnfoundControllerRequest = 
@@ -43,6 +46,7 @@ public class RequestBuilderImplTest {
 		assertThat(handleUnfoundControllerRequest, 
 				is(instanceOf(HandleUnfoundControllerRequestImpl.class)));
 	}
+	
 	@Test
 	public void canBuildPresentQuestionRequest() {
 		Request presentQuestionRequest = 
@@ -53,16 +57,7 @@ public class RequestBuilderImplTest {
 				is(instanceOf(RequestImpl.class)));
 		assertThat(name, is("PresentQuestion"));
 	}
-	@Test
-	public void canBuildPresentAnswerRequest() {
-		Request presentAnswerRequest = 
-				buildRequest("presentAnswer", makeArgsHashmap());
-		String name = presentAnswerRequest.getName();
-		
-		assertThat(presentAnswerRequest, 
-				is(instanceOf(RequestImpl.class)));
-		assertThat(name, is("PresentAnswer"));
-	}
+	
 	@Test
 	public void canBuildNavigationRequest() {
 		Request navigationRequest = 
@@ -76,6 +71,7 @@ public class RequestBuilderImplTest {
 		assertThat(name, is("Navigation"));
 		assertThat(castNavigationRequest.getDirection(), is(Direction.FORWARD));
 	}
+	
 	@Test
 	public void canBuildNoRequest() {
 		Request noRequest = impl.build("unknown", makeArgsHashmap());

@@ -12,8 +12,6 @@ public class RequestBuilderImpl implements RequestBuilder {
 			return buildHandleUnfoundControllerRequest(args); 
 		else if(requestName.equalsIgnoreCase("presentQuestion"))
 			return buildPresentQuestionRequest(args);
-		else if(requestName.equalsIgnoreCase("presentAnswer"))
-			return buildPresentAnswerRequest(args);
 		else if(requestName.equalsIgnoreCase("navigation"))
 			return buildNavigationRequest(args);
 		else
@@ -26,23 +24,23 @@ public class RequestBuilderImpl implements RequestBuilder {
 		builder.buildMessage((String) args.get("message"));
 		return finishBuildingRequest(builder);
 	}
+	
 	private <K,V> Request buildPresentQuestionRequest(HashMap<K,V> args) {
 		PresentQuestionRequestBuilder builder = new PresentQuestionRequestBuilder();
 		return finishBuildingRequest(builder);
 	}	
-	private <K,V> Request buildPresentAnswerRequest(HashMap<K,V> args) {
-		PresentAnswerRequestBuilder builder = new PresentAnswerRequestBuilder();
-		return finishBuildingRequest(builder);
-	}
+	
 	private <K,V> Request buildNavigationRequest(HashMap<K,V> args) {
 		NavigationRequestBuilder builder = new NavigationRequestBuilder();
 		builder.buildDirection((Direction) args.get("direction")); 
 		return finishBuildingRequest(builder);
 	}
-	private Request finishBuildingRequest(AbstractRequestBuilder builder){
+	
+	private Request finishBuildingRequest(RequestBuilderFunctions builder){
 		builder.buildName();
 		return builder.getRequest();
 	}
+	
 	private Request getNoRequest() {
 		return new Request(){
 			public String getName() {
@@ -50,5 +48,4 @@ public class RequestBuilderImpl implements RequestBuilder {
 			}
 			public void setName(String name) { }};
 	}
-
 }

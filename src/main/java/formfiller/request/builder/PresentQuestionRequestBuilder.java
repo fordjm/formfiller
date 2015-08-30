@@ -3,7 +3,7 @@ package formfiller.request.builder;
 import formfiller.request.implementations.RequestImpl;
 import formfiller.request.interfaces.Request;
 
-public class PresentQuestionRequestBuilder implements AbstractRequestBuilder {
+public class PresentQuestionRequestBuilder implements RequestBuilderFunctions {
 	RequestImpl presentQuestionRequestImpl;
 	
 	public PresentQuestionRequestBuilder(){

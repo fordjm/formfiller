@@ -5,7 +5,7 @@ import formfiller.request.implementations.NavigationRequestImpl;
 import formfiller.request.interfaces.NavigationRequest;
 import formfiller.request.interfaces.Request;
 
-public class NavigationRequestBuilder implements AbstractRequestBuilder {
+public class NavigationRequestBuilder implements RequestBuilderFunctions {
 	NavigationRequest navigationRequest;
 	
 	public NavigationRequestBuilder(){

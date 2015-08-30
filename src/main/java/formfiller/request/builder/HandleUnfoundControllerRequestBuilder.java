@@ -4,7 +4,7 @@ import formfiller.request.implementations.HandleUnfoundControllerRequestImpl;
 import formfiller.request.interfaces.HandleUnfoundControllerRequest;
 import formfiller.request.interfaces.Request;
 
-public class HandleUnfoundControllerRequestBuilder implements AbstractRequestBuilder {
+public class HandleUnfoundControllerRequestBuilder implements RequestBuilderFunctions {
 	HandleUnfoundControllerRequest handleUnfoundControllerRequest;
 	
 	public HandleUnfoundControllerRequestBuilder(){
