@@ -2,9 +2,15 @@ package formfiller.usecases.navigation;
 
 import formfiller.ApplicationContext;
 import formfiller.boundaries.UseCase;
+import formfiller.boundaryCrossers.PresentableAnswer;
+import formfiller.boundaryCrossers.PresentableFormComponent;
+import formfiller.boundaryCrossers.PresentableQuestion;
 import formfiller.boundaryCrossers.PresentableResponse;
 import formfiller.boundaryCrossers.PresentableResponseImpl;
+import formfiller.entities.Answer;
 import formfiller.entities.ExecutedUseCaseImpl;
+import formfiller.entities.FormComponent;
+import formfiller.entities.Prompt;
 import formfiller.enums.ActionOutcome;
 import formfiller.gateways.NavigationValidator;
 import formfiller.gateways.Transporter;
@@ -16,7 +22,7 @@ public class NavigationUseCase implements UseCase {
 	private ActionOutcome outcome;
 	private String message;
 
-	private NavigationValidator getNavigator(){
+	private NavigationValidator getNavigationValidator(){
 		return getTransporter().navigationValidator;
 	}
 	
@@ -29,7 +35,7 @@ public class NavigationUseCase implements UseCase {
 		
 		NavigationRequest navigationRequest = (NavigationRequest) request;
 		Transporter.Direction direction = navigationRequest.getDirection();
-		NavigationValidator navigator = getNavigator();
+		NavigationValidator navigator = getNavigationValidator();
 		
 		if (navigator.isMoveLegal(direction)) {
 			executeMove(direction);
@@ -64,18 +70,48 @@ public class NavigationUseCase implements UseCase {
 		ApplicationContext.formComponentGateway.transporter.move(direction);
 	}
 
-	//	TODO:	Successful navigation presentation is current form component.
 	private void presentNavigationResponse() {
-		PresentableResponse presentableResponse = makePresentableNavigation();
+		PresentableResponse presentableResponse = makePresentableResponse();
 		ApplicationContext.navigationPresenter.present(presentableResponse);
 	}
-	
-	private PresentableResponse makePresentableNavigation() {
-		PresentableResponse result = new PresentableResponseImpl();
+
+	//	TODO:	Navigation should know nothing about PresentableResponses.
+	//			Make some factories.	
+	private PresentableResponse makePresentableResponse() {
+		PresentableResponse result;
+		if (outcome == ActionOutcome.FAILED)
+			result = new PresentableResponseImpl();
+		else
+			result = makePresentableFormComponent();
 		result.setMessage(message);
 		result.setOutcome(outcome);
 		return result;
 	}
 	
+	private PresentableResponse makePresentableFormComponent() {
+		PresentableFormComponent result = new PresentableFormComponent();
+		FormComponent current = ApplicationContext.formComponentGateway.
+				transporter.getCurrent();
+		PresentableQuestion question = makePresentableQuestion(current.question);
+		PresentableAnswer answer = makePresentableAnswer(current.answer);
+		result.setQuestion(question);
+		result.setAnswer(answer);
+		return result;
+	}
+
+	private PresentableQuestion makePresentableQuestion(Prompt requestedQuestion) {
+		PresentableQuestion result = new PresentableQuestion();
+		result.setId(requestedQuestion.getId());
+		result.setMessage(requestedQuestion.getContent());
+		return result;
+	}
+	private PresentableAnswer makePresentableAnswer(Answer requestedAnswer) {
+		PresentableAnswer result = new PresentableAnswer();
+		result.setId(requestedAnswer.getId());
+		result.setMessage(requestedAnswer.getContent().toString());
+		return result;
+	}
+	
+	@SuppressWarnings("serial")
 	public class NullExecution extends RuntimeException { }
 }

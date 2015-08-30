@@ -10,13 +10,17 @@ import formfiller.enums.ActionOutcome;
 public class ConsoleNavigationView implements View {
 
 	public void update(Observable observable, Object input) {
-		displayPresentableResponse();
+		outputPresentableResponse();
 	}
-	public void displayPresentableResponse() {
+	
+	public void outputPresentableResponse() {
 		PresentableResponse presentableNavigation = 
 				ApplicationContext.navigationPresenter.getPresentableResponse();
 		if (presentableNavigation.getOutcome() == ActionOutcome.FAILED)
-			System.out.println(presentableNavigation.getMessage());
+			outputFailedNavigation(presentableNavigation);
 	}
 	
+	private void outputFailedNavigation(PresentableResponse presentableNavigation) {
+		System.out.println(presentableNavigation.getMessage());
+	}	
 }

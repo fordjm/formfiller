@@ -14,6 +14,7 @@ import formfiller.entities.FormComponent;
 import formfiller.entities.Prompt;
 import formfiller.entities.Question;
 import formfiller.enums.ActionOutcome;
+import formfiller.gateways.Transporter;
 import formfiller.gateways.Transporter.Direction;
 import formfiller.request.interfaces.NavigationRequest;
 import formfiller.usecases.navigation.NavigationUseCase;
@@ -27,16 +28,16 @@ public class NavigationTest {
 	private NavigationRequest mockRequest;
 	private FormComponent foundFormComponent;
 	
-	void setMockRequestDirection(Direction direction){
+	private void setMockRequestDirection(Direction direction){
 		when(mockRequest.getDirection()).thenReturn(direction);
-	}
-	
-	private Prompt findQuestionByIndex(int index) {
-		return ApplicationContext.questionGateway.findQuestionByIndex(index);
 	}
 	
 	private FormComponent findFormComponentByIndex(int index){
 		return ApplicationContext.formComponentGateway.findByIndex(index);
+	}
+	
+	private FormComponent makeMockFormComponent(Prompt question){
+		return FormComponentMocker.makeMockFormComponent(question, AnswerImpl.NONE);
 	}
 	
 	@Before
@@ -55,7 +56,11 @@ public class NavigationTest {
 		return ApplicationContext.formComponentGateway.transporter.getCurrent();
 	}
 
-	public class GivenNoQuestions{
+	private void setFoundFormComponentToIndex(int index) {
+		foundFormComponent = findFormComponentByIndex(index);
+	}
+
+	public class GivenNoFormComponents{
 		
 		public class GivenPrevQuestionRequest{
 			
@@ -109,139 +114,124 @@ public class NavigationTest {
 		}
 	}
 	
-	public class GivenOneQuestion{
+	public class GivenTwoFormComponents {
+		FormComponent mockNameFormComponent;
+		FormComponent mockAgeFormComponent;
 		Question mockQuestion;
-		FormComponent mockFormComponent;
 		
-		private FormComponent makeMockFormComponent(Prompt question){
-			return FormComponentMocker.makeMockFormComponent(question, AnswerImpl.NONE);
+		private void setMockQuestion(Question mockQuestion){
+			this.mockQuestion = mockQuestion;
 		}
 		
-		public class GivenAnswerNotRequired{
+		@Before
+		public void givenTwoFormComponents(){
+			setMockQuestion(QuestionMocker.makeMockNameQuestion());
+			mockNameFormComponent = makeMockFormComponent(mockQuestion);
+			setMockQuestion(QuestionMocker.makeMockAgeQuestion());
+			mockAgeFormComponent = makeMockFormComponent(mockQuestion);
+			ApplicationContext.formComponentGateway.save(mockNameFormComponent);
+			ApplicationContext.formComponentGateway.save(mockAgeFormComponent);
+		}
+		
+		@Test
+		public void formComponentGatewayStoresGivenComponents(){
+			assertEquals(mockNameFormComponent, findFormComponentByIndex(0));
+			assertEquals(mockAgeFormComponent, findFormComponentByIndex(1));
+		}
+		
+		public class GivenTransporterIsAtStart {
+			
+			@Test
+			public void gettingCurrent_ReturnsMockNameFormComponent(){
+				Transporter transporter = ApplicationContext.formComponentGateway.transporter;
+				assertThat(transporter.getCurrent().id, is("name"));
+				assertThat(transporter.getCurrent().question.requiresAnswer(), is(false));
+			}
+			
+			@Test
+			public void movingBack_OutputsStartComponent(){
+				setMockRequestDirection(Direction.BACKWARD);
+				setFoundFormComponentToIndex(-1);
+				
+				navigationUseCase.execute(mockRequest);
+				
+				assertThat(getCurrentFormComponent(), is(foundFormComponent));
+				assertThat(foundFormComponent.id, is("start"));
+			}
+			
+			@Test
+			public void movingNowhere_OutputsFirstComponent(){
+				setMockRequestDirection(Direction.NONE);
+				setFoundFormComponentToIndex(0);
+				
+				navigationUseCase.execute(mockRequest);
+				
+				assertThat(getCurrentFormComponent(), is(foundFormComponent));
+				assertThat(foundFormComponent.id, is("name"));
+			}
+			
+			@Test
+			public void movingForward_OutputsSecondComponent(){
+				setMockRequestDirection(Direction.FORWARD);
+				setFoundFormComponentToIndex(1);
+				
+				navigationUseCase.execute(mockRequest);
+				
+				assertThat(getCurrentFormComponent(), is(foundFormComponent));
+				assertThat(foundFormComponent.id, is("age"));
+			}
+		}
+		
+		public class GivenTransporterHasMovedForward {
 			
 			@Before
-			public void givenAnswerNotRequired(){
-				mockQuestion = QuestionMocker.makeMockNameQuestion();
-				mockFormComponent = makeMockFormComponent(mockQuestion);
-				ApplicationContext.questionGateway.save(mockQuestion);	//
-				ApplicationContext.formComponentGateway.save(mockFormComponent);
+			public void givenTransporterIsAtFirstComponent(){
+				setMockRequestDirection(Direction.FORWARD);
+				navigationUseCase.execute(mockRequest);
 			}
+			
 			@Test
-			public void questionExistsAtIndexZero(){
-				assertEquals(mockQuestion, findQuestionByIndex(0));	//
-				assertEquals(mockFormComponent, findFormComponentByIndex(0));
+			public void gettingCurrent_ReturnsMockAgeFormComponent(){
+				Transporter transporter = ApplicationContext.formComponentGateway.transporter;
+				assertThat(transporter.getCurrent().id, is("age"));
+				assertThat(transporter.getCurrent().question.requiresAnswer(), is(true));
 			}
 			
-			public class GivenANextQuestionRequest{
+			@Test			
+			public void movingBack_OutputsFirstComponent(){
+				setMockRequestDirection(Direction.BACKWARD);
+				setFoundFormComponentToIndex(0);
 				
-				@Before
-				public void givenNextQuestionRequest(){
-					setMockRequestDirection(Direction.FORWARD);
-				}
-				@Test
-				public void canNavigateToFirstQuestion() {
-					foundFormComponent = findFormComponentByIndex(1);
-					
-					navigationUseCase.execute(mockRequest);
-					
-					assertThat(getCurrentFormComponent(), is(foundFormComponent));
-				}
+				navigationUseCase.execute(mockRequest);
 				
+				assertThat(getCurrentFormComponent(), is(foundFormComponent));
+				assertThat(foundFormComponent.id, is("name"));
 			}
-			
-			public class GivenFormIsAtTheEnd{
-				
-				@Before
-				public void givenFormIsAtTheEnd(){
-					setMockRequestDirection(Direction.FORWARD);
-					navigationUseCase.execute(mockRequest);
-				}
-				@Test
-				public void gettingPrevQuestionGetsGivenQuestion(){
-					foundFormComponent = findFormComponentByIndex(0);
-					setMockRequestDirection(Direction.BACKWARD);
-					
-					navigationUseCase.execute(mockRequest);
-					
-					assertThat(getCurrentFormComponent(), is(foundFormComponent));
-				}
-				
-			}
-		}
-		
-		public class GivenAnswerIsRequired{
-			
-			//	TODO:	Don't test PresentedNavigation.  Test ExecutedUseCase.
+
+			//	TODO:	Move presentation tests to presenter test class.
 			private PresentableResponseImpl getPresentedNavigation() {
 				return (PresentableResponseImpl)
 						ApplicationContext.navigationPresenter.getPresentableResponse();
 			}
-			
-			@Before
-			public void givenAnswerIsRequired(){
-				mockQuestion = QuestionMocker.makeMockAgeQuestion();
-				mockFormComponent = makeMockFormComponent(mockQuestion);
-				ApplicationContext.formComponentGateway.save(mockFormComponent);
-			}	
 
-			public class GivenANextQuestionRequest{
-
-				private String getFailedNavigationResult(){
-					return "Sorry, you cannot move ahead.  The current question requires a response.";
-				}
-				
-				@Before
-				public void givenANextQuestionRequest(){
-					setMockRequestDirection(Direction.FORWARD);
-				}
-				@Test
-				public void cannotNavigateToEnd() {	
-					foundFormComponent = findFormComponentByIndex(0);
-					
-					navigationUseCase.execute(mockRequest);
-					
-					assertThat(getPresentedNavigation().getOutcome(), is(ActionOutcome.FAILED));
-					assertEquals(getFailedNavigationResult(), getPresentedNavigation().getMessage());
-					assertThat(getCurrentFormComponent(), is(foundFormComponent));
-				}
-				
+			private String getFailedNavigationResult(){
+				return "Sorry, you cannot move ahead.  The current question requires a response.";
 			}
 			
-			public class GivenCurrentQuestionRequest {
+			@Test
+			public void movingForward_DoesNotChangeComponent(){
+				setMockRequestDirection(Direction.FORWARD);
+				setFoundFormComponentToIndex(1);
 				
-				@Before
-				public void givenCurrentQuestionRequest(){
-					setMockRequestDirection(Direction.NONE);
-				}
-				@Test
-				public void canRepeatQuestion() {
-					foundFormComponent = findFormComponentByIndex(0);
-					
-					navigationUseCase.execute(mockRequest);
-					
-					assertThat(getPresentedNavigation().getOutcome(), is(ActionOutcome.SUCCEEDED));	//
-					assertThat(getCurrentFormComponent(), is(foundFormComponent));
-				}
+				navigationUseCase.execute(mockRequest);
 				
+				assertThat(getCurrentFormComponent(), is(foundFormComponent));
+				assertThat(foundFormComponent.id, is("age"));
+				assertThat(getPresentedNavigation().getOutcome(), is(ActionOutcome.FAILED));
+				assertEquals(getFailedNavigationResult(), getPresentedNavigation().getMessage());
 			}
 			
-			public class GivenPrevQuestionRequest {
-				
-				@Before
-				public void givenPrevQuestionRequest(){
-					setMockRequestDirection(Direction.BACKWARD);
-				}
-				@Test
-				public void canGoBackToStart() {
-					foundFormComponent = findFormComponentByIndex(-1);
-					setMockRequestDirection(Direction.BACKWARD);
-					
-					navigationUseCase.execute(mockRequest);
-					
-					assertThat(getCurrentFormComponent(), is(foundFormComponent));
-				}
-				
-			}
 		}
+		
 	}
 }

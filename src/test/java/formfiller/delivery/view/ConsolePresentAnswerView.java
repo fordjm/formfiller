@@ -17,9 +17,9 @@ public class ConsolePresentAnswerView implements UserRequestSource {
 		return stdIn.nextLine();
 	}
 	public void update(Observable o, Object arg) {
-		displayPresentableResponse();
+		outputPresentableResponse();
 	}
-	public void displayPresentableResponse() {
+	public void outputPresentableResponse() {
 		String answerMessage = answerMessage(presentableAnswer());
 		if (answerMessage.length() > 0){
 			setWasDisplayed(true);

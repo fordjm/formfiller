@@ -48,7 +48,7 @@ public class RouterTest {
 		@Before
 		public void givenANavigationRequest(){
 			mockParsedRequest = 
-					ParsedUserRequestMocker.makeMockParsedUserRequest("navigation", "1");
+					ParsedUserRequestMocker.makeMockParsedUserRequest("navigation", "forward");
 			mockController = ControllerMocker.makeMockNavigationController();
 		}
 		@Test

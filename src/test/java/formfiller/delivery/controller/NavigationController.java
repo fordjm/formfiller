@@ -20,26 +20,23 @@ public class NavigationController implements Controller {
 		Request navigationRequest = makeNavigationRequest(direction);
 		UseCase useCase = makeNavigationUseCase(parsedInput);
 		useCase.execute(navigationRequest);
-		
-		invokePresentQuestionController(parsedInput);
 	}	
+	
 	protected Request makeNavigationRequest(Direction direction){
 		RequestBuilder requestBuilder = new RequestBuilderImpl();
 		Request result = requestBuilder.build("navigation", 
 				makeArgsHashmap("direction", direction));
 		return result;
 	}
+	
 	protected UseCase makeNavigationUseCase(ParsedUserRequest parsedUserRequest){		
 		UseCaseFactory useCaseFactory = new UseCaseFactoryImpl();
 		return useCaseFactory.make("navigation");
 	}
+	
 	private <K,V> HashMap<K,V> makeArgsHashmap(K key, V value){
 		HashMap<K,V> result = new HashMap<K,V>();
 		result.put(key, value);
 		return result;
-	}
-	private void invokePresentQuestionController(ParsedUserRequest parsedInput){
-		PresentQuestionController pqc = new PresentQuestionController();
-		pqc.handle(parsedInput);
 	}
 }

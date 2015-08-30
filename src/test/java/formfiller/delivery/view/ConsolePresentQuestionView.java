@@ -10,9 +10,9 @@ public class ConsolePresentQuestionView implements View {
 	PresentableQuestion question;
 
 	public void update(Observable presenter, Object input) {
-		displayPresentableResponse();
+		outputPresentableResponse();
 	}
-	public void displayPresentableResponse() {
+	public void outputPresentableResponse() {
 		question = (PresentableQuestion) 
 				ApplicationContext.questionPresenter.getPresentableResponse();
 		System.out.println(question.getMessage());

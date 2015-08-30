@@ -9,9 +9,9 @@ import formfiller.delivery.View;
 public class ConsoleHandleUnfoundControllerView implements View {
 
 	public void update(Observable o, Object arg) {
-		displayPresentableResponse();
+		outputPresentableResponse();
 	}
-	public void displayPresentableResponse() {
+	public void outputPresentableResponse() {
 		PresentableResponse presentableHandleUnfoundController = 
 				ApplicationContext.handleUnfoundControllerPresenter.getPresentableResponse();
 		System.out.println(presentableHandleUnfoundController.getMessage());
