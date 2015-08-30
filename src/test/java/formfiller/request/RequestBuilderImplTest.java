@@ -12,7 +12,6 @@ import formfiller.gateways.Transporter.Direction;
 import formfiller.request.builder.RequestBuilderImpl;
 import formfiller.request.implementations.HandleUnfoundControllerRequestImpl;
 import formfiller.request.implementations.NavigationRequestImpl;
-import formfiller.request.implementations.RequestImpl;
 import formfiller.request.interfaces.NavigationRequest;
 import formfiller.request.interfaces.Request;
 
@@ -45,17 +44,6 @@ public class RequestBuilderImplTest {
 		
 		assertThat(handleUnfoundControllerRequest, 
 				is(instanceOf(HandleUnfoundControllerRequestImpl.class)));
-	}
-	
-	@Test
-	public void canBuildPresentQuestionRequest() {
-		Request presentQuestionRequest = 
-				buildRequest("presentQuestion", makeArgsHashmap());
-		String name = presentQuestionRequest.getName();
-		
-		assertThat(presentQuestionRequest, 
-				is(instanceOf(RequestImpl.class)));
-		assertThat(name, is("PresentQuestion"));
 	}
 	
 	@Test

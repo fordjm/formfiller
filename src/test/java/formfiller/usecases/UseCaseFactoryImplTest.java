@@ -8,8 +8,8 @@ import org.junit.Test;
 
 import formfiller.boundaries.UseCase;
 import formfiller.usecases.UseCaseFactoryImpl.UnknownUseCase;
+import formfiller.usecases.handleUnfoundController.HandleUnfoundControllerUseCase;
 import formfiller.usecases.navigation.NavigationUseCase;
-import formfiller.usecases.presentQuestion.PresentQuestionUseCase;
 
 public class UseCaseFactoryImplTest {
 
@@ -20,16 +20,19 @@ public class UseCaseFactoryImplTest {
 	public void setUp() {
 		factory = new UseCaseFactoryImpl();
 	}
+	
+	@Test
+	public void canCreateHandleUnfoundControllerUseCase() {
+		useCase = factory.make("handleUnfoundController");
+		assertThat(useCase, is(instanceOf(HandleUnfoundControllerUseCase.class)));
+	}
+	
 	@Test
 	public void canCreateNavigationUseCase() {
 		useCase = factory.make("navigation");
 		assertThat(useCase, is(instanceOf(NavigationUseCase.class)));
 	}
-	@Test
-	public void canCreatePresentQuestionUseCase() {
-		useCase = factory.make("presentQuestion");
-		assertThat(useCase, is(instanceOf(PresentQuestionUseCase.class)));
-	}
+
 	@Test(expected = UnknownUseCase.class)
 	public void unknownUseCaseThrowsException(){
 		useCase = factory.make("unknown");
