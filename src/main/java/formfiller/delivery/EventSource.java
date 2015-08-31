@@ -1,5 +1,7 @@
 package formfiller.delivery;
 
-public interface EventSource {
-	public String getInputEvent();
+import java.util.Observable;
+
+public abstract class EventSource extends Observable {
+	public abstract void captureEvents();
 }

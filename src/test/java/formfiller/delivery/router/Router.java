@@ -5,14 +5,24 @@ import java.util.Map;
 
 import formfiller.delivery.Controller;
 import formfiller.delivery.controller.HandleUnfoundControllerController;
+import formfiller.delivery.controller.NavigationController;
 import formfiller.delivery.eventParser.ParsedEvent;
 
 //Adapted from:
 //https://github.com/cleancoders/CleanCodeCaseStudy/blob/master/src/cleancoderscom/http/Router.java
 //Retrieved 2015-08-14
+
 public class Router {
 	public static final Controller handleUnfoundController = new HandleUnfoundControllerController();
 	private Map<String, Controller> routes = new HashMap<String, Controller>();
+	
+	public static Router makeRouter(){
+		Router result = new Router();
+		result.addMethod("navigation", new NavigationController());
+		return result;
+	}
+	
+	private Router() { }
 
 	public void addMethod(String request, Controller controller) {
 		routes.put(request, controller);

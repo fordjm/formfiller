@@ -4,11 +4,18 @@ import java.util.Scanner;
 
 import formfiller.delivery.EventSource;
 
-// TODO:	Make this operate through a listener.
-public class ConsoleEventSource implements EventSource {
+public class ConsoleEventSource extends EventSource {
 	private static final Scanner stdIn = new Scanner(System.in);
+	
+	public void captureEvents(){
+		while (true){
+			getInputEvent();
+		}
+	}
 
-	public String getInputEvent() {
-		return stdIn.nextLine();
+	private void getInputEvent() {
+		String event = stdIn.nextLine();
+		setChanged();
+		notifyObservers(event);
 	}
 }

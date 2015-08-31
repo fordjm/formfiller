@@ -5,7 +5,8 @@ import formfiller.delivery.EventParser;
 //Adapted from:
 //https://github.com/cleancoders/CleanCodeCaseStudy/blob/master/src/cleancoderscom/http/RequestParser.java
 //Retrieved 2015-08-14
-public class ConsoleEventParser implements EventParser {
+
+public class StringEventParser implements EventParser {
 
 	public ParsedEvent parse(String input) {
 		ParsedEvent result = new ParsedEvent();

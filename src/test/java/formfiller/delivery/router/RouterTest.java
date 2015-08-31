@@ -20,7 +20,7 @@ public class RouterTest {
 	
 	@Before
 	public void setUp(){
-		router = new Router();
+		router = Router.makeRouter();
 	}
 
 	private void verifyControllerHandledParsedRequest() {
