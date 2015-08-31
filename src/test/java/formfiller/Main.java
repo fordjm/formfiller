@@ -1,11 +1,11 @@
 package formfiller;
 
-import formfiller.delivery.UserRequestParser;
-import formfiller.delivery.UserRequestSource;
+import formfiller.delivery.EventParser;
+import formfiller.delivery.EventSource;
 import formfiller.delivery.controller.NavigationController;
+import formfiller.delivery.eventParser.ConsoleEventParser;
+import formfiller.delivery.eventParser.ParsedEvent;
 import formfiller.delivery.router.Router;
-import formfiller.delivery.userRequestParser.ConsoleUserRequestParser;
-import formfiller.delivery.userRequestParser.ParsedUserRequest;
 import formfiller.delivery.view.PresentAnswerViewModel;
 import formfiller.delivery.view.HandleUnfoundControllerViewModel;
 import formfiller.delivery.view.NavigationViewModel;
@@ -13,8 +13,8 @@ import formfiller.delivery.view.PresentQuestionViewModel;
 import formfiller.utilities.TestSetup;
 
 public class Main {
-	private static UserRequestSource userRequestSource;
-	private static UserRequestParser userRequestParser;
+	private static EventSource eventSource;
+	private static EventParser eventParser;
 	private static Router router;
 	
 	public static void main(String[] args){
@@ -23,12 +23,12 @@ public class Main {
 		
 		outputCheapHackyStartPrompt();
 		while (true){
-			routeUserRequests(router);
+			routeEvents(router);
 		}
 	}
 	
 	private static void outputCheapHackyStartPrompt() {
-		System.out.print("Please enter a user request:  ");
+		System.out.print("Please enter the name of an event to handle:  ");
 	}
 	
 	private static void setupClassVariables() {
@@ -36,9 +36,10 @@ public class Main {
 				new HandleUnfoundControllerViewModel());
 		ApplicationContext.navigationPresenter.addObserver(new NavigationViewModel());
 		ApplicationContext.questionPresenter.addObserver(new PresentQuestionViewModel());
+		ApplicationContext.answerPresenter.addObserver(new PresentAnswerViewModel());
 		
-		userRequestSource = new PresentAnswerViewModel();
-		userRequestParser = new ConsoleUserRequestParser();
+		eventSource = new ConsoleEventSource();
+		eventParser = new ConsoleEventParser();
 		router = makeRouter();
 	}
 	
@@ -48,9 +49,9 @@ public class Main {
 		return result;
 	}
 	
-	private static void routeUserRequests(Router router) {
-		String userRequestString = userRequestSource.getUserRequestInput();
-		ParsedUserRequest parsedRequest = userRequestParser.parse(userRequestString);
-		router.route(parsedRequest);
+	private static void routeEvents(Router router) {
+		String event = eventSource.getInputEvent();
+		ParsedEvent parsedEvent = eventParser.parse(event);
+		router.route(parsedEvent);
 	}	
 }

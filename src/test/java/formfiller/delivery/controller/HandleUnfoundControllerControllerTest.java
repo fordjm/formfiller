@@ -8,13 +8,13 @@ import org.junit.Test;
 
 import formfiller.ApplicationContext;
 import formfiller.boundaryCrossers.PresentableResponse;
-import formfiller.delivery.userRequestParser.ParsedUserRequest;
+import formfiller.delivery.eventParser.ParsedEvent;
 import formfiller.enums.ActionOutcome;
 import formfiller.utilities.*;
 
 public class HandleUnfoundControllerControllerTest {
 	private HandleUnfoundControllerController controller;
-	private ParsedUserRequest request;
+	private ParsedEvent request;
 	
 	private PresentableResponse getPresentableUnfoundControllerResponse(){
 		PresentableResponse result = 
@@ -26,7 +26,7 @@ public class HandleUnfoundControllerControllerTest {
 	public void setUp() {
 		TestSetup.setupContext();
 		controller = new HandleUnfoundControllerController();
-		request = ParsedUserRequestMocker.makeMockParsedUserRequest("");
+		request = ParsedEventMocker.makeMockParsedEvent("");
 	}
 	
 	@Test

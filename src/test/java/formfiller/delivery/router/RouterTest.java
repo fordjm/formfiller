@@ -7,7 +7,7 @@ import org.mockito.Mockito;
 
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
 import formfiller.delivery.Controller;
-import formfiller.delivery.userRequestParser.ParsedUserRequest;
+import formfiller.delivery.eventParser.ParsedEvent;
 import formfiller.utilities.*;
 //Adapted from:
 //https://github.com/cleancoders/CleanCodeCaseStudy/blob/master/test/cleancoderscom/http/RouterTest.java
@@ -15,7 +15,7 @@ import formfiller.utilities.*;
 @RunWith(HierarchicalContextRunner.class)
 public class RouterTest {
 	Router router;
-	private ParsedUserRequest mockParsedRequest;
+	private ParsedEvent mockParsedRequest;
 	private Controller mockController;
 	
 	@Before
@@ -33,7 +33,7 @@ public class RouterTest {
 		@Before
 		public void givenANavigationRequest(){
 			mockParsedRequest = 
-					ParsedUserRequestMocker.makeMockParsedUserRequest("navigation", "forward");
+					ParsedEventMocker.makeMockParsedEvent("navigation", "forward");
 			mockController = ControllerMocker.makeMockNavigationController();
 		}
 		@Test

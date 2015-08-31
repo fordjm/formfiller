@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 import formfiller.boundaries.UseCase;
 import formfiller.delivery.Controller;
-import formfiller.delivery.userRequestParser.ParsedUserRequest;
+import formfiller.delivery.eventParser.ParsedEvent;
 import formfiller.gateways.InMemoryTransporter.Direction;
 import formfiller.request.builder.RequestBuilder;
 import formfiller.request.builder.RequestBuilderImpl;
@@ -15,7 +15,7 @@ import formfiller.utilities.*;
 
 public class NavigationController implements Controller {
 
-	public void handle(ParsedUserRequest parsedInput) {
+	public void handle(ParsedEvent parsedInput) {
 		Direction direction = DirectionParser.parseDirection(parsedInput.getParam());
 		Request navigationRequest = makeNavigationRequest(direction);
 		UseCase useCase = makeNavigationUseCase(parsedInput);
@@ -29,7 +29,7 @@ public class NavigationController implements Controller {
 		return result;
 	}
 	
-	protected UseCase makeNavigationUseCase(ParsedUserRequest parsedUserRequest){		
+	protected UseCase makeNavigationUseCase(ParsedEvent parsedUserRequest){		
 		UseCaseFactory useCaseFactory = new UseCaseFactoryImpl();
 		return useCaseFactory.make("navigation");
 	}

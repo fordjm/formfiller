@@ -8,14 +8,14 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import formfiller.ApplicationContext;
-import formfiller.delivery.userRequestParser.ParsedUserRequest;
+import formfiller.delivery.eventParser.ParsedEvent;
 import formfiller.entities.FormComponent;
 import formfiller.gateways.InMemoryFormComponentGateway;
 import formfiller.utilities.*;
 
 public class NavigationControllerTest {
 	private NavigationController navigationController;
-	private ParsedUserRequest mockParsedUserRequest;
+	private ParsedEvent mockParsedUserRequest;
 	private FormComponent formComponentFoundAtIndex;
 	FormComponent currentComponent;
 
@@ -56,7 +56,7 @@ public class NavigationControllerTest {
 	public void movingBackward_ReturnsStartComponent() {
 		updateFormComponentFoundAtIndex(-1);
 		mockParsedUserRequest = 
-				ParsedUserRequestMocker.makeMockParsedUserRequest("navigation", "backward");
+				ParsedEventMocker.makeMockParsedEvent("navigation", "backward");
 		
 		navigationController.handle(mockParsedUserRequest);
 		
@@ -68,7 +68,7 @@ public class NavigationControllerTest {
 	public void requestingCurrentQuestionReturnsStartPrompt() {
 		updateFormComponentFoundAtIndex(0);
 		mockParsedUserRequest = 
-				ParsedUserRequestMocker.makeMockParsedUserRequest("navigation", "none");
+				ParsedEventMocker.makeMockParsedEvent("navigation", "none");
 		
 		navigationController.handle(mockParsedUserRequest);
 		
@@ -80,7 +80,7 @@ public class NavigationControllerTest {
 	public void requestingNextQuestionReturnsGivenQuestion() {
 		updateFormComponentFoundAtIndex(1);
 		mockParsedUserRequest = 
-				ParsedUserRequestMocker.makeMockParsedUserRequest("navigation", "forward");
+				ParsedEventMocker.makeMockParsedEvent("navigation", "forward");
 		
 		navigationController.handle(mockParsedUserRequest);
 		

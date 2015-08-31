@@ -1,14 +1,14 @@
-package formfiller.delivery.userRequestParser;
+package formfiller.delivery.eventParser;
 
-import formfiller.delivery.UserRequestParser;
+import formfiller.delivery.EventParser;
 
 //Adapted from:
 //https://github.com/cleancoders/CleanCodeCaseStudy/blob/master/src/cleancoderscom/http/RequestParser.java
 //Retrieved 2015-08-14
-public class ConsoleUserRequestParser implements UserRequestParser {
+public class ConsoleEventParser implements EventParser {
 
-	public ParsedUserRequest parse(String input) {
-		ParsedUserRequest result = new ParsedUserRequest();
+	public ParsedEvent parse(String input) {
+		ParsedEvent result = new ParsedEvent();
 		if (input == null) return result;
 		
 		String[] split = preprocessInputString(input);

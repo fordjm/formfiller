@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 import formfiller.boundaries.UseCase;
 import formfiller.delivery.Controller;
-import formfiller.delivery.userRequestParser.ParsedUserRequest;
+import formfiller.delivery.eventParser.ParsedEvent;
 import formfiller.request.builder.RequestBuilder;
 import formfiller.request.builder.RequestBuilderImpl;
 import formfiller.request.interfaces.Request;
@@ -13,17 +13,17 @@ import formfiller.usecases.UseCaseFactoryImpl;
 
 public class HandleUnfoundControllerController implements Controller {
 
-	public void handle(ParsedUserRequest parsedUserRequest) {
+	public void handle(ParsedEvent parsedUserRequest) {
 		String message = unfoundControllerMessage(parsedUserRequest);
 		Request request = handleUnfoundControllerRequest(message);
 		UseCase useCase = handleUnfoundControllerUseCase(parsedUserRequest);
 		useCase.execute(request);
 	}
-	private String unfoundControllerMessage(ParsedUserRequest parsedUserRequest) {
+	private String unfoundControllerMessage(ParsedEvent parsedUserRequest) {
 		String requestedMethod = requestedMethod(parsedUserRequest);
 		return "Request " + requestedMethod + "was not found.";
 	}
-	private String requestedMethod(ParsedUserRequest parsedUserRequest){
+	private String requestedMethod(ParsedEvent parsedUserRequest){
 		String result = "";
 		String method = parsedUserRequest.getMethod();
 		if (method.length() > 0)
@@ -36,7 +36,7 @@ public class HandleUnfoundControllerController implements Controller {
 				makeArgsHashmap(message));
 		return result;
 	}
-	protected UseCase handleUnfoundControllerUseCase(ParsedUserRequest parsedUserRequest){		
+	protected UseCase handleUnfoundControllerUseCase(ParsedEvent parsedUserRequest){		
 		UseCaseFactory useCaseFactory = new UseCaseFactoryImpl();
 		return useCaseFactory.make("handleUnfoundController");
 	}
