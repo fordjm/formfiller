@@ -22,59 +22,67 @@ public class ConsoleEventParserTest {
 	public void setUp(){
 		parser = new ConsoleEventParser();
 	}
+	
 	@Test
 	public void canParseEmptyString(){
 		setParsedRequest("");
-		assertEquals("", parsedUserRequest.getMethod());
-		assertEquals("", parsedUserRequest.getParam());
+		assertEquals("", parsedUserRequest.method);
+		assertEquals("", parsedUserRequest.param);
 	}
+	
 	@Test
 	public void canParseNull(){
 		setParsedRequest(null);
-		assertEquals("", parsedUserRequest.getMethod());
-		assertEquals("", parsedUserRequest.getParam());
+		assertEquals("", parsedUserRequest.method);
+		assertEquals("", parsedUserRequest.param);
 	}
+	
 	@Test
 	public void canParseUnknownCommand(){
 		setParsedRequest("unknown");
-		assertEquals("unknown", parsedUserRequest.getMethod());
-		assertEquals("", parsedUserRequest.getParam());
+		assertEquals("unknown", parsedUserRequest.method);
+		assertEquals("", parsedUserRequest.param);
 	}
+	
 	@Test
 	public void canParsePresentQuestionCommand() {		
 		setParsedRequest("presentQuestion");
-		assertEquals("presentQuestion", parsedUserRequest.getMethod());
-		assertEquals("", parsedUserRequest.getParam());
+		assertEquals("presentQuestion", parsedUserRequest.method);
+		assertEquals("", parsedUserRequest.param);
 	}
+	
 	@Test
 	public void canParsePresentQuestionCommandWithExtraSpaces() {		
 		setParsedRequest("  presentQuestion   ");
-		assertEquals("presentQuestion", parsedUserRequest.getMethod());
-		assertEquals("", parsedUserRequest.getParam());
+		assertEquals("presentQuestion", parsedUserRequest.method);
+		assertEquals("", parsedUserRequest.param);
 	}
+	
 	@Test
 	public void canParsePresentQuestionCommandWithOneExtraArgument() {		
 		setParsedRequest("presentQuestion -1");
-		assertEquals("presentQuestion", parsedUserRequest.getMethod());
-		assertEquals("-1", parsedUserRequest.getParam());
+		assertEquals("presentQuestion", parsedUserRequest.method);
+		assertEquals("-1", parsedUserRequest.param);
 	}
+	
 	@Test
 	public void canParsePresentQuestionCommandWithTwoExtraArguments() {		
 		setParsedRequest("presentQuestion -1 0");
-		assertEquals("presentQuestion", parsedUserRequest.getMethod());
-		assertEquals("-1", parsedUserRequest.getParam());
+		assertEquals("presentQuestion", parsedUserRequest.method);
+		assertEquals("-1", parsedUserRequest.param);
 	}
+	
 	@Test
 	public void canParseNavigationCommand() {
 		setParsedRequest("navigation -1");
-		assertEquals("navigation", parsedUserRequest.getMethod());
-		assertEquals("-1", parsedUserRequest.getParam());
+		assertEquals("navigation", parsedUserRequest.method);
+		assertEquals("-1", parsedUserRequest.param);
 	}
+	
 	@Test
 	public void canParseNavigationCommandWithExtraSpaces() {
 		setParsedRequest("    navigation  -1  ");
-		assertEquals("navigation", parsedUserRequest.getMethod());
-		assertEquals("-1", parsedUserRequest.getParam());
+		assertEquals("navigation", parsedUserRequest.method);
+		assertEquals("-1", parsedUserRequest.param);
 	}
-
 }

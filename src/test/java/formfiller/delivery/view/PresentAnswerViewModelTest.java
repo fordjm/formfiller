@@ -19,7 +19,7 @@ public class PresentAnswerViewModelTest {
 	
 	private PresentableAnswer makePresentableAnswer(String message){
 		PresentableAnswer result = new PresentableAnswer();
-		result.setMessage(message);
+		result.message = message;
 		return result;
 	}
 	

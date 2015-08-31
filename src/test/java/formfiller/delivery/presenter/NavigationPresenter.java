@@ -3,19 +3,18 @@ package formfiller.delivery.presenter;
 import formfiller.ApplicationContext;
 import formfiller.boundaryCrossers.PresentableFormComponent;
 import formfiller.boundaryCrossers.PresentableResponse;
-import formfiller.boundaryCrossers.PresentableResponseImpl;
 import formfiller.enums.ActionOutcome;
 
 public class NavigationPresenter extends AbstractPresenter {
-	PresentableResponseImpl presentableNavigation;
+	PresentableResponse presentableNavigation;
 
-	public PresentableResponseImpl getPresentableResponse() {
+	public PresentableResponse getPresentableResponse() {
 		return presentableNavigation;
 	}
 	
 	public void present(PresentableResponse presentableNavigation) {
 		super.present(presentableNavigation);
-		if (presentableNavigation.getOutcome() == ActionOutcome.SUCCEEDED)
+		if (presentableNavigation.outcome == ActionOutcome.SUCCEEDED)
 			presentSuccessfulNavigation(presentableNavigation);
 	}	
 	
@@ -26,6 +25,6 @@ public class NavigationPresenter extends AbstractPresenter {
 	}
 
 	protected void setPresentableResponseFieldValue(PresentableResponse presentableResponse) {
-		presentableNavigation = (PresentableResponseImpl) presentableResponse;
+		presentableNavigation = (PresentableResponse) presentableResponse;
 	}
 }

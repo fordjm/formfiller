@@ -21,7 +21,7 @@ import formfiller.gateways.Transporter;
 import formfiller.request.interfaces.NavigationRequest;
 import formfiller.usecases.navigation.NavigationUseCase;
 import formfiller.ApplicationContext;
-import formfiller.boundaryCrossers.PresentableResponseImpl;
+import formfiller.boundaryCrossers.PresentableResponse;
 import formfiller.utilities.*;
 
 @RunWith(HierarchicalContextRunner.class)
@@ -97,6 +97,7 @@ public class NavigationTest {
 			public void givenCurrentQuestionRequest(){
 				setMockRequestDirection(Direction.NONE);
 			}
+			
 			@Test
 			public void gettingQuestionGetsStartPrompt(){
 				foundFormComponent = findFormComponentByIndex(0);
@@ -104,8 +105,7 @@ public class NavigationTest {
 				navigationUseCase.execute(mockRequest);
 				
 				assertThat(getCurrentFormComponent(), is(foundFormComponent));
-			}
-			
+			}			
 		}
 		
 		public class GivenNextQuestionRequest{
@@ -114,6 +114,7 @@ public class NavigationTest {
 			public void givenNextQuestionRequest(){
 				setMockRequestDirection(Direction.FORWARD);
 			}
+			
 			@Test
 			public void gettingQuestionGetsEndPrompt(){
 				foundFormComponent = findFormComponentByIndex(0);
@@ -121,8 +122,7 @@ public class NavigationTest {
 				navigationUseCase.execute(mockRequest);
 				
 				assertThat(getCurrentFormComponent(), is(foundFormComponent));
-			}
-			
+			}			
 		}
 	}
 	
@@ -223,8 +223,8 @@ public class NavigationTest {
 			}
 
 			//	TODO:	Move presentation tests to presenter test class.
-			private PresentableResponseImpl getPresentedNavigation() {
-				return (PresentableResponseImpl)
+			private PresentableResponse getPresentedNavigation() {
+				return (PresentableResponse)
 						ApplicationContext.navigationPresenter.getPresentableResponse();
 			}
 
@@ -241,11 +241,9 @@ public class NavigationTest {
 				
 				assertThat(getCurrentFormComponent(), is(foundFormComponent));
 				assertThat(foundFormComponent.id, is("age"));
-				assertThat(getPresentedNavigation().getOutcome(), is(ActionOutcome.FAILED));
-				assertEquals(getFailedNavigationResult(), getPresentedNavigation().getMessage());
-			}
-			
-		}
-		
+				assertThat(getPresentedNavigation().outcome, is(ActionOutcome.FAILED));
+				assertEquals(getFailedNavigationResult(), getPresentedNavigation().message);
+			}			
+		}		
 	}
 }

@@ -33,9 +33,9 @@ public class HandleUnfoundControllerControllerTest {
 	public void canHandle() {		
 		controller.handle(request);
 		
-		assertThat(getPresentableUnfoundControllerResponse().getOutcome(), 
+		assertThat(getPresentableUnfoundControllerResponse().outcome, 
 				is(ActionOutcome.FAILED));
-		assertThat(getPresentableUnfoundControllerResponse().getMessage(), 
+		assertThat(getPresentableUnfoundControllerResponse().message, 
 				is("Request was not found."));
 	}
 }

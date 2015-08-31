@@ -8,14 +8,13 @@ import org.mockito.Mockito;
 
 import static org.hamcrest.CoreMatchers.*;
 import formfiller.boundaryCrossers.PresentableResponse;
-import formfiller.boundaryCrossers.PresentableResponseImpl;
 
 public class HandleUnfoundControllerPresenterTest {
 	HandleUnfoundControllerPresenter handleUnfoundControllerPresenter;
 	
 	private PresentableResponse makePresentableResponse(){
-		PresentableResponse result = Mockito.mock(PresentableResponseImpl.class);
-		Mockito.when(result.getMessage()).thenReturn("Request was not found.");
+		PresentableResponse result = Mockito.mock(PresentableResponse.class);
+		result.message = "Request was not found.";
 		return result;
 	}
 
@@ -32,6 +31,6 @@ public class HandleUnfoundControllerPresenterTest {
 				handleUnfoundControllerPresenter.getPresentableResponse();
 		
 		assertThat(presentedResponse, is(presentableResponse));
-		assertThat(presentedResponse.getMessage(), is("Request was not found."));
+		assertThat(presentedResponse.message, is("Request was not found."));
 	}
 }

@@ -12,8 +12,8 @@ public class ParsedEventMocker {
 	
 	public static ParsedEvent makeMockParsedEvent(String method, String param){
 		ParsedEvent result = Mockito.mock(ParsedEvent.class);
-		Mockito.when(result.getMethod()).thenReturn(method);
-		Mockito.when(result.getParam()).thenReturn(param);
+		result.method = method;
+		result.param = param;
 		return result;
 	}
 }

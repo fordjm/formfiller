@@ -15,11 +15,11 @@ public class NavigationViewModel implements ViewModel {
 	public void outputPresentableResponse(Object input) {
 		PresentableResponse presentableNavigation = 
 				(PresentableResponse) input;
-		if (presentableNavigation.getOutcome() == ActionOutcome.FAILED)
+		if (presentableNavigation.outcome == ActionOutcome.FAILED)
 			outputFailedNavigation(presentableNavigation);
 	}
 	
 	private void outputFailedNavigation(PresentableResponse presentableNavigation) {
-		ConsoleView.output(presentableNavigation.getMessage());
+		ConsoleView.output(presentableNavigation.message);
 	}	
 }

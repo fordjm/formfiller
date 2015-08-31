@@ -14,6 +14,6 @@ public class HandleUnfoundControllerViewModel implements ViewModel {
 	public void outputPresentableResponse(Object input) {
 		PresentableResponse presentableHandleUnfoundController = 
 				(PresentableResponse) input;
-		ConsoleView.output(presentableHandleUnfoundController.getMessage());
+		ConsoleView.output(presentableHandleUnfoundController.message);
 	}
 }

@@ -6,7 +6,6 @@ import formfiller.boundaryCrossers.PresentableAnswer;
 import formfiller.boundaryCrossers.PresentableFormComponent;
 import formfiller.boundaryCrossers.PresentableQuestion;
 import formfiller.boundaryCrossers.PresentableResponse;
-import formfiller.boundaryCrossers.PresentableResponseImpl;
 import formfiller.entities.Answer;
 import formfiller.entities.ExecutedUseCaseImpl;
 import formfiller.entities.FormComponent;
@@ -81,11 +80,11 @@ public class NavigationUseCase implements UseCase {
 	private PresentableResponse makePresentableResponse() {
 		PresentableResponse result;
 		if (outcome == ActionOutcome.FAILED)
-			result = new PresentableResponseImpl();
+			result = new PresentableResponse();
 		else
 			result = makePresentableFormComponent();
-		result.setMessage(message);
-		result.setOutcome(outcome);
+		result.message = message;
+		result.outcome = outcome;
 		return result;
 	}
 	
@@ -95,21 +94,21 @@ public class NavigationUseCase implements UseCase {
 				getTransporter().getCurrent();
 		PresentableQuestion question = makePresentableQuestion(current.question);
 		PresentableAnswer answer = makePresentableAnswer(current.answer);
-		result.setQuestion(question);
-		result.setAnswer(answer);
+		result.question = question;
+		result.answer = answer;
 		return result;
 	}
 
 	private PresentableQuestion makePresentableQuestion(Prompt requestedQuestion) {
 		PresentableQuestion result = new PresentableQuestion();
-		result.setId(requestedQuestion.getId());
-		result.setMessage(requestedQuestion.getContent());
+		result.id = requestedQuestion.getId();
+		result.message = requestedQuestion.getContent();
 		return result;
 	}
 	private PresentableAnswer makePresentableAnswer(Answer requestedAnswer) {
 		PresentableAnswer result = new PresentableAnswer();
-		result.setId(requestedAnswer.getId());
-		result.setMessage(requestedAnswer.getContent().toString());
+		result.id = requestedAnswer.getId();
+		result.message = requestedAnswer.getContent().toString();
 		return result;
 	}
 	

@@ -17,14 +17,15 @@ public class Router {
 	public void addMethod(String request, Controller controller) {
 		routes.put(request, controller);
 	}
+	
 	public void route(ParsedEvent parsedUserRequest) {
 		Controller controller = getController(parsedUserRequest);
 		controller.handle(parsedUserRequest);
 	}
+	
 	protected Controller getController(ParsedEvent parsedUserRequest) {
-		Controller result = routes.get(parsedUserRequest.getMethod());
+		Controller result = routes.get(parsedUserRequest.method);
 		if (result == null) result = handleUnfoundController;
 		return result;
 	}
-
 }

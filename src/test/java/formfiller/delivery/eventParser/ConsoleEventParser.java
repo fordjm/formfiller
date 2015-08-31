@@ -13,9 +13,9 @@ public class ConsoleEventParser implements EventParser {
 		
 		String[] split = preprocessInputString(input);
 		if (split.length > 0)
-			result.setMethod(split[0]);
+			result.method = split[0];
 		if (split.length > 1)
-			result.setParam(split[1]);
+			result.param = split[1];
 		return result;
 	}
 
@@ -24,5 +24,4 @@ public class ConsoleEventParser implements EventParser {
 		String[] split = input.split("\\s+");
 		return split;
 	}
-
 }

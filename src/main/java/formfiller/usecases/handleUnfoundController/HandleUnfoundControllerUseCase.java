@@ -3,7 +3,6 @@ package formfiller.usecases.handleUnfoundController;
 import formfiller.ApplicationContext;
 import formfiller.boundaries.UseCase;
 import formfiller.boundaryCrossers.PresentableResponse;
-import formfiller.boundaryCrossers.PresentableResponseImpl;
 import formfiller.enums.ActionOutcome;
 import formfiller.request.interfaces.HandleUnfoundControllerRequest;
 import formfiller.request.interfaces.Request;
@@ -24,9 +23,9 @@ public class HandleUnfoundControllerUseCase implements UseCase {
 	}
 	private PresentableResponse makePresentableUnfoundControllerResponse(
 			ActionOutcome outcome, String message) {
-		PresentableResponse result = new PresentableResponseImpl();
-		result.setMessage(message);
-		result.setOutcome(outcome);
+		PresentableResponse result = new PresentableResponse();
+		result.message = message;
+		result.outcome = outcome;
 		return result;
 	}	
 

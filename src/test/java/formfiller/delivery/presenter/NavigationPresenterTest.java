@@ -13,7 +13,6 @@ import formfiller.boundaryCrossers.PresentableAnswer;
 import formfiller.boundaryCrossers.PresentableFormComponent;
 import formfiller.boundaryCrossers.PresentableQuestion;
 import formfiller.boundaryCrossers.PresentableResponse;
-import formfiller.boundaryCrossers.PresentableResponseImpl;
 import formfiller.enums.ActionOutcome;
 
 @RunWith(HierarchicalContextRunner.class)
@@ -23,17 +22,17 @@ public class NavigationPresenterTest {
 
 	private PresentableResponse makeMockPresentableNavigation(String message, 
 				ActionOutcome outcome) {
-		PresentableResponseImpl result;
+		PresentableResponse result;
 		if (outcome == ActionOutcome.SUCCEEDED)
 			result = makeMockPresentableFormComponent();
 		else
-			result = Mockito.mock(PresentableResponseImpl.class);
-		Mockito.when(result.getMessage()).thenReturn(message);
-		Mockito.when(result.getOutcome()).thenReturn(outcome);
+			result = Mockito.mock(PresentableResponse.class);
+		result.message = message;
+		result.outcome = outcome;
 		return result;
 	}
 	
-	private PresentableResponseImpl makeMockPresentableFormComponent() {
+	private PresentableResponse makeMockPresentableFormComponent() {
 		PresentableFormComponent result = Mockito.mock(PresentableFormComponent.class);
 		result.question = Mockito.mock(PresentableQuestion.class);
 		result.answer = Mockito.mock(PresentableAnswer.class);
@@ -66,5 +65,4 @@ public class NavigationPresenterTest {
 			assertThat(presentableResponse, is(instanceOf(PresentableFormComponent.class)));
 		}
 	}
-
 }

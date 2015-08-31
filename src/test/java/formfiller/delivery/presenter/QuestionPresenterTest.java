@@ -15,8 +15,8 @@ public class QuestionPresenterTest {
 
 	PresentableQuestion makeMockPresentableQuestion(String id, String content) {
 		PresentableQuestion result = Mockito.mock(PresentableQuestion.class);
-		Mockito.when(result.getId()).thenReturn(id);
-		Mockito.when(result.getMessage()).thenReturn(content);
+		result.id = id;
+		result.message = content;
 		return result;
 	}
 
@@ -24,11 +24,11 @@ public class QuestionPresenterTest {
 	public void setUp(){
 		presentableQuestion = makeMockPresentableQuestion("name", "What is your name?");
 	}
+	
 	@Test
 	public void canPresentQuestion() {
 		QuestionPresenter questionPresenter = new QuestionPresenter();
 		questionPresenter.present(presentableQuestion);
 		assertEquals(presentableQuestion, questionPresenter.getPresentableResponse());
 	}
-
 }

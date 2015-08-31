@@ -13,11 +13,11 @@ public class PresentAnswerViewModel implements ViewModel {
 	
 	public void outputPresentableResponse(Object input) {
 		String answerMessage = getAnswerMessage(getPresentableAnswer(input));
+		
 		if (answerMessage.length() > 0){
 			setWasDisplayed(true);
 			ConsoleView.output("Your current answer is: " + answerMessage);
-		}
-		else
+		} else
 			setWasDisplayed(false);
 	}
 	
@@ -34,7 +34,6 @@ public class PresentAnswerViewModel implements ViewModel {
 	}
 	
 	private String getAnswerMessage(PresentableAnswer presentableAnswer){
-		return presentableAnswer.getMessage();
+		return presentableAnswer.message;
 	}
-
 }

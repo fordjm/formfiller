@@ -11,8 +11,9 @@ public class PresentQuestionViewModel implements ViewModel {
 	public void update(Observable presenter, Object input) {
 		outputPresentableResponse(input);
 	}
+	
 	public void outputPresentableResponse(Object input) {
 		question = (PresentableQuestion) input;
-		ConsoleView.output(question.getMessage());
+		ConsoleView.output(question.message);
 	}
 }

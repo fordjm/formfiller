@@ -31,7 +31,7 @@ public class AnswerPresenterTest {
 		@Before
 		public void givenAPresentableAnswer(){
 			presentableAnswer = new PresentableAnswer();
-			presentableAnswer.setMessage("");
+			presentableAnswer.message = "";
 		}
 		@Test
 		public void presentingAnswerPresentsGivenAnswer() {
