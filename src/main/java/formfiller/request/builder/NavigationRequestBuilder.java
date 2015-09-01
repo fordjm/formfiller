@@ -23,5 +23,4 @@ public class NavigationRequestBuilder implements RequestBuilderFunctions {
 	public Request getRequest() {
 		return navigationRequest;
 	}
-
 }

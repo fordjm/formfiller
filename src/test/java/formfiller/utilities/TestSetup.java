@@ -14,6 +14,7 @@ import formfiller.gateways.InMemoryFormComponentGateway;
 
 // TODO:  Credit CleanCoders JCS TestSetup
 public class TestSetup {
+	
 	public static void setupContext(){
 		ApplicationContext.formComponentGateway = new InMemoryFormComponentGateway();
 		ApplicationContext.executedUseCases = new Stack<ExecutedUseCase>();

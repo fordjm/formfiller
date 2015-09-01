@@ -14,6 +14,7 @@ public class UseCaseFactoryImpl implements UseCaseFactory {
 		else
 			throw new UnknownUseCase();
 	}
+	
 	private UseCase makehandleUnfoundControllerUseCase() {
 		return new HandleUnfoundControllerUseCase();
 	}

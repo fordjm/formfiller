@@ -39,6 +39,7 @@ public class RequestBuilderImpl implements RequestBuilder {
 			public String getName() {
 				return "NoRequest";
 			}
-			public void setName(String name) { }};
+			public void setName(String name) { }
+		};
 	}
 }

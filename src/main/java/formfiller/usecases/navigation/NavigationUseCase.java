@@ -60,7 +60,7 @@ public class NavigationUseCase implements UseCase {
 	
 	private void setMessage() {
 		if (this.outcome == ActionOutcome.SUCCEEDED || 
-				this.outcome == ActionOutcome.NO_OUTCOME)
+				this.outcome == ActionOutcome.NONE)
 			this.message = "";
 		else
 			this.message = getAnswerRequiredMessage();
@@ -105,6 +105,7 @@ public class NavigationUseCase implements UseCase {
 		result.message = requestedQuestion.getContent();
 		return result;
 	}
+	
 	private PresentableAnswer makePresentableAnswer(Answer requestedAnswer) {
 		PresentableAnswer result = new PresentableAnswer();
 		result.id = requestedAnswer.getId();

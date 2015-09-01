@@ -10,7 +10,6 @@ import formfiller.entities.FormComponent;
 import formfiller.utilities.FormComponentMocker;
 
 public class InMemoryFormComponentGatewayTest {
-
 	private InMemoryFormComponentGateway gateway;
 
 	@Before
@@ -36,5 +35,4 @@ public class InMemoryFormComponentGatewayTest {
 		
 		assertThat(gateway.find("id"), is(mockFormComponent));
 	}
-
 }

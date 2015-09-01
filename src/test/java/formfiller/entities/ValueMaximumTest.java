@@ -19,37 +19,45 @@ public class ValueMaximumTest<T> {
 		valueMaximum = new ValueMaximum<T>((T) "max");
 	}
 	
-	public class GivenAResponse{
+	public class GivenAnAnswer{
 		Answer response;
 		
-		public class GivenAnInvalidResponse{
+		public class GivenAnInvalidAnswer{
+			
 			@Before
-			public void givenAnInvalidResponse(){
+			public void givenAnInvalidAnswer(){
 				response = AnswerMocker.makeMockAnswer(false);
 				valueMaximum.wrap(response);
 			}
+			
 			@Test
 			public void whenSatisfiesConstraintRuns_ThenItReturnsFalse(){
 				assertFalse(valueMaximum.satisfiesConstraint());
 			}
 		}	
-		public class GivenAValidResponseLessThanMaximum{
+		
+		public class GivenAValidAnswerLessThanMaximum{
+			
 			@Before
-			public void givenAValidResponseLessThanMinimum(){
+			public void givenAValidAnswerLessThanMinimum(){
 				response = AnswerMocker.makeMockNameAnswer("joe");
 				valueMaximum.wrap(response);
 			}
+			
 			@Test
 			public void whenSatisfiesConstraintRuns_ThenItReturnsTrue(){
 				assertTrue(valueMaximum.satisfiesConstraint());
 			}
 		}
-		public class GivenAValidResponseGreaterThanMaximum{
+		
+		public class GivenAValidAnswerGreaterThanMaximum{
+			
 			@Before
-			public void givenAValidResponseGreaterThanMaximum(){
+			public void givenAValidAnswerGreaterThanMaximum(){
 				response = AnswerMocker.makeMockNameAnswer("moe");
 				valueMaximum.wrap(response);
 			}
+			
 			@Test
 			public void whenSatisfiesConstraintRuns_ThenItReturnsFalse(){
 				assertFalse(valueMaximum.satisfiesConstraint());

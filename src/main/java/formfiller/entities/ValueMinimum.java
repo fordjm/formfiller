@@ -10,7 +10,6 @@ public class ValueMinimum<T> extends Constraint {
 		this.minimum = minimum;
 	}
 
-	@Override
 	protected boolean isConstraintSatisfied() {
 		return isLegalValue() && answer.satisfiesConstraint();
 	}

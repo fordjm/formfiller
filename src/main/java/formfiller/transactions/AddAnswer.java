@@ -9,35 +9,39 @@ import formfiller.entities.AnswerImpl;
 import formfiller.enums.ContentConstraint;
 import formfiller.persistence.FormWidget;
 
-public class AddResponse implements Transaction {
-	Answer response;
-	public AddResponse(Object content) {
-		int id = FormWidget.getNextResponseId();
-		this.response = new AnswerImpl(id, content);
+public class AddAnswer implements Transaction {
+	Answer answer;
+	
+	public AddAnswer(Object content) {
+		int id = FormWidget.getNextAnswerId();
+		this.answer = new AnswerImpl(id, content);
 	}
+	
 	public void execute() {
 		wrapResponse();
 		checkTransactionIsLegal();
-		FormWidget.addResponse(response);
+		FormWidget.addAnswer(answer);
 	}
 
 	private void wrapResponse(){
 		Map<ContentConstraint, Constraint> constraints = FormWidget.getConstraints();
 		Collection<Constraint> constraintValues = constraints.values();
 		for (Constraint constraint : constraintValues){
-			constraint.wrap(response);
-			response = constraint;
+			constraint.wrap(answer);
+			answer = constraint;
 		}
 	}
+	
 	private void checkTransactionIsLegal() throws IllegalStateException, IllegalArgumentException{
-		if (!FormWidget.hasPrompt()) throw new IllegalStateException(
+		if (!FormWidget.hasQuestion()) throw new IllegalStateException(
 				"There is no question to answer!");
-		if (response.getId() == -1) throw new IllegalStateException(
+		if (answer.getId() == -1) throw new IllegalStateException(
 				"This question only allows one response!");
 		if (!responseSatisfiesConstraints()) throw new IllegalArgumentException(
 				"Response is not valid!");
 	}
+	
 	private boolean responseSatisfiesConstraints(){
-		return response.satisfiesConstraint();
+		return answer.satisfiesConstraint();
 	}
 }

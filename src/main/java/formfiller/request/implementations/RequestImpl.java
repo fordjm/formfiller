@@ -8,8 +8,8 @@ public class RequestImpl implements Request {
 	public String getName() {
 		return name;
 	}
+	
 	public void setName(String name) {
 		this.name = name;
 	}
-
 }

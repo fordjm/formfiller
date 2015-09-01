@@ -27,17 +27,22 @@ public class AddConstraintTest {
 	static Transaction addConstraint;
 	static Map<ContentConstraint, Constraint> constraintsMap;
 	static Constraint constraint;
+	
 	static void setConstraintsMap() {
 		constraintsMap = FormWidget.getConstraints();
 	}
+	
 	static void setConstraint(ContentConstraint contentConstraint) {
 		constraint = constraintsMap.get(contentConstraint);
 	}
-	public class FreeEntryFormatContext<T>{
+	
+	public class NoConstraintContext<T>{
+		
 		@Before
-		public void givenAFreeEntryFormat(){
+		public void givenANoConstraint(){
 			addConstraint = new AddNoConstraint();
 		}
+		
 		@Test
 		public void whenAddConstraintExecutes_ThenFormWidgetHasConstraint(){
 			addConstraint.execute();		
@@ -46,15 +51,18 @@ public class AddConstraintTest {
 			assertTrue(constraint instanceof NoConstraint);
 		}		
 	}
+	
 	public class SelectionFormatContext<T>{
 		List<Object> selections;
+		
 		@Before
 		public void givenASelectionFormat(){
 			selections = Arrays.asList((Object) "a", (Object) "b", (Object) "c");
 			addConstraint = new AddSelectionConstraint<Object>(selections);
 		}
+		
 		@Test
-		public void whenAddConstraintExecutes_ThenFormWidgetHasConstraint(){
+		public void whenAddConstraintExecutes_ThenFormWidgetHasAConstraint(){
 			addConstraint.execute();		
 			setConstraintsMap();		
 			setConstraint(ContentConstraint.SELECTION);
@@ -63,47 +71,56 @@ public class AddConstraintTest {
 			assertEquals(selections, selectionFormat.getSelections());
 		}
 	}
-	public class ResponseTypeContext<T>{
+	
+	public class AnswerTypeContext<T>{
 		Type type;
+		
 		@Before
-		public void givenAResponseType(){
+		public void givenAnAnswerType(){
 			type = String.class;
-			addConstraint = new AddResponseType(type);
+			addConstraint = new AddAnswerType(type);
 		}
+		
 		@Test
-		public void whenAddConstraintExecutes_ThenFormWidgetHasConstraint(){
+		public void whenAddConstraintExecutes_ThenFormWidgetHasAConstraint(){
 			addConstraint.execute();		
 			setConstraintsMap();
 			setConstraint(ContentConstraint.TYPE);
-			AnswerType responseType = (AnswerType) constraint;
+			AnswerType answerType = (AnswerType) constraint;
 			assertTrue(constraint instanceof AnswerType);
-			assertEquals(type, responseType.getType());
+			assertEquals(type, answerType.getType());
 		}
 	}
+	
 	public class ValueMaximumContext<T>{
 		T maximum;
+		
 		@Before
 		public void givenAValueMaximum(){
 			maximum = (T) "m";
 			addConstraint = new AddValueMaximum<T>(maximum);
 		}
+		
 		@Test
-		public void whenAddConstraintExecutes_ThenFormWidgetHasConstraint(){
+		public void whenAddConstraintExecutes_ThenFormWidgetHasAConstraint(){
 			addConstraint.execute();		
 			setConstraintsMap();
 			setConstraint(ContentConstraint.VALUE_MAXIMUM);
 			assertTrue(constraint instanceof ValueMaximum);
 		}
 	}
+	
 	public class ValueMinimumContext<T>{
 		T minimum;
+		
 		@Before
 		public void givenAValueMinimum(){
 			minimum = (T) "m";
 			addConstraint = new AddValueMinimum<T>(minimum);
 		}
+		
 		@Test
-		public void whenAddConstraintExecutes_ThenFormWidgetHasConstraint(){
+		public void whenAddConstraintExecutes_ThenFormWidgetHasAConstraint(){
 			addConstraint.execute();		
 			setConstraintsMap();
 			setConstraint(ContentConstraint.VALUE_MINIMUM);

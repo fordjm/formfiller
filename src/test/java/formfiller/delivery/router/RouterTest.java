@@ -30,12 +30,14 @@ public class RouterTest {
 	// TODO:  public class GivenAnEmptyStringRequest{ ... }
 	//		  Should route() return a String with routing info?
 	public class GivenANavigationRequest{
+		
 		@Before
 		public void givenANavigationRequest(){
 			mockParsedRequest = 
 					ParsedEventMocker.makeMockParsedEvent("navigation", "forward");
 			mockController = ControllerMocker.makeMockNavigationController();
 		}
+		
 		@Test
 		public void canRouteNavigationRequest() {
 			router.addMethod("navigation", mockController);
@@ -44,5 +46,4 @@ public class RouterTest {
 			verifyControllerHandledParsedRequest();
 		}
 	}
-
 }

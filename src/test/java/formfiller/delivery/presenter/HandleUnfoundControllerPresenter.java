@@ -8,11 +8,12 @@ public class HandleUnfoundControllerPresenter extends AbstractPresenter {
 	public PresentableResponse getPresentableResponse() {
 		return presentableHandleUnfoundController;
 	}
+	
 	public void present(PresentableResponse presentableHandleUnfoundController) {
 		super.present(presentableHandleUnfoundController);
 	}
+	
 	protected void setPresentableResponseFieldValue(PresentableResponse presentableResponse) {
 		presentableHandleUnfoundController = presentableResponse;
 	}
-
 }

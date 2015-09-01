@@ -6,8 +6,7 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-public class QuestionTest {
-	
+public class QuestionTest {	
 	Question question;
 	final String id = "name";
 	final String content = "What is your name?";
@@ -17,6 +16,7 @@ public class QuestionTest {
 		question = new Question(id, content);
 		question.setResponseRequired(false);
 	}
+	
 	@Test
 	public void questionFieldsHaveExpectedValues(){
 		assertThat(question.getId(), is(id));

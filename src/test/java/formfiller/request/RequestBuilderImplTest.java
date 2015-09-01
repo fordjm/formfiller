@@ -68,5 +68,4 @@ public class RequestBuilderImplTest {
 		
 		assertThat(noRequest.getName(), is("NoRequest"));
 	}
-
 }

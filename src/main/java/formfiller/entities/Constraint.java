@@ -18,7 +18,7 @@ public abstract class Constraint implements Answer {
 		this.answer = response;
 	}
 	
-	public boolean hasResponse(){
+	public boolean hasAnswer(){
 		return !(answer.equals(AnswerImpl.NONE));
 	}
 	
@@ -35,7 +35,7 @@ public abstract class Constraint implements Answer {
 	}
 	
 	public boolean satisfiesConstraint(){
-		if (!hasResponse()) return false;
+		if (!hasAnswer()) return false;
 		return isConstraintSatisfied();
 	}
 	

@@ -2,13 +2,15 @@ package formfiller.transactions;
 
 import formfiller.persistence.FormWidget;
 
-public class RemoveResponse implements Transaction {
+public class RemoveAnswer implements Transaction {
+	
 	public void execute() {
 		checkTransactionIsLegal();
-		FormWidget.clearResponse();
+		FormWidget.clearAnswer();
 	}
+	
 	private void checkTransactionIsLegal() throws IllegalStateException{
-		if (!FormWidget.hasResponse()) 
+		if (!FormWidget.hasAnswer()) 
 			throw new IllegalStateException("This question has no responses!");
 	}
 }

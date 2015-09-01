@@ -5,8 +5,9 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-public class ResponseImplTest {
-	public abstract static class GivenAResponseImpl{
+public class AnswerImplTest {
+	
+	public abstract static class GivenAnAnswerImpl{
 		int id;
 		Object content;
 		AnswerImpl response;
@@ -15,7 +16,7 @@ public class ResponseImplTest {
 		public abstract Object getContent();
 		
 		@Before
-		public void givenAResponseImpl(){
+		public void givenAnAnswerImpl(){
 			id = getId();
 			content = getContent();
 			response = new AnswerImpl(id, content);
@@ -29,18 +30,15 @@ public class ResponseImplTest {
 		@Test
 		public void whenFieldValuesAreCompared_ObjecthenValuesAreConsistent(){
 			assertResponseDataIsConsistent();
-		}
-		
+		}		
 	}
 	
-	public static class GivenAnIllegalIdAndLegalContent extends GivenAResponseImpl{
+	public static class GivenAnIllegalIdAndLegalContent extends GivenAnAnswerImpl{
 
-		@Override
 		public int getId() {
 			return -12;
 		}
 
-		@Override
 		public Object getContent() {
 			return (Object) "";
 		}
@@ -51,14 +49,12 @@ public class ResponseImplTest {
 		}
 	}
 	
-	public static class GivenALegalIdAndIllegalContent extends GivenAResponseImpl{
+	public static class GivenALegalIdAndIllegalContent extends GivenAnAnswerImpl{
 
-		@Override
 		public int getId() {
 			return 32;
 		}
 
-		@Override
 		public Object getContent() {
 			return null;
 		}
@@ -69,14 +65,12 @@ public class ResponseImplTest {
 		}		
 	}
 	
-	public static class GivenALegalIdAndLegalContent extends GivenAResponseImpl{
+	public static class GivenALegalIdAndLegalContent extends GivenAnAnswerImpl{
 
-		@Override
 		public int getId() {
 			return 0;
 		}
 
-		@Override
 		public Object getContent() {
 			return (Object) "Joe";
 		}

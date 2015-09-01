@@ -10,7 +10,6 @@ public class ValueMaximum<T> extends Constraint {
 		this.maximum = maximum;
 	}
 
-	@Override
 	protected boolean isConstraintSatisfied() {
 		return isLegalValue() && answer.satisfiesConstraint();
 	}

@@ -33,9 +33,10 @@ public class NoConstraintTest {
 	}
 	
 	public class GivenANewFreeEntryFormat {		
+		
 		@Test
 		public void whenFormatIsNew_ThenItWrapsANullResponse(){
-			assertFalse(noConstraint.hasResponse());
+			assertFalse(noConstraint.hasAnswer());
 			assertSame(-1, noConstraint.getId());
 			assertSame("", noConstraint.getContent());
 			assertFalse(noConstraint.satisfiesConstraint());
@@ -46,6 +47,7 @@ public class NoConstraintTest {
 		Answer response;
 		
 		public class GivenAnInvalidResponse{
+			
 			@Before
 			public void givenAnInvalidResponse(){
 				response = null;
@@ -53,19 +55,21 @@ public class NoConstraintTest {
 			
 			@Test
 			public void whenSatisfiesConstraintRuns_ThenItReturnsFalse(){
-				assertThat(noConstraint.hasResponse(), is(equalTo(false)));
+				assertThat(noConstraint.hasAnswer(), is(equalTo(false)));
 				assertThat(noConstraint.isConstraintSatisfied(), is(false));
 			}
 		}
 		public class GivenAValidResponse{
+			
 			@Before
 			public void givenAValidResponse(){
 				response = AnswerMocker.makeMockNameAnswer("Joe");
 				noConstraint.wrap(response);
 			}			
+			
 			@Test
 			public void whenSatisfiesConstraintRuns_ThenItReturnsFalse(){
-				assertThat(noConstraint.hasResponse(), is(equalTo(true)));
+				assertThat(noConstraint.hasAnswer(), is(equalTo(true)));
 				assertResponseDataIsConsistent(response.getId(), response.getContent(), response.satisfiesConstraint());
 				assertThat(noConstraint.isConstraintSatisfied(), is(true));
 			}

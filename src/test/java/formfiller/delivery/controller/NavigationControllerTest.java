@@ -87,5 +87,4 @@ public class NavigationControllerTest {
 		assertThat(getCurrentFormComponent(), is(formComponentFoundAtIndex));
 		assertThat(getCurrentFormComponent().id, is("end"));
 	}
-
 }

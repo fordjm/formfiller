@@ -55,6 +55,7 @@ public class NavigationPresenterTest {
 		public void givenAPresentableNavigationThatSucceeded(){
 			presentableNavigation = makeMockPresentableNavigation("", ActionOutcome.SUCCEEDED);
 		}
+		
 		@Test
 		public void gettingPresentableResponse_ReturnsGivenPresentableNavigation(){
 			presenter.present(presentableNavigation);

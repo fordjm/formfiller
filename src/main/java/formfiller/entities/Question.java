@@ -17,6 +17,7 @@ public class Question implements Prompt {
 			}
 		};
 	}
+	
 	private static NoQuestion getEndPrompt() {
 		return new NoQuestion(){
 			public String getContent() {
@@ -36,15 +37,19 @@ public class Question implements Prompt {
 	public String getContent(){
 		return content;
 	}
+	
 	public String getId() {
 		return id;
 	}
+	
 	public boolean hasAnswer() {
 		return false;
 	}	
+	
 	public void setResponseRequired(boolean requiresAnswer){
 		this.requiresAnswer = requiresAnswer;
 	}
+	
 	public boolean requiresAnswer() {
 		return requiresAnswer;
 	}

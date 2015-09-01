@@ -21,6 +21,7 @@ public class HandleUnfoundControllerUseCase implements UseCase {
 			String message) {
 		return makePresentableUnfoundControllerResponse(ActionOutcome.FAILED, message);
 	}
+	
 	private PresentableResponse makePresentableUnfoundControllerResponse(
 			ActionOutcome outcome, String message) {
 		PresentableResponse result = new PresentableResponse();
@@ -28,5 +29,4 @@ public class HandleUnfoundControllerUseCase implements UseCase {
 		result.outcome = outcome;
 		return result;
 	}	
-
 }

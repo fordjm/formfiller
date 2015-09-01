@@ -28,6 +28,7 @@ public class AddAnswerTest {
 	private AddAnswerRequest makeAddAnswerRequest(String questionId, Object content) {
 		return new AddAnswerRequest(questionId, content);
 	}
+	
 	private Answer findAnswerByName(String name) {
 		return ApplicationContext.formComponentGateway.find(name).answer;
 	}
@@ -43,6 +44,7 @@ public class AddAnswerTest {
 		ApplicationContext.formComponentGateway.save(nameComponent);
 		ApplicationContext.formComponentGateway.save(ageComponent);
 	}
+	
 	private FormComponent makeRealFormComponent(Question mockQuestion){
 		FormComponent result = new FormComponent();
 		result.setQuestion(mockQuestion);
@@ -98,5 +100,4 @@ public class AddAnswerTest {
 		assertEquals(RETIREMENT_AGE, content);
 	}
 	//	TODO:	Handle validation and multiple answers.
-
 }

@@ -15,8 +15,7 @@ public class InMemoryFormComponentGateway implements FormComponentGateway {
 	
 	public FormComponent findByIndex(int index){
 		if (!isLegalIndex(index))
-			return getIllegalIndexComponent(index);
-		
+			return getIllegalIndexComponent(index);		
 		return getFormComponentAtIndex(index);			
 	}
 	
@@ -47,9 +46,6 @@ public class InMemoryFormComponentGateway implements FormComponentGateway {
 		return formComponents.get(id);
 	}
 
-	/* (non-Javadoc)
-	 * @see formfiller.gateways.FormComponentGateway#save(formfiller.entities.FormComponent)
-	 */
 	public void save(FormComponent formComponent) {
 		if (formComponent == null) throw new NullSave();
 		

@@ -27,45 +27,55 @@ public class ClearWidgetTest {
 		assertEquals("", FormWidget.getPrompt().getId());
 		assertEquals("", FormWidget.getPrompt().getContent());
 	}
-	static void assertGetResponseGetsANullResponse() {
-		assertTrue(FormWidget.getResponse().equals(AnswerImpl.NONE));
-		assertThat(FormWidget.getResponse().getId(), is(-1));
-		assertEquals("", FormWidget.getResponse().getContent());
+	
+	static void assertGetAnswerGetsANullAnswer() {
+		assertTrue(FormWidget.getAnswer().equals(AnswerImpl.NONE));
+		assertThat(FormWidget.getAnswer().getId(), is(-1));
+		assertEquals("", FormWidget.getAnswer().getContent());
 	}
+	
 	static void assertWidgetHasNoConstraints(){
 		Collection<Constraint> constraintValues = getConstraintValues();
 		assertThat(constraintValues.size(), is(0));
 	}
+	
 	static Collection<Constraint> getConstraintValues(){
 		Map<ContentConstraint, Constraint> constraintsMap = getConstraintsMap();
 		return constraintsMap.values();
 	}
+	
 	static Map<ContentConstraint, Constraint> getConstraintsMap(){
 		return FormWidget.getConstraints();
 	}
 	
 	public class GivenAClearedWidget{
+		
 		@Before
 		public void givenAClearedWidget(){
 			clearWidget = new ClearWidget();
 			clearWidget.execute();
 		}
+		
 		@Test
 		public void whenIsRequiredRuns_ThenItReturnsFalse(){
-			assertThat(FormWidget.isResponseRequired(), is(false));
+			assertThat(FormWidget.isAnswerRequired(), is(false));
 		}
+		
 		@Test
 		public void whenGetCardinalityRuns_ThenItReturnsSingle(){
 			assertThat(FormWidget.getCardinality(), is(Cardinality.SINGLE));
 		}
+		
 		@Test
 		public void whenGetPromptRuns_ThenItReturnsNullPrompt(){
 			assertGetPromptGetsANullPrompt();
 		}
+		
 		@Test
-		public void whenGetResponseRuns_ThenItReturnsNullResponse(){
-			assertGetResponseGetsANullResponse();
+		public void whenGetAnswerRuns_ThenItReturnsNullAnswer(){
+			assertGetAnswerGetsANullAnswer();
 		}	
+		
 		@Test
 		public void whenConstraintValuesSizeChecked_ThenItReturnsZero(){
 			assertWidgetHasNoConstraints();

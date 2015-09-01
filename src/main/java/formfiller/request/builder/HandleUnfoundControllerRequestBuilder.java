@@ -14,11 +14,12 @@ public class HandleUnfoundControllerRequestBuilder implements RequestBuilderFunc
 	public void buildName() {
 		handleUnfoundControllerRequest.setName("HandleUnfoundRequest");
 	}
+	
 	public void buildMessage(String message) {
 		handleUnfoundControllerRequest.setMessage(message);
 	}
+	
 	public Request getRequest() {
 		return handleUnfoundControllerRequest;
 	}
-
 }

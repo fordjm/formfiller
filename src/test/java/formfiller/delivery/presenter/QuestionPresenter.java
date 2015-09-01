@@ -11,11 +11,12 @@ public class QuestionPresenter extends AbstractPresenter {
 	public PresentableQuestion getPresentableResponse() {
 		return presentableQuestion;
 	}
+	
 	public void present(PresentableQuestion presentableQuestion) {
 		super.present(presentableQuestion);
 	}
+	
 	protected void setPresentableResponseFieldValue(PresentableResponse presentableResponse) {
 		presentableQuestion = (PresentableQuestion) presentableResponse;
-	}
-	
+	}	
 }

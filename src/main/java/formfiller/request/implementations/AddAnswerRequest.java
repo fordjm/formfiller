@@ -14,11 +14,14 @@ public class AddAnswerRequest implements Request {
 	public Object getContent(){
 		return content;
 	}
+	
 	public String getQuestionId(){
 		return questionId;
 	}
+	
 	public String getName() {
 		return "TestRequest";
 	}
+	
 	public void setName(String name) { }
 }

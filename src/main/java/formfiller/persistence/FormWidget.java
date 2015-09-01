@@ -11,50 +11,49 @@ import formfiller.entities.Answer;
 import formfiller.entities.AnswerImpl;
 import formfiller.enums.Cardinality;
 import formfiller.enums.ContentConstraint;
-import formfiller.entities.Constrainable;
 import formfiller.entities.Constraint;
 
 public class FormWidget {
-
 	private static Prompt prompt = new NoQuestion();
-	private static Answer response = AnswerImpl.NONE;
+	private static Answer answer = AnswerImpl.NONE;
 	private static Map<ContentConstraint, Constraint> contentConstraints = 
 			new HashMap<ContentConstraint, Constraint>();
-	private static Cardinality responseCardinality = Cardinality.SINGLE;
-	private static boolean responseRequired = false;
+	private static Cardinality answerCardinality = Cardinality.SINGLE;
+	private static boolean answerRequired = false;
 
 	public static Cardinality getCardinality() {
-		return responseCardinality;
+		return answerCardinality;
 	}
 
 	public static Prompt getPrompt() {
 		return prompt;
 	}
 	
-	public static int getNextResponseId(){
-		if (!hasResponse()) return 0;
-		else if (response.getContent() instanceof List){
-			List<?> responses = (List<Answer>) response.getContent();
+	public static int getNextAnswerId(){
+		if (!hasAnswer()) 
+			return 0;
+		else if (answer.getContent() instanceof List){
+			List<?> responses = (List<Answer>) answer.getContent();
 			return responses.size();
 		}
-			return -1;
+		return -1;
 	}
 
-	public static Answer getResponse() {
-		return response;
+	public static Answer getAnswer() {
+		return answer;
 	}
 	
-	public static boolean hasPrompt(){
+	public static boolean hasQuestion(){
 		return !(prompt instanceof NoQuestion);
 	}
 	
 	public static void setCardinality(Cardinality c){
-		responseCardinality = c;
+		answerCardinality = c;
 	}
 
 	public static void addPrompt(Prompt prompt) throws IllegalStateException, IllegalArgumentException {
-		if (responseRequired && response.equals(AnswerImpl.NONE))
-			throw new IllegalStateException("Previous question requires a response!");
+		if (answerRequired && answer.equals(AnswerImpl.NONE))
+			throw new IllegalStateException("Previous question requires an answer!");
 		else if (prompt == null) 
 			throw new IllegalArgumentException("Cannot add nulls to FormWidget!");
 		else
@@ -62,51 +61,51 @@ public class FormWidget {
 	}
 
 	// TODO:  It appears this belongs in AddResponseTransaction...
-	public static void addResponse(Answer response) {
-		if (!hasPrompt())
+	public static void addAnswer(Answer answer) {
+		if (!hasQuestion())
 			throw new IllegalStateException(
-					"Must have a question before adding a response!");
-		else if (!hasAValidResponse(response))
-			throw new IllegalArgumentException("Response is not valid!");
-		else if (!hasRoomForResponse())
-			throw new IllegalStateException("This question only takes one response!");
+					"Must have a question before adding an answer!");
+		else if (!hasAValidAnswer(answer))
+			throw new IllegalArgumentException("Answer is not valid!");
+		else if (!hasRoomForAnswer())
+			throw new IllegalStateException("This question only takes one answer!");
 		else
-			addResponseToWidget(response);
+			addAnswerToWidget(answer);
 	}
 	
 	// TODO:  And this belongs here in the widget.
-	private static void addResponseToWidget(Answer response){
-		if (responseCardinality == Cardinality.SINGLE)
-			FormWidget.response = response;
-		else if (FormWidget.response.getContent() instanceof List){
-			List<Answer> content = (List<Answer>) FormWidget.response.getContent();
-			content.add(response);
+	private static void addAnswerToWidget(Answer answer){
+		if (answerCardinality == Cardinality.SINGLE)
+			FormWidget.answer = answer;
+		else if (FormWidget.answer.getContent() instanceof List){
+			List<Answer> content = (List<Answer>) FormWidget.answer.getContent();
+			content.add(answer);
 		}
 		else{
 			List<Answer> content = new ArrayList<Answer>();
-			content.add(response);
+			content.add(answer);
 			Answer toAdd = new AnswerImpl(0, content);
-			FormWidget.response = toAdd;
+			FormWidget.answer = toAdd;
 		}
 	}
 	
-	private static boolean hasRoomForResponse() throws IllegalStateException {
-		if (!hasResponse()) return true;
-		return responseCardinality == Cardinality.MULTI;
+	private static boolean hasRoomForAnswer() throws IllegalStateException {
+		if (!hasAnswer()) return true;
+		return answerCardinality == Cardinality.MULTI;
 	}
 	
-	public static boolean hasResponse(){
-		return !isANullResponse(response);
+	public static boolean hasAnswer(){
+		return !isANullAnswer(answer);
 	}
 	
-	private static boolean isANullResponse(Answer response){
-		return (response.equals(AnswerImpl.NONE));
+	private static boolean isANullAnswer(Answer answer){
+		return (answer.equals(AnswerImpl.NONE));
 	}
 	
-	private static boolean hasAValidResponse(Answer response){
-		return response != null && 
-				!isANullResponse(response) && 
-				response.getContent() != null;
+	private static boolean hasAValidAnswer(Answer answer){
+		return answer != null && 
+				!isANullAnswer(answer) && 
+				answer.getContent() != null;
 	}
 
 	public static void clear() {
@@ -114,7 +113,7 @@ public class FormWidget {
 		clearRequired();
 		clearCardinality();
 		clearConstraints();
-		clearResponse();
+		clearAnswer();
 	}
 
 	private static void clearPrompt() {
@@ -122,19 +121,19 @@ public class FormWidget {
 	}
 
 	private static void clearRequired() {
-		responseRequired = false;
+		answerRequired = false;
 	}
 
 	private static void clearCardinality() {
-		responseCardinality = Cardinality.SINGLE;
+		answerCardinality = Cardinality.SINGLE;
 	}
 	
 	private static void clearConstraints() {
 		contentConstraints = new HashMap<ContentConstraint, Constraint>();
 	}
 
-	public static void clearResponse() {
-		response = AnswerImpl.NONE;
+	public static void clearAnswer() {
+		answer = AnswerImpl.NONE;
 	}
 
 	public static Map<ContentConstraint, Constraint> getConstraints() {
@@ -145,11 +144,11 @@ public class FormWidget {
 		contentConstraints.put(constraint.getName(), constraint);
 	}
 
-	public static boolean isResponseRequired() {
-		return responseRequired;
+	public static boolean isAnswerRequired() {
+		return answerRequired;
 	}
 
-	public static void setRequired(boolean responseRequired) {
-		FormWidget.responseRequired = responseRequired;
+	public static void setRequired(boolean answerRequired) {
+		FormWidget.answerRequired = answerRequired;
 	}
 }

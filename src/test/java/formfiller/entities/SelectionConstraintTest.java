@@ -21,35 +21,39 @@ import formfiller.utilities.AnswerMocker;
 public class SelectionConstraintTest {
 	List<String> selections;
 	SelectionConstraint<String> selectionConstraint;	
+	
 	List<String> makeSelectionsList(String... selections){
 		return Arrays.asList(selections);
 	}
 
 	@Before
-	public void givenASelectionFormat(){
+	public void givenASelectionConstraint(){
 		selections = makeSelectionsList("a", "b", "c");
 		selectionConstraint = new SelectionConstraint<String>(selections);
 	}
 	
-	public class GivenANewSelectionFormat {
+	public class GivenANewSelectionConstraint {
+		
 		@Test
 		public void whenGetNameRuns_ThenItReturnsCorrectName(){
 			assertSame(ContentConstraint.SELECTION, selectionConstraint.getName());
 		}	
+		
 		@Test
 		public void whenGetSelectionsRuns_ThenItReturnsGivenSelections(){
 			assertSame(selections, selectionConstraint.getSelections());			
 		}
+		
 		@Test
-		public void whenFormatIsNew_ThenItWrapsANullResponse(){
-			assertFalse(selectionConstraint.hasResponse());
+		public void whenConstraintIsNew_ThenItWrapsANullResponse(){
+			assertFalse(selectionConstraint.hasAnswer());
 			assertSame(-1, selectionConstraint.getId());
 			assertSame("", selectionConstraint.getContent());
 			assertFalse(selectionConstraint.satisfiesConstraint());
 		}
 	}	
 
-	public class GivenFormatWrapsAResponse{
+	public class GivenConstraintWrapsAnAnswer{
 		int answerId;
 		String answerContent;
 		boolean satisfiesConstraint;
@@ -62,9 +66,11 @@ public class SelectionConstraintTest {
 			Mockito.when(result.satisfiesConstraint()).thenReturn(satisfied);			
 			return result;
 		}		
-		private void assertFormatHasResponse(){
-			assertTrue(selectionConstraint.hasResponse());
+		
+		private void assertConstraintHasAnswer(){
+			assertTrue(selectionConstraint.hasAnswer());
 		}
+		
 		private void assertConstraintIsSatisfied(boolean flag){
 			if (flag)
 				assertTrue(selectionConstraint.satisfiesConstraint());
@@ -72,63 +78,74 @@ public class SelectionConstraintTest {
 				assertFalse(selectionConstraint.satisfiesConstraint());
 		}
 
-		public class GivenANullToWrap {		
+		public class GivenANullToWrap {	
+			
 			@Before
 			public void givenANullToWrap(){
 				answer = null;
 			}		
+			
 			@Test(expected = IllegalArgumentException.class)
 			public void whenWrappingNull_ThenIllegalArgumentExceptionIsThrown(){
 				selectionConstraint.wrap(answer);
 			}
 		}		
-		public class GivenAnInvalidResponse{
+		
+		public class GivenAnInvalidAnswer{
+			
 			@Before
-			public void givenAnInvalidResponse(){
+			public void givenAnInvalidAnswer(){
 				answer = AnswerMocker.makeMockAnswer(false);
 				selectionConstraint.wrap(answer);
 			}		
+			
 			@Test
-			public void whenResponseIsInvalid_ThenConstraintIsUnsatisfied(){
-				assertFormatHasResponse();
+			public void whenAnswerIsInvalid_ThenConstraintIsUnsatisfied(){
+				assertConstraintHasAnswer();
 				assertSame(answer.getId(), selectionConstraint.getId());
 				assertSame(answer.getContent(), selectionConstraint.getContent());
 				assertSame(answer.satisfiesConstraint(), selectionConstraint.satisfiesConstraint());
 				assertConstraintIsSatisfied(false);
 			}
 		}
-		public class GivenAValidResponse{
-			public class GivenANonSelectionResponse{
+		
+		public class GivenAValidAnswer{
+			
+			public class GivenANonSelectionAnswer{
+				
 				@Before
-				public void givenAValidResponse(){
+				public void givenAValidAnswer(){
 					answer = AnswerMocker.makeMockNameAnswer("Joe");
 					selectionConstraint.wrap(answer);
 				}
+				
 				@Test
-				public void whenResponseIsValid_ThenConstraintIsUnsatisfied(){
-					assertFormatHasResponse();
+				public void whenAnswerIsValid_ThenConstraintIsUnsatisfied(){
+					assertConstraintHasAnswer();
 					assertSame(answer.getId(), selectionConstraint.getId());					
 					assertSame(answer.getContent(), selectionConstraint.getContent());
 					assertNotSame(answer.satisfiesConstraint(), selectionConstraint.satisfiesConstraint());
 					assertConstraintIsSatisfied(false);
 				}
 			}
-			public class GivenASelectionResponse{
+			
+			public class GivenASelectionAnswer{
+				
 				@Before
-				public void givenASelectionResponse(){
+				public void givenASelectionAnswer(){
 					answer = makeMockAnswer(0, "b", true);
 					selectionConstraint.wrap(answer);
 				}
+				
 				@Test
-				public void whenFormatWrapsSelectionResponse_ThenConstraintIsSatisfied(){
-					assertFormatHasResponse();
+				public void whenConstraintWrapsSelectionAnswer_ThenConstraintIsSatisfied(){
+					assertConstraintHasAnswer();
 					assertSame(answer.getId(), selectionConstraint.getId());
 					assertSame(answer.getContent(), selectionConstraint.getContent());
 					assertSame(answer.satisfiesConstraint(), selectionConstraint.satisfiesConstraint());
 					assertConstraintIsSatisfied(true);
 				}
 			}
-
 		}
 	}
 }

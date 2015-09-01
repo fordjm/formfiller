@@ -7,11 +7,12 @@ import org.junit.Test;
 
 import formfiller.persistence.FormWidget;
 
-public class AddResponseRequiredTest {
+public class AddAnswerRequiredTest {
+	
 	@Test
-	public void canSetResponseRequired() {
-		Transaction t = new AddResponseRequired(true);
+	public void canSetAnswerRequired() {
+		Transaction t = new AddAnswerRequired(true);
 		t.execute();
-		assertThat(FormWidget.isResponseRequired(), is(true));
+		assertThat(FormWidget.isAnswerRequired(), is(true));
 	}
 }

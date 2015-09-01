@@ -29,14 +29,14 @@ public class ExecutedUseCaseImplTest {
 		@Before
 		public void givenANullUseCase(){
 			mockUseCase = null;
-			outcome = ActionOutcome.NO_OUTCOME;
+			outcome = ActionOutcome.NONE;
 			message = "messsage";
 		}
+		
 		@Test(expected = ExecutedUseCaseImpl.IllegalUseCase.class)
 		public void constructorThrowsException(){
 			executedUseCaseImpl = new ExecutedUseCaseImpl(mockUseCase, outcome, message);
-		}
-		
+		}		
 	}
 	
 	public class GivenANullOutcome {
@@ -47,20 +47,22 @@ public class ExecutedUseCaseImplTest {
 			outcome = null;
 			message = "message";
 		}
+		
 		@Test(expected = ExecutedUseCaseImpl.IllegalOutcome.class)
 		public void constructorThrowsException(){
 			executedUseCaseImpl = new ExecutedUseCaseImpl(mockUseCase, outcome, message);
-		}
-		
+		}		
 	}
 	
 	public class GivenANullMessage {
+		
 		@Before
 		public void givenANullMessage(){
 			mockUseCase = makeMockUseCase();
 			outcome = ActionOutcome.FAILED;
 			message = null;
 		}
+		
 		@Test
 		public void getMessageReturnsTheEmptyString(){
 			executedUseCaseImpl = new ExecutedUseCaseImpl(mockUseCase, outcome, message);
@@ -76,18 +78,17 @@ public class ExecutedUseCaseImplTest {
 		@Before
 		public void givenLegalUseCaseAndOutcome(){
 			mockUseCase = makeMockUseCase();
-			outcome = ActionOutcome.NO_OUTCOME;
+			outcome = ActionOutcome.NONE;
 			message = "message";
 		}
+		
 		@Test
 		public void test() {
 			executedUseCaseImpl = new ExecutedUseCaseImpl(mockUseCase, outcome, message);
 			
 			assertThat(executedUseCaseImpl.getUseCase(), is(mockUseCase));
-			assertThat(executedUseCaseImpl.getOutcome(), is(ActionOutcome.NO_OUTCOME));
+			assertThat(executedUseCaseImpl.getOutcome(), is(ActionOutcome.NONE));
 			assertThat(executedUseCaseImpl.getMessage(), is("message"));
-		}
-		
+		}		
 	}
-
 }

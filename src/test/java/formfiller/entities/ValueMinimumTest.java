@@ -19,36 +19,44 @@ public class ValueMinimumTest<T> {
 		valueMinimum = new ValueMinimum<T>((T) "min");
 	}
 	
-	public class GivenAResponse{
+	public class GivenAnAnswer{
 		Answer response;
 		
-		public class GivenAnInvalidResponse{
+		public class GivenAnInvalidAnswer{
+			
 			@Before
-			public void givenAnInvalidResponse(){
+			public void givenAnInvalidAnswer(){
 				response = AnswerMocker.makeMockAnswer(false);
 			}
+			
 			@Test
 			public void whenSatisfiesConstraintRuns_ThenItReturnsFalse(){
 				assertFalse(valueMinimum.satisfiesConstraint());
 			}
 		}	
-		public class GivenAValidResponseLessThanMinimum{
+		
+		public class GivenAValidAnswerLessThanMinimum{
+			
 			@Before
-			public void givenAValidResponseLessThanMinimum(){
+			public void givenAValidAnswerLessThanMinimum(){
 				response = AnswerMocker.makeMockNameAnswer("joe");
 				valueMinimum.wrap(response);
 			}
+			
 			@Test
 			public void whenSatisfiesConstraintRuns_ThenItReturnsFalse(){
 				assertFalse(valueMinimum.satisfiesConstraint());
 			}
 		}
-		public class GivenAValidResponseGreaterThanMinimum{
+		
+		public class GivenAValidAnswerGreaterThanMinimum{
+			
 			@Before
-			public void givenAValidResponseLessThanMinimum(){
+			public void givenAValidAnswerLessThanMinimum(){
 				response = AnswerMocker.makeMockNameAnswer("moe");
 				valueMinimum.wrap(response);
 			}
+			
 			@Test
 			public void whenSatisfiesConstraintRuns_ThenItReturnsTrue(){
 				assertTrue(valueMinimum.satisfiesConstraint());

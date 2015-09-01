@@ -1,7 +1,6 @@
 package formfiller.entities;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
 import org.junit.Before;
@@ -15,6 +14,7 @@ public class NoQuestionTest {
 	public void givenANoQuestion(){
 		noQuestion = new NoQuestion();
 	}
+	
 	@Test
 	public void noQuestionFieldsHaveExpectedValues(){
 		assertThat(noQuestion.getId(), is(emptyString));

@@ -12,7 +12,6 @@ import formfiller.usecases.handleUnfoundController.HandleUnfoundControllerUseCas
 import formfiller.usecases.navigation.NavigationUseCase;
 
 public class UseCaseFactoryImplTest {
-
 	private UseCaseFactoryImpl factory;
 	private UseCase useCase;
 	
@@ -36,6 +35,5 @@ public class UseCaseFactoryImplTest {
 	@Test(expected = UnknownUseCase.class)
 	public void unknownUseCaseThrowsException(){
 		useCase = factory.make("unknown");
-	}
-	
+	}	
 }

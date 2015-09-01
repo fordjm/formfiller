@@ -12,7 +12,6 @@ import formfiller.boundaryCrossers.PresentableAnswer;
 
 @RunWith(HierarchicalContextRunner.class)
 public class AnswerPresenterTest {
-
 	private AnswerPresenter answerPresenter;
 	
 	@Before
@@ -33,14 +32,13 @@ public class AnswerPresenterTest {
 			presentableAnswer = new PresentableAnswer();
 			presentableAnswer.message = "";
 		}
+		
 		@Test
 		public void presentingAnswerPresentsGivenAnswer() {
 			answerPresenter.present(presentableAnswer);
 			PresentableAnswer response = 
 					(PresentableAnswer) answerPresenter.getPresentableResponse();
 			assertThat(response, is(presentableAnswer));
-		}
-		
+		}		
 	}
-
 }

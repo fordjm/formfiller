@@ -100,8 +100,6 @@ public class InMemoryTransporterTest {
 			currentFormComponent = transporter.getCurrent();
 			
 			assertThat(currentFormComponent.id, is("end"));
-		}
-		
+		}		
 	}
-
 }

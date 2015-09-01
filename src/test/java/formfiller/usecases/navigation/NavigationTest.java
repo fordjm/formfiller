@@ -80,6 +80,7 @@ public class NavigationTest {
 			public void givenPrevQuestionRequest(){
 				setMockRequestDirection(Direction.BACKWARD);
 			}
+			
 			@Test
 			public void gettingQuestionGetsStartPrompt(){			
 				foundFormComponent = findFormComponentByIndex(-1);

@@ -12,6 +12,5 @@ public class NavigationRequestImpl extends RequestImpl implements NavigationRequ
 
 	public void setDirection(Direction direction) {
 		this.direction = direction;
-	}
-	
+	}	
 }
