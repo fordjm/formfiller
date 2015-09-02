@@ -1,15 +1,16 @@
-package formfiller;
+package formfiller.delivery.ui.testConsoleUi;
 
+import formfiller.ApplicationContext;
 import formfiller.delivery.EventSource;
-import formfiller.delivery.eventParser.StringEventHandler;
-import formfiller.delivery.view.HandleUnfoundControllerViewModel;
-import formfiller.delivery.view.NavigationViewModel;
-import formfiller.delivery.view.PresentAnswerViewModel;
-import formfiller.delivery.view.PresentQuestionViewModel;
+import formfiller.delivery.event.EventHandler;
+import formfiller.delivery.viewModel.HandleUnfoundControllerViewModel;
+import formfiller.delivery.viewModel.NavigationViewModel;
+import formfiller.delivery.viewModel.AnswerViewModel;
+import formfiller.delivery.viewModel.QuestionViewModel;
 import formfiller.utilities.TestSetup;
 
 public class Main {
-	private static StringEventHandler eventHandler;
+	private static EventHandler eventHandler;
 	private static EventSource eventSource;
 	
 	public static void main(String[] args){
@@ -29,12 +30,12 @@ public class Main {
 		ApplicationContext.handleUnfoundControllerPresenter.addObserver(
 				new HandleUnfoundControllerViewModel());
 		ApplicationContext.navigationPresenter.addObserver(new NavigationViewModel());
-		ApplicationContext.questionPresenter.addObserver(new PresentQuestionViewModel());
-		ApplicationContext.answerPresenter.addObserver(new PresentAnswerViewModel());
+		ApplicationContext.questionPresenter.addObserver(new QuestionViewModel());
+		ApplicationContext.answerPresenter.addObserver(new AnswerViewModel());
 	}
 	
 	private static void setupClassVariables() {
-		eventHandler = new StringEventHandler();
+		eventHandler = new EventHandler();
 		eventSource = new ConsoleEventSource();
 		eventSource.addObserver(eventHandler);
 	}

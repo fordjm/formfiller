@@ -6,6 +6,7 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
 import formfiller.ApplicationContext;
@@ -40,25 +41,29 @@ public class AddAnswerTest {
 		return foundAnswer.getContent();
 	}
 	
-	//	TODO:	Make this work with mocks.
-	private void addRealFormComponentsToGateway(){
-		FormComponent nameComponent = makeRealFormComponent(QuestionMocker.makeMockNameQuestion());
-		FormComponent ageComponent = makeRealFormComponent(QuestionMocker.makeMockAgeQuestion());
-		ApplicationContext.formComponentGateway.save(nameComponent);
-		ApplicationContext.formComponentGateway.save(ageComponent);
+	private void addMockFormComponentsToGateway(){
+		FormComponent nameComponent = makeMockFormComponent(QuestionMocker.makeMockNameQuestion());
+		FormComponent ageComponent = makeMockFormComponent(QuestionMocker.makeMockAgeQuestion());
+		saveFormComponents(nameComponent, ageComponent);
 	}
 	
-	private FormComponent makeRealFormComponent(Question mockQuestion){
-		FormComponent result = new FormComponent();
-		result.setQuestion(mockQuestion);
-		result.setAnswer(AnswerImpl.NONE);
+	private FormComponent makeMockFormComponent(Question mockQuestion){
+		FormComponent result = Mockito.mock(FormComponent.class);
+		result.id = mockQuestion.getId();
+		result.question = mockQuestion;
+		result.answer = AnswerImpl.NONE;
 		return result;
+	}
+
+	private void saveFormComponents(FormComponent... formComponents) {
+		for (FormComponent formComponent : formComponents)
+			ApplicationContext.formComponentGateway.save(formComponent);
 	}
 
 	@Before
 	public void setUp() {
 		TestSetup.setupContext();
-		addRealFormComponentsToGateway();
+		addMockFormComponentsToGateway();
 		addAnswer = new AddAnswerUseCase();
 	}
 	

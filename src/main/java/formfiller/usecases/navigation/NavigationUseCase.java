@@ -9,7 +9,6 @@ import formfiller.entities.Prompt;
 import formfiller.enums.ActionOutcome;
 import formfiller.gateways.NavigationValidator;
 import formfiller.gateways.Transporter;
-import formfiller.gateways.InMemoryTransporter;
 import formfiller.gateways.InMemoryTransporter.Direction;
 import formfiller.request.models.NavigationRequest;
 import formfiller.request.models.Request;
@@ -19,11 +18,12 @@ import formfiller.response.models.PresentableQuestion;
 import formfiller.response.models.PresentableResponse;
 
 public class NavigationUseCase implements UseCase {
-	private ActionOutcome outcome;
-	private String message;
+	private ActionOutcome outcome = ActionOutcome.NONE;
+	private String message = "";
 
 	private NavigationValidator getNavigationValidator(){
-		return getTransporter().getNavigationValidator();
+		Transporter transporter = getTransporter();
+		return transporter.getNavigationValidator();
 	}
 	
 	private Transporter getTransporter(){
@@ -34,10 +34,10 @@ public class NavigationUseCase implements UseCase {
 		if (request == null) throw new NullExecution();
 		
 		NavigationRequest navigationRequest = (NavigationRequest) request;
-		InMemoryTransporter.Direction direction = navigationRequest.direction;
-		NavigationValidator navigator = getNavigationValidator();
+		Direction direction = navigationRequest.direction;
+		NavigationValidator validator = getNavigationValidator();
 		
-		if (navigator.isMoveLegal(direction)) {
+		if (validator.isMoveLegal(direction)) {
 			executeMove(direction);
 			setOutcome(ActionOutcome.SUCCEEDED);
 		} else
@@ -59,10 +59,7 @@ public class NavigationUseCase implements UseCase {
 	}	
 	
 	private void setMessage() {
-		if (this.outcome == ActionOutcome.SUCCEEDED || 
-				this.outcome == ActionOutcome.NONE)
-			this.message = "";
-		else
+		if (this.outcome == ActionOutcome.FAILED)
 			this.message = getAnswerRequiredMessage();
 	}
 

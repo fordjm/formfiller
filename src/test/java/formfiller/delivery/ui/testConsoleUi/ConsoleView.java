@@ -1,4 +1,4 @@
-package formfiller.delivery.view;
+package formfiller.delivery.ui.testConsoleUi;
 
 public class ConsoleView {
 

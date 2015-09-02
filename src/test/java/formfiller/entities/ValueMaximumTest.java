@@ -11,23 +11,23 @@ import de.bechte.junit.runners.context.HierarchicalContextRunner;
 import formfiller.utilities.AnswerMocker;
 
 @RunWith(HierarchicalContextRunner.class)
-public class ValueMaximumTest<T> {
-	ValueMaximum<T> valueMaximum;
+public class ValueMaximumTest {
+	ValueMaximum<String> valueMaximum;
 	
 	@Before
 	public void setUp(){
-		valueMaximum = new ValueMaximum<T>((T) "max");
+		valueMaximum = new ValueMaximum<String>("max");
 	}
 	
 	public class GivenAnAnswer{
-		Answer response;
+		Answer answer;
 		
 		public class GivenAnInvalidAnswer{
 			
 			@Before
 			public void givenAnInvalidAnswer(){
-				response = AnswerMocker.makeMockAnswer(false);
-				valueMaximum.wrap(response);
+				answer = AnswerMocker.makeMockAnswer(false);
+				valueMaximum.wrap(answer);
 			}
 			
 			@Test
@@ -40,8 +40,8 @@ public class ValueMaximumTest<T> {
 			
 			@Before
 			public void givenAValidAnswerLessThanMinimum(){
-				response = AnswerMocker.makeMockNameAnswer("joe");
-				valueMaximum.wrap(response);
+				answer = AnswerMocker.makeMockNameAnswer("joe");
+				valueMaximum.wrap(answer);
 			}
 			
 			@Test
@@ -54,8 +54,8 @@ public class ValueMaximumTest<T> {
 			
 			@Before
 			public void givenAValidAnswerGreaterThanMaximum(){
-				response = AnswerMocker.makeMockNameAnswer("moe");
-				valueMaximum.wrap(response);
+				answer = AnswerMocker.makeMockNameAnswer("moe");
+				valueMaximum.wrap(answer);
 			}
 			
 			@Test

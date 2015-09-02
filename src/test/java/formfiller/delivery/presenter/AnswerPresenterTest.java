@@ -20,7 +20,7 @@ public class AnswerPresenterTest {
 	}
 	
 	@Test(expected = AbstractPresenter.NullPresentableResponse.class)
-	public void settingPresentableResponseToNullThrowsException(){
+	public void presentingNullThrowsException(){
 		answerPresenter.present(null);
 	}
 	
@@ -36,8 +36,10 @@ public class AnswerPresenterTest {
 		@Test
 		public void presentingAnswerPresentsGivenAnswer() {
 			answerPresenter.present(presentableAnswer);
+			
 			PresentableAnswer response = 
 					(PresentableAnswer) answerPresenter.getPresentableResponse();
+			
 			assertThat(response, is(presentableAnswer));
 		}		
 	}

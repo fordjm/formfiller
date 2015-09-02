@@ -25,7 +25,7 @@ public class HandleUnfoundControllerPresenterTest {
 	}
 	
 	@Test
-	public void canSomething() {
+	public void canPresentResponse() {
 		PresentableResponse presentableResponse = makePresentableResponse();
 		
 		handleUnfoundControllerPresenter.present(presentableResponse);

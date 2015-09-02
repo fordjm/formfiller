@@ -1,6 +1,6 @@
 package formfiller.delivery;
 
-import formfiller.delivery.eventParser.ParsedEvent;
+import formfiller.delivery.event.ParsedEvent;
 
 public interface EventParser {
 	ParsedEvent parse(String string);

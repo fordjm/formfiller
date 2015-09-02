@@ -10,27 +10,9 @@ public class FormComponent {
 		
 	private static FormComponent makeIllegalIndexFormComponent(NoQuestion noQuestion) {
 		FormComponent result = new FormComponent();
-		result.setQuestion(noQuestion);
-		result.setAnswer(AnswerImpl.NONE);
+		result.id = noQuestion.getId();
+		result.question = noQuestion;
+		result.answer = AnswerImpl.NONE;
 		return result;
-	}
-
-	public void setQuestion(Prompt question) {
-		if (question == null) 
-			this.question = new NoQuestion();
-		else
-			this.question = question;		
-		setId();
-	}
-
-	private void setId() {
-		id = question.getId();
-	}
-
-	public void setAnswer(Answer answer) {
-		if (answer == null) 
-			this.answer = AnswerImpl.NONE;
-		else
-			this.answer = answer;
 	}
 }

@@ -2,7 +2,7 @@ package formfiller.delivery.controller;
 
 import formfiller.boundaries.UseCase;
 import formfiller.delivery.Controller;
-import formfiller.delivery.eventParser.ParsedEvent;
+import formfiller.delivery.event.ParsedEvent;
 import formfiller.request.builders.RequestBuilder;
 import formfiller.request.builders.RequestBuilderImpl;
 import formfiller.request.models.Request;
@@ -12,33 +12,32 @@ import formfiller.usecases.UseCaseFactoryImpl;
 public class HandleUnfoundControllerController implements Controller {
 
 	public void handle(ParsedEvent parsedUserRequest) {
-		String message = unfoundControllerMessage(parsedUserRequest);
-		Request request = handleUnfoundControllerRequest(message);
-		UseCase useCase = handleUnfoundControllerUseCase(parsedUserRequest);
+		String message = makeUnfoundControllerMessage(parsedUserRequest.method);
+		Request request = makeHandleUnfoundControllerRequest(message);
+		UseCase useCase = makeHandleUnfoundControllerUseCase();
 		useCase.execute(request);
 	}
 	
-	private String unfoundControllerMessage(ParsedEvent parsedUserRequest) {
-		String requestedMethod = requestedMethod(parsedUserRequest);
+	private String makeUnfoundControllerMessage(String method) {
+		String requestedMethod = addWhitespaceIfNecessary(method);
 		return "Request " + requestedMethod + "was not found.";
 	}
 	
-	private String requestedMethod(ParsedEvent parsedUserRequest){
+	private String addWhitespaceIfNecessary(String method){
 		String result = "";
-		String method = parsedUserRequest.method;
 		if (method.length() > 0)
 			result += method + " ";		
 		return result;
 	}
 	
-	protected Request handleUnfoundControllerRequest(String message){
+	protected Request makeHandleUnfoundControllerRequest(String message){
 		RequestBuilder requestBuilder = new RequestBuilderImpl();
 		Request result = requestBuilder.build("handleUnfoundController", 
-				ArgsMaker.makeArgs("message", message));
+				ArgsMaker.makeArgs("message", message));	// TODO:	Wrap boundary interface.
 		return result;
 	}
 	
-	protected UseCase handleUnfoundControllerUseCase(ParsedEvent parsedUserRequest){		
+	protected UseCase makeHandleUnfoundControllerUseCase(){		
 		UseCaseFactory useCaseFactory = new UseCaseFactoryImpl();
 		return useCaseFactory.make("handleUnfoundController");
 	}

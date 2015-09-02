@@ -1,4 +1,4 @@
-package formfiller.delivery.view;
+package formfiller.delivery.viewModel;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -14,8 +14,8 @@ import formfiller.delivery.presenter.AnswerPresenter;
 import formfiller.response.models.PresentableAnswer;
 
 @RunWith(HierarchicalContextRunner.class)
-public class PresentAnswerViewModelTest {
-	private PresentAnswerViewModel consoleAnswerView;
+public class AnswerViewModelTest {
+	private AnswerViewModel consoleAnswerView;
 	
 	private PresentableAnswer makePresentableAnswer(String message){
 		PresentableAnswer result = new PresentableAnswer();
@@ -34,7 +34,7 @@ public class PresentAnswerViewModelTest {
 		
 		@Before
 		public void setUp() {
-			consoleAnswerView = new PresentAnswerViewModel();
+			consoleAnswerView = new AnswerViewModel();
 			answerPresenter = makeMockPresenter();
 		}
 

@@ -6,7 +6,7 @@ import java.util.Map;
 import formfiller.delivery.Controller;
 import formfiller.delivery.controller.HandleUnfoundControllerController;
 import formfiller.delivery.controller.NavigationController;
-import formfiller.delivery.eventParser.ParsedEvent;
+import formfiller.delivery.event.ParsedEvent;
 
 //Adapted from:
 //https://github.com/cleancoders/CleanCodeCaseStudy/blob/master/src/cleancoderscom/http/Router.java
@@ -28,13 +28,13 @@ public class Router {
 		routes.put(request, controller);
 	}
 	
-	public void route(ParsedEvent parsedUserRequest) {
-		Controller controller = getController(parsedUserRequest);
-		controller.handle(parsedUserRequest);
+	public void route(ParsedEvent parsedEvent) {
+		Controller controller = getController(parsedEvent.method);
+		controller.handle(parsedEvent);
 	}
 	
-	protected Controller getController(ParsedEvent parsedUserRequest) {
-		Controller result = routes.get(parsedUserRequest.method);
+	protected Controller getController(String method) {
+		Controller result = routes.get(method);
 		if (result == null) result = handleUnfoundController;
 		return result;
 	}

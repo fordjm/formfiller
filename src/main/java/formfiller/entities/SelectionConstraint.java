@@ -7,7 +7,7 @@ import formfiller.enums.ContentConstraint;
 public class SelectionConstraint<T> extends Constraint {
 	private List<T> selections;
 	
-	public SelectionConstraint(List<T> selections) throws IllegalArgumentException {
+	public SelectionConstraint(List<T> selections) {
 		super(ContentConstraint.SELECTION);
 		this.selections = selections;
 	}

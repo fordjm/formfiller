@@ -32,7 +32,7 @@ public class NoConstraintTest {
 				noConstraint.getName());
 	}
 	
-	public class GivenANewFreeEntryFormat {		
+	public class GivenANewNoConstraint {		
 		
 		@Test
 		public void whenFormatIsNew_ThenItWrapsANullResponse(){
@@ -59,7 +59,8 @@ public class NoConstraintTest {
 				assertThat(noConstraint.isConstraintSatisfied(), is(false));
 			}
 		}
-		public class GivenAValidResponse{
+		
+		public class GivenAValidAnswer {
 			
 			@Before
 			public void givenAValidResponse(){

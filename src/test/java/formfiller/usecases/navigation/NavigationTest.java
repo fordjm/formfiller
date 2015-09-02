@@ -65,7 +65,8 @@ public class NavigationTest {
 	}
 	
 	private FormComponent getCurrentFormComponent() {
-		return getFormComponentGatewayFromContext().getTransporter().getCurrent();
+		Transporter transporter = getFormComponentGatewayFromContext().getTransporter();
+		return transporter.getCurrent();
 	}
 
 	private void setFoundFormComponentToIndex(int index) {
@@ -142,8 +143,12 @@ public class NavigationTest {
 			mockNameFormComponent = makeMockFormComponent(mockQuestion);
 			setMockQuestion(QuestionMocker.makeMockAgeQuestion());
 			mockAgeFormComponent = makeMockFormComponent(mockQuestion);
-			getFormComponentGatewayFromContext().save(mockNameFormComponent);
-			getFormComponentGatewayFromContext().save(mockAgeFormComponent);
+			saveFormComponents(mockNameFormComponent, mockAgeFormComponent);
+		}
+
+		private void saveFormComponents(FormComponent... formComponents) {
+			for (FormComponent formComponent : formComponents)
+				getFormComponentGatewayFromContext().save(formComponent);
 		}
 		
 		@Test

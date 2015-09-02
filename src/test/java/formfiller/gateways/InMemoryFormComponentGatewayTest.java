@@ -17,12 +17,12 @@ public class InMemoryFormComponentGatewayTest {
 		gateway = new InMemoryFormComponentGateway();
 	}
 	
-	@Test(expected = InMemoryFormComponentGateway.NullSave.class)
+	@Test(expected = InMemoryFormComponentGateway.NullFormComponent.class)
 	public void cannotSaveNull(){
 		gateway.save(null);
 	}
 	
-	@Test(expected = InMemoryFormComponentGateway.NullFind.class)
+	@Test(expected = InMemoryFormComponentGateway.NullId.class)
 	public void cannotFindNull(){
 		gateway.find(null);
 	}

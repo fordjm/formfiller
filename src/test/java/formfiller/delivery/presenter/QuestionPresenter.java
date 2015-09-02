@@ -5,8 +5,6 @@ import formfiller.response.models.PresentableResponse;
 
 public class QuestionPresenter extends AbstractPresenter {
 	PresentableQuestion presentableQuestion;
-	
-	public QuestionPresenter(){	}
 
 	public PresentableQuestion getPresentableResponse() {
 		return presentableQuestion;

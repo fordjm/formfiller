@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-public class NullResponseTest {
+public class NoAnswerTest {
 	private final int id = -1;
 	private final String content = "";
 

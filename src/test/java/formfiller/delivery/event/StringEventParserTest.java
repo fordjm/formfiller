@@ -1,4 +1,4 @@
-package formfiller.delivery.eventParser;
+package formfiller.delivery.event;
 
 import static org.junit.Assert.*;
 
@@ -15,7 +15,7 @@ public class StringEventParserTest {
 	EventParser parser;
 	ParsedEvent parsedEvent;
 
-	private void setParsedRequest(String input) {
+	private void setParsedEvent(String input) {
 		parsedEvent = parser.parse(input);
 	}
 
@@ -26,63 +26,63 @@ public class StringEventParserTest {
 	
 	@Test
 	public void canParseEmptyString(){
-		setParsedRequest("");
+		setParsedEvent("");
 		assertEquals("", parsedEvent.method);
 		assertEquals("", parsedEvent.param);
 	}
 	
 	@Test
 	public void canParseNull(){
-		setParsedRequest(null);
+		setParsedEvent(null);
 		assertEquals("", parsedEvent.method);
 		assertEquals("", parsedEvent.param);
 	}
 	
 	@Test
 	public void canParseUnknownCommand(){
-		setParsedRequest("unknown");
+		setParsedEvent("unknown");
 		assertEquals("unknown", parsedEvent.method);
 		assertEquals("", parsedEvent.param);
 	}
 	
 	@Test
 	public void canParsePresentQuestionCommand() {		
-		setParsedRequest("presentQuestion");
+		setParsedEvent("presentQuestion");
 		assertEquals("presentQuestion", parsedEvent.method);
 		assertEquals("", parsedEvent.param);
 	}
 	
 	@Test
 	public void canParsePresentQuestionCommandWithExtraSpaces() {		
-		setParsedRequest("  presentQuestion   ");
+		setParsedEvent("  presentQuestion   ");
 		assertEquals("presentQuestion", parsedEvent.method);
 		assertEquals("", parsedEvent.param);
 	}
 	
 	@Test
 	public void canParsePresentQuestionCommandWithOneExtraArgument() {		
-		setParsedRequest("presentQuestion -1");
+		setParsedEvent("presentQuestion -1");
 		assertEquals("presentQuestion", parsedEvent.method);
 		assertEquals("-1", parsedEvent.param);
 	}
 	
 	@Test
 	public void canParsePresentQuestionCommandWithTwoExtraArguments() {		
-		setParsedRequest("presentQuestion -1 0");
+		setParsedEvent("presentQuestion -1 0");
 		assertEquals("presentQuestion", parsedEvent.method);
 		assertEquals("-1", parsedEvent.param);
 	}
 	
 	@Test
 	public void canParseNavigationCommand() {
-		setParsedRequest("navigation -1");
+		setParsedEvent("navigation -1");
 		assertEquals("navigation", parsedEvent.method);
 		assertEquals("-1", parsedEvent.param);
 	}
 	
 	@Test
 	public void canParseNavigationCommandWithExtraSpaces() {
-		setParsedRequest("    navigation  -1  ");
+		setParsedEvent("    navigation  -1  ");
 		assertEquals("navigation", parsedEvent.method);
 		assertEquals("-1", parsedEvent.param);
 	}

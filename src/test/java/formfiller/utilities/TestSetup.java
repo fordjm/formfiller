@@ -36,8 +36,9 @@ public class TestSetup {
 	
 	private static FormComponent makeFormComponent(String id, String content, boolean isRequired){
 		FormComponent result = new FormComponent();
-		result.setQuestion(makeQuestion(id, content, isRequired));
-		result.setAnswer(AnswerImpl.NONE);
+		result.id = id;
+		result.question = makeQuestion(id, content, isRequired);
+		result.answer = AnswerImpl.NONE;
 		return result;
 	}
 	

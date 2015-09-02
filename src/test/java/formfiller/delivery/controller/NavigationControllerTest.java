@@ -8,36 +8,37 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import formfiller.ApplicationContext;
-import formfiller.delivery.eventParser.ParsedEvent;
+import formfiller.delivery.event.ParsedEvent;
 import formfiller.entities.FormComponent;
+import formfiller.gateways.FormComponentGateway;
 import formfiller.gateways.InMemoryFormComponentGateway;
+import formfiller.gateways.Transporter;
 import formfiller.utilities.*;
 
 public class NavigationControllerTest {
 	private NavigationController navigationController;
 	private ParsedEvent mockParsedUserRequest;
 	private FormComponent formComponentFoundAtIndex;
-	FormComponent currentComponent;
 
 	private void updateFormComponentFoundAtIndex(int index) {
 		formComponentFoundAtIndex = findFormComponentByIndex(index);
-	}
-	
-	private InMemoryFormComponentGateway getInMemoryFormComponentGateway(){
-		InMemoryFormComponentGateway result = (InMemoryFormComponentGateway)
-				ApplicationContext.formComponentGateway;		
-		return result;
 	}
 
 	private FormComponent findFormComponentByIndex(int index) {
 		return getInMemoryFormComponentGateway().findByIndex(index);
 	}
 	
-	private FormComponent getCurrentFormComponent() {
-		return getInMemoryFormComponentGateway().transporter.getCurrent();
+	private InMemoryFormComponentGateway getInMemoryFormComponentGateway(){
+		InMemoryFormComponentGateway result = (InMemoryFormComponentGateway)
+				getFormComponentGatewayFromContext();		
+		return result;
+	}
+
+	private FormComponentGateway getFormComponentGatewayFromContext() {
+		return ApplicationContext.formComponentGateway;
 	}
 	
-	private FormComponent makeMockFormComponent() {
+	private FormComponent makeMockNameFormComponent() {
 		FormComponent result = Mockito.mock(FormComponent.class);
 		result.id = "name";
 		result.question = QuestionMocker.makeMockNameQuestion();
@@ -45,10 +46,15 @@ public class NavigationControllerTest {
 		return result;
 	}
 	
+	private FormComponent getCurrentFormComponent() {
+		Transporter transporter = getInMemoryFormComponentGateway().transporter;
+		return transporter.getCurrent();
+	}
+	
 	@Before
 	public void setupTest(){
 		TestSetup.setupContext();
-		ApplicationContext.formComponentGateway.save(makeMockFormComponent());
+		getFormComponentGatewayFromContext().save(makeMockNameFormComponent());
 		navigationController = new NavigationController();
 	}
 

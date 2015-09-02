@@ -2,7 +2,7 @@ package formfiller.delivery.controller;
 
 import formfiller.boundaries.UseCase;
 import formfiller.delivery.Controller;
-import formfiller.delivery.eventParser.ParsedEvent;
+import formfiller.delivery.event.ParsedEvent;
 import formfiller.gateways.InMemoryTransporter.Direction;
 import formfiller.request.builders.RequestBuilder;
 import formfiller.request.builders.RequestBuilderImpl;
@@ -13,10 +13,10 @@ import formfiller.utilities.*;
 
 public class NavigationController implements Controller {
 
-	public void handle(ParsedEvent parsedInput) {
-		Direction direction = DirectionParser.parseDirection(parsedInput.param);
+	public void handle(ParsedEvent parsedEvent) {
+		Direction direction = DirectionParser.parseDirection(parsedEvent.param);
 		Request navigationRequest = makeNavigationRequest(direction);
-		UseCase useCase = makeNavigationUseCase(parsedInput);
+		UseCase useCase = makeNavigationUseCase();
 		useCase.execute(navigationRequest);
 	}	
 	
@@ -27,7 +27,7 @@ public class NavigationController implements Controller {
 		return result;
 	}
 	
-	protected UseCase makeNavigationUseCase(ParsedEvent parsedUserRequest){		
+	protected UseCase makeNavigationUseCase(){		
 		UseCaseFactory useCaseFactory = new UseCaseFactoryImpl();
 		return useCaseFactory.make("navigation");
 	}

@@ -16,6 +16,7 @@ public class NavigationPresenter extends AbstractPresenter {
 		super.present(presentableNavigation);
 		if (presentableNavigation.outcome == ActionOutcome.SUCCEEDED)
 			presentSuccessfulNavigation(presentableNavigation);
+		// else presentUseCaseError();
 	}	
 	
 	private void presentSuccessfulNavigation(PresentableResponse presentableNavigation) {

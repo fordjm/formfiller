@@ -7,7 +7,7 @@ import org.mockito.Mockito;
 
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
 import formfiller.delivery.Controller;
-import formfiller.delivery.eventParser.ParsedEvent;
+import formfiller.delivery.event.ParsedEvent;
 import formfiller.utilities.*;
 //Adapted from:
 //https://github.com/cleancoders/CleanCodeCaseStudy/blob/master/test/cleancoderscom/http/RouterTest.java

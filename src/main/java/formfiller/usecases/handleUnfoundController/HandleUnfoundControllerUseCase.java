@@ -14,19 +14,13 @@ public class HandleUnfoundControllerUseCase implements UseCase {
 				(HandleUnfoundControllerRequest) request;
 		String message = handleUnfoundControllerRequest.message;
 		ApplicationContext.handleUnfoundControllerPresenter.
-				present(makePresentableUnfoundControllerResponse(message));
+				present(makeHandleUnfoundControllerResponse(message));
 	}
 	
-	private PresentableResponse makePresentableUnfoundControllerResponse(
-			String message) {
-		return makePresentableUnfoundControllerResponse(ActionOutcome.FAILED, message);
-	}
-	
-	private PresentableResponse makePresentableUnfoundControllerResponse(
-			ActionOutcome outcome, String message) {
+	private PresentableResponse makeHandleUnfoundControllerResponse(String message) {
 		PresentableResponse result = new PresentableResponse();
 		result.message = message;
-		result.outcome = outcome;
+		result.outcome = ActionOutcome.FAILED;
 		return result;
 	}	
 }

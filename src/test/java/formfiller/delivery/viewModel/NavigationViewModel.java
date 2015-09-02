@@ -1,11 +1,13 @@
-package formfiller.delivery.view;
+package formfiller.delivery.viewModel;
 
 import java.util.Observable;
 
 import formfiller.delivery.ViewModel;
+import formfiller.delivery.ui.testConsoleUi.ConsoleView;
 import formfiller.enums.ActionOutcome;
 import formfiller.response.models.PresentableResponse;
 
+// TODO:	Change to FailedUseCaseViewModel
 public class NavigationViewModel implements ViewModel {
 
 	public void update(Observable observable, Object input) {

@@ -11,22 +11,22 @@ import de.bechte.junit.runners.context.HierarchicalContextRunner;
 import formfiller.utilities.AnswerMocker;
 
 @RunWith(HierarchicalContextRunner.class)
-public class ValueMinimumTest<T> {
-	ValueMinimum<T> valueMinimum;
+public class ValueMinimumTest {
+	ValueMinimum<String> valueMinimum;
 	
 	@Before
 	public void setUp(){
-		valueMinimum = new ValueMinimum<T>((T) "min");
+		valueMinimum = new ValueMinimum<String>("min");
 	}
 	
 	public class GivenAnAnswer{
-		Answer response;
+		Answer answer;
 		
 		public class GivenAnInvalidAnswer{
 			
 			@Before
 			public void givenAnInvalidAnswer(){
-				response = AnswerMocker.makeMockAnswer(false);
+				answer = AnswerMocker.makeMockAnswer(false);
 			}
 			
 			@Test
@@ -39,8 +39,8 @@ public class ValueMinimumTest<T> {
 			
 			@Before
 			public void givenAValidAnswerLessThanMinimum(){
-				response = AnswerMocker.makeMockNameAnswer("joe");
-				valueMinimum.wrap(response);
+				answer = AnswerMocker.makeMockNameAnswer("joe");
+				valueMinimum.wrap(answer);
 			}
 			
 			@Test
@@ -53,8 +53,8 @@ public class ValueMinimumTest<T> {
 			
 			@Before
 			public void givenAValidAnswerLessThanMinimum(){
-				response = AnswerMocker.makeMockNameAnswer("moe");
-				valueMinimum.wrap(response);
+				answer = AnswerMocker.makeMockNameAnswer("moe");
+				valueMinimum.wrap(answer);
 			}
 			
 			@Test

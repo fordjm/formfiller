@@ -78,6 +78,7 @@ public class AnswerTypeTest<T> {
 		
 		public void assertAnswerDataIsConsistent(int answerId, T answerContent){
 			Object content = answerType.getContent();
+			
 			assertSame(answerId, answerType.getId());
 			assertSame(answerContent, content);
 			assertSame(type, content.getClass());
@@ -91,12 +92,14 @@ public class AnswerTypeTest<T> {
 				assertFalse(answerType.satisfiesConstraint());
 		}
 		
-		public class GivenAnInvalidAnswer{			
+		public class GivenAnInvalidAnswer{	
+			
 			@Before
 			public void givenAnInvalidAnswer(){
 				answer = AnswerMocker.makeMockAnswer(false);
 				answerType.wrap(answer);
-			}			
+			}		
+			
 			@Test
 			public void whenFormatWrapsInvalidAnswer_ThenConstraintNotSatisfied(){
 				assertConstraintHasAnswer();
@@ -105,6 +108,7 @@ public class AnswerTypeTest<T> {
 		}
 		
 		public class GivenAValidAnswer{		
+			
 			@Before
 			public void givenAValidResponse(){
 				answer = AnswerMocker.makeMockNameAnswer("Joe");

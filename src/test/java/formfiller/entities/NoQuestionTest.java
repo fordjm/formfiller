@@ -8,7 +8,7 @@ import org.junit.Test;
 
 public class NoQuestionTest {
 	private NoQuestion noQuestion;
-	private final String emptyString = "";
+	private final String EMPTY_STRING = "";
 	
 	@Before
 	public void givenANoQuestion(){
@@ -17,8 +17,8 @@ public class NoQuestionTest {
 	
 	@Test
 	public void noQuestionFieldsHaveExpectedValues(){
-		assertThat(noQuestion.getId(), is(emptyString));
-		assertThat(noQuestion.getContent(), is(emptyString));
+		assertThat(noQuestion.getId(), is(EMPTY_STRING));
+		assertThat(noQuestion.getContent(), is(EMPTY_STRING));
 		assertThat(noQuestion.hasAnswer(), is(false));
 		assertThat(noQuestion.requiresAnswer(), is(false));
 	}

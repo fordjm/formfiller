@@ -11,11 +11,11 @@ public abstract class Constraint implements Answer {
 		this.answer = AnswerImpl.NONE;		
 	}
 
-	public void wrap(Answer response) throws IllegalArgumentException{
-		if (response == null || response.getContent() == null)
+	public void wrap(Answer answer) throws IllegalArgumentException{
+		if (answer == null || answer.getContent() == null)
 			throw new IllegalArgumentException(
 					"Constraint cannot wrap null responses or content.");
-		this.answer = response;
+		this.answer = answer;
 	}
 	
 	public boolean hasAnswer(){

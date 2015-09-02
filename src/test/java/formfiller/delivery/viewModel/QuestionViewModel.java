@@ -1,11 +1,12 @@
-package formfiller.delivery.view;
+package formfiller.delivery.viewModel;
 
 import java.util.Observable;
 
 import formfiller.delivery.ViewModel;
+import formfiller.delivery.ui.testConsoleUi.ConsoleView;
 import formfiller.response.models.PresentableQuestion;
 
-public class PresentQuestionViewModel implements ViewModel {
+public class QuestionViewModel implements ViewModel {
 	PresentableQuestion question;
 
 	public void update(Observable presenter, Object input) {

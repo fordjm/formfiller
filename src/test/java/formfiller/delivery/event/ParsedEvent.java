@@ -1,4 +1,4 @@
-package formfiller.delivery.eventParser;
+package formfiller.delivery.event;
 
 // Adapted from:
 // https://github.com/cleancoders/CleanCodeCaseStudy/blob/master/src/cleancoderscom/http/ParsedRequest.java

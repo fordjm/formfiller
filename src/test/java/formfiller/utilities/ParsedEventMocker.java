@@ -2,7 +2,7 @@ package formfiller.utilities;
 
 import org.mockito.Mockito;
 
-import formfiller.delivery.eventParser.ParsedEvent;
+import formfiller.delivery.event.ParsedEvent;
 
 public class ParsedEventMocker {
 

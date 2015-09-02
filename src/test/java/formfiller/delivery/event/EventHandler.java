@@ -1,4 +1,4 @@
-package formfiller.delivery.eventParser;
+package formfiller.delivery.event;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -6,12 +6,12 @@ import java.util.Observer;
 import formfiller.delivery.EventParser;
 import formfiller.delivery.router.Router;
 
-public class StringEventHandler implements Observer {
+public class EventHandler implements Observer {
 	EventParser eventParser = new StringEventParser();
 	Router router = Router.makeRouter();
 
-	public void update(Observable o, Object arg) {
-		String event = (String) arg;
+	public void update(Observable o, Object input) {
+		String event = (String) input;
 		handleEvent(event);
 	}
 	

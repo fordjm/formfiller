@@ -1,4 +1,4 @@
-package formfiller.delivery.eventParser;
+package formfiller.delivery.event;
 
 import formfiller.delivery.EventParser;
 
@@ -20,7 +20,7 @@ public class StringEventParser implements EventParser {
 		return result;
 	}
 
-	String[] preprocessInputString(String input) {
+	private String[] preprocessInputString(String input) {
 		input = input.trim();
 		String[] split = input.split("\\s+");
 		return split;

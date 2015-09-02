@@ -14,7 +14,7 @@ public class AnswerPresenter extends AbstractPresenter {
 		super.present(presentableAnswer);
 	}	
 	
-	protected void setPresentableResponseFieldValue(PresentableResponse presentableResponse) {
-		presentableAnswer = (PresentableAnswer) presentableResponse;
+	protected void setPresentableResponseFieldValue(PresentableResponse presentableAnswer) {
+		this.presentableAnswer = (PresentableAnswer) presentableAnswer;
 	}
 }

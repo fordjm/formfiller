@@ -10,7 +10,7 @@ public class AnswerImplTest {
 	public abstract static class GivenAnAnswerImpl{
 		int id;
 		Object content;
-		AnswerImpl response;
+		AnswerImpl answer;
 		
 		public abstract int getId();
 		public abstract Object getContent();
@@ -19,12 +19,12 @@ public class AnswerImplTest {
 		public void givenAnAnswerImpl(){
 			id = getId();
 			content = getContent();
-			response = new AnswerImpl(id, content);
+			answer = new AnswerImpl(id, content);
 		}
 		
 		void assertResponseDataIsConsistent(){
-			assertSame(id, response.getId());
-			assertSame(content, response.getContent());
+			assertSame(id, answer.getId());
+			assertSame(content, answer.getContent());
 		}
 		
 		@Test
@@ -45,7 +45,7 @@ public class AnswerImplTest {
 		
 		@Test
 		public void whenSatisfiesConstraintRuns_ObjecthenItReturnsFalse(){
-			assertFalse(response.satisfiesConstraint());
+			assertFalse(answer.satisfiesConstraint());
 		}
 	}
 	
@@ -61,7 +61,7 @@ public class AnswerImplTest {
 		
 		@Test
 		public void whenSatisfiesConstraintRuns_ObjecthenItReturnsFalse(){
-			assertFalse(response.satisfiesConstraint());
+			assertFalse(answer.satisfiesConstraint());
 		}		
 	}
 	
@@ -77,7 +77,7 @@ public class AnswerImplTest {
 		
 		@Test
 		public void whenSatisfiesConstraintRuns_ObjecthenItReturnsObjectrue(){
-			assertTrue(response.satisfiesConstraint());
+			assertTrue(answer.satisfiesConstraint());
 		}			
 	}
 }

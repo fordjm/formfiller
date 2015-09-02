@@ -63,8 +63,6 @@ public class RequestBuilderImplTest {
 	public void canBuildNoRequest() {
 		Request noRequest = impl.build("unknown", makeArgsHashmap());
 		
-		//noRequest.name = "newName";
-		
 		assertThat(noRequest.name, is("NoRequest"));
 	}
 }

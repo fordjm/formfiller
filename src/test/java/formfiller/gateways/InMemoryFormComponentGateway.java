@@ -8,7 +8,6 @@ import java.util.Map;
 import formfiller.entities.FormComponent;
 
 public class InMemoryFormComponentGateway implements FormComponentGateway {
-	// TODO:	Extract Transporter interface and rename InMemoryTransporter
 	public final InMemoryTransporter transporter = new InMemoryTransporter();	
 	private Map<String, FormComponent> formComponents = new HashMap<String, FormComponent>();
 	private List<String> orderedElements = new ArrayList<String>();
@@ -41,21 +40,21 @@ public class InMemoryFormComponentGateway implements FormComponentGateway {
 	}
 	
 	public FormComponent find(String id) {
-		if (id == null) throw new NullFind();
+		if (id == null) throw new NullId();
 		
 		return formComponents.get(id);
 	}
 
 	public void save(FormComponent formComponent) {
-		if (formComponent == null) throw new NullSave();
+		if (formComponent == null) throw new NullFormComponent();
 		
 		formComponents.put(formComponent.id, formComponent);
 		orderedElements.add(formComponent.id);
 	}
 
 	@SuppressWarnings("serial")
-	public class NullFind extends RuntimeException { }
+	public class NullId extends RuntimeException { }
 
 	@SuppressWarnings("serial")
-	public class NullSave extends RuntimeException { }
+	public class NullFormComponent extends RuntimeException { }
 }

@@ -7,14 +7,14 @@ import org.junit.Before;
 import org.junit.Test;
 
 import formfiller.ApplicationContext;
-import formfiller.delivery.eventParser.ParsedEvent;
+import formfiller.delivery.event.ParsedEvent;
 import formfiller.enums.ActionOutcome;
 import formfiller.response.models.PresentableResponse;
 import formfiller.utilities.*;
 
 public class HandleUnfoundControllerControllerTest {
 	private HandleUnfoundControllerController controller;
-	private ParsedEvent request;
+	private ParsedEvent parsedEvent;
 	
 	private PresentableResponse getPresentableUnfoundControllerResponse(){
 		PresentableResponse result = 
@@ -26,12 +26,12 @@ public class HandleUnfoundControllerControllerTest {
 	public void setUp() {
 		TestSetup.setupContext();
 		controller = new HandleUnfoundControllerController();
-		request = ParsedEventMocker.makeMockParsedEvent("");
+		parsedEvent = ParsedEventMocker.makeMockParsedEvent("");
 	}
 	
 	@Test
 	public void canHandle() {		
-		controller.handle(request);
+		controller.handle(parsedEvent);
 		
 		assertThat(getPresentableUnfoundControllerResponse().outcome, 
 				is(ActionOutcome.FAILED));
