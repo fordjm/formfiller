@@ -1,4 +1,4 @@
-package formfiller.persistence;
+package formfiller.deprecated;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotSame;
@@ -19,6 +19,7 @@ import de.bechte.junit.runners.context.HierarchicalContextRunner;
 import formfiller.entities.Constraint;
 import formfiller.entities.NoQuestion;
 import formfiller.entities.Prompt;
+import formfiller.deprecated.FormWidget;
 import formfiller.entities.Answer;
 import formfiller.entities.AnswerImpl;
 import formfiller.enums.Cardinality;

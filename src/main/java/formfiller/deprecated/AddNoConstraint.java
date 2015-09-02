@@ -1,4 +1,4 @@
-package formfiller.transactions;
+package formfiller.deprecated;
 
 import formfiller.entities.Constraint;
 import formfiller.entities.NoConstraint;

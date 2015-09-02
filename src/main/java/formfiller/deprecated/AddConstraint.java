@@ -1,8 +1,7 @@
-package formfiller.transactions;
+package formfiller.deprecated;
 
 import formfiller.entities.Constraint;
 import formfiller.enums.ContentConstraint;
-import formfiller.persistence.FormWidget;
 
 public abstract class AddConstraint implements Transaction {
 	ContentConstraint constraintName;

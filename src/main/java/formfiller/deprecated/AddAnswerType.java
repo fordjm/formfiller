@@ -1,4 +1,4 @@
-package formfiller.transactions;
+package formfiller.deprecated;
 
 import java.lang.reflect.Type;
 

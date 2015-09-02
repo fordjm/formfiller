@@ -1,11 +1,13 @@
-package formfiller.transactions;
+package formfiller.deprecated;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import formfiller.persistence.FormWidget;
+import formfiller.deprecated.AddAnswerRequired;
+import formfiller.deprecated.FormWidget;
+import formfiller.deprecated.Transaction;
 
 public class AddAnswerRequiredTest {
 	

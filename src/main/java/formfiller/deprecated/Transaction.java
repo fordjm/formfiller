@@ -1,4 +1,4 @@
-package formfiller.transactions;
+package formfiller.deprecated;
 
 public interface Transaction {
 	void execute();

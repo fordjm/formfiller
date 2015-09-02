@@ -1,4 +1,4 @@
-package formfiller.transactions;
+package formfiller.deprecated;
 
 import static org.junit.Assert.*;
 
@@ -10,8 +10,10 @@ import de.bechte.junit.runners.context.HierarchicalContextRunner;
 import formfiller.entities.Constraint;
 import formfiller.entities.NoConstraint;
 import formfiller.entities.Prompt;
+import formfiller.deprecated.AddAnswer;
+import formfiller.deprecated.FormWidget;
+import formfiller.deprecated.Transaction;
 import formfiller.entities.AnswerType;
-import formfiller.persistence.FormWidget;
 import formfiller.utilities.*;
 
 @RunWith(HierarchicalContextRunner.class)

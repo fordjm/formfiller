@@ -1,4 +1,4 @@
-package formfiller.transactions;
+package formfiller.deprecated;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
@@ -11,12 +11,14 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
+import formfiller.deprecated.ClearWidget;
+import formfiller.deprecated.FormWidget;
+import formfiller.deprecated.Transaction;
 import formfiller.entities.AnswerImpl;
 import formfiller.entities.Constraint;
 import formfiller.entities.NoQuestion;
 import formfiller.enums.Cardinality;
 import formfiller.enums.ContentConstraint;
-import formfiller.persistence.FormWidget;
 
 @RunWith(HierarchicalContextRunner.class)
 public class ClearWidgetTest {

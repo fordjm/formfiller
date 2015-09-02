@@ -6,8 +6,8 @@ import formfiller.delivery.event.ParsedEvent;
 import formfiller.request.builders.RequestBuilder;
 import formfiller.request.builders.RequestBuilderImpl;
 import formfiller.request.models.Request;
-import formfiller.usecases.UseCaseFactory;
-import formfiller.usecases.UseCaseFactoryImpl;
+import formfiller.usecases.factory.UseCaseFactory;
+import formfiller.usecases.factory.UseCaseFactoryImpl;
 
 public class HandleUnfoundControllerController implements Controller {
 

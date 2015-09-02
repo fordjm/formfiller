@@ -1,11 +1,10 @@
-package formfiller.transactions;
+package formfiller.deprecated;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import formfiller.entities.Prompt;
 import formfiller.entities.Question;
-import formfiller.persistence.FormWidget;
 
 public class PromptSubject implements Transaction {
 	List<Transaction> setupTransactions = new ArrayList<Transaction>();

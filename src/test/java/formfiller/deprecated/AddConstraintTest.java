@@ -1,4 +1,4 @@
-package formfiller.transactions;
+package formfiller.deprecated;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -13,6 +13,13 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
+import formfiller.deprecated.AddAnswerType;
+import formfiller.deprecated.AddNoConstraint;
+import formfiller.deprecated.AddSelectionConstraint;
+import formfiller.deprecated.AddValueMaximum;
+import formfiller.deprecated.AddValueMinimum;
+import formfiller.deprecated.FormWidget;
+import formfiller.deprecated.Transaction;
 import formfiller.entities.AnswerType;
 import formfiller.entities.Constraint;
 import formfiller.entities.NoConstraint;
@@ -20,7 +27,6 @@ import formfiller.entities.SelectionConstraint;
 import formfiller.entities.ValueMaximum;
 import formfiller.entities.ValueMinimum;
 import formfiller.enums.ContentConstraint;
-import formfiller.persistence.FormWidget;
 
 @RunWith(HierarchicalContextRunner.class)
 public class AddConstraintTest {

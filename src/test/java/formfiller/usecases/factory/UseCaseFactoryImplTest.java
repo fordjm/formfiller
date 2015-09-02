@@ -1,4 +1,4 @@
-package formfiller.usecases;
+package formfiller.usecases.factory;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
@@ -7,7 +7,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import formfiller.boundaries.UseCase;
-import formfiller.usecases.UseCaseFactoryImpl.UnknownUseCase;
+import formfiller.usecases.factory.UseCaseFactoryImpl;
+import formfiller.usecases.factory.UseCaseFactoryImpl.UnknownUseCase;
 import formfiller.usecases.handleUnfoundController.HandleUnfoundControllerUseCase;
 import formfiller.usecases.navigation.NavigationUseCase;
 

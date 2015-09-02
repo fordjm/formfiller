@@ -1,4 +1,4 @@
-package formfiller.usecases;
+package formfiller.usecases.factory;
 
 import formfiller.boundaries.UseCase;
 import formfiller.usecases.handleUnfoundController.HandleUnfoundControllerUseCase;

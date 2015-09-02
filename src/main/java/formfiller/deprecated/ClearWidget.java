@@ -1,6 +1,4 @@
-package formfiller.transactions;
-
-import formfiller.persistence.FormWidget;
+package formfiller.deprecated;
 
 public class ClearWidget implements Transaction {
 	

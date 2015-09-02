@@ -1,4 +1,4 @@
-package formfiller.transactions;
+package formfiller.deprecated;
 
 import java.util.Collection;
 import java.util.Map;
@@ -7,7 +7,6 @@ import formfiller.entities.Constraint;
 import formfiller.entities.Answer;
 import formfiller.entities.AnswerImpl;
 import formfiller.enums.ContentConstraint;
-import formfiller.persistence.FormWidget;
 
 public class AddAnswer implements Transaction {
 	Answer answer;

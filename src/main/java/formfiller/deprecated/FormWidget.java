@@ -1,4 +1,4 @@
-package formfiller.persistence;
+package formfiller.deprecated;
 
 import java.util.ArrayList;
 import java.util.HashMap;
