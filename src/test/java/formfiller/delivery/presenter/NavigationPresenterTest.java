@@ -9,11 +9,11 @@ import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
-import formfiller.boundaryCrossers.PresentableAnswer;
-import formfiller.boundaryCrossers.PresentableFormComponent;
-import formfiller.boundaryCrossers.PresentableQuestion;
-import formfiller.boundaryCrossers.PresentableResponse;
 import formfiller.enums.ActionOutcome;
+import formfiller.response.models.PresentableAnswer;
+import formfiller.response.models.PresentableFormComponent;
+import formfiller.response.models.PresentableQuestion;
+import formfiller.response.models.PresentableResponse;
 
 @RunWith(HierarchicalContextRunner.class)
 public class NavigationPresenterTest {

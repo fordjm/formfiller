@@ -10,8 +10,8 @@ import org.mockito.Mockito;
 
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
 import formfiller.ApplicationContext;
-import formfiller.boundaryCrossers.PresentableAnswer;
 import formfiller.delivery.presenter.AnswerPresenter;
+import formfiller.response.models.PresentableAnswer;
 
 @RunWith(HierarchicalContextRunner.class)
 public class PresentAnswerViewModelTest {

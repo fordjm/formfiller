@@ -6,8 +6,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import formfiller.boundaryCrossers.PresentableQuestion;
 import formfiller.entities.Prompt;
+import formfiller.response.models.PresentableQuestion;
 
 public class QuestionPresenterTest {
 	PresentableQuestion presentableQuestion;

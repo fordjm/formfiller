@@ -7,9 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import formfiller.ApplicationContext;
-import formfiller.boundaryCrossers.PresentableResponse;
 import formfiller.delivery.eventParser.ParsedEvent;
 import formfiller.enums.ActionOutcome;
+import formfiller.response.models.PresentableResponse;
 import formfiller.utilities.*;
 
 public class HandleUnfoundControllerControllerTest {

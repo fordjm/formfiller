@@ -1,9 +1,9 @@
 package formfiller.delivery.presenter;
 
 import formfiller.ApplicationContext;
-import formfiller.boundaryCrossers.PresentableFormComponent;
-import formfiller.boundaryCrossers.PresentableResponse;
 import formfiller.enums.ActionOutcome;
+import formfiller.response.models.PresentableFormComponent;
+import formfiller.response.models.PresentableResponse;
 
 public class NavigationPresenter extends AbstractPresenter {
 	PresentableResponse presentableNavigation;

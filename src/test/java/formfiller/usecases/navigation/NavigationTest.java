@@ -16,12 +16,12 @@ import formfiller.entities.Question;
 import formfiller.enums.ActionOutcome;
 import formfiller.gateways.InMemoryTransporter.Direction;
 import formfiller.request.models.NavigationRequest;
+import formfiller.response.models.PresentableResponse;
 import formfiller.gateways.FormComponentGateway;
 import formfiller.gateways.InMemoryFormComponentGateway;
 import formfiller.gateways.Transporter;
 import formfiller.usecases.navigation.NavigationUseCase;
 import formfiller.ApplicationContext;
-import formfiller.boundaryCrossers.PresentableResponse;
 import formfiller.utilities.*;
 
 @RunWith(HierarchicalContextRunner.class)

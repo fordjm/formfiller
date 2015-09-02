@@ -1,4 +1,4 @@
-package formfiller.boundaryCrossers;
+package formfiller.response.models;
 
 import formfiller.enums.ActionOutcome;
 

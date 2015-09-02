@@ -2,10 +2,6 @@ package formfiller.usecases.navigation;
 
 import formfiller.ApplicationContext;
 import formfiller.boundaries.UseCase;
-import formfiller.boundaryCrossers.PresentableAnswer;
-import formfiller.boundaryCrossers.PresentableFormComponent;
-import formfiller.boundaryCrossers.PresentableQuestion;
-import formfiller.boundaryCrossers.PresentableResponse;
 import formfiller.entities.Answer;
 import formfiller.entities.ExecutedUseCaseImpl;
 import formfiller.entities.FormComponent;
@@ -17,6 +13,10 @@ import formfiller.gateways.InMemoryTransporter;
 import formfiller.gateways.InMemoryTransporter.Direction;
 import formfiller.request.models.NavigationRequest;
 import formfiller.request.models.Request;
+import formfiller.response.models.PresentableAnswer;
+import formfiller.response.models.PresentableFormComponent;
+import formfiller.response.models.PresentableQuestion;
+import formfiller.response.models.PresentableResponse;
 
 public class NavigationUseCase implements UseCase {
 	private ActionOutcome outcome;

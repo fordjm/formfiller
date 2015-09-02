@@ -1,7 +1,7 @@
 package formfiller.delivery.presenter;
 
-import formfiller.boundaryCrossers.PresentableQuestion;
-import formfiller.boundaryCrossers.PresentableResponse;
+import formfiller.response.models.PresentableQuestion;
+import formfiller.response.models.PresentableResponse;
 
 public class QuestionPresenter extends AbstractPresenter {
 	PresentableQuestion presentableQuestion;

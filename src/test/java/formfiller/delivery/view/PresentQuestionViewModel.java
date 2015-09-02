@@ -2,8 +2,8 @@ package formfiller.delivery.view;
 
 import java.util.Observable;
 
-import formfiller.boundaryCrossers.PresentableQuestion;
 import formfiller.delivery.ViewModel;
+import formfiller.response.models.PresentableQuestion;
 
 public class PresentQuestionViewModel implements ViewModel {
 	PresentableQuestion question;

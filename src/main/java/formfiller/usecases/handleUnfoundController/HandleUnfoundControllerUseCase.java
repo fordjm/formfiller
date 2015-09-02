@@ -2,10 +2,10 @@ package formfiller.usecases.handleUnfoundController;
 
 import formfiller.ApplicationContext;
 import formfiller.boundaries.UseCase;
-import formfiller.boundaryCrossers.PresentableResponse;
 import formfiller.enums.ActionOutcome;
 import formfiller.request.models.HandleUnfoundControllerRequest;
 import formfiller.request.models.Request;
+import formfiller.response.models.PresentableResponse;
 
 public class HandleUnfoundControllerUseCase implements UseCase {	
 

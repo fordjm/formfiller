@@ -1,6 +1,6 @@
 package formfiller.delivery.presenter;
 
-import formfiller.boundaryCrossers.PresentableResponse;
+import formfiller.response.models.PresentableResponse;
 
 public class HandleUnfoundControllerPresenter extends AbstractPresenter {
 	PresentableResponse presentableHandleUnfoundController;

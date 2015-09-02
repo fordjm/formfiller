@@ -2,8 +2,8 @@ package formfiller.delivery.view;
 
 import java.util.Observable;
 
-import formfiller.boundaryCrossers.PresentableResponse;
 import formfiller.delivery.ViewModel;
+import formfiller.response.models.PresentableResponse;
 
 public class HandleUnfoundControllerViewModel implements ViewModel {
 

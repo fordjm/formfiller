@@ -8,8 +8,8 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import formfiller.ApplicationContext;
-import formfiller.boundaryCrossers.PresentableResponse;
 import formfiller.request.models.HandleUnfoundControllerRequest;
+import formfiller.response.models.PresentableResponse;
 import formfiller.utilities.TestSetup;
 
 public class HandleUnfoundControllerTest {

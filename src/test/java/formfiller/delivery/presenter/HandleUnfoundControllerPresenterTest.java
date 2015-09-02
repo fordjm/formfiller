@@ -6,8 +6,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
+import formfiller.response.models.PresentableResponse;
+
 import static org.hamcrest.CoreMatchers.*;
-import formfiller.boundaryCrossers.PresentableResponse;
 
 public class HandleUnfoundControllerPresenterTest {
 	HandleUnfoundControllerPresenter handleUnfoundControllerPresenter;

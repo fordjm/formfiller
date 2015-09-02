@@ -1,8 +1,8 @@
 package formfiller.delivery.view;
 import java.util.Observable;
 
-import formfiller.boundaryCrossers.PresentableAnswer;
 import formfiller.delivery.ViewModel;
+import formfiller.response.models.PresentableAnswer;
 
 public class PresentAnswerViewModel implements ViewModel {
 	private boolean wasDisplayed = false;
