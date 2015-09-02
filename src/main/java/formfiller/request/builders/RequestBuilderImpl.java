@@ -1,9 +1,9 @@
-package formfiller.request.builder;
+package formfiller.request.builders;
 
 import java.util.HashMap;
 
 import formfiller.gateways.InMemoryTransporter.Direction;
-import formfiller.request.interfaces.Request;
+import formfiller.request.models.Request;
 
 public class RequestBuilderImpl implements RequestBuilder {
 
@@ -35,11 +35,8 @@ public class RequestBuilderImpl implements RequestBuilder {
 	}
 	
 	private Request getNoRequest() {
-		return new Request(){
-			public String getName() {
-				return "NoRequest";
-			}
-			public void setName(String name) { }
-		};
+		Request result = new Request();
+		result.name = "NoRequest";
+		return result;
 	}
 }

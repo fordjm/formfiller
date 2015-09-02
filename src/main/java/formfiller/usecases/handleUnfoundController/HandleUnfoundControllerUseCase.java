@@ -4,15 +4,15 @@ import formfiller.ApplicationContext;
 import formfiller.boundaries.UseCase;
 import formfiller.boundaryCrossers.PresentableResponse;
 import formfiller.enums.ActionOutcome;
-import formfiller.request.interfaces.HandleUnfoundControllerRequest;
-import formfiller.request.interfaces.Request;
+import formfiller.request.models.HandleUnfoundControllerRequest;
+import formfiller.request.models.Request;
 
 public class HandleUnfoundControllerUseCase implements UseCase {	
 
 	public void execute(Request request) {
 		HandleUnfoundControllerRequest handleUnfoundControllerRequest = 
 				(HandleUnfoundControllerRequest) request;
-		String message = handleUnfoundControllerRequest.getMessage();
+		String message = handleUnfoundControllerRequest.message;
 		ApplicationContext.handleUnfoundControllerPresenter.
 				present(makePresentableUnfoundControllerResponse(message));
 	}

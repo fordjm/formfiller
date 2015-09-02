@@ -9,7 +9,7 @@ import org.mockito.Mockito;
 
 import formfiller.ApplicationContext;
 import formfiller.boundaryCrossers.PresentableResponse;
-import formfiller.request.interfaces.HandleUnfoundControllerRequest;
+import formfiller.request.models.HandleUnfoundControllerRequest;
 import formfiller.utilities.TestSetup;
 
 public class HandleUnfoundControllerTest {
@@ -36,7 +36,7 @@ public class HandleUnfoundControllerTest {
 	@Test
 	public void executionPassesRequestDataToResponse() {
 		HandleUnfoundControllerRequest mockRequest = Mockito.mock(HandleUnfoundControllerRequest.class);
-		Mockito.when(mockRequest.getMessage()).thenReturn(REQUEST_NOT_FOUND);
+		mockRequest.message = REQUEST_NOT_FOUND;
 		
 		handleUnfoundControllerUseCase.execute(mockRequest);
 		currentPresentableResponse = getPresentableResponseFromPresenter();

@@ -1,8 +1,8 @@
-package formfiller.request.builder;
+package formfiller.request.builders;
 
 import java.util.HashMap;
 
-import formfiller.request.interfaces.Request;
+import formfiller.request.models.Request;
 
 public interface RequestBuilder {	
 	public <K,V> Request build(String requestName, HashMap<K,V> args);	

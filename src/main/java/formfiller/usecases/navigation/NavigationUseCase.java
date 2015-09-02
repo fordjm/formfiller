@@ -15,8 +15,8 @@ import formfiller.gateways.NavigationValidator;
 import formfiller.gateways.Transporter;
 import formfiller.gateways.InMemoryTransporter;
 import formfiller.gateways.InMemoryTransporter.Direction;
-import formfiller.request.interfaces.NavigationRequest;
-import formfiller.request.interfaces.Request;
+import formfiller.request.models.NavigationRequest;
+import formfiller.request.models.Request;
 
 public class NavigationUseCase implements UseCase {
 	private ActionOutcome outcome;
@@ -34,7 +34,7 @@ public class NavigationUseCase implements UseCase {
 		if (request == null) throw new NullExecution();
 		
 		NavigationRequest navigationRequest = (NavigationRequest) request;
-		InMemoryTransporter.Direction direction = navigationRequest.getDirection();
+		InMemoryTransporter.Direction direction = navigationRequest.direction;
 		NavigationValidator navigator = getNavigationValidator();
 		
 		if (navigator.isMoveLegal(direction)) {

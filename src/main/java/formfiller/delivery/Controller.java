@@ -7,5 +7,5 @@ import formfiller.delivery.eventParser.ParsedEvent;
 // Retrieved 2015-08-14
 
 public interface Controller {
-	public void handle(ParsedEvent parsedUserRequest);
+	public void handle(ParsedEvent parsedEvent);
 }

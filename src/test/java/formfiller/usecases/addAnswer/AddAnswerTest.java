@@ -14,7 +14,7 @@ import formfiller.entities.Answer;
 import formfiller.entities.AnswerImpl;
 import formfiller.entities.FormComponent;
 import formfiller.entities.Question;
-import formfiller.request.implementations.AddAnswerRequest;
+import formfiller.request.models.AddAnswerRequest;
 import formfiller.usecases.addAnswer.AddAnswerUseCase;
 import formfiller.utilities.QuestionMocker;
 import formfiller.utilities.TestSetup;
@@ -26,7 +26,10 @@ public class AddAnswerTest {
 	private Answer foundAnswer;	
 
 	private AddAnswerRequest makeAddAnswerRequest(String questionId, Object content) {
-		return new AddAnswerRequest(questionId, content);
+		AddAnswerRequest result = new AddAnswerRequest();
+		result.questionId = questionId;
+		result.content = content;
+		return result;
 	}
 	
 	private Answer findAnswerByName(String name) {

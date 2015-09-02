@@ -15,10 +15,10 @@ import formfiller.entities.Prompt;
 import formfiller.entities.Question;
 import formfiller.enums.ActionOutcome;
 import formfiller.gateways.InMemoryTransporter.Direction;
+import formfiller.request.models.NavigationRequest;
 import formfiller.gateways.FormComponentGateway;
 import formfiller.gateways.InMemoryFormComponentGateway;
 import formfiller.gateways.Transporter;
-import formfiller.request.interfaces.NavigationRequest;
 import formfiller.usecases.navigation.NavigationUseCase;
 import formfiller.ApplicationContext;
 import formfiller.boundaryCrossers.PresentableResponse;
@@ -31,7 +31,7 @@ public class NavigationTest {
 	private FormComponent foundFormComponent;
 	
 	private void setMockRequestDirection(Direction direction){
-		when(mockRequest.getDirection()).thenReturn(direction);
+		mockRequest.direction = direction;
 	}
 	
 	private FormComponent findFormComponentByIndex(int index){

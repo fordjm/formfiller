@@ -1,6 +1,6 @@
-package formfiller.request.builder;
+package formfiller.request.builders;
 
-import formfiller.request.interfaces.Request;
+import formfiller.request.models.Request;
 
 public interface RequestBuilderFunctions {
 	void buildName();

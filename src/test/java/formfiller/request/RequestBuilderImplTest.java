@@ -9,11 +9,10 @@ import org.junit.Before;
 import org.junit.Test;
 
 import formfiller.gateways.InMemoryTransporter.Direction;
-import formfiller.request.builder.RequestBuilderImpl;
-import formfiller.request.implementations.HandleUnfoundControllerRequestImpl;
-import formfiller.request.implementations.NavigationRequestImpl;
-import formfiller.request.interfaces.NavigationRequest;
-import formfiller.request.interfaces.Request;
+import formfiller.request.builders.RequestBuilderImpl;
+import formfiller.request.models.HandleUnfoundControllerRequest;
+import formfiller.request.models.NavigationRequest;
+import formfiller.request.models.Request;
 
 public class RequestBuilderImplTest {
 	private RequestBuilderImpl impl;
@@ -43,29 +42,29 @@ public class RequestBuilderImplTest {
 				buildRequest("handleUnfoundController", makeArgsHashmap());
 		
 		assertThat(handleUnfoundControllerRequest, 
-				is(instanceOf(HandleUnfoundControllerRequestImpl.class)));
+				is(instanceOf(HandleUnfoundControllerRequest.class)));
 	}
 	
 	@Test
 	public void canBuildNavigationRequest() {
 		Request navigationRequest = 
 				buildRequest("navigation", makeArgsHashmap("direction", Direction.FORWARD));
-		String name = navigationRequest.getName();
+		String name = navigationRequest.name;
 		NavigationRequest castNavigationRequest = (NavigationRequest) 
 				navigationRequest;
 		
 		assertThat(navigationRequest, 
-				is(instanceOf(NavigationRequestImpl.class)));
+				is(instanceOf(NavigationRequest.class)));
 		assertThat(name, is("Navigation"));
-		assertThat(castNavigationRequest.getDirection(), is(Direction.FORWARD));
+		assertThat(castNavigationRequest.direction, is(Direction.FORWARD));
 	}
 	
 	@Test
 	public void canBuildNoRequest() {
 		Request noRequest = impl.build("unknown", makeArgsHashmap());
 		
-		noRequest.setName("newName");
+		//noRequest.name = "newName";
 		
-		assertThat(noRequest.getName(), is("NoRequest"));
+		assertThat(noRequest.name, is("NoRequest"));
 	}
 }

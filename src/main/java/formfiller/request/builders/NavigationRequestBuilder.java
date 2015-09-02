@@ -1,23 +1,22 @@
-package formfiller.request.builder;
+package formfiller.request.builders;
 
 import formfiller.gateways.InMemoryTransporter;
-import formfiller.request.implementations.NavigationRequestImpl;
-import formfiller.request.interfaces.NavigationRequest;
-import formfiller.request.interfaces.Request;
+import formfiller.request.models.NavigationRequest;
+import formfiller.request.models.Request;
 
 public class NavigationRequestBuilder implements RequestBuilderFunctions {
 	NavigationRequest navigationRequest;
 	
 	public NavigationRequestBuilder(){
-		navigationRequest = new NavigationRequestImpl();
+		navigationRequest = new NavigationRequest();
 	}
 
 	public void buildName() {
-		navigationRequest.setName("Navigation");
+		navigationRequest.name = "Navigation";
 	}
 	
 	public void buildDirection(InMemoryTransporter.Direction direction){
-		navigationRequest.setDirection(direction);
+		navigationRequest.direction = direction;
 	}
 
 	public Request getRequest() {
