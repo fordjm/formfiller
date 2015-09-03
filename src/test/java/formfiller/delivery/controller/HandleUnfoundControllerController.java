@@ -13,7 +13,8 @@ public class HandleUnfoundControllerController implements Controller {
 
 	public void handle(ParsedEvent parsedUserRequest) {
 		String message = makeUnfoundControllerMessage(parsedUserRequest.method);
-		Request request = makeHandleUnfoundControllerRequest(message);
+		Arguments arguments = makeArguments(message);
+		Request request = makeHandleUnfoundControllerRequest(arguments);
 		UseCase useCase = makeHandleUnfoundControllerUseCase();
 		useCase.execute(request);
 	}
@@ -30,11 +31,16 @@ public class HandleUnfoundControllerController implements Controller {
 		return result;
 	}
 	
-	protected Request makeHandleUnfoundControllerRequest(String message){
-		RequestBuilder requestBuilder = new RequestBuilderImpl();
-		Request result = requestBuilder.build("handleUnfoundController", 
-				ArgsMaker.makeArgs("message", message));	// TODO:	Wrap boundary interface.
+	protected Request makeHandleUnfoundControllerRequest(Arguments arguments){
+		RequestBuilder requestBuilder = new RequestBuilderImpl();		
+		Request result = requestBuilder.build("handleUnfoundController", arguments);
 		return result;
+	}
+
+	private Arguments makeArguments(String message) {
+		Arguments arguments = new Arguments();
+		arguments.add("message", message);
+		return arguments;
 	}
 	
 	protected UseCase makeHandleUnfoundControllerUseCase(){		

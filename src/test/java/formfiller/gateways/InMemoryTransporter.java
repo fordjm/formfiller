@@ -4,6 +4,7 @@ import formfiller.ApplicationContext;
 import formfiller.entities.FormComponent;
 
 public class InMemoryTransporter implements Transporter {
+	//	TODO:	Does Java Direction class exist?
 	public enum Direction { BACKWARD, FORWARD, NONE }	
 	public final NavigationValidator navigationValidator = 
 			new NavigationValidator();

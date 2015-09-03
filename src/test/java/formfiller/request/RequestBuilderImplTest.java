@@ -3,11 +3,10 @@ package formfiller.request;
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
 
-import java.util.HashMap;
-
 import org.junit.Before;
 import org.junit.Test;
 
+import formfiller.delivery.controller.Arguments;
 import formfiller.gateways.InMemoryTransporter.Direction;
 import formfiller.request.builders.RequestBuilderImpl;
 import formfiller.request.models.HandleUnfoundControllerRequest;
@@ -17,17 +16,13 @@ import formfiller.request.models.Request;
 public class RequestBuilderImplTest {
 	private RequestBuilderImpl impl;
 	
-	private <K,V> Request buildRequest(String requestName, HashMap<K,V> args) {
+	private Request buildRequest(String requestName, Arguments args) {
 		return impl.build(requestName, args);
 	}
 	
-	private <K,V> HashMap<K,V> makeArgsHashmap() {
-		return new HashMap<K,V>();
-	}
-	
-	private <K,V> HashMap<K,V> makeArgsHashmap(K key, V value) {
-		HashMap<K,V> result = new HashMap<K,V>();
-		result.put(key, value);
+	private Arguments makeArguments(String key, Object value) {
+		Arguments result = new Arguments();
+		result.add(key, value);
 		return result;
 	}
 	
@@ -39,7 +34,7 @@ public class RequestBuilderImplTest {
 	@Test
 	public void canBuildHandleUnfoundControllerRequest() {
 		Request handleUnfoundControllerRequest = 
-				buildRequest("handleUnfoundController", makeArgsHashmap());
+				impl.build("handleUnfoundController", new Arguments());
 		
 		assertThat(handleUnfoundControllerRequest, 
 				is(instanceOf(HandleUnfoundControllerRequest.class)));
@@ -48,7 +43,7 @@ public class RequestBuilderImplTest {
 	@Test
 	public void canBuildNavigationRequest() {
 		Request navigationRequest = 
-				buildRequest("navigation", makeArgsHashmap("direction", Direction.FORWARD));
+				buildRequest("navigation", makeArguments("direction", Direction.FORWARD));
 		String name = navigationRequest.name;
 		NavigationRequest castNavigationRequest = (NavigationRequest) 
 				navigationRequest;
@@ -61,7 +56,7 @@ public class RequestBuilderImplTest {
 	
 	@Test
 	public void canBuildNoRequest() {
-		Request noRequest = impl.build("unknown", makeArgsHashmap());
+		Request noRequest = impl.build("unknown", new Arguments());
 		
 		assertThat(noRequest.name, is("NoRequest"));
 	}

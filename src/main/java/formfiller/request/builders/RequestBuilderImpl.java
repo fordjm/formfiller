@@ -1,31 +1,31 @@
 package formfiller.request.builders;
 
-import java.util.HashMap;
-
+import formfiller.delivery.controller.Arguments;
 import formfiller.gateways.InMemoryTransporter.Direction;
 import formfiller.request.models.Request;
 
 public class RequestBuilderImpl implements RequestBuilder {
 
-	public <K,V> Request build(String requestName, HashMap<K,V> args) {
-		if(requestName.equalsIgnoreCase("handleUnfoundController"))
-			return buildHandleUnfoundControllerRequest(args); 
+	public Request build(String requestName, Arguments args) {
+		if(requestName.equalsIgnoreCase("handleUnfoundController")) {
+			return buildHandleUnfoundControllerRequest(args);
+		}
 		else if(requestName.equalsIgnoreCase("navigation"))
 			return buildNavigationRequest(args);
 		else
 			return getNoRequest();
 	}
 
-	private <K,V> Request buildHandleUnfoundControllerRequest(HashMap<K,V> args) {
+	private Request buildHandleUnfoundControllerRequest(Arguments args) {
 		HandleUnfoundControllerRequestBuilder builder = 
 				new HandleUnfoundControllerRequestBuilder();
-		builder.buildMessage((String) args.get("message"));
+		builder.buildMessage((String) args.getById("message"));
 		return finishBuildingRequest(builder);
 	}
 	
-	private <K,V> Request buildNavigationRequest(HashMap<K,V> args) {
+	private Request buildNavigationRequest(Arguments args) {
 		NavigationRequestBuilder builder = new NavigationRequestBuilder();
-		builder.buildDirection((Direction) args.get("direction")); 
+		builder.buildDirection((Direction) args.getById("direction")); 
 		return finishBuildingRequest(builder);
 	}
 	

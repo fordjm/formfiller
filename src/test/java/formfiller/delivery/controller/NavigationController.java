@@ -15,16 +15,22 @@ public class NavigationController implements Controller {
 
 	public void handle(ParsedEvent parsedEvent) {
 		Direction direction = DirectionParser.parseDirection(parsedEvent.param);
-		Request navigationRequest = makeNavigationRequest(direction);
+		Arguments arguments = makeArguments(direction);
+		Request navigationRequest = makeNavigationRequest(arguments);
 		UseCase useCase = makeNavigationUseCase();
 		useCase.execute(navigationRequest);
 	}	
 	
-	protected Request makeNavigationRequest(Direction direction){
+	protected Request makeNavigationRequest(Arguments arguments){
 		RequestBuilder requestBuilder = new RequestBuilderImpl();
-		Request result = requestBuilder.build("navigation", 
-				ArgsMaker.makeArgs("direction", direction));
+		Request result = requestBuilder.build("navigation", arguments);
 		return result;
+	}
+
+	private Arguments makeArguments(Direction direction) {
+		Arguments arguments = new Arguments();
+		arguments.add("direction", direction);
+		return arguments;
 	}
 	
 	protected UseCase makeNavigationUseCase(){		
