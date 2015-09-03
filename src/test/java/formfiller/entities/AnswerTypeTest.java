@@ -24,14 +24,17 @@ public class AnswerTypeTest<T> {
 		type = temp.getClass();
 		answerType = new AnswerType(type);
 	}	
+	
 	@Test
 	public void whenGetNameRuns_ThenItReturnsCorrectName(){
 		assertSame(ContentConstraint.TYPE, answerType.getName());
 	}	
+	
 	@Test
 	public void whenGetTypeRuns_ThenItReturnsGivenType(){
 		assertSame(type, answerType.getType());
 	}	
+	
 	@Test
 	public void whenAnswerTypeIsNew_ThenItWrapsANullResponse(){
 		assertFalse(answerType.hasAnswer());
@@ -41,11 +44,13 @@ public class AnswerTypeTest<T> {
 	}
 	
 	public class GivenANullToWrap {
-		Answer response;		
+		Answer response;	
+		
 		@Before
 		public void givenANullToWrap(){
 			response = null;
 		}		
+		
 		@Test(expected = IllegalArgumentException.class)
 		public void whenWrappingNull_ThenIllegalArgumentExceptionIsThrown(){
 			answerType.wrap(response);

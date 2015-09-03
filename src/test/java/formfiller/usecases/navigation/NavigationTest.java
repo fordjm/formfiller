@@ -1,28 +1,28 @@
 package formfiller.usecases.navigation;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.mock;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
+import formfiller.ApplicationContext;
 import formfiller.entities.AnswerImpl;
 import formfiller.entities.FormComponent;
 import formfiller.entities.Prompt;
 import formfiller.entities.Question;
-import formfiller.enums.ActionOutcome;
-import formfiller.gateways.InMemoryTransporter.Direction;
-import formfiller.request.models.NavigationRequest;
-import formfiller.response.models.PresentableResponse;
 import formfiller.gateways.FormComponentGateway;
 import formfiller.gateways.InMemoryFormComponentGateway;
+import formfiller.gateways.InMemoryTransporter.Direction;
 import formfiller.gateways.Transporter;
-import formfiller.usecases.navigation.NavigationUseCase;
-import formfiller.ApplicationContext;
-import formfiller.utilities.*;
+import formfiller.request.models.NavigationRequest;
+import formfiller.utilities.FormComponentMocker;
+import formfiller.utilities.QuestionMocker;
+import formfiller.utilities.TestSetup;
 
 @RunWith(HierarchicalContextRunner.class)
 public class NavigationTest {	
@@ -227,16 +227,6 @@ public class NavigationTest {
 				assertThat(getCurrentFormComponent(), is(foundFormComponent));
 				assertThat(foundFormComponent.id, is("name"));
 			}
-
-			//	TODO:	Move presentation tests to presenter test class.
-			private PresentableResponse getPresentedNavigation() {
-				return (PresentableResponse)
-						ApplicationContext.navigationPresenter.getPresentableResponse();
-			}
-
-			private String getFailedNavigationResult(){
-				return "Sorry, you cannot move ahead.  The current question requires a response.";
-			}
 			
 			@Test
 			public void movingForward_DoesNotChangeComponent(){
@@ -247,8 +237,6 @@ public class NavigationTest {
 				
 				assertThat(getCurrentFormComponent(), is(foundFormComponent));
 				assertThat(foundFormComponent.id, is("age"));
-				assertThat(getPresentedNavigation().outcome, is(ActionOutcome.FAILED));
-				assertEquals(getFailedNavigationResult(), getPresentedNavigation().message);
 			}			
 		}		
 	}

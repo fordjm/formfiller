@@ -1,6 +1,6 @@
 package formfiller.usecases.factory;
 
-import formfiller.boundaries.UseCase;
+import formfiller.applicationBoundaryInterfaces.UseCase;
 import formfiller.usecases.handleUnfoundController.HandleUnfoundControllerUseCase;
 import formfiller.usecases.navigation.NavigationUseCase;
 
@@ -23,6 +23,6 @@ public class UseCaseFactoryImpl implements UseCaseFactory {
 		return new NavigationUseCase();
 	}
 	
+	@SuppressWarnings("serial")
 	public class UnknownUseCase extends RuntimeException{ }
-
 }

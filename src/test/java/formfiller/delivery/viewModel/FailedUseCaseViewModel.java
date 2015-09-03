@@ -6,15 +6,16 @@ import formfiller.delivery.ViewModel;
 import formfiller.delivery.ui.testConsoleUi.ConsoleView;
 import formfiller.response.models.PresentableResponse;
 
-public class HandleUnfoundControllerViewModel implements ViewModel {
+//	TODO:	This could probably be a Singleton.
+public class FailedUseCaseViewModel implements ViewModel {
 
 	public void update(Observable o, Object input) {
 		outputPresentableResponse(input);
 	}
 	
 	public void outputPresentableResponse(Object input) {
-		PresentableResponse presentableHandleUnfoundController = 
+		PresentableResponse presentableFailedUseCase = 
 				(PresentableResponse) input;
-		ConsoleView.output(presentableHandleUnfoundController.message);
+		ConsoleView.output(presentableFailedUseCase.message);
 	}
 }

@@ -1,6 +1,6 @@
 package formfiller.entities;
 
-import formfiller.boundaries.UseCase;
+import formfiller.applicationBoundaryInterfaces.UseCase;
 import formfiller.enums.ActionOutcome;
 
 public class ExecutedUseCaseImpl implements ExecutedUseCase {

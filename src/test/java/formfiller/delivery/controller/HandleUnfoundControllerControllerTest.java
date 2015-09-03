@@ -18,7 +18,7 @@ public class HandleUnfoundControllerControllerTest {
 	
 	private PresentableResponse getPresentableUnfoundControllerResponse(){
 		PresentableResponse result = 
-				ApplicationContext.handleUnfoundControllerPresenter.getPresentableResponse();
+				ApplicationContext.failedUseCasePresenter.getPresentableResponse();
 		return result;
 	}
 	

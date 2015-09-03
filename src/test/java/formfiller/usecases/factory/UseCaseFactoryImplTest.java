@@ -6,7 +6,7 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import formfiller.boundaries.UseCase;
+import formfiller.applicationBoundaryInterfaces.UseCase;
 import formfiller.usecases.factory.UseCaseFactoryImpl;
 import formfiller.usecases.factory.UseCaseFactoryImpl.UnknownUseCase;
 import formfiller.usecases.handleUnfoundController.HandleUnfoundControllerUseCase;

@@ -9,7 +9,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
-import formfiller.boundaries.UseCase;
+import formfiller.applicationBoundaryInterfaces.UseCase;
 import formfiller.enums.ActionOutcome;
 
 @RunWith(HierarchicalContextRunner.class)

@@ -2,7 +2,7 @@ package formfiller.delivery.presenter;
 
 import formfiller.response.models.PresentableResponse;
 
-public class HandleUnfoundControllerPresenter extends AbstractPresenter {
+public class FailedUseCasePresenter extends AbstractPresenter {
 	PresentableResponse presentableHandleUnfoundController;
 
 	public PresentableResponse getPresentableResponse() {

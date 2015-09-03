@@ -2,7 +2,7 @@ package formfiller.delivery.presenter;
 
 import java.util.Observable;
 
-import formfiller.boundaries.Presenter;
+import formfiller.applicationBoundaryInterfaces.Presenter;
 import formfiller.delivery.ViewModel;
 import formfiller.response.models.PresentableResponse;
 

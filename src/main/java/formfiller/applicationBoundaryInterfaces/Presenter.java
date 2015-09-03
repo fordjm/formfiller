@@ -1,4 +1,4 @@
-package formfiller.boundaries;
+package formfiller.applicationBoundaryInterfaces;
 
 import formfiller.delivery.ViewModel;
 import formfiller.response.models.PresentableResponse;

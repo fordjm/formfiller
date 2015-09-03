@@ -1,14 +1,13 @@
 package formfiller.delivery.controller;
 
-import formfiller.boundaries.UseCase;
+import formfiller.applicationBoundaryInterfaces.UseCase;
 import formfiller.delivery.Controller;
 import formfiller.delivery.event.ParsedEvent;
 import formfiller.gateways.InMemoryTransporter.Direction;
 import formfiller.request.builders.RequestBuilder;
 import formfiller.request.builders.RequestBuilderImpl;
 import formfiller.request.models.Request;
-import formfiller.usecases.factory.UseCaseFactory;
-import formfiller.usecases.factory.UseCaseFactoryImpl;
+import formfiller.usecases.factory.LocalUseCaseFactory;
 import formfiller.utilities.*;
 
 public class NavigationController implements Controller {
@@ -34,7 +33,7 @@ public class NavigationController implements Controller {
 	}
 	
 	protected UseCase makeNavigationUseCase(){		
-		UseCaseFactory useCaseFactory = new UseCaseFactoryImpl();
+		LocalUseCaseFactory useCaseFactory = new LocalUseCaseFactory();
 		return useCaseFactory.make("navigation");
 	}
 }

@@ -3,8 +3,8 @@ import java.util.Stack;
 
 import formfiller.ApplicationContext;
 import formfiller.delivery.presenter.AnswerPresenter;
-import formfiller.delivery.presenter.HandleUnfoundControllerPresenter;
-import formfiller.delivery.presenter.NavigationPresenter;
+import formfiller.delivery.presenter.FailedUseCasePresenter;
+import formfiller.delivery.presenter.FormComponentPresenter;
 import formfiller.delivery.presenter.QuestionPresenter;
 import formfiller.entities.AnswerImpl;
 import formfiller.entities.ExecutedUseCase;
@@ -19,8 +19,8 @@ public class TestSetup {
 		ApplicationContext.formComponentGateway = new InMemoryFormComponentGateway();
 		ApplicationContext.executedUseCases = new Stack<ExecutedUseCase>();
 		ApplicationContext.answerPresenter = new AnswerPresenter();
-		ApplicationContext.handleUnfoundControllerPresenter = new HandleUnfoundControllerPresenter();
-		ApplicationContext.navigationPresenter = new NavigationPresenter();
+		ApplicationContext.failedUseCasePresenter = new FailedUseCasePresenter();
+		ApplicationContext.formComponentPresenter = new FormComponentPresenter();
 		ApplicationContext.questionPresenter = new QuestionPresenter();
 	}
 	
