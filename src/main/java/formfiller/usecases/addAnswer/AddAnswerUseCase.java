@@ -1,7 +1,7 @@
 package formfiller.usecases.addAnswer;
 
 import formfiller.ApplicationContext;
-import formfiller.applicationBoundaryInterfaces.UseCase;
+import formfiller.appBoundaries.UseCase;
 import formfiller.entities.Answer;
 import formfiller.entities.AnswerImpl;
 import formfiller.request.models.AddAnswerRequest;

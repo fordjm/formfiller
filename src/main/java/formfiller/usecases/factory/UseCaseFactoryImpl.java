@@ -1,6 +1,6 @@
 package formfiller.usecases.factory;
 
-import formfiller.applicationBoundaryInterfaces.UseCase;
+import formfiller.appBoundaries.UseCase;
 import formfiller.usecases.handleUnfoundController.HandleUnfoundControllerUseCase;
 import formfiller.usecases.navigation.NavigationUseCase;
 

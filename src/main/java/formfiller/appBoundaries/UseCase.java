@@ -1,4 +1,4 @@
-package formfiller.applicationBoundaryInterfaces;
+package formfiller.appBoundaries;
 
 import formfiller.request.models.Request;
 

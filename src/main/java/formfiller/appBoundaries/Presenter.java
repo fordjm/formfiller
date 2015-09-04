@@ -1,11 +1,8 @@
-package formfiller.applicationBoundaryInterfaces;
+package formfiller.appBoundaries;
 
-import formfiller.delivery.ViewModel;
 import formfiller.response.models.PresentableResponse;
 
-public interface Presenter {	
-	void addObserver(ViewModel view);
-	
+public interface Presenter {		
 	PresentableResponse getPresentableResponse();
 	
 	void present(PresentableResponse presentableResponse);	

@@ -2,14 +2,15 @@ package formfiller.delivery.presenter;
 
 import java.util.Observable;
 
-import formfiller.applicationBoundaryInterfaces.Presenter;
+import formfiller.appBoundaries.Presenter;
 import formfiller.delivery.ViewModel;
+import formfiller.delivery.viewModel.PresentableResponseViewModel;
 import formfiller.response.models.PresentableResponse;
 
 public abstract class AbstractPresenter extends Observable implements Presenter {
+	ViewModel viewModel = new PresentableResponseViewModel();
 
-	public void addObserver(ViewModel view){
-		super.addObserver(view);
+	public void addViewModel(ViewModel view){
 	}	
 	
 	public void present(PresentableResponse presentableResponse){
@@ -19,6 +20,8 @@ public abstract class AbstractPresenter extends Observable implements Presenter 
 		setPresentableResponseFieldValue(presentableResponse);
 		setChanged();
 		notifyObservers(presentableResponse);
+		
+		viewModel.outputPresentableResponse(presentableResponse);
 	}
 	
 	protected abstract void setPresentableResponseFieldValue(PresentableResponse presentableResponse);

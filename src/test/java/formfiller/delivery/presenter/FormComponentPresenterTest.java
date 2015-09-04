@@ -9,6 +9,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
+import formfiller.delivery.viewModel.PresentableResponseViewModel;
 import formfiller.response.models.PresentableAnswer;
 import formfiller.response.models.PresentableFormComponent;
 import formfiller.response.models.PresentableQuestion;
@@ -28,10 +29,10 @@ public class FormComponentPresenterTest {
 
 	@Before
 	public void setUp(){
-		presenter = new FormComponentPresenter();
+		presenter = new FormComponentPresenter(new PresentableResponseViewModel());
 	}
 	
-	@Test(expected = AbstractPresenter.NullPresentableResponse.class)
+	@Test(expected = ResponsePresenter.NullPresentableResponse.class)
 	public void presentingNullThrowsException(){
 		presenter.present(null);
 	}

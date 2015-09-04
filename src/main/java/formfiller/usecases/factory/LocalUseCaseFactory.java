@@ -1,7 +1,7 @@
 package formfiller.usecases.factory;
 
 import formfiller.ApplicationContext;
-import formfiller.applicationBoundaryInterfaces.UseCase;
+import formfiller.appBoundaries.UseCase;
 import formfiller.enums.ActionOutcome;
 import formfiller.request.models.Request;
 import formfiller.response.models.PresentableResponse;
@@ -22,7 +22,7 @@ public class LocalUseCaseFactory implements UseCaseFactory {
 	private UseCase makeUnfoundUseCase() {
 		return new UseCase(){
 			public void execute(Request request) {
-				ApplicationContext.failedUseCasePresenter.present(
+				ApplicationContext.responsePresenter.present(
 						makePresentableFailedUseCase());
 			}  
 		};

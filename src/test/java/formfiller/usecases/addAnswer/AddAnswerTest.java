@@ -10,7 +10,7 @@ import org.mockito.Mockito;
 
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
 import formfiller.ApplicationContext;
-import formfiller.applicationBoundaryInterfaces.UseCase;
+import formfiller.appBoundaries.UseCase;
 import formfiller.entities.Answer;
 import formfiller.entities.AnswerImpl;
 import formfiller.entities.FormComponent;

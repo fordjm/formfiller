@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
+import formfiller.delivery.viewModel.PresentableResponseViewModel;
 import formfiller.response.models.PresentableResponse;
 
 import static org.hamcrest.CoreMatchers.*;
@@ -25,8 +26,8 @@ assertEquals(getFailedNavigationResult(), getPresentedNavigation().message);
 */
 
 //	TODO:	What should we really test here?
-public class FailedUseCasePresenterTest {
-	FailedUseCasePresenter failedUseCasePresenter;
+public class ResponsePresenterTest {
+	ResponsePresenter responsePresenter;
 	
 	private PresentableResponse makePresentableResponse(){
 		PresentableResponse result = Mockito.mock(PresentableResponse.class);
@@ -36,16 +37,16 @@ public class FailedUseCasePresenterTest {
 
 	@Before
 	public void setUp() {
-		failedUseCasePresenter = new FailedUseCasePresenter();
+		responsePresenter = new ResponsePresenter(new PresentableResponseViewModel());
 	}
 	
 	@Test
 	public void canPresentResponse() {
 		PresentableResponse presentableResponse = makePresentableResponse();
 		
-		failedUseCasePresenter.present(presentableResponse);
+		responsePresenter.present(presentableResponse);
 		PresentableResponse presentedResponse = 
-				failedUseCasePresenter.getPresentableResponse();
+				responsePresenter.getPresentableResponse();
 		
 		assertThat(presentedResponse, is(presentableResponse));
 		assertThat(presentedResponse.message, is("Request was not found."));

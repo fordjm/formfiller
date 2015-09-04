@@ -1,8 +1,8 @@
 package formfiller.usecases.navigation;
 
 import formfiller.ApplicationContext;
-import formfiller.applicationBoundaryInterfaces.Presenter;
-import formfiller.applicationBoundaryInterfaces.UseCase;
+import formfiller.appBoundaries.Presenter;
+import formfiller.appBoundaries.UseCase;
 import formfiller.entities.Answer;
 import formfiller.entities.ExecutedUseCaseImpl;
 import formfiller.entities.FormComponent;
@@ -77,7 +77,7 @@ public class NavigationUseCase implements UseCase {
 		if (outcome == ActionOutcome.SUCCEEDED)
 			return ApplicationContext.formComponentPresenter;
 		else
-			return ApplicationContext.failedUseCasePresenter;
+			return ApplicationContext.responsePresenter;
 	}
 
 	//	TODO:	Navigation should know nothing about PresentableResponses.

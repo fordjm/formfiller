@@ -1,6 +1,6 @@
 package formfiller.delivery.controller;
 
-import formfiller.applicationBoundaryInterfaces.UseCase;
+import formfiller.appBoundaries.UseCase;
 import formfiller.delivery.Controller;
 import formfiller.delivery.event.ParsedEvent;
 import formfiller.gateways.InMemoryTransporter.Direction;

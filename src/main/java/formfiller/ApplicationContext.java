@@ -2,7 +2,7 @@ package formfiller;
 
 import java.util.Stack;
 
-import formfiller.applicationBoundaryInterfaces.Presenter;
+import formfiller.appBoundaries.Presenter;
 import formfiller.entities.ExecutedUseCase;
 import formfiller.gateways.FormComponentGateway;
 
@@ -14,7 +14,7 @@ public class ApplicationContext {
 	public static FormComponentGateway formComponentGateway;
 	public static Stack<ExecutedUseCase> executedUseCases;
 	public static Presenter answerPresenter;
-	public static Presenter failedUseCasePresenter;
+	public static Presenter responsePresenter;
 	public static Presenter formComponentPresenter;
 	public static Presenter questionPresenter;
 }
