@@ -1,4 +1,4 @@
-package formfiller.delivery.ui.testConsoleUi;
+package formfiller.delivery.ui.consoleUi;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;

@@ -1,4 +1,4 @@
-package formfiller.delivery.ui.testConsoleUi;
+package formfiller.delivery.ui.consoleUi;
 
 import formfiller.delivery.EventSource;
 import formfiller.delivery.event.EventHandler;
@@ -12,12 +12,12 @@ public class Main {
 		TestSetup.setupSampleFormComponents();
 		setupClassVariables();
 		
-		outputCheapHackyStartPrompt();
+		handleStartEvent();
 		eventSource.captureEvents();
 	}
 	
-	private static void outputCheapHackyStartPrompt() {
-		System.out.print("Please enter the name of an event to handle:  ");
+	private static void handleStartEvent() {
+		eventHandler.update(eventSource, "navigation none");
 	}
 	
 	private static void setupClassVariables() {

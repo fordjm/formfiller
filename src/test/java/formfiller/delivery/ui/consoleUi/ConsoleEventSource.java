@@ -1,4 +1,4 @@
-package formfiller.delivery.ui.testConsoleUi;
+package formfiller.delivery.ui.consoleUi;
 
 import java.util.Scanner;
 

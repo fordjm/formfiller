@@ -7,17 +7,17 @@ import org.junit.Before;
 import org.junit.Test;
 
 import formfiller.delivery.controller.Arguments;
-import formfiller.gateways.InMemoryTransporter.Direction;
+import formfiller.enums.Direction;
 import formfiller.request.builders.RequestBuilderImpl;
 import formfiller.request.models.HandleUnfoundUseCaseRequest;
 import formfiller.request.models.NavigationRequest;
 import formfiller.request.models.Request;
 
 public class RequestBuilderImplTest {
-	private RequestBuilderImpl impl;
+	private RequestBuilderImpl builder;
 	
 	private Request buildRequest(String requestName, Arguments args) {
-		return impl.build(requestName, args);
+		return builder.build(requestName, args);
 	}
 	
 	private Arguments makeArguments(String key, Object value) {
@@ -28,13 +28,13 @@ public class RequestBuilderImplTest {
 	
 	@Before
 	public void setUp() {
-		impl = new RequestBuilderImpl();
+		builder = new RequestBuilderImpl();
 	}
 	
 	@Test
 	public void canBuildHandleUnfoundUseCaseRequest() {
 		Request handleUnfoundUseCaseRequest = 
-				impl.build("handleUnfoundUseCase", new Arguments());
+				builder.build("handleUnfoundUseCase", new Arguments());
 		
 		assertThat(handleUnfoundUseCaseRequest, 
 				is(instanceOf(HandleUnfoundUseCaseRequest.class)));
@@ -58,7 +58,7 @@ public class RequestBuilderImplTest {
 	
 	@Test
 	public void canBuildNoRequest() {
-		Request noRequest = impl.build("unknown", new Arguments());
+		Request noRequest = builder.build("unknown", new Arguments());
 		
 		assertThat(noRequest.name, is("NoRequest"));
 	}

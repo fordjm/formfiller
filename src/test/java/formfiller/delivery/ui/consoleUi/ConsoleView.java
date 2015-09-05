@@ -1,4 +1,4 @@
-package formfiller.delivery.ui.testConsoleUi;
+package formfiller.delivery.ui.consoleUi;
 
 import java.util.Observable;
 
@@ -9,8 +9,11 @@ public class ConsoleView implements View {
 	public boolean outputRan;
 
 	public void output(String message){
+		if (message == null) message = "";
+		
 		outputRan = true;
-		System.out.println(message);
+		if (message.length() > 0) 
+			System.out.println(message);
 	}
 
 	public void update(Observable o, Object input) {

@@ -1,7 +1,7 @@
 package formfiller.request.builders;
 
 import formfiller.delivery.controller.Arguments;
-import formfiller.gateways.InMemoryTransporter.Direction;
+import formfiller.enums.Direction;
 import formfiller.request.models.Request;
 
 public class RequestBuilderImpl implements RequestBuilder {

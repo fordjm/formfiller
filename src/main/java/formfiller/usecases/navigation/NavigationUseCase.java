@@ -8,9 +8,8 @@ import formfiller.entities.ExecutedUseCase;
 import formfiller.entities.FormComponent;
 import formfiller.entities.Prompt;
 import formfiller.enums.ActionOutcome;
-import formfiller.gateways.NavigationValidator;
+import formfiller.enums.Direction;
 import formfiller.gateways.Transporter;
-import formfiller.gateways.InMemoryTransporter.Direction;
 import formfiller.request.models.NavigationRequest;
 import formfiller.request.models.Request;
 import formfiller.response.models.PresentableAnswer;
@@ -19,69 +18,55 @@ import formfiller.response.models.PresentableQuestion;
 import formfiller.response.models.PresentableResponse;
 
 public class NavigationUseCase implements UseCase {
-	private ActionOutcome outcome = ActionOutcome.NONE;
-	private String message = "";
-
-	private NavigationValidator getNavigationValidator(){
-		Transporter transporter = getTransporter();
-		return transporter.getNavigationValidator();
-	}
+	private NavigationValidator navigationValidator = new NavigationValidator();
 	
-	private Transporter getTransporter(){
-		return ApplicationContext.formComponentGateway.getTransporter();
-	}
-	
-	public void execute(Request request) {
+	public void execute(Request request) {		
 		if (request == null) request = new NavigationRequest();
-		
+
 		NavigationRequest navigationRequest = (NavigationRequest) request;
 		Direction direction = navigationRequest.direction;
-		NavigationValidator validator = getNavigationValidator();
+		PresentableResponse response;
 		
-		if (validator.isMoveLegal(direction)) {
+		if (navigationValidator.isValidMove(direction)) {
 			executeMove(direction);
-			setOutcome(ActionOutcome.SUCCEEDED);
-		} else
-			setOutcome(ActionOutcome.FAILED);
-		setMessage();
+			response = makePresentableFormComponent();
+		} else {
+			response = makePresentableResponse();
+		}
 		
-		presentNavigationResponse();
+		presentNavigationResponse(response);
 		ApplicationContext.executedUseCases.push(
-				makeExecutedUseCase(this, outcome, message));
+				makeExecutedUseCase(response));
 	}
 	
-	private ExecutedUseCase makeExecutedUseCase(UseCase useCase, ActionOutcome outcome, String message){
+	private ExecutedUseCase makeExecutedUseCase(PresentableResponse response){
 		ExecutedUseCase result = new ExecutedUseCase();
-		result.useCase = useCase;
-		result.outcome = outcome;
-		result.message = message;
+		result.useCase = this;
+		result.outcome = response.outcome;
+		result.message = response.message;
 		return result;
 	}
 	
 	private String getAnswerRequiredMessage(){
 		return "Sorry, you cannot move ahead.  "
-				+ "The current question requires a response.";
-	}
-	
-	private void setOutcome(ActionOutcome actionOutcome) {
-		outcome = actionOutcome;
-	}	
-	
-	private void setMessage() {
-		if (this.outcome == ActionOutcome.FAILED)
-			this.message = getAnswerRequiredMessage();
+				+ "The current question requires an answer.";
 	}
 
 	private void executeMove(Direction direction) {
-		ApplicationContext.formComponentGateway.getTransporter().move(direction);
+		getTransporter().move(direction);
 	}
 
-	private void presentNavigationResponse() {
-		PresentableResponse presentableResponse = makePresentableResponse();
-		getPresenterFromContext().present(presentableResponse);
+	private Transporter getTransporter() {
+		return ApplicationContext.formComponentGateway.
+				getTransporter();
 	}
 
-	private Presenter getPresenterFromContext() {
+	private void presentNavigationResponse(PresentableResponse presentableResponse) {
+		getPresenterFromContext(presentableResponse.outcome).
+				present(presentableResponse);
+	}
+
+	private Presenter getPresenterFromContext(ActionOutcome outcome) {
 		if (outcome == ActionOutcome.SUCCEEDED)
 			return ApplicationContext.formComponentPresenter;
 		else
@@ -91,25 +76,25 @@ public class NavigationUseCase implements UseCase {
 	//	TODO:	Navigation should know nothing about PresentableResponses.
 	//			Make some factories.	
 	private PresentableResponse makePresentableResponse() {
-		PresentableResponse result;
-		if (outcome == ActionOutcome.FAILED)
-			result = new PresentableResponse();
-		else
-			result = makePresentableFormComponent();
-		result.message = message;
-		result.outcome = outcome;
+		PresentableResponse result = new PresentableResponse();
+		result.message = getAnswerRequiredMessage();
+		result.outcome = ActionOutcome.FAILED;
 		return result;
 	}
 	
-	private PresentableResponse makePresentableFormComponent() {
+	private PresentableResponse makePresentableFormComponent() {		
+		FormComponent current = getCurrentFormComponent();
 		PresentableFormComponent result = new PresentableFormComponent();
-		FormComponent current = ApplicationContext.formComponentGateway.
-				getTransporter().getCurrent();
-		PresentableQuestion question = makePresentableQuestion(current.question);
-		PresentableAnswer answer = makePresentableAnswer(current.answer);
-		result.question = question;
-		result.answer = answer;
+		result.question = makePresentableQuestion(current.question);
+		result.answer = makePresentableAnswer(current.answer);
+		result.outcome = ActionOutcome.SUCCEEDED;
+		result.message = result.question.message;
 		return result;
+	}
+
+	private FormComponent getCurrentFormComponent() {
+		Transporter transporter = getTransporter();
+		return transporter.getCurrent();
 	}
 
 	private PresentableQuestion makePresentableQuestion(Prompt requestedQuestion) {
@@ -125,7 +110,4 @@ public class NavigationUseCase implements UseCase {
 		result.message = requestedAnswer.getContent().toString();
 		return result;
 	}
-	
-	@SuppressWarnings("serial")
-	public class NullExecution extends RuntimeException { }
 }

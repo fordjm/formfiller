@@ -2,10 +2,10 @@ package formfiller.gateways;
 
 import formfiller.ApplicationContext;
 import formfiller.entities.FormComponent;
+import formfiller.enums.Direction;
+import formfiller.usecases.navigation.NavigationValidator;
 
-public class InMemoryTransporter implements Transporter {
-	//	TODO:	Does Java Direction class exist?
-	public enum Direction { BACKWARD, FORWARD, NONE }	
+public class InMemoryTransporter implements Transporter {	
 	public final NavigationValidator navigationValidator = 
 			new NavigationValidator();
 	private final FormState currentState = new FormState();
@@ -18,10 +18,6 @@ public class InMemoryTransporter implements Transporter {
 		InMemoryFormComponentGateway result = (InMemoryFormComponentGateway)
 				ApplicationContext.formComponentGateway;		
 		return result;
-	}
-	
-	public NavigationValidator getNavigationValidator(){
-		return navigationValidator;
 	}
 	
 	public void move(Direction direction){

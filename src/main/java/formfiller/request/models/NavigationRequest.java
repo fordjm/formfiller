@@ -1,6 +1,6 @@
 package formfiller.request.models;
 
-import formfiller.gateways.InMemoryTransporter.Direction;
+import formfiller.enums.Direction;
 
 public class NavigationRequest extends Request {
 	public Direction direction = Direction.NONE;

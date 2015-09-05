@@ -5,8 +5,9 @@ import formfiller.ApplicationContext;
 import formfiller.delivery.View;
 import formfiller.delivery.presenter.FormComponentPresenter;
 import formfiller.delivery.presenter.ResponsePresenter;
-import formfiller.delivery.ui.testConsoleUi.ConsoleView;
+import formfiller.delivery.ui.consoleUi.ConsoleView;
 import formfiller.delivery.viewModel.PresentableResponseViewModel;
+import formfiller.entities.Answer;
 import formfiller.entities.AnswerImpl;
 import formfiller.entities.ExecutedUseCase;
 import formfiller.entities.FormComponent;
@@ -44,24 +45,37 @@ public class TestSetup {
 	public static void setupSampleFormComponents(){
 		setupContext();
 		ApplicationContext.formComponentGateway.save(
-				makeFormComponent("name", "What is your name?", false));
+				makeFormComponent(
+						makeQuestion("name", "What is your name?", false)));
 		ApplicationContext.formComponentGateway.save(
-				makeFormComponent("age", "What is your age?", true));
+				makeFormComponent(
+						makeQuestion("birthDate", "What is your birth date?", false), 
+						makeAnswer("November 12, 1955")));
 		ApplicationContext.formComponentGateway.save(
-				makeFormComponent("birthDate", "What is your birth date?", false));
+				makeFormComponent(
+						makeQuestion("age", "What is your age?", true)));
 	}
 	
-	private static FormComponent makeFormComponent(String id, String content, boolean isRequired){
+	private static FormComponent makeFormComponent(Question question){		
+		return makeFormComponent(question, AnswerImpl.NONE);
+	}
+	
+	private static FormComponent makeFormComponent(Question question, Answer answer){
 		FormComponent result = new FormComponent();
-		result.id = id;
-		result.question = makeQuestion(id, content, isRequired);
-		result.answer = AnswerImpl.NONE;
+		result.id = question.getId();
+		result.question = question;
+		result.answer = answer;		
 		return result;
 	}
 	
 	private static Question makeQuestion(String id, String content, boolean isRequired){
 		Question result = new Question(id, content);
 		result.setResponseRequired(isRequired);
+		return result;
+	}
+	
+	private static Answer makeAnswer(String content){
+		Answer result = new AnswerImpl(content);
 		return result;
 	}
 }

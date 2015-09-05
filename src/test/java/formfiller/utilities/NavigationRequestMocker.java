@@ -2,7 +2,7 @@ package formfiller.utilities;
 
 import org.mockito.Mockito;
 
-import formfiller.gateways.InMemoryTransporter.Direction;
+import formfiller.enums.Direction;
 import formfiller.request.models.NavigationRequest;
 
 public class NavigationRequestMocker {

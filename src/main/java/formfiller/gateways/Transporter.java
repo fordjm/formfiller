@@ -1,12 +1,10 @@
 package formfiller.gateways;
 
 import formfiller.entities.FormComponent;
-import formfiller.gateways.InMemoryTransporter.Direction;
+import formfiller.enums.Direction;
 
 public interface Transporter {	
 	FormComponent getCurrent();
-	
-	NavigationValidator getNavigationValidator();
 	
 	void move(Direction direction);
 }

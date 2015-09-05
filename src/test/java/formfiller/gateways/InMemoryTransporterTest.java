@@ -12,7 +12,7 @@ import formfiller.ApplicationContext;
 import formfiller.entities.AnswerImpl;
 import formfiller.entities.FormComponent;
 import formfiller.entities.Prompt;
-import formfiller.gateways.InMemoryTransporter.Direction;
+import formfiller.enums.Direction;
 import formfiller.utilities.FormComponentMocker;
 import formfiller.utilities.QuestionMocker;
 import formfiller.utilities.TestSetup;

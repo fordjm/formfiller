@@ -3,7 +3,7 @@ package formfiller.delivery.controller;
 import formfiller.appBoundaries.UseCase;
 import formfiller.delivery.Controller;
 import formfiller.delivery.event.ParsedEvent;
-import formfiller.gateways.InMemoryTransporter.Direction;
+import formfiller.enums.Direction;
 import formfiller.request.builders.RequestBuilder;
 import formfiller.request.builders.RequestBuilderImpl;
 import formfiller.request.models.Request;

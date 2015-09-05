@@ -1,13 +1,14 @@
-package formfiller.gateways;
+package formfiller.usecases.navigation;
 
 import formfiller.ApplicationContext;
 import formfiller.entities.FormComponent;
 import formfiller.entities.Prompt;
-import formfiller.gateways.InMemoryTransporter.Direction;
+import formfiller.gateways.Transporter;
+import formfiller.enums.Direction;
 
 public class NavigationValidator {
 	
-	public boolean isMoveLegal(Direction direction) {
+	public boolean isValidMove(Direction direction) {
 		Prompt currentQuestion = getCurrentQuestion();
 		return !isMovingForward(direction) || 
 				!isAnswerRequiredButAbsent(currentQuestion);

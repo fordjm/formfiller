@@ -17,7 +17,7 @@ import formfiller.entities.Prompt;
 import formfiller.entities.Question;
 import formfiller.gateways.FormComponentGateway;
 import formfiller.gateways.InMemoryFormComponentGateway;
-import formfiller.gateways.InMemoryTransporter.Direction;
+import formfiller.enums.Direction;
 import formfiller.gateways.Transporter;
 import formfiller.request.models.NavigationRequest;
 import formfiller.utilities.FormComponentMocker;
