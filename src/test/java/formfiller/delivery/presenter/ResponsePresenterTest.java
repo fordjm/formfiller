@@ -7,11 +7,12 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import formfiller.delivery.viewModel.PresentableResponseViewModel;
+import formfiller.enums.ActionOutcome;
 import formfiller.response.models.PresentableResponse;
 
 import static org.hamcrest.CoreMatchers.*;
 
-/* Orphans from NavigationTest:
+/* Orphans from NavigationTest (TODO:	Adapt to fit here):
 assertThat(getPresentedNavigation().outcome, is(ActionOutcome.FAILED));
 assertEquals(getFailedNavigationResult(), getPresentedNavigation().message);
 
@@ -25,7 +26,6 @@ assertEquals(getFailedNavigationResult(), getPresentedNavigation().message);
 			}
 */
 
-//	TODO:	What should we really test here?
 public class ResponsePresenterTest {
 	ResponsePresenter responsePresenter;
 	
@@ -38,6 +38,16 @@ public class ResponsePresenterTest {
 	@Before
 	public void setUp() {
 		responsePresenter = new ResponsePresenter(new PresentableResponseViewModel());
+	}
+	
+	@Test
+	public void atStart_PresenterHasNoPresentableResponse(){
+		PresentableResponse currentResponse = 
+				responsePresenter.getPresentableResponse();
+		
+		assertThat(currentResponse, is(instanceOf(PresentableResponse.class)));
+		assertThat(currentResponse.message, is(""));
+		assertThat(currentResponse.outcome, is(ActionOutcome.NONE));
 	}
 	
 	@Test

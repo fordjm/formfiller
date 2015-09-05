@@ -4,7 +4,7 @@ import formfiller.ApplicationContext;
 import formfiller.appBoundaries.Presenter;
 import formfiller.appBoundaries.UseCase;
 import formfiller.entities.Answer;
-import formfiller.entities.ExecutedUseCaseImpl;
+import formfiller.entities.ExecutedUseCase;
 import formfiller.entities.FormComponent;
 import formfiller.entities.Prompt;
 import formfiller.enums.ActionOutcome;
@@ -32,7 +32,7 @@ public class NavigationUseCase implements UseCase {
 	}
 	
 	public void execute(Request request) {
-		if (request == null) throw new NullExecution();
+		if (request == null) request = new NavigationRequest();
 		
 		NavigationRequest navigationRequest = (NavigationRequest) request;
 		Direction direction = navigationRequest.direction;
@@ -47,7 +47,15 @@ public class NavigationUseCase implements UseCase {
 		
 		presentNavigationResponse();
 		ApplicationContext.executedUseCases.push(
-				new ExecutedUseCaseImpl(this, outcome, message));
+				makeExecutedUseCase(this, outcome, message));
+	}
+	
+	private ExecutedUseCase makeExecutedUseCase(UseCase useCase, ActionOutcome outcome, String message){
+		ExecutedUseCase result = new ExecutedUseCase();
+		result.useCase = useCase;
+		result.outcome = outcome;
+		result.message = message;
+		return result;
 	}
 	
 	private String getAnswerRequiredMessage(){

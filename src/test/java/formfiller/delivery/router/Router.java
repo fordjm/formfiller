@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import formfiller.delivery.Controller;
-import formfiller.delivery.controller.HandleUnfoundControllerController;
+import formfiller.delivery.controller.HandleUnfoundUseCaseController;
 import formfiller.delivery.controller.NavigationController;
 import formfiller.delivery.event.ParsedEvent;
 
@@ -13,7 +13,8 @@ import formfiller.delivery.event.ParsedEvent;
 //Retrieved 2015-08-14
 
 public class Router {
-	public static final Controller handleUnfoundController = new HandleUnfoundControllerController();
+	public static final Controller handleUnfoundUseCaseController = 
+			new HandleUnfoundUseCaseController();
 	private Map<String, Controller> routes = new HashMap<String, Controller>();
 	
 	public static Router makeRouter(){
@@ -35,7 +36,7 @@ public class Router {
 	
 	protected Controller getController(String method) {
 		Controller result = routes.get(method);
-		if (result == null) result = handleUnfoundController;
+		if (result == null) result = handleUnfoundUseCaseController;
 		return result;
 	}
 }

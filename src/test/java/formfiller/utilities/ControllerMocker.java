@@ -3,7 +3,7 @@ package formfiller.utilities;
 import org.mockito.Mockito;
 
 import formfiller.delivery.Controller;
-import formfiller.delivery.controller.HandleUnfoundControllerController;
+import formfiller.delivery.controller.HandleUnfoundUseCaseController;
 import formfiller.delivery.controller.NavigationController;
 
 public class ControllerMocker {
@@ -13,6 +13,6 @@ public class ControllerMocker {
 	}
 	
 	public static Controller makeMockHandleUnfoundControllerController() {
-		return Mockito.mock(HandleUnfoundControllerController.class);
+		return Mockito.mock(HandleUnfoundUseCaseController.class);
 	}	
 }

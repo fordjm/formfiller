@@ -9,7 +9,7 @@ import org.junit.Test;
 import formfiller.delivery.controller.Arguments;
 import formfiller.gateways.InMemoryTransporter.Direction;
 import formfiller.request.builders.RequestBuilderImpl;
-import formfiller.request.models.HandleUnfoundControllerRequest;
+import formfiller.request.models.HandleUnfoundUseCaseRequest;
 import formfiller.request.models.NavigationRequest;
 import formfiller.request.models.Request;
 
@@ -32,12 +32,14 @@ public class RequestBuilderImplTest {
 	}
 	
 	@Test
-	public void canBuildHandleUnfoundControllerRequest() {
-		Request handleUnfoundControllerRequest = 
-				impl.build("handleUnfoundController", new Arguments());
+	public void canBuildHandleUnfoundUseCaseRequest() {
+		Request handleUnfoundUseCaseRequest = 
+				impl.build("handleUnfoundUseCase", new Arguments());
 		
-		assertThat(handleUnfoundControllerRequest, 
-				is(instanceOf(HandleUnfoundControllerRequest.class)));
+		assertThat(handleUnfoundUseCaseRequest, 
+				is(instanceOf(HandleUnfoundUseCaseRequest.class)));
+		assertThat(handleUnfoundUseCaseRequest.name, 
+				is("HandleUnfoundUseCaseRequest"));
 	}
 	
 	@Test
@@ -45,8 +47,8 @@ public class RequestBuilderImplTest {
 		Request navigationRequest = 
 				buildRequest("navigation", makeArguments("direction", Direction.FORWARD));
 		String name = navigationRequest.name;
-		NavigationRequest castNavigationRequest = (NavigationRequest) 
-				navigationRequest;
+		NavigationRequest castNavigationRequest = 
+				(NavigationRequest) navigationRequest;
 		
 		assertThat(navigationRequest, 
 				is(instanceOf(NavigationRequest.class)));

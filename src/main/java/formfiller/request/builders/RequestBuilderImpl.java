@@ -7,7 +7,7 @@ import formfiller.request.models.Request;
 public class RequestBuilderImpl implements RequestBuilder {
 
 	public Request build(String requestName, Arguments args) {
-		if(requestName.equalsIgnoreCase("handleUnfoundController")) {
+		if(requestName.equalsIgnoreCase("handleUnfoundUseCase")) {
 			return buildHandleUnfoundControllerRequest(args);
 		}
 		else if(requestName.equalsIgnoreCase("navigation"))
@@ -17,8 +17,8 @@ public class RequestBuilderImpl implements RequestBuilder {
 	}
 
 	private Request buildHandleUnfoundControllerRequest(Arguments args) {
-		HandleUnfoundControllerRequestBuilder builder = 
-				new HandleUnfoundControllerRequestBuilder();
+		HandleUnfoundUseCaseRequestBuilder builder = 
+				new HandleUnfoundUseCaseRequestBuilder();
 		builder.buildMessage((String) args.getById("message"));
 		return finishBuildingRequest(builder);
 	}
@@ -34,6 +34,7 @@ public class RequestBuilderImpl implements RequestBuilder {
 		return builder.getRequest();
 	}
 	
+	//	TODO:	Build a NoRequest object.
 	private Request getNoRequest() {
 		Request result = new Request();
 		result.name = "NoRequest";

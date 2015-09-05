@@ -52,18 +52,6 @@ public class NavigationTest {
 		return FormComponentMocker.makeMockFormComponent(question, AnswerImpl.NONE);
 	}
 	
-	@Before
-	public void setUp(){
-		TestSetup.setupContext();
-		navigationUseCase = new NavigationUseCase();
-		mockRequest = mock(NavigationRequest.class);		
-	}
-	
-	@Test(expected = NavigationUseCase.NullExecution.class)
-	public void cannotExecuteNull() {
-		navigationUseCase.execute(null);
-	}
-	
 	private FormComponent getCurrentFormComponent() {
 		Transporter transporter = getFormComponentGatewayFromContext().getTransporter();
 		return transporter.getCurrent();
@@ -71,6 +59,18 @@ public class NavigationTest {
 
 	private void setFoundFormComponentToIndex(int index) {
 		foundFormComponent = findFormComponentByIndex(index);
+	}
+	
+	@Before
+	public void setUp(){
+		TestSetup.setupContext();
+		navigationUseCase = new NavigationUseCase();
+		mockRequest = mock(NavigationRequest.class);		
+	}
+	
+	@Test
+	public void canHandleNull() {
+		navigationUseCase.execute(null);
 	}
 
 	public class GivenNoFormComponents{
@@ -88,7 +88,7 @@ public class NavigationTest {
 				
 				navigationUseCase.execute(mockRequest);
 				
-				assertEquals(navigationUseCase, ApplicationContext.executedUseCases.peek().getUseCase());
+				assertEquals(navigationUseCase, ApplicationContext.executedUseCases.peek().useCase);
 				assertThat(getCurrentFormComponent(), is(foundFormComponent));
 			}
 		}

@@ -7,11 +7,12 @@ import formfiller.delivery.ViewModel;
 import formfiller.response.models.PresentableResponse;
 
 public class ResponsePresenter extends Observable implements Presenter {	
-	ViewModel viewModel;
-	PresentableResponse presentableResponse;
+	private ViewModel viewModel;
+	private PresentableResponse presentableResponse;
 	
 	public ResponsePresenter(ViewModel viewModel){
 		this.viewModel = viewModel;
+		this.presentableResponse = new PresentableResponse();
 	}
 
 	public PresentableResponse getPresentableResponse() {
@@ -22,11 +23,4 @@ public class ResponsePresenter extends Observable implements Presenter {
 		this.presentableResponse = presentableResponse;
 		viewModel.outputPresentableResponse(presentableResponse);
 	}
-	
-	protected void setPresentableResponseFieldValue(PresentableResponse presentableResponse) {
-		this.presentableResponse = presentableResponse;
-	}
-
-	@SuppressWarnings("serial")
-	public class NullPresentableResponse extends RuntimeException { }
 }

@@ -16,15 +16,12 @@ public class FormComponentPresenter extends ResponsePresenter {
 		return component;
 	}
 	
-	public void present(PresentableResponse presentableFormComponent) {
-		if (presentableFormComponent == null) throw new ResponsePresenter.NullPresentableResponse();
+	public void present(PresentableResponse componentResponse) {
+		if (componentResponse == null) componentResponse = 
+				new PresentableFormComponent();
 		
-		component = (PresentableFormComponent) presentableFormComponent;
+		component = (PresentableFormComponent) componentResponse;
 		ApplicationContext.questionPresenter.present(component.question);
 		ApplicationContext.answerPresenter.present(component.answer);
-	}
-
-	protected void setPresentableResponseFieldValue(PresentableResponse presentableResponse) {
-		//presentableFormComponent = (PresentableFormComponent) presentableResponse;
 	}
 }

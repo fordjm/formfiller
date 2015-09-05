@@ -8,8 +8,7 @@ import org.junit.Test;
 
 import formfiller.appBoundaries.UseCase;
 import formfiller.usecases.factory.UseCaseFactoryImpl;
-import formfiller.usecases.factory.UseCaseFactoryImpl.UnknownUseCase;
-import formfiller.usecases.handleUnfoundController.HandleUnfoundControllerUseCase;
+import formfiller.usecases.handleUnfoundController.HandleUnfoundUseCaseUseCase;
 import formfiller.usecases.navigation.NavigationUseCase;
 
 public class UseCaseFactoryImplTest {
@@ -22,19 +21,37 @@ public class UseCaseFactoryImplTest {
 	}
 	
 	@Test
-	public void canCreateHandleUnfoundControllerUseCase() {
-		useCase = factory.make("handleUnfoundController");
-		assertThat(useCase, is(instanceOf(HandleUnfoundControllerUseCase.class)));
+	public void canHandleNull() {
+		useCase = factory.make(null);
+		
+		assertThat(useCase, is(instanceOf(HandleUnfoundUseCaseUseCase.class)));
+	}
+	
+	@Test
+	public void canHandleEmptyString() {
+		useCase = factory.make("");
+		
+		assertThat(useCase, is(instanceOf(HandleUnfoundUseCaseUseCase.class)));
+	}
+
+	@Test
+	public void canHandleUnknownUseCase(){
+		useCase = factory.make("unknown");
+
+		assertThat(useCase, is(instanceOf(HandleUnfoundUseCaseUseCase.class)));
+	}
+	
+	@Test
+	public void canCreateHandleUnfoundUseCaseUseCase() {
+		useCase = factory.make("handleUnfoundUseCase");
+		
+		assertThat(useCase, is(instanceOf(HandleUnfoundUseCaseUseCase.class)));
 	}
 	
 	@Test
 	public void canCreateNavigationUseCase() {
 		useCase = factory.make("navigation");
+		
 		assertThat(useCase, is(instanceOf(NavigationUseCase.class)));
-	}
-
-	@Test(expected = UnknownUseCase.class)
-	public void unknownUseCaseThrowsException(){
-		useCase = factory.make("unknown");
 	}	
 }

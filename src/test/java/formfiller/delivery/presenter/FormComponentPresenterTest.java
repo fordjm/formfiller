@@ -32,9 +32,16 @@ public class FormComponentPresenterTest {
 		presenter = new FormComponentPresenter(new PresentableResponseViewModel());
 	}
 	
-	@Test(expected = ResponsePresenter.NullPresentableResponse.class)
-	public void presentingNullThrowsException(){
+	@Test
+	public void canHandleNull(){
 		presenter.present(null);
+		
+		PresentableResponse currentResponse = presenter.getPresentableResponse();
+		PresentableFormComponent castResponse = (PresentableFormComponent) currentResponse;
+		
+		assertThat(currentResponse, is(instanceOf(PresentableFormComponent.class)));
+		assertThat(castResponse.question.message, is(""));
+		assertThat(castResponse.answer.message, is(""));
 	}
 	
 	public class GivenAPresentableResponse {

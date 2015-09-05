@@ -7,7 +7,7 @@ import formfiller.gateways.InMemoryTransporter.Direction;
 import formfiller.request.builders.RequestBuilder;
 import formfiller.request.builders.RequestBuilderImpl;
 import formfiller.request.models.Request;
-import formfiller.usecases.factory.LocalUseCaseFactory;
+import formfiller.usecases.factory.UseCaseFactoryImpl;
 import formfiller.utilities.*;
 
 public class NavigationController implements Controller {
@@ -17,6 +17,7 @@ public class NavigationController implements Controller {
 		Arguments arguments = makeArguments(direction);
 		Request navigationRequest = makeNavigationRequest(arguments);
 		UseCase useCase = makeNavigationUseCase();
+		
 		useCase.execute(navigationRequest);
 	}	
 	
@@ -33,7 +34,7 @@ public class NavigationController implements Controller {
 	}
 	
 	protected UseCase makeNavigationUseCase(){		
-		LocalUseCaseFactory useCaseFactory = new LocalUseCaseFactory();
-		return useCaseFactory.make("navigation");
+		UseCaseFactoryImpl factory = new UseCaseFactoryImpl();
+		return factory.make("navigation");
 	}
 }

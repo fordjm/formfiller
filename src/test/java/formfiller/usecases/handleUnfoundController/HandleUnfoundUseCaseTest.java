@@ -8,13 +8,13 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import formfiller.ApplicationContext;
-import formfiller.request.models.HandleUnfoundControllerRequest;
+import formfiller.request.models.HandleUnfoundUseCaseRequest;
 import formfiller.response.models.PresentableResponse;
 import formfiller.utilities.TestSetup;
 
-public class HandleUnfoundControllerTest {
+public class HandleUnfoundUseCaseTest {
 	private final String REQUEST_NOT_FOUND = "Request was not found.";
-	private HandleUnfoundControllerUseCase handleUnfoundControllerUseCase;
+	private HandleUnfoundUseCaseUseCase useCase;
 	private PresentableResponse currentPresentableResponse;
 
 	private PresentableResponse getPresentableResponseFromPresenter() {
@@ -24,21 +24,20 @@ public class HandleUnfoundControllerTest {
 	@Before
 	public void setUp() {
 		TestSetup.setupContext();
-		handleUnfoundControllerUseCase = new HandleUnfoundControllerUseCase();
+		useCase = new HandleUnfoundUseCaseUseCase();
 	}
 	
 	@Test
-	public void atStart_PresenterHasNoPresentableResponse(){
-		currentPresentableResponse = getPresentableResponseFromPresenter();
-		assertThat(currentPresentableResponse, is(equalTo(null)));
+	public void canHandleNull() {
+		useCase.execute(null);
 	}
 	
 	@Test
 	public void executionPassesRequestDataToResponse() {
-		HandleUnfoundControllerRequest mockRequest = Mockito.mock(HandleUnfoundControllerRequest.class);
+		HandleUnfoundUseCaseRequest mockRequest = Mockito.mock(HandleUnfoundUseCaseRequest.class);
 		mockRequest.message = REQUEST_NOT_FOUND;
 		
-		handleUnfoundControllerUseCase.execute(mockRequest);
+		useCase.execute(mockRequest);
 		currentPresentableResponse = getPresentableResponseFromPresenter();
 		
 		assertThat(currentPresentableResponse.message, is(REQUEST_NOT_FOUND));

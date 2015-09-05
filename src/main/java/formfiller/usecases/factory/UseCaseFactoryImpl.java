@@ -1,28 +1,25 @@
 package formfiller.usecases.factory;
 
 import formfiller.appBoundaries.UseCase;
-import formfiller.usecases.handleUnfoundController.HandleUnfoundControllerUseCase;
+import formfiller.usecases.handleUnfoundController.HandleUnfoundUseCaseUseCase;
 import formfiller.usecases.navigation.NavigationUseCase;
 
 public class UseCaseFactoryImpl implements UseCaseFactory {
 
 	public UseCase make(String useCaseName) {
-		if (useCaseName.equalsIgnoreCase("handleUnfoundController"))
-			return makehandleUnfoundControllerUseCase();
-		else if (useCaseName.equalsIgnoreCase("navigation"))
+		if (useCaseName == null) useCaseName = "";
+			
+		if (useCaseName.equalsIgnoreCase("navigation"))
 			return makeNavigationUseCase();
 		else
-			throw new UnknownUseCase();
+			return makehandleUnfoundUseCaseUseCase();
 	}
 	
-	private UseCase makehandleUnfoundControllerUseCase() {
-		return new HandleUnfoundControllerUseCase();
+	private UseCase makehandleUnfoundUseCaseUseCase() {
+		return new HandleUnfoundUseCaseUseCase();
 	}
 
 	private UseCase makeNavigationUseCase() {
 		return new NavigationUseCase();
 	}
-	
-	@SuppressWarnings("serial")
-	public class UnknownUseCase extends RuntimeException{ }
 }
