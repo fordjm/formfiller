@@ -17,22 +17,27 @@ public class RouterTest {
 	Router router;
 	private ParsedEvent mockParsedRequest;
 	private Controller mockController;
-	
-	@Before
-	public void setUp(){
-		router = Router.makeRouter();
-	}
 
 	private void verifyControllerHandledParsedRequest() {
 		Mockito.verify(mockController).handle(mockParsedRequest);
 	}
+	
+	@Before
+	public void setUp() {
+		router = Router.makeRouter();
+	}
+	
+	@Test
+	public void canHandleNull() {
+		router.route(null);
+	}
 
 	// TODO:  public class GivenAnEmptyStringRequest{ ... }
 	//		  Should route() return a String with routing info?
-	public class GivenANavigationRequest{
+	public class GivenANavigationRequest {
 		
 		@Before
-		public void givenANavigationRequest(){
+		public void givenANavigationRequest() {
 			mockParsedRequest = 
 					ParsedEventMocker.makeMockParsedEvent("navigation", "forward");
 			mockController = ControllerMocker.makeMockNavigationController();

@@ -21,6 +21,7 @@ public class InMemoryTransporter implements Transporter {
 	}
 	
 	public void move(Direction direction){
+		checkIsFinished();
 		if (!moveChangesPosition(direction)) 
 			return;
 		
@@ -28,6 +29,13 @@ public class InMemoryTransporter implements Transporter {
 			++currentState.currentIndex;
 		else
 			--currentState.currentIndex;
+	}
+
+	private void checkIsFinished() {
+		if (getCurrent() == FormComponent.END)
+			currentState.isFinished = true;
+		else
+			currentState.isFinished = false;
 	}
 
 	private boolean moveChangesPosition(Direction direction) {

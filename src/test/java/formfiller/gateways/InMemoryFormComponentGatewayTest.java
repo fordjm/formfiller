@@ -17,18 +17,20 @@ public class InMemoryFormComponentGatewayTest {
 		gateway = new InMemoryFormComponentGateway();
 	}
 	
-	@Test(expected = InMemoryFormComponentGateway.NullFormComponent.class)
-	public void cannotSaveNull(){
+	@Test
+	public void saveCanHandleNull(){
 		gateway.save(null);
 	}
 	
-	@Test(expected = InMemoryFormComponentGateway.NullId.class)
-	public void cannotFindNull(){
-		gateway.find(null);
+	@Test
+	public void findCanHandleNull(){
+		FormComponent result = gateway.find(null);
+		
+		assertNull(result);
 	}
 	
 	@Test
-	public void canSaveAndFind() {
+	public void canSaveAndFindGivenFormComponent() {
 		FormComponent mockFormComponent = FormComponentMocker.makeMockFormComponent("id");
 		
 		gateway.save(mockFormComponent);

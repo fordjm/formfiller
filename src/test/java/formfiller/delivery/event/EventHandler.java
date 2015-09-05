@@ -11,6 +11,8 @@ public class EventHandler implements Observer {
 	Router router = Router.makeRouter();
 
 	public void update(Observable o, Object input) {
+		if (input == null) input = "";
+		
 		String event = (String) input;
 		handleEvent(event);
 	}

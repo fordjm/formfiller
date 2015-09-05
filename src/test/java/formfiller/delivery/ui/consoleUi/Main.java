@@ -1,6 +1,7 @@
 package formfiller.delivery.ui.consoleUi;
 
 import formfiller.delivery.EventSource;
+import formfiller.delivery.event.ConsoleEventSource;
 import formfiller.delivery.event.EventHandler;
 import formfiller.utilities.TestSetup;
 

@@ -57,7 +57,7 @@ public class NavigationValidatorTest {
 		
 		@Before
 		public void givenAnswerIsNotRequired(){
-			FormComponent mockComponent = makeMockFormComponent(QuestionMocker.makeMockNameQuestion());
+			FormComponent mockComponent = makeMockFormComponent(QuestionMocker.makeMockBirthDateQuestion());
 			ApplicationContext.formComponentGateway.save(mockComponent);
 		}
 		

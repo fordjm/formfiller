@@ -124,9 +124,16 @@ public class AddAnswerTest<T> {
 				}
 				
 				@Test
-				public void whenAddAnswerRuns_ThenItAddsANewAnswer(){
+				public void whenAddAnswerRunsOnce_ThenItAddsANewAnswer(){
 					addAnswer.execute();
 					assertSame(validContent, FormWidget.getAnswer().getContent());
+				}
+				
+				@Test(expected = IllegalStateException.class)
+				public void whenAddAnswerRunsTwice_ThenItThrowsAnException(){
+					addAnswer.execute();
+					makeAddAnswer((T) "Bob");
+					addAnswer.execute();
 				}
 			}
 			

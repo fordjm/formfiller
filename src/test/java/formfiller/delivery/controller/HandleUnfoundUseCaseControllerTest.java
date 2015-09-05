@@ -26,7 +26,6 @@ public class HandleUnfoundUseCaseControllerTest {
 	public void setUp() {
 		TestSetup.setupContext();
 		controller = new HandleUnfoundUseCaseController();
-		parsedEvent = ParsedEventMocker.makeMockParsedEvent("");
 	}
 	
 	@Test
@@ -35,12 +34,26 @@ public class HandleUnfoundUseCaseControllerTest {
 	}
 	
 	@Test
-	public void canHandleParsedEvent() {		
+	public void canHandleEmptyStringEvent() {	
+		parsedEvent = ParsedEventMocker.makeMockParsedEvent("");
+		
 		controller.handle(parsedEvent);
 		
 		assertThat(getPresentableUnfoundUseCaseResponse().outcome, 
 				is(ActionOutcome.FAILED));
 		assertThat(getPresentableUnfoundUseCaseResponse().message, 
 				is("Request was not found."));
+	}
+	
+	@Test
+	public void canHandleParsedEvent() {	
+		parsedEvent = ParsedEventMocker.makeMockParsedEvent("unknown none");
+		
+		controller.handle(parsedEvent);
+		
+		assertThat(getPresentableUnfoundUseCaseResponse().outcome, 
+				is(ActionOutcome.FAILED));
+		assertThat(getPresentableUnfoundUseCaseResponse().message, 
+				is("Request unknown none was not found."));
 	}
 }

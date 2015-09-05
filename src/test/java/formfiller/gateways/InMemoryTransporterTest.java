@@ -47,7 +47,26 @@ public class InMemoryTransporterTest {
 		}
 		
 		@Test
+		public void movingBackwardTwice_ReturnsFormComponentDotStart(){
+			transporter.move(Direction.BACKWARD);
+			transporter.move(Direction.BACKWARD);
+			
+			currentFormComponent = transporter.getCurrent();
+			
+			assertThat(currentFormComponent.id, is("start"));
+		}
+		
+		@Test
 		public void movingForward_ReturnsFormComponentDotEnd(){
+			transporter.move(Direction.FORWARD);
+			
+			currentFormComponent = transporter.getCurrent();
+			
+			assertThat(currentFormComponent.id, is("end"));
+		}
+		
+		@Test
+		public void movingForwardTwice_ReturnsFormComponentDotEnd(){
 			transporter.move(Direction.FORWARD);
 			
 			currentFormComponent = transporter.getCurrent();

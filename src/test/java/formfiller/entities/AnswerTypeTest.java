@@ -63,31 +63,8 @@ public class AnswerTypeTest<T> {
 		boolean satisfiesConstraint;
 		Answer answer;
 		
-		Answer makeAnswer(int id, T content, boolean satisfied){
-			answerId = id;
-			answerContent = content;
-			satisfiesConstraint = satisfied;
-			answer = AnswerMocker.makeMockAnswer(answerId, answerContent, 
-					satisfiesConstraint);
-			return answer;
-		}
-		
-		public void setupAnswer(int id, T content, boolean satisfied){
-			makeAnswer(id, content, satisfied);
-			answerType.wrap(answer);
-		}
-		
 		public void assertConstraintHasAnswer(){
 			assertTrue(answerType.hasAnswer());
-		}
-		
-		public void assertAnswerDataIsConsistent(int answerId, T answerContent){
-			Object content = answerType.getContent();
-			
-			assertSame(answerId, answerType.getId());
-			assertSame(answerContent, content);
-			assertSame(type, content.getClass());
-			assertSame(satisfiesConstraint, answerType.satisfiesConstraint());
 		}
 		
 		public void assertConstraintIsSatisfied(boolean flag){

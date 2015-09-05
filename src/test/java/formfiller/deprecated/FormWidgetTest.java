@@ -1,29 +1,23 @@
 package formfiller.deprecated;
 
-import static org.junit.Assert.assertEquals;
+import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
-import java.util.Collection;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
-import formfiller.entities.Constraint;
-import formfiller.entities.NoQuestion;
-import formfiller.entities.Prompt;
-import formfiller.deprecated.FormWidget;
 import formfiller.entities.Answer;
 import formfiller.entities.AnswerImpl;
+import formfiller.entities.Prompt;
 import formfiller.enums.Cardinality;
-import formfiller.enums.ContentConstraint;
 import formfiller.utilities.AnswerMocker;
 import formfiller.utilities.QuestionMocker;
 
@@ -36,50 +30,12 @@ public class FormWidgetTest {
 	static Answer addedAnswer;
 	static Answer newAnswer;
 	
-	static void assertPromptIsANoQuestion() {
-		assertTrue(FormWidget.getPrompt() instanceof NoQuestion);
-		assertEquals("", FormWidget.getPrompt().getId());
-		assertEquals("", FormWidget.getPrompt().getContent());
-	}
-	
-	static void assertAnswerIsANoAnswer() {
-		assertTrue(FormWidget.getAnswer().equals(AnswerImpl.NONE));
-		assertEquals(-1, FormWidget.getAnswer().getId());
-		assertEquals("", FormWidget.getAnswer().getContent());
-	}
-	
-	static void assertWidgetHasNoConstraints(){
-		Collection<Constraint> constraintValues = getConstraintValues();
-		assertTrue(constraintValues.size() == 0);
-	}
-	
-	static Collection<Constraint> getConstraintValues(){
-		Map<ContentConstraint, Constraint> constraintsMap = getConstraintsMap();
-		return constraintsMap.values();
-	}
-	
-	static Map<ContentConstraint, Constraint> getConstraintsMap(){
-		return FormWidget.getConstraints();
-	}
-	
 	static Prompt makeMockNameQuestion() {
 		return QuestionMocker.makeMockNameQuestion();
 	}
 	
 	static Answer makeMockNameAnswer() {
 		return AnswerMocker.makeMockAnswer(0, "Joe", true);
-	}
-	
-	static Prompt makeMockPrompt(String id, String content){
-		Prompt result = mock(Prompt.class);
-		when (result.getId()).thenReturn(id);
-		when (result.getContent()).thenReturn(content);
-		return result;
-	}
-	
-	static void assertPromptDidNotChange() {
-		assertNotSame(oldPrompt, newPrompt);
-		assertSame(oldPrompt, newPrompt);
 	}
 	
 	static void assertPromptChanged() {
@@ -103,15 +59,6 @@ public class FormWidgetTest {
 			addedAnswer = response;
 			FormWidget.addAnswer(response);
 		}
-	}
-	
-	void setNewAnswer() {
-		newAnswer = FormWidget.getAnswer();
-	}
-	
-	void assertAnswerDidNotChange() {
-		assertNotSame(addedAnswer, newAnswer);
-		assertSame(oldAnswer, newAnswer);
 	}
 	
 	void assertAnswerChanged() {
@@ -146,8 +93,6 @@ public class FormWidgetTest {
 					@Test(expected = IllegalArgumentException.class)
 					public void whenAddPromptRuns_ThenPromptThrowsException(){
 						FormWidget.addPrompt(addedPrompt);
-						setNewPromptValue();
-						assertPromptDidNotChange();
 					}
 				}
 				
@@ -219,7 +164,6 @@ public class FormWidgetTest {
 				@Test(expected = IllegalStateException.class)
 				public void whenSetAnswerRuns_ThenAnswerDoesNotChange(){
 					updateAnswerFieldValues(addedAnswer);
-					assertAnswerDidNotChange();			
 				}
 			}
 			
@@ -233,13 +177,24 @@ public class FormWidgetTest {
 				@Test(expected = IllegalStateException.class)
 				public void whenAddAnswerRuns_ThenAnswerDoesNotChange(){
 					updateAnswerFieldValues(addedAnswer);
-					assertAnswerDidNotChange();
 				}	
 			}
 		}
 	}
 	
 	public class GivenValidQuestionWasAdded{
+		
+		@Test(expected = IllegalArgumentException.class)
+		public void nullAnswer_ThrowsException(){
+			addedAnswer = null;
+			updateAnswerFieldValues(addedAnswer);	
+		}
+		
+		@Test(expected = IllegalArgumentException.class)
+		public void nullContent_ThrowsException(){
+			addedAnswer = AnswerMocker.makeMockAnswer(0, null, false);
+			updateAnswerFieldValues(addedAnswer);	
+		}
 		
 		public class GivenAnInvalidAnswer{
 			
@@ -251,13 +206,13 @@ public class FormWidgetTest {
 			@Test(expected = IllegalArgumentException.class)
 			public void whenSetAnswerRuns_ThenAnswerDoesNotChange(){
 				updateAnswerFieldValues(addedAnswer);
-				assertAnswerDidNotChange();			
 			}
 		}
+		
 		public class GivenAValidAnswer{
 
 			@Before
-			public <T> void givenAValidAnswer(){
+			public void givenAValidAnswer(){
 				addedAnswer = makeMockNameAnswer();
 			}
 
@@ -266,6 +221,23 @@ public class FormWidgetTest {
 				updateAnswerFieldValues(addedAnswer);
 				assertAnswerChanged();
 			}	
+		}
+
+		public class GivenAListAnswer{			
+			private List<Answer> answer;
+
+			@Before
+			public void givenAListAnswerWasAdded(){
+				answer = Arrays.asList(makeMockNameAnswer(), makeMockAgeAnswer(65));
+				addedAnswer = AnswerMocker.makeMockAnswer(0, answer, true);
+				updateAnswerFieldValues(addedAnswer);
+			}
+			
+			@Test
+			public void gettingNextAnswerId_ReturnsTheListSize(){
+				assertAnswerChanged();
+				assertThat(FormWidget.getNextAnswerId(), is(answer.size()));
+			}
 		}
 		
 		Prompt makeMockAgeQuestion() {
@@ -371,8 +343,7 @@ public class FormWidgetTest {
 				
 				@Test(expected = IllegalStateException.class)
 				public void whenAnswerIsAbsent_ThenAddPromptThrowsException(){
-					addedPrompt = makeMockAgeQuestion();
-					FormWidget.addPrompt(addedPrompt);
+					FormWidget.addPrompt(makeMockAgeQuestion());
 				}
 			}
 			

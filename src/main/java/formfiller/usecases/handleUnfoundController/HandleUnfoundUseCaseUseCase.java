@@ -11,9 +11,9 @@ public class HandleUnfoundUseCaseUseCase implements UseCase {
 	public void execute(Request request) {
 		if (request == null) request = new HandleUnfoundUseCaseRequest();
 		
-		HandleUnfoundUseCaseRequest handleUnfoundControllerRequest = 
+		HandleUnfoundUseCaseRequest handleUnfoundUseCaseRequest = 
 				(HandleUnfoundUseCaseRequest) request;
-		String message = handleUnfoundControllerRequest.message;
+		String message = handleUnfoundUseCaseRequest.message;
 		ApplicationContext.responsePresenter.
 				present(makeHandleUnfoundUseCaseResponse(message));
 	}

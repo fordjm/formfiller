@@ -40,21 +40,15 @@ public class InMemoryFormComponentGateway implements FormComponentGateway {
 	}
 	
 	public FormComponent find(String id) {
-		if (id == null) throw new NullId();
+		if (id == null) id = "";
 		
 		return formComponents.get(id);
 	}
 
 	public void save(FormComponent formComponent) {
-		if (formComponent == null) throw new NullFormComponent();
+		if (formComponent == null) return;
 		
 		formComponents.put(formComponent.id, formComponent);
 		orderedElements.add(formComponent.id);
 	}
-
-	@SuppressWarnings("serial")
-	public class NullId extends RuntimeException { }
-
-	@SuppressWarnings("serial")
-	public class NullFormComponent extends RuntimeException { }
 }

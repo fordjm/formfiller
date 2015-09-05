@@ -65,7 +65,7 @@ public class FormWidget {
 		if (!hasQuestion())
 			throw new IllegalStateException(
 					"Must have a question before adding an answer!");
-		else if (!hasAValidAnswer(answer))
+		else if (!isValidAnswer(answer))
 			throw new IllegalArgumentException("Answer is not valid!");
 		else if (!hasRoomForAnswer())
 			throw new IllegalStateException("This question only takes one answer!");
@@ -102,7 +102,7 @@ public class FormWidget {
 		return (answer.equals(AnswerImpl.NONE));
 	}
 	
-	private static boolean hasAValidAnswer(Answer answer){
+	private static boolean isValidAnswer(Answer answer){
 		return answer != null && 
 				!isANullAnswer(answer) && 
 				answer.getContent() != null;

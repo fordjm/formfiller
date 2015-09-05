@@ -30,6 +30,8 @@ public class Router {
 	}
 	
 	public void route(ParsedEvent parsedEvent) {
+		if (parsedEvent == null) parsedEvent = new ParsedEvent();
+		
 		Controller controller = getController(parsedEvent.method);
 		controller.handle(parsedEvent);
 	}
