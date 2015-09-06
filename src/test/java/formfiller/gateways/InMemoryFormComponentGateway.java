@@ -7,8 +7,7 @@ import java.util.Map;
 
 import formfiller.entities.FormComponent;
 
-public class InMemoryFormComponentGateway implements FormComponentGateway {
-	public final InMemoryTransporter transporter = new InMemoryTransporter();	
+public class InMemoryFormComponentGateway implements FormComponentGateway {	
 	private Map<String, FormComponent> formComponents = new HashMap<String, FormComponent>();
 	private List<String> orderedElements = new ArrayList<String>();
 	
@@ -33,10 +32,6 @@ public class InMemoryFormComponentGateway implements FormComponentGateway {
 	private FormComponent getFormComponentAtIndex(int index) {
 		String id = orderedElements.get(index);
 		return formComponents.get(id);
-	}
-
-	public Transporter getTransporter(){
-		return transporter;
 	}
 	
 	public FormComponent find(String id) {

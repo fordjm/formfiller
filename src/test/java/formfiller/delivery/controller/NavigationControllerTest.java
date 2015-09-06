@@ -12,7 +12,6 @@ import formfiller.delivery.event.ParsedEvent;
 import formfiller.entities.FormComponent;
 import formfiller.gateways.FormComponentGateway;
 import formfiller.gateways.InMemoryFormComponentGateway;
-import formfiller.gateways.Transporter;
 import formfiller.utilities.*;
 
 public class NavigationControllerTest {
@@ -47,8 +46,7 @@ public class NavigationControllerTest {
 	}
 	
 	private FormComponent getCurrentFormComponent() {
-		Transporter transporter = getInMemoryFormComponentGateway().transporter;
-		return transporter.getCurrent();
+		return ApplicationContext.formComponentState.getCurrent();
 	}
 	
 	@Before

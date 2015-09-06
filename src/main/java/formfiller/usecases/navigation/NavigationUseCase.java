@@ -4,12 +4,11 @@ import formfiller.ApplicationContext;
 import formfiller.appBoundaries.Presenter;
 import formfiller.appBoundaries.UseCase;
 import formfiller.entities.Answer;
-import formfiller.entities.ExecutedUseCase;
 import formfiller.entities.FormComponent;
 import formfiller.entities.Prompt;
 import formfiller.enums.ActionOutcome;
 import formfiller.enums.Direction;
-import formfiller.gateways.Transporter;
+import formfiller.gateways.InMemoryTransporter;
 import formfiller.request.models.NavigationRequest;
 import formfiller.request.models.Request;
 import formfiller.response.models.PresentableAnswer;
@@ -17,53 +16,48 @@ import formfiller.response.models.PresentableFormComponent;
 import formfiller.response.models.PresentableQuestion;
 import formfiller.response.models.PresentableResponse;
 
-public class NavigationUseCase implements UseCase {
-	private NavigationValidator navigationValidator = new NavigationValidator();
-	
+public class NavigationUseCase implements UseCase, Undoable {
+	private Direction direction = Direction.NONE;
+	private ActionOutcome outcome = ActionOutcome.NONE;
+
 	public void execute(Request request) {		
-		if (request == null) request = new NavigationRequest();
+		if (request == null) return;
 
 		NavigationRequest navigationRequest = (NavigationRequest) request;
-		Direction direction = navigationRequest.direction;
-		PresentableResponse response;
-		
-		if (navigationValidator.isValidMove(direction)) {
+		direction = navigationRequest.direction;
+
+		if (NavigationValidator.isValidMove(direction)) {
+			setOutcome(ActionOutcome.SUCCEEDED);
 			executeMove(direction);
-			response = makePresentableFormComponent();
-		} else {
-			response = makePresentableResponse();
-		}
-		
+		} else 
+			setOutcome(ActionOutcome.FAILED);
+
+		PresentableResponse response = makeResponse();		
 		presentNavigationResponse(response);
-		ApplicationContext.executedUseCases.push(
-				makeExecutedUseCase(response));
+		ApplicationContext.executedUseCases.push(this);
 	}
-	
-	private ExecutedUseCase makeExecutedUseCase(PresentableResponse response){
-		ExecutedUseCase result = new ExecutedUseCase();
-		result.useCase = this;
-		result.outcome = response.outcome;
-		result.message = response.message;
-		return result;
+
+	private void setOutcome(ActionOutcome outcome) {
+		this.outcome = outcome;
 	}
-	
+
+	private PresentableResponse makeResponse() {
+		return (outcome == ActionOutcome.SUCCEEDED) 
+				? makePresentableFormComponent() : makePresentableResponse();
+	}
+
 	private String getAnswerRequiredMessage(){
 		return "Sorry, you cannot move ahead.  "
 				+ "The current question requires an answer.";
 	}
 
 	private void executeMove(Direction direction) {
-		getTransporter().move(direction);
-	}
-
-	private Transporter getTransporter() {
-		return ApplicationContext.formComponentGateway.
-				getTransporter();
+		new InMemoryTransporter().move(direction);
 	}
 
 	private void presentNavigationResponse(PresentableResponse presentableResponse) {
 		getPresenterFromContext(presentableResponse.outcome).
-				present(presentableResponse);
+		present(presentableResponse);
 	}
 
 	private Presenter getPresenterFromContext(ActionOutcome outcome) {
@@ -81,7 +75,7 @@ public class NavigationUseCase implements UseCase {
 		result.outcome = ActionOutcome.FAILED;
 		return result;
 	}
-	
+
 	private PresentableResponse makePresentableFormComponent() {		
 		FormComponent current = getCurrentFormComponent();
 		PresentableFormComponent result = new PresentableFormComponent();
@@ -93,8 +87,7 @@ public class NavigationUseCase implements UseCase {
 	}
 
 	private FormComponent getCurrentFormComponent() {
-		Transporter transporter = getTransporter();
-		return transporter.getCurrent();
+		return ApplicationContext.formComponentState.getCurrent();
 	}
 
 	private PresentableQuestion makePresentableQuestion(Prompt requestedQuestion) {
@@ -103,11 +96,26 @@ public class NavigationUseCase implements UseCase {
 		result.message = requestedQuestion.getContent();
 		return result;
 	}
-	
+
 	private PresentableAnswer makePresentableAnswer(Answer requestedAnswer) {
 		PresentableAnswer result = new PresentableAnswer();
 		result.id = requestedAnswer.getId();
 		result.message = requestedAnswer.getContent().toString();
 		return result;
+	}
+
+	public void undo() {
+		if (outcome != ActionOutcome.SUCCEEDED) return;
+		Direction direction = getUndoDirection();
+		executeMove(direction);
+	}
+
+	private Direction getUndoDirection() {
+		if (direction == Direction.NONE)
+			return direction;
+		else if (direction == Direction.FORWARD)
+			return Direction.BACKWARD;
+		else
+			return Direction.FORWARD;
 	}
 }

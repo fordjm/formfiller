@@ -9,9 +9,10 @@ import formfiller.delivery.ui.consoleUi.ConsoleView;
 import formfiller.delivery.viewModel.PresentableResponseViewModel;
 import formfiller.entities.Answer;
 import formfiller.entities.AnswerImpl;
-import formfiller.entities.ExecutedUseCase;
+import formfiller.usecases.navigation.NavigationUseCase;
 import formfiller.entities.FormComponent;
 import formfiller.entities.Question;
+import formfiller.gateways.InMemoryFormComponentState;
 import formfiller.gateways.InMemoryFormComponentGateway;
 
 // TODO:  Credit CleanCoders JCS TestSetup
@@ -20,8 +21,9 @@ public class TestSetup {
 	public static void setupContext(){
 		View consoleView = new ConsoleView();
 		
+		ApplicationContext.formComponentState = new InMemoryFormComponentState();
 		ApplicationContext.formComponentGateway = new InMemoryFormComponentGateway();
-		ApplicationContext.executedUseCases = new Stack<ExecutedUseCase>();
+		ApplicationContext.executedUseCases = new Stack<NavigationUseCase>();
 		ApplicationContext.answerPresenter = makeResponsePresenter(consoleView);
 		ApplicationContext.responsePresenter = makeResponsePresenter(consoleView);
 		ApplicationContext.formComponentPresenter = makeFormComponentPresenter(consoleView);

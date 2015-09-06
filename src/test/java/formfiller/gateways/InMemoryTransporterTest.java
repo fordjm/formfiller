@@ -28,11 +28,15 @@ public class InMemoryTransporterTest {
 		transporter = new InMemoryTransporter();		
 	}
 	
+	private FormComponent getCurrentFormComponent() {
+		return ApplicationContext.formComponentState.getCurrent();
+	}
+
 	public class GivenNoFormComponents {
 
 		@Test
 		public void gettingCurrent_ReturnsFormComponentDotEnd() {	
-			FormComponent currentFormComponent = transporter.getCurrent();
+			FormComponent currentFormComponent = getCurrentFormComponent();
 			
 			assertThat(currentFormComponent.id, is("end"));
 		}
@@ -41,7 +45,7 @@ public class InMemoryTransporterTest {
 		public void movingBackward_ReturnsFormComponentDotStart(){
 			transporter.move(Direction.BACKWARD);
 			
-			currentFormComponent = transporter.getCurrent();
+			currentFormComponent = getCurrentFormComponent();
 			
 			assertThat(currentFormComponent.id, is("start"));
 		}
@@ -51,7 +55,7 @@ public class InMemoryTransporterTest {
 			transporter.move(Direction.BACKWARD);
 			transporter.move(Direction.BACKWARD);
 			
-			currentFormComponent = transporter.getCurrent();
+			currentFormComponent = getCurrentFormComponent();
 			
 			assertThat(currentFormComponent.id, is("start"));
 		}
@@ -60,7 +64,7 @@ public class InMemoryTransporterTest {
 		public void movingForward_ReturnsFormComponentDotEnd(){
 			transporter.move(Direction.FORWARD);
 			
-			currentFormComponent = transporter.getCurrent();
+			currentFormComponent = getCurrentFormComponent();
 			
 			assertThat(currentFormComponent.id, is("end"));
 		}
@@ -69,7 +73,7 @@ public class InMemoryTransporterTest {
 		public void movingForwardTwice_ReturnsFormComponentDotEnd(){
 			transporter.move(Direction.FORWARD);
 			
-			currentFormComponent = transporter.getCurrent();
+			currentFormComponent = getCurrentFormComponent();
 			
 			assertThat(currentFormComponent.id, is("end"));
 		}
@@ -98,7 +102,7 @@ public class InMemoryTransporterTest {
 		public void movingBackward_ReturnsFormComponentDotStart(){
 			transporter.move(Direction.BACKWARD);
 			
-			currentFormComponent = transporter.getCurrent();
+			currentFormComponent = getCurrentFormComponent();
 			
 			assertThat(currentFormComponent.id, is("start"));
 		}
@@ -107,7 +111,7 @@ public class InMemoryTransporterTest {
 		public void movingInPlace_ReturnsTheGivenFormComponent(){
 			transporter.move(Direction.NONE);
 			
-			currentFormComponent = transporter.getCurrent();
+			currentFormComponent = getCurrentFormComponent();
 			
 			assertThat(currentFormComponent.id, is("name"));
 		}
@@ -116,7 +120,7 @@ public class InMemoryTransporterTest {
 		public void movingForward_ReturnsQuestionDotEnd(){
 			transporter.move(Direction.FORWARD);
 			
-			currentFormComponent = transporter.getCurrent();
+			currentFormComponent = getCurrentFormComponent();
 			
 			assertThat(currentFormComponent.id, is("end"));
 		}		

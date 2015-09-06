@@ -3,36 +3,36 @@ package formfiller.usecases.navigation;
 import formfiller.ApplicationContext;
 import formfiller.entities.FormComponent;
 import formfiller.entities.Prompt;
-import formfiller.gateways.Transporter;
 import formfiller.enums.Direction;
 
 public class NavigationValidator {
 	
-	public boolean isValidMove(Direction direction) {
-		Prompt currentQuestion = getCurrentQuestion();
-		return !isMovingForward(direction) || 
-				!isAnswerRequiredButAbsent(currentQuestion);
+	public static boolean isValidMove(Direction direction) {
+		Prompt currentQuestion = getCurrentQuestion();		
+		return !isInvalidMove(direction, currentQuestion);
 	}
 	
-	private boolean isMovingForward(Direction direction) {
+	private static boolean isInvalidMove(Direction direction, Prompt currentQuestion){
+		return isMovingForward(direction) && 
+				isAnswerRequiredButAbsent(currentQuestion);
+	}
+	
+	private static boolean isMovingForward(Direction direction) {
 		return direction == Direction.FORWARD;
 	}
 	
-	private boolean isAnswerRequiredButAbsent(Prompt currentQuestion){
+	private static boolean isAnswerRequiredButAbsent(Prompt currentQuestion){
 		boolean result = currentQuestion.requiresAnswer() && 
 				!currentQuestion.hasAnswer();
 		return result;
 	}
 	
-	private Prompt getCurrentQuestion() {
-		return getCurrentFormComponent().question;
+	private static Prompt getCurrentQuestion() {
+		FormComponent component = getCurrentFormComponent();
+		return component.question;
 	}
 	
-	private FormComponent getCurrentFormComponent() {
-		return getTransporter().getCurrent();
-	}
-
-	private Transporter getTransporter(){
-		return ApplicationContext.formComponentGateway.getTransporter();
+	private static FormComponent getCurrentFormComponent() {
+		return ApplicationContext.formComponentState.getCurrent();
 	}
 }

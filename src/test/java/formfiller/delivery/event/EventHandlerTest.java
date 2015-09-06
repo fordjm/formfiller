@@ -10,7 +10,6 @@ import org.mockito.Mockito;
 import formfiller.ApplicationContext;
 import formfiller.delivery.EventSource;
 import formfiller.entities.FormComponent;
-import formfiller.gateways.Transporter;
 import formfiller.utilities.TestSetup;
 
 public class EventHandlerTest {	
@@ -18,8 +17,7 @@ public class EventHandlerTest {
 	private EventSource mockEventSource;
 	
 	private FormComponent getCurrent() {
-		Transporter transporter = ApplicationContext.formComponentGateway.getTransporter();
-		return transporter.getCurrent();
+		return ApplicationContext.formComponentState.getCurrent();
 	}
 
 	@Before

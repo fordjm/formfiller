@@ -1,6 +1,6 @@
 package formfiller.usecases.navigation;
 
-import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
@@ -11,19 +11,19 @@ import org.junit.runner.RunWith;
 
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
 import formfiller.ApplicationContext;
+import formfiller.appBoundaries.UseCase;
 import formfiller.entities.AnswerImpl;
 import formfiller.entities.FormComponent;
 import formfiller.entities.Prompt;
 import formfiller.entities.Question;
-import formfiller.gateways.FormComponentGateway;
-import formfiller.gateways.InMemoryFormComponentGateway;
 import formfiller.enums.Direction;
-import formfiller.gateways.Transporter;
 import formfiller.request.models.NavigationRequest;
+import formfiller.utilities.InMemoryFormComponentLiason;
 import formfiller.utilities.FormComponentMocker;
 import formfiller.utilities.QuestionMocker;
 import formfiller.utilities.TestSetup;
 
+//	TODO:	Break the index (InMemory) dependency.
 @RunWith(HierarchicalContextRunner.class)
 public class NavigationTest {	
 	private NavigationUseCase navigationUseCase;
@@ -33,19 +33,9 @@ public class NavigationTest {
 	private void setMockRequestDirection(Direction direction){
 		mockRequest.direction = direction;
 	}
-	
-	private FormComponent findFormComponentByIndex(int index){
-		return getInMemoryFormComponentGateway().findByIndex(index);
-	}
-	
-	private InMemoryFormComponentGateway getInMemoryFormComponentGateway(){
-		InMemoryFormComponentGateway result = (InMemoryFormComponentGateway)
-				getFormComponentGatewayFromContext();		
-		return result;
-	}
 
-	private FormComponentGateway getFormComponentGatewayFromContext() {
-		return ApplicationContext.formComponentGateway;
+	private void setFoundFormComponentToIndex(int index) {
+		foundFormComponent = InMemoryFormComponentLiason.findFormComponentByIndex(index);
 	}
 	
 	private FormComponent makeMockFormComponent(Prompt question){
@@ -53,12 +43,7 @@ public class NavigationTest {
 	}
 	
 	private FormComponent getCurrentFormComponent() {
-		Transporter transporter = getFormComponentGatewayFromContext().getTransporter();
-		return transporter.getCurrent();
-	}
-
-	private void setFoundFormComponentToIndex(int index) {
-		foundFormComponent = findFormComponentByIndex(index);
+		return ApplicationContext.formComponentState.getCurrent();
 	}
 	
 	@Before
@@ -66,6 +51,25 @@ public class NavigationTest {
 		TestSetup.setupContext();
 		navigationUseCase = new NavigationUseCase();
 		mockRequest = mock(NavigationRequest.class);		
+	}
+	
+	@Test
+	public void isAUseCase() {
+		assertThat(navigationUseCase, is(instanceOf(UseCase.class)));
+	}
+	
+	@Test
+	public void isUndoable() {
+		assertThat(navigationUseCase, is(instanceOf(Undoable.class)));
+	}
+	
+	@Test
+	public void undoBeforeExecutionDoesNotChangeCurrentFormComponent() {
+		setFoundFormComponentToIndex(0);
+		
+		navigationUseCase.undo();
+		
+		assertThat(getCurrentFormComponent(), is(foundFormComponent));
 	}
 	
 	@Test
@@ -84,11 +88,11 @@ public class NavigationTest {
 			
 			@Test
 			public void gettingQuestionGetsStartPrompt(){			
-				foundFormComponent = findFormComponentByIndex(-1);
+				setFoundFormComponentToIndex(-1);
 				
 				navigationUseCase.execute(mockRequest);
 				
-				assertEquals(navigationUseCase, ApplicationContext.executedUseCases.peek().useCase);
+				assertEquals(navigationUseCase, ApplicationContext.executedUseCases.peek());
 				assertThat(getCurrentFormComponent(), is(foundFormComponent));
 			}
 		}
@@ -102,7 +106,7 @@ public class NavigationTest {
 			
 			@Test
 			public void gettingQuestionGetsStartPrompt(){
-				foundFormComponent = findFormComponentByIndex(0);
+				setFoundFormComponentToIndex(0);
 				
 				navigationUseCase.execute(mockRequest);
 				
@@ -119,12 +123,12 @@ public class NavigationTest {
 			
 			@Test
 			public void gettingQuestionGetsEndPrompt(){
-				foundFormComponent = findFormComponentByIndex(0);
+				setFoundFormComponentToIndex(0);
 				
 				navigationUseCase.execute(mockRequest);
 				
 				assertThat(getCurrentFormComponent(), is(foundFormComponent));
-			}			
+			}		
 		}
 	}
 	
@@ -148,23 +152,23 @@ public class NavigationTest {
 
 		private void saveFormComponents(FormComponent... formComponents) {
 			for (FormComponent formComponent : formComponents)
-				getFormComponentGatewayFromContext().save(formComponent);
+				ApplicationContext.formComponentGateway.save(formComponent);
 		}
 		
 		@Test
 		public void formComponentGatewayStoresGivenComponents(){
-			assertEquals(mockNameFormComponent, findFormComponentByIndex(0));
-			assertEquals(mockAgeFormComponent, findFormComponentByIndex(1));
+			assertEquals(mockNameFormComponent, InMemoryFormComponentLiason.findFormComponentByIndex(0));
+			assertEquals(mockAgeFormComponent, InMemoryFormComponentLiason.findFormComponentByIndex(1));
 		}
 		
 		public class GivenTransporterIsAtStart {
 			
 			@Test
 			public void gettingCurrent_ReturnsMockNameFormComponent(){
-				Transporter transporter = getFormComponentGatewayFromContext().getTransporter();
+				FormComponent currentComponent = getCurrentFormComponent();
 				
-				assertThat(transporter.getCurrent().id, is("name"));
-				assertThat(transporter.getCurrent().question.requiresAnswer(), is(false));
+				assertThat(currentComponent.id, is("name"));
+				assertThat(currentComponent.question.requiresAnswer(), is(false));
 			}
 			
 			@Test
@@ -190,6 +194,17 @@ public class NavigationTest {
 			}
 			
 			@Test
+			public void undoAfterMovingNowhereDoesNotChangeCurrentFormComponent() {
+				setMockRequestDirection(Direction.NONE);
+				setFoundFormComponentToIndex(0);
+				
+				navigationUseCase.execute(mockRequest);				
+				navigationUseCase.undo();
+				
+				assertThat(getCurrentFormComponent(), is(foundFormComponent));
+			}
+			
+			@Test
 			public void movingForward_OutputsSecondComponent(){
 				setMockRequestDirection(Direction.FORWARD);
 				setFoundFormComponentToIndex(1);
@@ -199,6 +214,17 @@ public class NavigationTest {
 				assertThat(getCurrentFormComponent(), is(foundFormComponent));
 				assertThat(foundFormComponent.id, is("age"));
 			}
+			
+			@Test
+			public void undoAfterForwardMove_RevertsCurrentFormComponent() {
+				setMockRequestDirection(Direction.FORWARD);
+				setFoundFormComponentToIndex(0);
+
+				navigationUseCase.execute(mockRequest);
+				navigationUseCase.undo();
+				
+				assertThat(getCurrentFormComponent(), is(foundFormComponent));
+			}		
 		}
 		
 		public class GivenTransporterHasMovedForward {
@@ -211,10 +237,10 @@ public class NavigationTest {
 			
 			@Test
 			public void gettingCurrent_ReturnsMockAgeFormComponent(){
-				Transporter transporter = getFormComponentGatewayFromContext().getTransporter();
+				FormComponent currentComponent = getCurrentFormComponent();
 				
-				assertThat(transporter.getCurrent().id, is("age"));
-				assertThat(transporter.getCurrent().question.requiresAnswer(), is(true));
+				assertThat(currentComponent.id, is("age"));
+				assertThat(currentComponent.question.requiresAnswer(), is(true));
 			}
 			
 			@Test			
@@ -229,6 +255,17 @@ public class NavigationTest {
 			}
 			
 			@Test
+			public void undoAfterBackwardMove_RevertsCurrentFormComponent() {
+				setMockRequestDirection(Direction.BACKWARD);
+				setFoundFormComponentToIndex(1);
+
+				navigationUseCase.execute(mockRequest);
+				navigationUseCase.undo();
+				
+				assertThat(getCurrentFormComponent(), is(foundFormComponent));
+			}
+			
+			@Test
 			public void movingForward_DoesNotChangeComponent(){
 				setMockRequestDirection(Direction.FORWARD);
 				setFoundFormComponentToIndex(1);
@@ -238,6 +275,17 @@ public class NavigationTest {
 				assertThat(getCurrentFormComponent(), is(foundFormComponent));
 				assertThat(foundFormComponent.id, is("age"));
 			}			
+			
+			@Test
+			public void undoAfterFailedExecutionDoesNotChangeCurrentFormComponent() {
+				setMockRequestDirection(Direction.FORWARD);
+				setFoundFormComponentToIndex(1);
+
+				navigationUseCase.execute(mockRequest);
+				navigationUseCase.undo();
+				
+				assertThat(getCurrentFormComponent(), is(foundFormComponent));
+			}	
 		}		
 	}
 }
