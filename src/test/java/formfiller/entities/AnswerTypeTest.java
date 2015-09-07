@@ -40,11 +40,11 @@ public class AnswerTypeTest<T> {
 		assertFalse(answerType.hasAnswer());
 		assertSame(-1, answerType.getId());
 		assertSame("", answerType.getContent());
-		assertFalse(answerType.satisfiesConstraint());
+		assertFalse(answerType.isSatisfied());
 	}
 	
 	public class GivenANullToWrap {
-		Answer answerImpl;	
+		ConstrainableAnswer answerImpl;	
 		
 		@Before
 		public void givenANullToWrap(){
@@ -61,7 +61,7 @@ public class AnswerTypeTest<T> {
 		int answerId;
 		T answerContent;
 		boolean satisfiesConstraint;
-		Answer answer;
+		ConstrainableAnswer answer;
 		
 		public void assertConstraintHasAnswer(){
 			assertTrue(answerType.hasAnswer());
@@ -69,9 +69,9 @@ public class AnswerTypeTest<T> {
 		
 		public void assertConstraintIsSatisfied(boolean flag){
 			if (flag)
-				assertTrue(answerType.satisfiesConstraint());
+				assertTrue(answerType.isSatisfied());
 			else
-				assertFalse(answerType.satisfiesConstraint());
+				assertFalse(answerType.isSatisfied());
 		}
 		
 		public class GivenAnInvalidAnswer{	

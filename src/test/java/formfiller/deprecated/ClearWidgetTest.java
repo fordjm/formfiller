@@ -14,7 +14,7 @@ import de.bechte.junit.runners.context.HierarchicalContextRunner;
 import formfiller.deprecated.ClearWidget;
 import formfiller.deprecated.FormWidget;
 import formfiller.deprecated.Transaction;
-import formfiller.entities.Answer;
+import formfiller.entities.ConstrainableAnswer;
 import formfiller.entities.Constraint;
 import formfiller.entities.NoQuestion;
 import formfiller.enums.Cardinality;
@@ -31,7 +31,7 @@ public class ClearWidgetTest {
 	}
 	
 	static void assertGetAnswerGetsANullAnswer() {
-		assertTrue(FormWidget.getAnswer().equals(Answer.NONE));
+		assertTrue(FormWidget.getAnswer().equals(ConstrainableAnswer.NONE));
 		assertThat(FormWidget.getAnswer().getId(), is(-1));
 		assertEquals("", FormWidget.getAnswer().getContent());
 	}

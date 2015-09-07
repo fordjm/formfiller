@@ -15,7 +15,7 @@ public class SelectionConstraint<T> extends Constraint {
 	protected boolean isConstraintSatisfied() {
 		return selections.size() > 0 && 
 				selections.contains(answer.getContent()) && 
-				answer.satisfiesConstraint();
+				answer.isSatisfied();
 	}
 
 	public List<T> getSelections() {

@@ -14,7 +14,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
-import formfiller.entities.Answer;
+import formfiller.entities.ConstrainableAnswer;
 import formfiller.entities.Prompt;
 import formfiller.enums.Cardinality;
 import formfiller.utilities.AnswerMocker;
@@ -25,15 +25,15 @@ public class FormWidgetTest {
 	static Prompt oldPrompt;
 	static Prompt addedPrompt;
 	static Prompt newPrompt;
-	static Answer oldAnswer;
-	static Answer addedAnswer;
-	static Answer newAnswer;
+	static ConstrainableAnswer oldAnswer;
+	static ConstrainableAnswer addedAnswer;
+	static ConstrainableAnswer newAnswer;
 	
 	static Prompt makeMockNameQuestion() {
 		return QuestionMocker.makeMockNameQuestion();
 	}
 	
-	static Answer makeMockNameAnswer() {
+	static ConstrainableAnswer makeMockNameAnswer() {
 		return AnswerMocker.makeMockAnswer(0, "Joe", true);
 	}
 	
@@ -47,14 +47,14 @@ public class FormWidgetTest {
 		newPrompt = FormWidget.getPrompt();
 	}
 	
-	static void updateAnswerFieldValues(Answer... responses) {
+	static void updateAnswerFieldValues(ConstrainableAnswer... responses) {
 		oldAnswer = FormWidget.getAnswer();
 		addAnswers(responses);
 		newAnswer = FormWidget.getAnswer();
 	}
 	
-	static void addAnswers(Answer... responses) {
-		for (Answer response : responses){
+	static void addAnswers(ConstrainableAnswer... responses) {
+		for (ConstrainableAnswer response : responses){
 			addedAnswer = response;
 			FormWidget.addAnswer(response);
 		}
@@ -157,7 +157,7 @@ public class FormWidgetTest {
 				
 				@Before
 				public void givenAnInvalidAnswer(){
-					addedAnswer = Answer.NONE;
+					addedAnswer = ConstrainableAnswer.NONE;
 				}
 
 				@Test(expected = IllegalStateException.class)
@@ -199,7 +199,7 @@ public class FormWidgetTest {
 			
 			@Before
 			public void givenAnInvalidAnswer(){
-				addedAnswer = Answer.NONE;
+				addedAnswer = ConstrainableAnswer.NONE;
 			}
 
 			@Test(expected = IllegalArgumentException.class)
@@ -223,7 +223,7 @@ public class FormWidgetTest {
 		}
 
 		public class GivenAListAnswer{			
-			private List<Answer> answer;
+			private List<ConstrainableAnswer> answer;
 
 			@Before
 			public void givenAListAnswerWasAdded(){
@@ -243,7 +243,7 @@ public class FormWidgetTest {
 			return QuestionMocker.makeMockAgeQuestion();
 		}
 		
-		Answer makeMockAgeAnswer(int age) {
+		ConstrainableAnswer makeMockAgeAnswer(int age) {
 			return AnswerMocker.makeMockAgeAnswer(age);
 		}
 		
@@ -286,14 +286,14 @@ public class FormWidgetTest {
 				@Test(expected = IllegalStateException.class)
 				public void whenAddAnswerRunsTwice_ThenItThrowsAnException(){
 					addedAnswer = makeMockAgeAnswer(47);
-					Answer secondAnswer = AnswerMocker.makeMockAnswer(1, 52, true);
+					ConstrainableAnswer secondAnswer = AnswerMocker.makeMockAnswer(1, 52, true);
 					updateAnswerFieldValues(addedAnswer, secondAnswer);
 				}				
 			}			
 			
 			public class GivenPromptTakesMultipleAnswers {
-				Answer firstAnswer;
-				Answer secondAnswer;
+				ConstrainableAnswer firstAnswer;
+				ConstrainableAnswer secondAnswer;
 				
 				private void assertAnswerContainsNAnswers(int n) {
 					assertTrue(newAnswer.getContent() instanceof List);

@@ -49,7 +49,7 @@ public class SelectionConstraintTest {
 			assertFalse(selectionConstraint.hasAnswer());
 			assertSame(-1, selectionConstraint.getId());
 			assertSame("", selectionConstraint.getContent());
-			assertFalse(selectionConstraint.satisfiesConstraint());
+			assertFalse(selectionConstraint.isSatisfied());
 		}
 	}	
 
@@ -57,13 +57,13 @@ public class SelectionConstraintTest {
 		int answerId;
 		String answerContent;
 		boolean satisfiesConstraint;
-		Answer answer;
+		ConstrainableAnswer answer;
 		
-		private Answer makeMockAnswer(int id, String content, boolean satisfied){
-			Answer result = Mockito.mock(Answer.class);
+		private ConstrainableAnswer makeMockAnswer(int id, String content, boolean satisfied){
+			ConstrainableAnswer result = Mockito.mock(ConstrainableAnswer.class);
 			Mockito.when(result.getId()).thenReturn(id);
 			Mockito.when(result.getContent()).thenReturn(content);
-			Mockito.when(result.satisfiesConstraint()).thenReturn(satisfied);			
+			Mockito.when(result.isSatisfied()).thenReturn(satisfied);			
 			return result;
 		}		
 		
@@ -73,9 +73,9 @@ public class SelectionConstraintTest {
 		
 		private void assertConstraintIsSatisfied(boolean flag){
 			if (flag)
-				assertTrue(selectionConstraint.satisfiesConstraint());
+				assertTrue(selectionConstraint.isSatisfied());
 			else
-				assertFalse(selectionConstraint.satisfiesConstraint());
+				assertFalse(selectionConstraint.isSatisfied());
 		}
 
 		public class GivenANullToWrap {	
@@ -104,7 +104,7 @@ public class SelectionConstraintTest {
 				assertConstraintHasAnswer();
 				assertSame(answer.getId(), selectionConstraint.getId());
 				assertSame(answer.getContent(), selectionConstraint.getContent());
-				assertSame(answer.satisfiesConstraint(), selectionConstraint.satisfiesConstraint());
+				assertSame(answer.isSatisfied(), selectionConstraint.isSatisfied());
 				assertConstraintIsSatisfied(false);
 			}
 		}
@@ -124,7 +124,7 @@ public class SelectionConstraintTest {
 					assertConstraintHasAnswer();
 					assertSame(answer.getId(), selectionConstraint.getId());					
 					assertSame(answer.getContent(), selectionConstraint.getContent());
-					assertNotSame(answer.satisfiesConstraint(), selectionConstraint.satisfiesConstraint());
+					assertNotSame(answer.isSatisfied(), selectionConstraint.isSatisfied());
 					assertConstraintIsSatisfied(false);
 				}
 			}
@@ -142,7 +142,7 @@ public class SelectionConstraintTest {
 					assertConstraintHasAnswer();
 					assertSame(answer.getId(), selectionConstraint.getId());
 					assertSame(answer.getContent(), selectionConstraint.getContent());
-					assertSame(answer.satisfiesConstraint(), selectionConstraint.satisfiesConstraint());
+					assertSame(answer.isSatisfied(), selectionConstraint.isSatisfied());
 					assertConstraintIsSatisfied(true);
 				}
 			}

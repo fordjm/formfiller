@@ -10,16 +10,16 @@ public class NoAnswerTest {
 
 	@Test
 	public void whenGetIdRuns_ThenIdEqualsNegativeOne() {
-		assertEquals(id, Answer.NONE.getId());
+		assertEquals(id, ConstrainableAnswer.NONE.getId());
 	}
 
 	@Test
 	public void whenGetContentRuns_ThenContentEqualsEmptyString() {
-		assertEquals(content, Answer.NONE.getContent());
+		assertEquals(content, ConstrainableAnswer.NONE.getContent());
 	}
 
 	@Test
 	public void whenSatisfiesConstraintRuns_ThenItReturnsFalse() {
-		assertFalse(Answer.NONE.satisfiesConstraint());
+		assertFalse(ConstrainableAnswer.NONE.isSatisfied());
 	}
 }

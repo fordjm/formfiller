@@ -2,7 +2,7 @@ package formfiller.usecases.addAnswer;
 
 import formfiller.FormFillerContext;
 import formfiller.appBoundaries.UseCase;
-import formfiller.entities.Answer;
+import formfiller.entities.ConstrainableAnswer;
 import formfiller.entities.FormComponent;
 import formfiller.request.models.AddAnswerRequest;
 import formfiller.request.models.Request;
@@ -16,7 +16,7 @@ public class AddAnswerUseCase implements UseCase {
 		//	If the answer content satisfies the answer constraints
 		if (content == "") return;
 		//		Then add the answer at the Gateway and tell the user.
-		Answer answer = new Answer(content);
+		ConstrainableAnswer answer = new ConstrainableAnswer(content);
 		
 		FormComponent foundComponent = FormFillerContext.formComponentGateway.find(questionId);
 		

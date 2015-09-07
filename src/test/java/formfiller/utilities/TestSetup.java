@@ -7,7 +7,7 @@ import formfiller.delivery.presenter.FormComponentPresenter;
 import formfiller.delivery.presenter.ResponsePresenter;
 import formfiller.delivery.ui.consoleUi.ConsoleView;
 import formfiller.delivery.viewModel.PresentableResponseViewModel;
-import formfiller.entities.Answer;
+import formfiller.entities.ConstrainableAnswer;
 import formfiller.usecases.navigation.NavigationUseCase;
 import formfiller.entities.FormComponent;
 import formfiller.entities.Question;
@@ -58,10 +58,10 @@ public class TestSetup {
 	}
 	
 	private static FormComponent makeFormComponent(Question question){		
-		return makeFormComponent(question, Answer.NONE);
+		return makeFormComponent(question, ConstrainableAnswer.NONE);
 	}
 	
-	private static FormComponent makeFormComponent(Question question, Answer answer){
+	private static FormComponent makeFormComponent(Question question, ConstrainableAnswer answer){
 		FormComponent result = new FormComponent();
 		result.id = question.getId();
 		result.question = question;
@@ -75,8 +75,8 @@ public class TestSetup {
 		return result;
 	}
 	
-	private static Answer makeAnswer(String content){
-		Answer result = new Answer(content);
+	private static ConstrainableAnswer makeAnswer(String content){
+		ConstrainableAnswer result = new ConstrainableAnswer(content);
 		return result;
 	}
 }

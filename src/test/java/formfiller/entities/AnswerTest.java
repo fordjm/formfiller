@@ -7,10 +7,10 @@ import org.junit.Test;
 
 public class AnswerTest {
 	
-	public abstract static class GivenAnAnswerImpl{
+	public abstract static class GivenAnAnswer{
 		int id;
 		Object content;
-		Answer answer;
+		ConstrainableAnswer answer;
 		
 		public abstract int getId();
 		public abstract Object getContent();
@@ -19,7 +19,7 @@ public class AnswerTest {
 		public void givenAnAnswerImpl(){
 			id = getId();
 			content = getContent();
-			answer = new Answer(id, content);
+			answer = new ConstrainableAnswer(id, content);
 		}
 		
 		void assertResponseDataIsConsistent(){
@@ -33,7 +33,7 @@ public class AnswerTest {
 		}		
 	}
 	
-	public static class GivenAnIllegalIdAndLegalContent extends GivenAnAnswerImpl{
+	public static class GivenAnIllegalIdAndLegalContent extends GivenAnAnswer{
 
 		public int getId() {
 			return -12;
@@ -45,11 +45,11 @@ public class AnswerTest {
 		
 		@Test
 		public void whenSatisfiesConstraintRuns_ThenItReturnsFalse(){
-			assertFalse(answer.satisfiesConstraint());
+			assertFalse(answer.isSatisfied());
 		}
 	}
 	
-	public static class GivenALegalIdAndIllegalContent extends GivenAnAnswerImpl{
+	public static class GivenALegalIdAndIllegalContent extends GivenAnAnswer{
 
 		public int getId() {
 			return 32;
@@ -61,11 +61,11 @@ public class AnswerTest {
 		
 		@Test
 		public void whenSatisfiesConstraintRuns_ObjecthenItReturnsFalse(){
-			assertFalse(answer.satisfiesConstraint());
+			assertFalse(answer.isSatisfied());
 		}		
 	}
 	
-	public static class GivenALegalIdAndLegalContent extends GivenAnAnswerImpl{
+	public static class GivenALegalIdAndLegalContent extends GivenAnAnswer{
 
 		public int getId() {
 			return 0;
@@ -77,7 +77,7 @@ public class AnswerTest {
 		
 		@Test
 		public void whenSatisfiesConstraintRuns_ObjecthenItReturnsObjectrue(){
-			assertTrue(answer.satisfiesConstraint());
+			assertTrue(answer.isSatisfied());
 		}			
 	}
 }

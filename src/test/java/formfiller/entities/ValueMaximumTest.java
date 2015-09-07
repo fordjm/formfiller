@@ -8,31 +8,36 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
-import formfiller.utilities.AnswerMocker;
 
 @RunWith(HierarchicalContextRunner.class)
 public class ValueMaximumTest {
-	ValueMaximum<String> valueMaximum;
+	ValueMaximum valueMaximum;
 	
 	@Before
 	public void setUp(){
-		valueMaximum = new ValueMaximum<String>("max");
+		valueMaximum = new ValueMaximum("max");
 	}
 	
 	public class GivenAnAnswer{
 		Answer answer;
+
+		private Answer makeMockAnswer(String content) {
+			Answer result = new Answer();
+			result.content = content;
+			return result;
+		}
 		
 		public class GivenAnInvalidAnswer{
 			
 			@Before
 			public void givenAnInvalidAnswer(){
-				answer = AnswerMocker.makeMockAnswer(false);
-				valueMaximum.wrap(answer);
+				answer = makeMockAnswer("");
+				valueMaximum.constrain(null);
 			}
 			
 			@Test
 			public void whenSatisfiesConstraintRuns_ThenItReturnsFalse(){
-				assertFalse(valueMaximum.satisfiesConstraint());
+				assertFalse(valueMaximum.isSatisfied());
 			}
 		}	
 		
@@ -40,13 +45,13 @@ public class ValueMaximumTest {
 			
 			@Before
 			public void givenAValidAnswerLessThanMinimum(){
-				answer = AnswerMocker.makeMockNameAnswer("joe");
-				valueMaximum.wrap(answer);
+				answer = makeMockAnswer("joe");
+				valueMaximum.constrain(answer.content);
 			}
 			
 			@Test
 			public void whenSatisfiesConstraintRuns_ThenItReturnsTrue(){
-				assertTrue(valueMaximum.satisfiesConstraint());
+				assertTrue(valueMaximum.isSatisfied());
 			}
 		}
 		
@@ -54,13 +59,13 @@ public class ValueMaximumTest {
 			
 			@Before
 			public void givenAValidAnswerGreaterThanMaximum(){
-				answer = AnswerMocker.makeMockNameAnswer("moe");
-				valueMaximum.wrap(answer);
+				answer = makeMockAnswer("moe");
+				valueMaximum.constrain(answer);
 			}
 			
 			@Test
 			public void whenSatisfiesConstraintRuns_ThenItReturnsFalse(){
-				assertFalse(valueMaximum.satisfiesConstraint());
+				assertFalse(valueMaximum.isSatisfied());
 			}
 		}
 	}

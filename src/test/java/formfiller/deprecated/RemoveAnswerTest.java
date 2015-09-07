@@ -10,7 +10,7 @@ import de.bechte.junit.runners.context.HierarchicalContextRunner;
 import formfiller.deprecated.FormWidget;
 import formfiller.deprecated.RemoveAnswer;
 import formfiller.deprecated.Transaction;
-import formfiller.entities.Answer;
+import formfiller.entities.ConstrainableAnswer;
 import formfiller.utilities.*;
 
 @RunWith(HierarchicalContextRunner.class)
@@ -37,7 +37,7 @@ public class RemoveAnswerTest {
 		}
 		
 		public class GivenWidgetHasOneAnswer{
-			Answer mockAnswer;
+			ConstrainableAnswer mockAnswer;
 			
 			@Before
 			public void givenWidgetHasAAnswer() throws Exception {

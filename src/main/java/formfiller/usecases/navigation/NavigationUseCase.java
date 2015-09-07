@@ -3,7 +3,7 @@ package formfiller.usecases.navigation;
 import formfiller.FormFillerContext;
 import formfiller.appBoundaries.Presenter;
 import formfiller.appBoundaries.UseCase;
-import formfiller.entities.Answer;
+import formfiller.entities.ConstrainableAnswer;
 import formfiller.entities.FormComponent;
 import formfiller.entities.Prompt;
 import formfiller.enums.Outcome;
@@ -93,7 +93,7 @@ public class NavigationUseCase implements UseCase, Undoable {
 		return result;
 	}
 
-	private PresentableAnswer makePresentableAnswer(Answer requestedAnswer) {
+	private PresentableAnswer makePresentableAnswer(ConstrainableAnswer requestedAnswer) {
 		PresentableAnswer result = new PresentableAnswer();
 		result.id = requestedAnswer.getId();
 		result.message = requestedAnswer.getContent().toString();

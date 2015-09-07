@@ -12,15 +12,15 @@ import formfiller.utilities.AnswerMocker;
 
 @RunWith(HierarchicalContextRunner.class)
 public class ValueMinimumTest {
-	ValueMinimum<String> valueMinimum;
+	ValueMinimum valueMinimum;
 	
 	@Before
 	public void setUp(){
-		valueMinimum = new ValueMinimum<String>("min");
+		valueMinimum = new ValueMinimum("min");
 	}
 	
 	public class GivenAnAnswer{
-		Answer answer;
+		ConstrainableAnswer answer;
 		
 		public class GivenAnInvalidAnswer{
 			
@@ -31,7 +31,7 @@ public class ValueMinimumTest {
 			
 			@Test
 			public void whenSatisfiesConstraintRuns_ThenItReturnsFalse(){
-				assertFalse(valueMinimum.satisfiesConstraint());
+				assertFalse(valueMinimum.isSatisfied());
 			}
 		}	
 		
@@ -40,12 +40,12 @@ public class ValueMinimumTest {
 			@Before
 			public void givenAValidAnswerLessThanMinimum(){
 				answer = AnswerMocker.makeMockNameAnswer("joe");
-				valueMinimum.wrap(answer);
+				valueMinimum.constrain("joe");
 			}
 			
 			@Test
 			public void whenSatisfiesConstraintRuns_ThenItReturnsFalse(){
-				assertFalse(valueMinimum.satisfiesConstraint());
+				assertFalse(valueMinimum.isSatisfied());
 			}
 		}
 		
@@ -54,12 +54,12 @@ public class ValueMinimumTest {
 			@Before
 			public void givenAValidAnswerLessThanMinimum(){
 				answer = AnswerMocker.makeMockNameAnswer("moe");
-				valueMinimum.wrap(answer);
+				valueMinimum.constrain("moe");
 			}
 			
 			@Test
 			public void whenSatisfiesConstraintRuns_ThenItReturnsTrue(){
-				assertTrue(valueMinimum.satisfiesConstraint());
+				assertTrue(valueMinimum.isSatisfied());
 			}
 		}
 	}

@@ -12,7 +12,7 @@ public class ConstraintMocker {
 		Constraint result = mock(Constraint.class);
 		when(result.getName()).thenReturn(ContentConstraint.MOCK);
 		when(result.getId()).thenReturn(id);
-		when(result.satisfiesConstraint()).thenReturn(satisfiesConstraint);
+		when(result.isSatisfied()).thenReturn(satisfiesConstraint);
 		return result;
 	}
 }

@@ -2,17 +2,17 @@ package formfiller.entities;
 
 import formfiller.enums.ContentConstraint;
 
-public abstract class Constraint extends Answer {
+public abstract class Constraint extends ConstrainableAnswer {
 	ContentConstraint name;
-	Answer answer;
+	ConstrainableAnswer answer;
 	
 	public Constraint(ContentConstraint name){
-		super(Answer.NONE);
+		super(ConstrainableAnswer.NONE);
 		this.name = name;
-		this.answer = Answer.NONE;		
+		this.answer = ConstrainableAnswer.NONE;		
 	}
 
-	public void wrap(Answer answer) throws IllegalArgumentException{
+	public void wrap(ConstrainableAnswer answer) throws IllegalArgumentException{
 		if (answer == null || answer.getContent() == null)
 			throw new IllegalArgumentException(
 					"Constraint cannot wrap null responses or content.");
@@ -20,7 +20,7 @@ public abstract class Constraint extends Answer {
 	}
 	
 	public boolean hasAnswer(){
-		return !(answer.equals(Answer.NONE));
+		return !(answer.equals(ConstrainableAnswer.NONE));
 	}
 	
 	public ContentConstraint getName(){
@@ -35,7 +35,7 @@ public abstract class Constraint extends Answer {
 		return answer.getContent();
 	}
 	
-	public boolean satisfiesConstraint(){
+	public boolean isSatisfied(){
 		if (!hasAnswer()) return false;
 		return isConstraintSatisfied();
 	}

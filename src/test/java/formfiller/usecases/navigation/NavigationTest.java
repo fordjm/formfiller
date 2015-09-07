@@ -12,7 +12,7 @@ import org.junit.runner.RunWith;
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
 import formfiller.FormFillerContext;
 import formfiller.appBoundaries.UseCase;
-import formfiller.entities.Answer;
+import formfiller.entities.ConstrainableAnswer;
 import formfiller.entities.FormComponent;
 import formfiller.entities.Prompt;
 import formfiller.entities.Question;
@@ -41,7 +41,7 @@ public class NavigationTest {
 	}
 	
 	private FormComponent makeMockFormComponent(Prompt question){
-		return FormComponentMocker.makeMockFormComponent(question, Answer.NONE);
+		return FormComponentMocker.makeMockFormComponent(question, ConstrainableAnswer.NONE);
 	}
 	
 	@Before

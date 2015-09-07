@@ -18,7 +18,7 @@ public class NoConstraintTest {
 	public <T> void assertResponseDataIsConsistent(int responseId, T responseContent, boolean satisfiesConstraint){
 		assertSame(responseId, noConstraint.getId());
 		assertSame(responseContent, noConstraint.getContent());
-		assertSame(satisfiesConstraint, noConstraint.satisfiesConstraint());
+		assertSame(satisfiesConstraint, noConstraint.isSatisfied());
 	}
 	
 	@Before
@@ -39,12 +39,12 @@ public class NoConstraintTest {
 			assertFalse(noConstraint.hasAnswer());
 			assertSame(-1, noConstraint.getId());
 			assertSame("", noConstraint.getContent());
-			assertFalse(noConstraint.satisfiesConstraint());
+			assertFalse(noConstraint.isSatisfied());
 		}
 	}
 	
 	public class GivenAResponse{
-		Answer answer;
+		ConstrainableAnswer answer;
 		
 		public class GivenAnInvalidResponse{
 			
@@ -71,7 +71,7 @@ public class NoConstraintTest {
 			@Test
 			public void whenSatisfiesConstraintRuns_ThenItReturnsFalse(){
 				assertThat(noConstraint.hasAnswer(), is(equalTo(true)));
-				assertResponseDataIsConsistent(answer.getId(), answer.getContent(), answer.satisfiesConstraint());
+				assertResponseDataIsConsistent(answer.getId(), answer.getContent(), answer.isSatisfied());
 				assertThat(noConstraint.isConstraintSatisfied(), is(true));
 			}
 		}

@@ -7,14 +7,14 @@ import java.util.Map;
 
 import formfiller.entities.NoQuestion;
 import formfiller.entities.Prompt;
-import formfiller.entities.Answer;
+import formfiller.entities.ConstrainableAnswer;
 import formfiller.enums.Cardinality;
 import formfiller.enums.ContentConstraint;
 import formfiller.entities.Constraint;
 
 public class FormWidget {
 	private static Prompt prompt = new NoQuestion();
-	private static Answer answer = Answer.NONE;
+	private static ConstrainableAnswer answer = ConstrainableAnswer.NONE;
 	private static Map<ContentConstraint, Constraint> contentConstraints = 
 			new HashMap<ContentConstraint, Constraint>();
 	private static Cardinality answerCardinality = Cardinality.SINGLE;
@@ -32,13 +32,13 @@ public class FormWidget {
 		if (!hasAnswer()) 
 			return 0;
 		else if (answer.getContent() instanceof List){
-			List<?> responses = (List<Answer>) answer.getContent();
+			List<?> responses = (List<ConstrainableAnswer>) answer.getContent();
 			return responses.size();
 		}
 		return -1;
 	}
 
-	public static Answer getAnswer() {
+	public static ConstrainableAnswer getAnswer() {
 		return answer;
 	}
 	
@@ -51,7 +51,7 @@ public class FormWidget {
 	}
 
 	public static void addPrompt(Prompt prompt) throws IllegalStateException, IllegalArgumentException {
-		if (answerRequired && answer.equals(Answer.NONE))
+		if (answerRequired && answer.equals(ConstrainableAnswer.NONE))
 			throw new IllegalStateException("Previous question requires an answer!");
 		else if (prompt == null) 
 			throw new IllegalArgumentException("Cannot add nulls to FormWidget!");
@@ -60,7 +60,7 @@ public class FormWidget {
 	}
 
 	// TODO:  It appears this belongs in AddResponseTransaction...
-	public static void addAnswer(Answer answer) {
+	public static void addAnswer(ConstrainableAnswer answer) {
 		if (!hasQuestion())
 			throw new IllegalStateException(
 					"Must have a question before adding an answer!");
@@ -73,17 +73,17 @@ public class FormWidget {
 	}
 	
 	// TODO:  And this belongs here in the widget.
-	private static void addAnswerToWidget(Answer answer){
+	private static void addAnswerToWidget(ConstrainableAnswer answer){
 		if (answerCardinality == Cardinality.SINGLE)
 			FormWidget.answer = answer;
 		else if (FormWidget.answer.getContent() instanceof List){
-			List<Answer> content = (List<Answer>) FormWidget.answer.getContent();
+			List<ConstrainableAnswer> content = (List<ConstrainableAnswer>) FormWidget.answer.getContent();
 			content.add(answer);
 		}
 		else{
-			List<Answer> content = new ArrayList<Answer>();
+			List<ConstrainableAnswer> content = new ArrayList<ConstrainableAnswer>();
 			content.add(answer);
-			Answer toAdd = new Answer(0, content);
+			ConstrainableAnswer toAdd = new ConstrainableAnswer(0, content);
 			FormWidget.answer = toAdd;
 		}
 	}
@@ -97,11 +97,11 @@ public class FormWidget {
 		return !isANullAnswer(answer);
 	}
 	
-	private static boolean isANullAnswer(Answer answer){
-		return (answer.equals(Answer.NONE));
+	private static boolean isANullAnswer(ConstrainableAnswer answer){
+		return (answer.equals(ConstrainableAnswer.NONE));
 	}
 	
-	private static boolean isValidAnswer(Answer answer){
+	private static boolean isValidAnswer(ConstrainableAnswer answer){
 		return answer != null && 
 				!isANullAnswer(answer) && 
 				answer.getContent() != null;
@@ -132,7 +132,7 @@ public class FormWidget {
 	}
 
 	public static void clearAnswer() {
-		answer = Answer.NONE;
+		answer = ConstrainableAnswer.NONE;
 	}
 
 	public static Map<ContentConstraint, Constraint> getConstraints() {

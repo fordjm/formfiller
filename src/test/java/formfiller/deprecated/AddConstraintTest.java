@@ -97,40 +97,4 @@ public class AddConstraintTest {
 			assertEquals(type, answerType.getType());
 		}
 	}
-	
-	public class ValueMaximumContext<T>{
-		T maximum;
-		
-		@Before
-		public void givenAValueMaximum(){
-			maximum = (T) "m";
-			addConstraint = new AddValueMaximum<T>(maximum);
-		}
-		
-		@Test
-		public void whenAddConstraintExecutes_ThenFormWidgetHasAConstraint(){
-			addConstraint.execute();		
-			setConstraintsMap();
-			setConstraint(ContentConstraint.VALUE_MAXIMUM);
-			assertTrue(constraint instanceof ValueMaximum);
-		}
-	}
-	
-	public class ValueMinimumContext<T>{
-		T minimum;
-		
-		@Before
-		public void givenAValueMinimum(){
-			minimum = (T) "m";
-			addConstraint = new AddValueMinimum<T>(minimum);
-		}
-		
-		@Test
-		public void whenAddConstraintExecutes_ThenFormWidgetHasAConstraint(){
-			addConstraint.execute();		
-			setConstraintsMap();
-			setConstraint(ContentConstraint.VALUE_MINIMUM);
-			assertTrue(constraint instanceof ValueMinimum);
-		}
-	}
 }

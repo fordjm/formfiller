@@ -4,15 +4,15 @@ import java.util.Collection;
 import java.util.Map;
 
 import formfiller.entities.Constraint;
-import formfiller.entities.Answer;
+import formfiller.entities.ConstrainableAnswer;
 import formfiller.enums.ContentConstraint;
 
 public class AddAnswer implements Transaction {
-	Answer answer;
+	ConstrainableAnswer answer;
 	
 	public AddAnswer(Object content) {
 		int id = FormWidget.getNextAnswerId();
-		this.answer = new Answer(id, content);
+		this.answer = new ConstrainableAnswer(id, content);
 	}
 	
 	public void execute() {
@@ -40,6 +40,6 @@ public class AddAnswer implements Transaction {
 	}
 	
 	private boolean responseSatisfiesConstraints(){
-		return answer.satisfiesConstraint();
+		return answer.isSatisfied();
 	}
 }

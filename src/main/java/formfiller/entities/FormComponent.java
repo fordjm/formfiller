@@ -7,13 +7,13 @@ public class FormComponent {
 	
 	public String id = "";
 	public Prompt question;
-	public Answer answer;
+	public ConstrainableAnswer answer;
 		
 	private static FormComponent makeNullFormComponent(NoQuestion noQuestion) {
 		FormComponent result = new FormComponent();
 		result.id = noQuestion.getId();
 		result.question = noQuestion;
-		result.answer = Answer.NONE;
+		result.answer = ConstrainableAnswer.NONE;
 		return result;
 	}
 }
