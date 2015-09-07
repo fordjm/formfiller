@@ -1,6 +1,6 @@
 package formfiller.utilities;
-import java.util.Stack;
 
+import java.util.Stack;
 import formfiller.FormFillerContext;
 import formfiller.delivery.View;
 import formfiller.delivery.presenter.FormComponentPresenter;
@@ -8,7 +8,6 @@ import formfiller.delivery.presenter.ResponsePresenter;
 import formfiller.delivery.ui.consoleUi.ConsoleView;
 import formfiller.delivery.viewModel.PresentableResponseViewModel;
 import formfiller.entities.Answer;
-import formfiller.entities.AnswerImpl;
 import formfiller.usecases.navigation.NavigationUseCase;
 import formfiller.entities.FormComponent;
 import formfiller.entities.Question;
@@ -59,7 +58,7 @@ public class TestSetup {
 	}
 	
 	private static FormComponent makeFormComponent(Question question){		
-		return makeFormComponent(question, AnswerImpl.NONE);
+		return makeFormComponent(question, Answer.NONE);
 	}
 	
 	private static FormComponent makeFormComponent(Question question, Answer answer){
@@ -77,7 +76,7 @@ public class TestSetup {
 	}
 	
 	private static Answer makeAnswer(String content){
-		Answer result = new AnswerImpl(content);
+		Answer result = new Answer(content);
 		return result;
 	}
 }

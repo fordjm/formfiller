@@ -44,16 +44,16 @@ public class AnswerTypeTest<T> {
 	}
 	
 	public class GivenANullToWrap {
-		Answer response;	
+		Answer answerImpl;	
 		
 		@Before
 		public void givenANullToWrap(){
-			response = null;
+			answerImpl = null;
 		}		
 		
 		@Test(expected = IllegalArgumentException.class)
 		public void whenWrappingNull_ThenIllegalArgumentExceptionIsThrown(){
-			answerType.wrap(response);
+			answerType.wrap(answerImpl);
 		}
 	}
 	

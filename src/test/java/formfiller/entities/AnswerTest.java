@@ -5,12 +5,12 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-public class AnswerImplTest {
+public class AnswerTest {
 	
 	public abstract static class GivenAnAnswerImpl{
 		int id;
 		Object content;
-		AnswerImpl answer;
+		Answer answer;
 		
 		public abstract int getId();
 		public abstract Object getContent();
@@ -19,7 +19,7 @@ public class AnswerImplTest {
 		public void givenAnAnswerImpl(){
 			id = getId();
 			content = getContent();
-			answer = new AnswerImpl(id, content);
+			answer = new Answer(id, content);
 		}
 		
 		void assertResponseDataIsConsistent(){
@@ -44,7 +44,7 @@ public class AnswerImplTest {
 		}
 		
 		@Test
-		public void whenSatisfiesConstraintRuns_ObjecthenItReturnsFalse(){
+		public void whenSatisfiesConstraintRuns_ThenItReturnsFalse(){
 			assertFalse(answer.satisfiesConstraint());
 		}
 	}

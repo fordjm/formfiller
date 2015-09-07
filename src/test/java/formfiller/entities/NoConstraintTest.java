@@ -44,13 +44,13 @@ public class NoConstraintTest {
 	}
 	
 	public class GivenAResponse{
-		Answer response;
+		Answer answer;
 		
 		public class GivenAnInvalidResponse{
 			
 			@Before
 			public void givenAnInvalidResponse(){
-				response = null;
+				answer = null;
 			}
 			
 			@Test
@@ -64,14 +64,14 @@ public class NoConstraintTest {
 			
 			@Before
 			public void givenAValidResponse(){
-				response = AnswerMocker.makeMockNameAnswer("Joe");
-				noConstraint.wrap(response);
+				answer = AnswerMocker.makeMockNameAnswer("Joe");
+				noConstraint.wrap(answer);
 			}			
 			
 			@Test
 			public void whenSatisfiesConstraintRuns_ThenItReturnsFalse(){
 				assertThat(noConstraint.hasAnswer(), is(equalTo(true)));
-				assertResponseDataIsConsistent(response.getId(), response.getContent(), response.satisfiesConstraint());
+				assertResponseDataIsConsistent(answer.getId(), answer.getContent(), answer.satisfiesConstraint());
 				assertThat(noConstraint.isConstraintSatisfied(), is(true));
 			}
 		}

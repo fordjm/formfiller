@@ -15,7 +15,6 @@ import org.junit.runner.RunWith;
 
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
 import formfiller.entities.Answer;
-import formfiller.entities.AnswerImpl;
 import formfiller.entities.Prompt;
 import formfiller.enums.Cardinality;
 import formfiller.utilities.AnswerMocker;
@@ -158,7 +157,7 @@ public class FormWidgetTest {
 				
 				@Before
 				public void givenAnInvalidAnswer(){
-					addedAnswer = AnswerImpl.NONE;
+					addedAnswer = Answer.NONE;
 				}
 
 				@Test(expected = IllegalStateException.class)
@@ -200,7 +199,7 @@ public class FormWidgetTest {
 			
 			@Before
 			public void givenAnInvalidAnswer(){
-				addedAnswer = AnswerImpl.NONE;
+				addedAnswer = Answer.NONE;
 			}
 
 			@Test(expected = IllegalArgumentException.class)

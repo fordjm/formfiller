@@ -5,7 +5,6 @@ import java.util.Map;
 
 import formfiller.entities.Constraint;
 import formfiller.entities.Answer;
-import formfiller.entities.AnswerImpl;
 import formfiller.enums.ContentConstraint;
 
 public class AddAnswer implements Transaction {
@@ -13,7 +12,7 @@ public class AddAnswer implements Transaction {
 	
 	public AddAnswer(Object content) {
 		int id = FormWidget.getNextAnswerId();
-		this.answer = new AnswerImpl(id, content);
+		this.answer = new Answer(id, content);
 	}
 	
 	public void execute() {

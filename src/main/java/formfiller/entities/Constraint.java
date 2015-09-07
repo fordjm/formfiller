@@ -2,13 +2,14 @@ package formfiller.entities;
 
 import formfiller.enums.ContentConstraint;
 
-public abstract class Constraint implements Answer {
+public abstract class Constraint extends Answer {
 	ContentConstraint name;
 	Answer answer;
 	
 	public Constraint(ContentConstraint name){
+		super(Answer.NONE);
 		this.name = name;
-		this.answer = AnswerImpl.NONE;		
+		this.answer = Answer.NONE;		
 	}
 
 	public void wrap(Answer answer) throws IllegalArgumentException{
@@ -19,7 +20,7 @@ public abstract class Constraint implements Answer {
 	}
 	
 	public boolean hasAnswer(){
-		return !(answer.equals(AnswerImpl.NONE));
+		return !(answer.equals(Answer.NONE));
 	}
 	
 	public ContentConstraint getName(){

@@ -1,6 +1,6 @@
 package formfiller.entities;
 
-public abstract class AbstractAnswer implements Answer {
+public abstract class AbstractAnswer {
 	int id;
 	Object content;
 

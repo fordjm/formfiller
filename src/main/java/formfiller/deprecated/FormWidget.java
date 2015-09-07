@@ -8,14 +8,13 @@ import java.util.Map;
 import formfiller.entities.NoQuestion;
 import formfiller.entities.Prompt;
 import formfiller.entities.Answer;
-import formfiller.entities.AnswerImpl;
 import formfiller.enums.Cardinality;
 import formfiller.enums.ContentConstraint;
 import formfiller.entities.Constraint;
 
 public class FormWidget {
 	private static Prompt prompt = new NoQuestion();
-	private static Answer answer = AnswerImpl.NONE;
+	private static Answer answer = Answer.NONE;
 	private static Map<ContentConstraint, Constraint> contentConstraints = 
 			new HashMap<ContentConstraint, Constraint>();
 	private static Cardinality answerCardinality = Cardinality.SINGLE;
@@ -52,7 +51,7 @@ public class FormWidget {
 	}
 
 	public static void addPrompt(Prompt prompt) throws IllegalStateException, IllegalArgumentException {
-		if (answerRequired && answer.equals(AnswerImpl.NONE))
+		if (answerRequired && answer.equals(Answer.NONE))
 			throw new IllegalStateException("Previous question requires an answer!");
 		else if (prompt == null) 
 			throw new IllegalArgumentException("Cannot add nulls to FormWidget!");
@@ -84,7 +83,7 @@ public class FormWidget {
 		else{
 			List<Answer> content = new ArrayList<Answer>();
 			content.add(answer);
-			Answer toAdd = new AnswerImpl(0, content);
+			Answer toAdd = new Answer(0, content);
 			FormWidget.answer = toAdd;
 		}
 	}
@@ -99,7 +98,7 @@ public class FormWidget {
 	}
 	
 	private static boolean isANullAnswer(Answer answer){
-		return (answer.equals(AnswerImpl.NONE));
+		return (answer.equals(Answer.NONE));
 	}
 	
 	private static boolean isValidAnswer(Answer answer){
@@ -133,7 +132,7 @@ public class FormWidget {
 	}
 
 	public static void clearAnswer() {
-		answer = AnswerImpl.NONE;
+		answer = Answer.NONE;
 	}
 
 	public static Map<ContentConstraint, Constraint> getConstraints() {

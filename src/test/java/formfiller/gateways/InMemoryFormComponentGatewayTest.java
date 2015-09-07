@@ -31,12 +31,11 @@ public class InMemoryFormComponentGatewayTest {
 		gateway.save(null);
 	}
 	
-	//	TODO:	Don't return null result.
 	@Test
 	public void findCanHandleNull(){
 		FormComponent result = gateway.find(null);
 		
-		assertNull(result);
+		assertThat(result, is(FormComponent.NULL));
 	}
 	
 	@Test

@@ -35,13 +35,19 @@ public class InMemoryFormComponentGateway implements FormComponentGateway {
 	}
 	
 	public FormComponent find(String id) {
-		if (id == null) id = "";
-		
-		return formComponents.get(id);
+		if (id == null) id = "";		
+		return screenNullFindResults(id);
+	}
+	
+	public FormComponent screenNullFindResults(String requestedId){
+		FormComponent result = formComponents.get(requestedId);
+		if (result == null) result = FormComponent.NULL;
+		return result;
 	}
 
 	public void save(FormComponent formComponent) {
-		if (formComponent == null) return;
+		if (formComponent == null || formComponent == FormComponent.NULL) 
+			return;
 		
 		formComponents.put(formComponent.id, formComponent);
 		orderedElements.add(formComponent.id);
