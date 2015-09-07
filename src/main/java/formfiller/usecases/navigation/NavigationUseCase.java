@@ -1,12 +1,12 @@
 package formfiller.usecases.navigation;
 
-import formfiller.ApplicationContext;
+import formfiller.FormFillerContext;
 import formfiller.appBoundaries.Presenter;
 import formfiller.appBoundaries.UseCase;
 import formfiller.entities.Answer;
 import formfiller.entities.FormComponent;
 import formfiller.entities.Prompt;
-import formfiller.enums.ActionOutcome;
+import formfiller.enums.Outcome;
 import formfiller.enums.Direction;
 import formfiller.gateways.InMemoryTransporter;
 import formfiller.request.models.NavigationRequest;
@@ -15,10 +15,12 @@ import formfiller.response.models.PresentableAnswer;
 import formfiller.response.models.PresentableFormComponent;
 import formfiller.response.models.PresentableQuestion;
 import formfiller.response.models.PresentableResponse;
+import formfiller.utilities.PresenterSelector;
 
+//	TODO:	Extract UndoableUseCase abstraction.
 public class NavigationUseCase implements UseCase, Undoable {
 	private Direction direction = Direction.NONE;
-	private ActionOutcome outcome = ActionOutcome.NONE;
+	private Outcome outcome = Outcome.NEUTRAL;
 
 	public void execute(Request request) {		
 		if (request == null) return;
@@ -26,23 +28,23 @@ public class NavigationUseCase implements UseCase, Undoable {
 		NavigationRequest navigationRequest = (NavigationRequest) request;
 		direction = navigationRequest.direction;
 
-		if (NavigationValidator.isValidMove(direction)) {
-			setOutcome(ActionOutcome.SUCCEEDED);
-			executeMove(direction);
+		if (NavigationValidator.isValidDirectionalMove(direction)) {
+			setOutcome(Outcome.POSITIVE);
+			executeDirectionalMove(direction);
 		} else 
-			setOutcome(ActionOutcome.FAILED);
+			setOutcome(Outcome.NEGATIVE);
 
 		PresentableResponse response = makeResponse();		
-		presentNavigationResponse(response);
-		ApplicationContext.executedUseCases.push(this);
+		presentResponse(response);
+		FormFillerContext.executedUseCases.push(this);
 	}
 
-	private void setOutcome(ActionOutcome outcome) {
+	private void setOutcome(Outcome outcome) {
 		this.outcome = outcome;
 	}
 
 	private PresentableResponse makeResponse() {
-		return (outcome == ActionOutcome.SUCCEEDED) 
+		return (outcome == Outcome.POSITIVE) 
 				? makePresentableFormComponent() : makePresentableResponse();
 	}
 
@@ -51,28 +53,22 @@ public class NavigationUseCase implements UseCase, Undoable {
 				+ "The current question requires an answer.";
 	}
 
-	private void executeMove(Direction direction) {
-		new InMemoryTransporter().move(direction);
+	private void executeDirectionalMove(Direction direction) {
+		new InMemoryTransporter().moveInDirection(direction);
 	}
 
-	private void presentNavigationResponse(PresentableResponse presentableResponse) {
-		getPresenterFromContext(presentableResponse.outcome).
-		present(presentableResponse);
-	}
-
-	private Presenter getPresenterFromContext(ActionOutcome outcome) {
-		if (outcome == ActionOutcome.SUCCEEDED)
-			return ApplicationContext.formComponentPresenter;
-		else
-			return ApplicationContext.responsePresenter;
-	}
+	private void presentResponse(PresentableResponse presentableResponse) {
+		Presenter presenter = 
+				PresenterSelector.selectPresenter(presentableResponse.outcome);
+		presenter.present(presentableResponse);
+	}	
 
 	//	TODO:	Navigation should know nothing about PresentableResponses.
 	//			Make some factories.	
 	private PresentableResponse makePresentableResponse() {
 		PresentableResponse result = new PresentableResponse();
 		result.message = getAnswerRequiredMessage();
-		result.outcome = ActionOutcome.FAILED;
+		result.outcome = Outcome.NEGATIVE;
 		return result;
 	}
 
@@ -81,13 +77,13 @@ public class NavigationUseCase implements UseCase, Undoable {
 		PresentableFormComponent result = new PresentableFormComponent();
 		result.question = makePresentableQuestion(current.question);
 		result.answer = makePresentableAnswer(current.answer);
-		result.outcome = ActionOutcome.SUCCEEDED;
+		result.outcome = Outcome.POSITIVE;
 		result.message = result.question.message;
 		return result;
 	}
 
 	private FormComponent getCurrentFormComponent() {
-		return ApplicationContext.formComponentState.getCurrent();
+		return FormFillerContext.formComponentState.getCurrent();
 	}
 
 	private PresentableQuestion makePresentableQuestion(Prompt requestedQuestion) {
@@ -105,9 +101,9 @@ public class NavigationUseCase implements UseCase, Undoable {
 	}
 
 	public void undo() {
-		if (outcome != ActionOutcome.SUCCEEDED) return;
+		if (outcome != Outcome.POSITIVE) return;
 		Direction direction = getUndoDirection();
-		executeMove(direction);
+		executeDirectionalMove(direction);
 	}
 
 	private Direction getUndoDirection() {

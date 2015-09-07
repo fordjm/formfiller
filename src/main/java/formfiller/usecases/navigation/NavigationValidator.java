@@ -1,13 +1,13 @@
 package formfiller.usecases.navigation;
 
-import formfiller.ApplicationContext;
+import formfiller.FormFillerContext;
 import formfiller.entities.FormComponent;
 import formfiller.entities.Prompt;
 import formfiller.enums.Direction;
 
 public class NavigationValidator {
 	
-	public static boolean isValidMove(Direction direction) {
+	public static boolean isValidDirectionalMove(Direction direction) {
 		Prompt currentQuestion = getCurrentQuestion();		
 		return !isInvalidMove(direction, currentQuestion);
 	}
@@ -33,6 +33,6 @@ public class NavigationValidator {
 	}
 	
 	private static FormComponent getCurrentFormComponent() {
-		return ApplicationContext.formComponentState.getCurrent();
+		return FormFillerContext.formComponentState.getCurrent();
 	}
 }

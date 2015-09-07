@@ -8,7 +8,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
-import formfiller.ApplicationContext;
+import formfiller.FormFillerContext;
 import formfiller.entities.AnswerImpl;
 import formfiller.entities.FormComponent;
 import formfiller.entities.Prompt;
@@ -29,7 +29,7 @@ public class InMemoryTransporterTest {
 	}
 	
 	private FormComponent getCurrentFormComponent() {
-		return ApplicationContext.formComponentState.getCurrent();
+		return FormFillerContext.formComponentState.getCurrent();
 	}
 
 	public class GivenNoFormComponents {
@@ -43,7 +43,7 @@ public class InMemoryTransporterTest {
 		
 		@Test
 		public void movingBackward_ReturnsFormComponentDotStart(){
-			transporter.move(Direction.BACKWARD);
+			transporter.moveInDirection(Direction.BACKWARD);
 			
 			currentFormComponent = getCurrentFormComponent();
 			
@@ -52,8 +52,8 @@ public class InMemoryTransporterTest {
 		
 		@Test
 		public void movingBackwardTwice_ReturnsFormComponentDotStart(){
-			transporter.move(Direction.BACKWARD);
-			transporter.move(Direction.BACKWARD);
+			transporter.moveInDirection(Direction.BACKWARD);
+			transporter.moveInDirection(Direction.BACKWARD);
 			
 			currentFormComponent = getCurrentFormComponent();
 			
@@ -62,7 +62,7 @@ public class InMemoryTransporterTest {
 		
 		@Test
 		public void movingForward_ReturnsFormComponentDotEnd(){
-			transporter.move(Direction.FORWARD);
+			transporter.moveInDirection(Direction.FORWARD);
 			
 			currentFormComponent = getCurrentFormComponent();
 			
@@ -71,7 +71,7 @@ public class InMemoryTransporterTest {
 		
 		@Test
 		public void movingForwardTwice_ReturnsFormComponentDotEnd(){
-			transporter.move(Direction.FORWARD);
+			transporter.moveInDirection(Direction.FORWARD);
 			
 			currentFormComponent = getCurrentFormComponent();
 			
@@ -82,7 +82,7 @@ public class InMemoryTransporterTest {
 	public class GivenAFormComponent {
 
 		private void addQuestionToFormComponentGateway() {
-			ApplicationContext.formComponentGateway.save(makeMockNameQuestionComponent());
+			FormFillerContext.formComponentGateway.save(makeMockNameQuestionComponent());
 		}
 
 		private FormComponent makeMockNameQuestionComponent() {			
@@ -100,7 +100,7 @@ public class InMemoryTransporterTest {
 		
 		@Test
 		public void movingBackward_ReturnsFormComponentDotStart(){
-			transporter.move(Direction.BACKWARD);
+			transporter.moveInDirection(Direction.BACKWARD);
 			
 			currentFormComponent = getCurrentFormComponent();
 			
@@ -109,7 +109,7 @@ public class InMemoryTransporterTest {
 		
 		@Test
 		public void movingInPlace_ReturnsTheGivenFormComponent(){
-			transporter.move(Direction.NONE);
+			transporter.moveInDirection(Direction.NONE);
 			
 			currentFormComponent = getCurrentFormComponent();
 			
@@ -118,7 +118,7 @@ public class InMemoryTransporterTest {
 		
 		@Test
 		public void movingForward_ReturnsQuestionDotEnd(){
-			transporter.move(Direction.FORWARD);
+			transporter.moveInDirection(Direction.FORWARD);
 			
 			currentFormComponent = getCurrentFormComponent();
 			

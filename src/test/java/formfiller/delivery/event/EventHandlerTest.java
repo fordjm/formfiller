@@ -7,7 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import formfiller.ApplicationContext;
+import formfiller.FormFillerContext;
 import formfiller.delivery.EventSource;
 import formfiller.entities.FormComponent;
 import formfiller.utilities.TestSetup;
@@ -17,7 +17,7 @@ public class EventHandlerTest {
 	private EventSource mockEventSource;
 	
 	private FormComponent getCurrent() {
-		return ApplicationContext.formComponentState.getCurrent();
+		return FormFillerContext.formComponentState.getCurrent();
 	}
 
 	@Before

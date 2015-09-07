@@ -11,7 +11,7 @@ import formfiller.usecases.navigation.NavigationUseCase;
 // https://cleancoders.com/episode/case-study-episode-1/show
 // Retrieved 2015-08-06
 
-public class ApplicationContext {
+public class FormFillerContext {
 	public static InMemoryFormComponentState formComponentState;
 	public static FormComponentGateway formComponentGateway;
 	//	Navigation is the only currently undoable use case.  This type will change.

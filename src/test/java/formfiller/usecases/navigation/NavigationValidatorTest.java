@@ -8,7 +8,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
-import formfiller.ApplicationContext;
+import formfiller.FormFillerContext;
 import formfiller.entities.FormComponent;
 import formfiller.entities.Question;
 import formfiller.enums.Direction;
@@ -25,11 +25,11 @@ public class NavigationValidatorTest {
 	}
 	
 	private void assertThatDirectionalMoveIsLegal(Direction direction) {
-		assertThat(validator.isValidMove(direction), is(true));
+		assertThat(validator.isValidDirectionalMove(direction), is(true));
 	}
 	
 	private void assertThat_DirectionalMoveIsIllegal(Direction direction) {
-		assertThat(validator.isValidMove(direction), is(false));
+		assertThat(validator.isValidDirectionalMove(direction), is(false));
 	}
 
 	@Before
@@ -58,7 +58,7 @@ public class NavigationValidatorTest {
 		@Before
 		public void givenAnswerIsNotRequired(){
 			FormComponent mockComponent = makeMockFormComponent(QuestionMocker.makeMockBirthDateQuestion());
-			ApplicationContext.formComponentGateway.save(mockComponent);
+			FormFillerContext.formComponentGateway.save(mockComponent);
 		}
 		
 		@Test
@@ -72,7 +72,7 @@ public class NavigationValidatorTest {
 		@Before
 		public void givenAnswerIsRequired(){
 			FormComponent mockComponent = makeMockFormComponent(QuestionMocker.makeMockAgeQuestion());
-			ApplicationContext.formComponentGateway.save(mockComponent);
+			FormFillerContext.formComponentGateway.save(mockComponent);
 		}
 
 		@Test

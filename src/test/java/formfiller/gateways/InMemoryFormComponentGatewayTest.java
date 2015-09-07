@@ -12,6 +12,15 @@ import formfiller.utilities.FormComponentMocker;
 public class InMemoryFormComponentGatewayTest {
 	private InMemoryFormComponentGateway gateway;
 
+	private FormComponent makeMockFormComponentWithId(String id) {
+		return FormComponentMocker.makeMockFormComponent(id);
+	}
+
+	private void saveFormComponentsAtGateway(FormComponent... formComponents) {
+		for (FormComponent formComponent : formComponents)
+			gateway.save(formComponent);
+	}
+
 	@Before
 	public void setUp() {
 		gateway = new InMemoryFormComponentGateway();
@@ -22,6 +31,7 @@ public class InMemoryFormComponentGatewayTest {
 		gateway.save(null);
 	}
 	
+	//	TODO:	Don't return null result.
 	@Test
 	public void findCanHandleNull(){
 		FormComponent result = gateway.find(null);
@@ -30,11 +40,13 @@ public class InMemoryFormComponentGatewayTest {
 	}
 	
 	@Test
-	public void canSaveAndFindGivenFormComponent() {
-		FormComponent mockFormComponent = FormComponentMocker.makeMockFormComponent("id");
+	public void canSaveAndFindGivenFormComponents() {
+		FormComponent mockComponent0 = makeMockFormComponentWithId("id0");
+		FormComponent mockComponent1 = makeMockFormComponentWithId("id1");
 		
-		gateway.save(mockFormComponent);
+		saveFormComponentsAtGateway(mockComponent0, mockComponent1);
 		
-		assertThat(gateway.find("id"), is(mockFormComponent));
+		assertThat(gateway.find("id0"), is(mockComponent0));
+		assertThat(gateway.find("id1"), is(mockComponent1));
 	}
 }

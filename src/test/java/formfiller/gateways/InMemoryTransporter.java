@@ -1,11 +1,11 @@
 package formfiller.gateways;
 
-import formfiller.ApplicationContext;
+import formfiller.FormFillerContext;
 import formfiller.enums.Direction;
 
 public class InMemoryTransporter implements Transporter {
 	
-	public void move(Direction direction){
+	public void moveInDirection(Direction direction){
 		if (!moveChangesPosition(direction)) 
 			return;
 		
@@ -13,7 +13,7 @@ public class InMemoryTransporter implements Transporter {
 	}
 	
 	private static FormComponentState getCurrentState(){
-		return ApplicationContext.formComponentState;
+		return FormFillerContext.formComponentState;
 	}
 
 	private static boolean moveChangesPosition(Direction direction) {

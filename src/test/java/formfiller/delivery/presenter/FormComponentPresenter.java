@@ -1,6 +1,6 @@
 package formfiller.delivery.presenter;
 
-import formfiller.ApplicationContext;
+import formfiller.FormFillerContext;
 import formfiller.delivery.ViewModel;
 import formfiller.response.models.PresentableFormComponent;
 import formfiller.response.models.PresentableResponse;
@@ -21,7 +21,7 @@ public class FormComponentPresenter extends ResponsePresenter {
 				new PresentableFormComponent();
 		
 		component = (PresentableFormComponent) componentResponse;
-		ApplicationContext.questionPresenter.present(component.question);
-		ApplicationContext.answerPresenter.present(component.answer);
+		FormFillerContext.questionPresenter.present(component.question);
+		FormFillerContext.answerPresenter.present(component.answer);
 	}
 }

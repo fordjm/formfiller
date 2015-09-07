@@ -1,6 +1,6 @@
 package formfiller.gateways;
 
-import formfiller.ApplicationContext;
+import formfiller.FormFillerContext;
 import formfiller.entities.FormComponent;
 import formfiller.enums.Direction;
 
@@ -9,7 +9,7 @@ public class InMemoryFormComponentState implements FormComponentState {
 	
 	public FormComponent getCurrent(){
 		InMemoryFormComponentGateway castGateway = 
-				(InMemoryFormComponentGateway) ApplicationContext.formComponentGateway;
+				(InMemoryFormComponentGateway) FormFillerContext.formComponentGateway;
 		return castGateway.findByIndex(currentIndex);
 	}
 	

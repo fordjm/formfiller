@@ -1,8 +1,8 @@
 package formfiller.response.models;
 
-import formfiller.enums.ActionOutcome;
+import formfiller.enums.Outcome;
 
 public class PresentableResponse {
 	public String message = "";
-	public ActionOutcome outcome = ActionOutcome.NONE;
+	public Outcome outcome = Outcome.NEUTRAL;
 }

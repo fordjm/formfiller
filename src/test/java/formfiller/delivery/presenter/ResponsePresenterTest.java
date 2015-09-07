@@ -7,7 +7,7 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import formfiller.delivery.viewModel.PresentableResponseViewModel;
-import formfiller.enums.ActionOutcome;
+import formfiller.enums.Outcome;
 import formfiller.response.models.PresentableResponse;
 
 import static org.hamcrest.CoreMatchers.*;
@@ -47,7 +47,7 @@ public class ResponsePresenterTest {
 		
 		assertThat(currentResponse, is(instanceOf(PresentableResponse.class)));
 		assertThat(currentResponse.message, is(""));
-		assertThat(currentResponse.outcome, is(ActionOutcome.NONE));
+		assertThat(currentResponse.outcome, is(Outcome.NEUTRAL));
 	}
 	
 	@Test

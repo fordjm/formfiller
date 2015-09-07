@@ -1,7 +1,7 @@
 package formfiller.utilities;
 import java.util.Stack;
 
-import formfiller.ApplicationContext;
+import formfiller.FormFillerContext;
 import formfiller.delivery.View;
 import formfiller.delivery.presenter.FormComponentPresenter;
 import formfiller.delivery.presenter.ResponsePresenter;
@@ -21,13 +21,13 @@ public class TestSetup {
 	public static void setupContext(){
 		View consoleView = new ConsoleView();
 		
-		ApplicationContext.formComponentState = new InMemoryFormComponentState();
-		ApplicationContext.formComponentGateway = new InMemoryFormComponentGateway();
-		ApplicationContext.executedUseCases = new Stack<NavigationUseCase>();
-		ApplicationContext.answerPresenter = makeResponsePresenter(consoleView);
-		ApplicationContext.responsePresenter = makeResponsePresenter(consoleView);
-		ApplicationContext.formComponentPresenter = makeFormComponentPresenter(consoleView);
-		ApplicationContext.questionPresenter = makeResponsePresenter(consoleView);
+		FormFillerContext.formComponentState = new InMemoryFormComponentState();
+		FormFillerContext.formComponentGateway = new InMemoryFormComponentGateway();
+		FormFillerContext.executedUseCases = new Stack<NavigationUseCase>();
+		FormFillerContext.answerPresenter = makeResponsePresenter(consoleView);
+		FormFillerContext.responsePresenter = makeResponsePresenter(consoleView);
+		FormFillerContext.formComponentPresenter = makeFormComponentPresenter(consoleView);
+		FormFillerContext.questionPresenter = makeResponsePresenter(consoleView);
 	}
 
 	private static ResponsePresenter makeResponsePresenter(View view) {
@@ -46,14 +46,14 @@ public class TestSetup {
 	
 	public static void setupSampleFormComponents(){
 		setupContext();
-		ApplicationContext.formComponentGateway.save(
+		FormFillerContext.formComponentGateway.save(
 				makeFormComponent(
 						makeQuestion("name", "What is your name?", false)));
-		ApplicationContext.formComponentGateway.save(
+		FormFillerContext.formComponentGateway.save(
 				makeFormComponent(
 						makeQuestion("birthDate", "What is your birth date?", false), 
 						makeAnswer("November 12, 1955")));
-		ApplicationContext.formComponentGateway.save(
+		FormFillerContext.formComponentGateway.save(
 				makeFormComponent(
 						makeQuestion("age", "What is your age?", true)));
 	}
