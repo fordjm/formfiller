@@ -33,7 +33,8 @@ public class AddAnswerTest {
 	}
 	
 	private Answer findAnswerByName(String name) {
-		return FormFillerContext.formComponentGateway.find(name).answer;
+		FormComponent component = FormFillerContext.formComponentGateway.find(name);
+		return component.answer;
 	}
 	
 	private Object returnAnswerContent(Answer foundAnswer) {
