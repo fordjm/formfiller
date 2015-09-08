@@ -40,6 +40,6 @@ public class AddAnswer implements Transaction {
 	}
 	
 	private boolean responseSatisfiesConstraints(){
-		return answer.isSatisfied();
+		return answer.isSatisfiedBy(null);
 	}
 }

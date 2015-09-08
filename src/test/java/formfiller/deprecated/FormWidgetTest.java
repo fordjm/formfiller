@@ -17,7 +17,7 @@ import de.bechte.junit.runners.context.HierarchicalContextRunner;
 import formfiller.entities.ConstrainableAnswer;
 import formfiller.entities.Prompt;
 import formfiller.enums.Cardinality;
-import formfiller.utilities.AnswerMocker;
+import formfiller.utilities.ConstrainableAnswerMocker;
 import formfiller.utilities.QuestionMocker;
 
 @RunWith(HierarchicalContextRunner.class)
@@ -34,7 +34,7 @@ public class FormWidgetTest {
 	}
 	
 	static ConstrainableAnswer makeMockNameAnswer() {
-		return AnswerMocker.makeMockAnswer(0, "Joe", true);
+		return ConstrainableAnswerMocker.makeMockAnswer(0, "Joe", true);
 	}
 	
 	static void assertPromptChanged() {
@@ -191,7 +191,7 @@ public class FormWidgetTest {
 		
 		@Test(expected = IllegalArgumentException.class)
 		public void nullContent_ThrowsException(){
-			addedAnswer = AnswerMocker.makeMockAnswer(0, null, false);
+			addedAnswer = ConstrainableAnswerMocker.makeMockAnswer(0, null, false);
 			updateAnswerFieldValues(addedAnswer);	
 		}
 		
@@ -228,7 +228,7 @@ public class FormWidgetTest {
 			@Before
 			public void givenAListAnswerWasAdded(){
 				answer = Arrays.asList(makeMockNameAnswer(), makeMockAgeAnswer(65));
-				addedAnswer = AnswerMocker.makeMockAnswer(0, answer, true);
+				addedAnswer = ConstrainableAnswerMocker.makeMockAnswer(0, answer, true);
 				updateAnswerFieldValues(addedAnswer);
 			}
 			
@@ -244,7 +244,7 @@ public class FormWidgetTest {
 		}
 		
 		ConstrainableAnswer makeMockAgeAnswer(int age) {
-			return AnswerMocker.makeMockAgeAnswer(age);
+			return ConstrainableAnswerMocker.makeMockAgeAnswer(age);
 		}
 		
 		@Before
@@ -286,7 +286,7 @@ public class FormWidgetTest {
 				@Test(expected = IllegalStateException.class)
 				public void whenAddAnswerRunsTwice_ThenItThrowsAnException(){
 					addedAnswer = makeMockAgeAnswer(47);
-					ConstrainableAnswer secondAnswer = AnswerMocker.makeMockAnswer(1, 52, true);
+					ConstrainableAnswer secondAnswer = ConstrainableAnswerMocker.makeMockAnswer(1, 52, true);
 					updateAnswerFieldValues(addedAnswer, secondAnswer);
 				}				
 			}			

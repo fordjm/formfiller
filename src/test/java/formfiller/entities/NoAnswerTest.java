@@ -20,6 +20,6 @@ public class NoAnswerTest {
 
 	@Test
 	public void whenSatisfiesConstraintRuns_ThenItReturnsFalse() {
-		assertFalse(ConstrainableAnswer.NONE.isSatisfied());
+		assertFalse(ConstrainableAnswer.NONE.isSatisfiedBy(null));
 	}
 }

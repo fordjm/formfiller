@@ -1,34 +1,15 @@
 package formfiller.utilities;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import org.mockito.Mockito;
 
-import formfiller.entities.ConstrainableAnswer;
+import formfiller.entities.Answer;
 
 public class AnswerMocker {
 	
-	public static ConstrainableAnswer makeMockNameAnswer(String name) {
-		return makeMockAnswer(0, name, true);
-	}
-	
-	public static ConstrainableAnswer makeMockAgeAnswer(int age) {
-		return makeMockAnswer(0, age, true);
-	}
-	
-	public static <T> ConstrainableAnswer makeMockAnswer(int id, T content, boolean satisfiesConstraint) {
-		ConstrainableAnswer result = 
-				(ConstrainableAnswer) mock(ConstrainableAnswer.class);
-		when(result.getId()).thenReturn(id);
-		when(result.getContent()).thenReturn(content);
-		when(result.isSatisfied()).thenReturn(satisfiesConstraint);
-		return result;
-	}
-	
-	public static <T> ConstrainableAnswer makeMockAnswer(boolean satisfiesConstraint) {
-		ConstrainableAnswer result = 
-				(ConstrainableAnswer) mock(ConstrainableAnswer.class);
-		when(result.getContent()).thenReturn("");
-		when(result.isSatisfied()).thenReturn(satisfiesConstraint);
+	public static Answer makeMockAnswer(int id, Object content){
+		Answer result = Mockito.mock(Answer.class);
+		result.id = id;
+		result.content = content;
 		return result;
 	}
 }

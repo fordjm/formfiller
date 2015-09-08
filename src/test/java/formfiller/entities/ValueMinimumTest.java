@@ -8,7 +8,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
-import formfiller.utilities.AnswerMocker;
 
 @RunWith(HierarchicalContextRunner.class)
 public class ValueMinimumTest {
@@ -19,47 +18,45 @@ public class ValueMinimumTest {
 		valueMinimum = new ValueMinimum("min");
 	}
 	
-	public class GivenAnAnswer{
-		ConstrainableAnswer answer;
+	public class GivenACandidate{
+		Object candidate;
 		
-		public class GivenAnInvalidAnswer{
+		public class GivenAnInvalidCandidate{
 			
 			@Before
-			public void givenAnInvalidAnswer(){
-				answer = AnswerMocker.makeMockAnswer(false);
+			public void givenAnInvalidCandidate(){
+				candidate = "";
 			}
 			
 			@Test
 			public void whenSatisfiesConstraintRuns_ThenItReturnsFalse(){
-				assertFalse(valueMinimum.isSatisfied());
+				assertFalse(valueMinimum.isSatisfiedBy(candidate));
 			}
 		}	
 		
-		public class GivenAValidAnswerLessThanMinimum{
+		public class GivenAValidCandidateLessThanMinimum{
 			
 			@Before
-			public void givenAValidAnswerLessThanMinimum(){
-				answer = AnswerMocker.makeMockNameAnswer("joe");
-				valueMinimum.constrain("joe");
+			public void givenAValidCandidateLessThanMinimum(){
+				candidate = "joe";
 			}
 			
 			@Test
 			public void whenSatisfiesConstraintRuns_ThenItReturnsFalse(){
-				assertFalse(valueMinimum.isSatisfied());
+				assertFalse(valueMinimum.isSatisfiedBy(candidate));
 			}
 		}
 		
-		public class GivenAValidAnswerGreaterThanMinimum{
+		public class GivenAValidCandidateGreaterThanMinimum{
 			
 			@Before
-			public void givenAValidAnswerLessThanMinimum(){
-				answer = AnswerMocker.makeMockNameAnswer("moe");
-				valueMinimum.constrain("moe");
+			public void givenAValidCandidateLessThanMinimum(){
+				candidate = "moe";
 			}
 			
 			@Test
 			public void whenSatisfiesConstraintRuns_ThenItReturnsTrue(){
-				assertTrue(valueMinimum.isSatisfied());
+				assertTrue(valueMinimum.isSatisfiedBy(candidate));
 			}
 		}
 	}

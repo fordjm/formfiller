@@ -18,54 +18,45 @@ public class ValueMaximumTest {
 		valueMaximum = new ValueMaximum("max");
 	}
 	
-	public class GivenAnAnswer{
-		Answer answer;
-
-		private Answer makeMockAnswer(String content) {
-			Answer result = new Answer();
-			result.content = content;
-			return result;
-		}
+	public class GivenACandidate{
+		Object candidate;
 		
-		public class GivenAnInvalidAnswer{
+		public class GivenAnInvalidCandidate{
 			
 			@Before
-			public void givenAnInvalidAnswer(){
-				answer = makeMockAnswer("");
-				valueMaximum.constrain(null);
+			public void givenAnInvalidCandidate(){
+				candidate = null;
 			}
 			
 			@Test
 			public void whenSatisfiesConstraintRuns_ThenItReturnsFalse(){
-				assertFalse(valueMaximum.isSatisfied());
+				assertFalse(valueMaximum.isSatisfiedBy(candidate));
 			}
 		}	
 		
-		public class GivenAValidAnswerLessThanMaximum{
+		public class GivenAValidCandidateLessThanMaximum{
 			
 			@Before
-			public void givenAValidAnswerLessThanMinimum(){
-				answer = makeMockAnswer("joe");
-				valueMaximum.constrain(answer.content);
+			public void givenAValidCandidateLessThanMinimum(){
+				candidate = "joe";
 			}
 			
 			@Test
 			public void whenSatisfiesConstraintRuns_ThenItReturnsTrue(){
-				assertTrue(valueMaximum.isSatisfied());
+				assertTrue(valueMaximum.isSatisfiedBy(candidate));
 			}
 		}
 		
-		public class GivenAValidAnswerGreaterThanMaximum{
+		public class GivenAValidCandidateGreaterThanMaximum{
 			
 			@Before
-			public void givenAValidAnswerGreaterThanMaximum(){
-				answer = makeMockAnswer("moe");
-				valueMaximum.constrain(answer);
+			public void givenAValidCandidateGreaterThanMaximum(){
+				candidate = "moe";
 			}
 			
 			@Test
 			public void whenSatisfiesConstraintRuns_ThenItReturnsFalse(){
-				assertFalse(valueMaximum.isSatisfied());
+				assertFalse(valueMaximum.isSatisfiedBy(candidate));
 			}
 		}
 	}

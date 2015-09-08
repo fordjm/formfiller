@@ -43,7 +43,7 @@ public class RemoveAnswerTest {
 			public void givenWidgetHasAAnswer() throws Exception {
 				// Line 39 brings more support for mocking FormWidget.
 				FormWidget.addPrompt(QuestionMocker.makeMockNameQuestion());
-				mockAnswer = AnswerMocker.makeMockAnswer(0, "Answer", true);
+				mockAnswer = ConstrainableAnswerMocker.makeMockAnswer(0, "Answer", true);
 				FormWidget.addAnswer(mockAnswer);
 			}
 			

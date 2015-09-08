@@ -41,7 +41,7 @@ public class NavigationControllerTest {
 		FormComponent result = Mockito.mock(FormComponent.class);
 		result.id = "name";
 		result.question = QuestionMocker.makeMockNameQuestion();
-		result.answer = AnswerMocker.makeMockNameAnswer("myName");
+		result.answer = ConstrainableAnswerMocker.makeMockNameAnswer("myName");
 		return result;
 	}
 	

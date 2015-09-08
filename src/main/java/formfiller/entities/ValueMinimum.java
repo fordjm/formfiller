@@ -11,21 +11,16 @@ public class ValueMinimum implements Constrainable {
 		this.minimum = minimum;
 	}
 
-	public Constrainable constrain(Object value) {
-		constrainedValue = value;
-		return this;
-	}
-
-	public boolean isSatisfied() {
-		return isComparable() && isGreaterOrEqualToMinimum();
+	public boolean isSatisfiedBy(Object candidate) {
+		return isComparable(candidate) && isGreaterOrEqualToMinimum(candidate);
 	}
 	
-	private boolean isComparable(){
-		return constrainedValue instanceof Comparable;
+	private boolean isComparable(Object candidate){
+		return candidate instanceof Comparable;
 	}
 	
-	private boolean isGreaterOrEqualToMinimum(){
-		Comparable<Object> castValue = (Comparable<Object>) constrainedValue;
+	private boolean isGreaterOrEqualToMinimum(Object candidate){
+		Comparable<Object> castValue = (Comparable<Object>) candidate;
 		return castValue.compareTo(minimum) >= 0;
 	}
 }

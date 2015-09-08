@@ -26,7 +26,7 @@ public class ConstrainableAnswer implements Constrainable {
 		return answer.content;
 	}
 
-	public boolean isSatisfied() {
+	public boolean isSatisfiedBy(Object objectUnderTest) {
 		return answer.id >= 0 && answer.content != null;
 	}
 

@@ -1,40 +1,43 @@
 package formfiller.usecases.addAnswer;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import formfiller.entities.Answer;
 import formfiller.entities.Constrainable;
 
 public class AnswerValidator {
+	Collection<Constrainable> constraints;
+
+	public AnswerValidator() {
+		this.constraints = new ArrayList<Constrainable>();
+	}
 
 	public boolean isValid(Answer answer) {
 		if (answer == null) return false;
 		
-		return hasValidFieldValues(answer) && satisfiesConstraints(answer);
+		return hasValidFieldValues(answer) && satisfiesConstraints(answer.content);
 	}
 
 	private boolean hasValidFieldValues(Answer answer) {
 		return answer.id >= 0 && answer.content != "";
 	}
 
-	private boolean satisfiesConstraints(Answer answer) {
-		if (hasNoConstraints(answer)) return true;
+	private boolean satisfiesConstraints(Object object) {
+		if (hasNoConstraints()) return true;
 		
-		Constrainable constrainedValue = 
-				constrainValue(answer.content, answer.constraints);
-		return constrainedValue.isSatisfied();
-	}
-
-	private boolean hasNoConstraints(Answer answer) {
-		return answer.constraints == null || answer.constraints.size() == 0;
-	}
-
-	private Constrainable constrainValue(Object answerContent,
-			Collection<Constrainable> constraints) {
-		Constrainable result = null;
 		for (Constrainable constraint : constraints){
-			result = constraint.constrain(answerContent);
+			if (!constraint.isSatisfiedBy(object))
+				return false;
 		}
-		return result;
+		return true;
+	}
+
+	private boolean hasNoConstraints() {
+		return constraints.size() == 0;
+	}
+
+	public void addConstraint(Constrainable constraint) {
+		constraints.add(constraint);
 	}
 }

@@ -35,7 +35,7 @@ public abstract class Constraint extends ConstrainableAnswer {
 		return answer.getContent();
 	}
 	
-	public boolean isSatisfied(){
+	public boolean isSatisfiedBy(Object objectUnderTest){
 		if (!hasAnswer()) return false;
 		return isConstraintSatisfied();
 	}

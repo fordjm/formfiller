@@ -11,7 +11,7 @@ import org.junit.runner.RunWith;
 
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
 import formfiller.enums.ContentConstraint;
-import formfiller.utilities.AnswerMocker;
+import formfiller.utilities.ConstrainableAnswerMocker;
 
 @RunWith(HierarchicalContextRunner.class)
 public class AnswerTypeTest<T> {
@@ -40,7 +40,7 @@ public class AnswerTypeTest<T> {
 		assertFalse(answerType.hasAnswer());
 		assertSame(-1, answerType.getId());
 		assertSame("", answerType.getContent());
-		assertFalse(answerType.isSatisfied());
+		assertFalse(answerType.isSatisfiedBy(null));
 	}
 	
 	public class GivenANullToWrap {
@@ -69,16 +69,16 @@ public class AnswerTypeTest<T> {
 		
 		public void assertConstraintIsSatisfied(boolean flag){
 			if (flag)
-				assertTrue(answerType.isSatisfied());
+				assertTrue(answerType.isSatisfiedBy(null));
 			else
-				assertFalse(answerType.isSatisfied());
+				assertFalse(answerType.isSatisfiedBy(null));
 		}
 		
 		public class GivenAnInvalidAnswer{	
 			
 			@Before
 			public void givenAnInvalidAnswer(){
-				answer = AnswerMocker.makeMockAnswer(false);
+				answer = ConstrainableAnswerMocker.makeMockAnswer(false);
 				answerType.wrap(answer);
 			}		
 			
@@ -93,7 +93,7 @@ public class AnswerTypeTest<T> {
 			
 			@Before
 			public void givenAValidResponse(){
-				answer = AnswerMocker.makeMockNameAnswer("Joe");
+				answer = ConstrainableAnswerMocker.makeMockNameAnswer("Joe");
 			}
 			
 			@Test

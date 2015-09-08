@@ -15,7 +15,7 @@ import org.mockito.Mockito;
 
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
 import formfiller.enums.ContentConstraint;
-import formfiller.utilities.AnswerMocker;
+import formfiller.utilities.ConstrainableAnswerMocker;
 
 @RunWith(HierarchicalContextRunner.class)
 public class SelectionConstraintTest {
@@ -49,7 +49,7 @@ public class SelectionConstraintTest {
 			assertFalse(selectionConstraint.hasAnswer());
 			assertSame(-1, selectionConstraint.getId());
 			assertSame("", selectionConstraint.getContent());
-			assertFalse(selectionConstraint.isSatisfied());
+			assertFalse(selectionConstraint.isSatisfiedBy(null));
 		}
 	}	
 
@@ -63,7 +63,7 @@ public class SelectionConstraintTest {
 			ConstrainableAnswer result = Mockito.mock(ConstrainableAnswer.class);
 			Mockito.when(result.getId()).thenReturn(id);
 			Mockito.when(result.getContent()).thenReturn(content);
-			Mockito.when(result.isSatisfied()).thenReturn(satisfied);			
+			Mockito.when(result.isSatisfiedBy(null)).thenReturn(satisfied);			
 			return result;
 		}		
 		
@@ -73,9 +73,9 @@ public class SelectionConstraintTest {
 		
 		private void assertConstraintIsSatisfied(boolean flag){
 			if (flag)
-				assertTrue(selectionConstraint.isSatisfied());
+				assertTrue(selectionConstraint.isSatisfiedBy(null));
 			else
-				assertFalse(selectionConstraint.isSatisfied());
+				assertFalse(selectionConstraint.isSatisfiedBy(null));
 		}
 
 		public class GivenANullToWrap {	
@@ -95,7 +95,7 @@ public class SelectionConstraintTest {
 			
 			@Before
 			public void givenAnInvalidAnswer(){
-				answer = AnswerMocker.makeMockAnswer(false);
+				answer = ConstrainableAnswerMocker.makeMockAnswer(false);
 				selectionConstraint.wrap(answer);
 			}		
 			
@@ -104,7 +104,7 @@ public class SelectionConstraintTest {
 				assertConstraintHasAnswer();
 				assertSame(answer.getId(), selectionConstraint.getId());
 				assertSame(answer.getContent(), selectionConstraint.getContent());
-				assertSame(answer.isSatisfied(), selectionConstraint.isSatisfied());
+				assertSame(answer.isSatisfiedBy(null), selectionConstraint.isSatisfiedBy(null));
 				assertConstraintIsSatisfied(false);
 			}
 		}
@@ -115,7 +115,7 @@ public class SelectionConstraintTest {
 				
 				@Before
 				public void givenAValidAnswer(){
-					answer = AnswerMocker.makeMockNameAnswer("Joe");
+					answer = ConstrainableAnswerMocker.makeMockNameAnswer("Joe");
 					selectionConstraint.wrap(answer);
 				}
 				
@@ -124,7 +124,7 @@ public class SelectionConstraintTest {
 					assertConstraintHasAnswer();
 					assertSame(answer.getId(), selectionConstraint.getId());					
 					assertSame(answer.getContent(), selectionConstraint.getContent());
-					assertNotSame(answer.isSatisfied(), selectionConstraint.isSatisfied());
+					assertNotSame(answer.isSatisfiedBy(null), selectionConstraint.isSatisfiedBy(null));
 					assertConstraintIsSatisfied(false);
 				}
 			}
@@ -142,7 +142,7 @@ public class SelectionConstraintTest {
 					assertConstraintHasAnswer();
 					assertSame(answer.getId(), selectionConstraint.getId());
 					assertSame(answer.getContent(), selectionConstraint.getContent());
-					assertSame(answer.isSatisfied(), selectionConstraint.isSatisfied());
+					assertSame(answer.isSatisfiedBy(null), selectionConstraint.isSatisfiedBy(null));
 					assertConstraintIsSatisfied(true);
 				}
 			}

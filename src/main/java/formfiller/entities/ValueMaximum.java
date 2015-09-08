@@ -10,22 +10,17 @@ public class ValueMaximum implements Constrainable {
 	public ValueMaximum(Object maximum) {
 		this.maximum = maximum;
 	}
-	
-	public Constrainable constrain(Object value){
-		this.constrainedValue = value;
-		return this;
-	}
 
-	public boolean isSatisfied() {
-		return isComparable() && isLessThanOrEqualToMaximum();
+	public boolean isSatisfiedBy(Object candidate) {
+		return isComparable(candidate) && isLessThanOrEqualToMaximum(candidate);
 	}
 	
-	protected boolean isComparable(){
-		return constrainedValue instanceof Comparable;
+	protected boolean isComparable(Object candidate){
+		return candidate instanceof Comparable;
 	}
 	
-	protected boolean isLessThanOrEqualToMaximum(){
-		Comparable<Object> castValue = (Comparable<Object>) constrainedValue;
+	protected boolean isLessThanOrEqualToMaximum(Object candidate){
+		Comparable<Object> castValue = (Comparable<Object>) candidate;
 		return castValue.compareTo(maximum) <= 0;
 	}
 }

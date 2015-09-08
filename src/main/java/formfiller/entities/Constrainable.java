@@ -1,7 +1,5 @@
 package formfiller.entities;
 
 public interface Constrainable {
-	Constrainable constrain(Object value);
-	
-	boolean isSatisfied();
+	boolean isSatisfiedBy(Object objectUnderTest);
 }

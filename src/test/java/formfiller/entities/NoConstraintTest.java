@@ -9,7 +9,7 @@ import org.junit.runner.RunWith;
 
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
 import formfiller.enums.ContentConstraint;
-import formfiller.utilities.AnswerMocker;
+import formfiller.utilities.ConstrainableAnswerMocker;
 
 @RunWith(HierarchicalContextRunner.class)
 public class NoConstraintTest {
@@ -18,7 +18,7 @@ public class NoConstraintTest {
 	public <T> void assertResponseDataIsConsistent(int responseId, T responseContent, boolean satisfiesConstraint){
 		assertSame(responseId, noConstraint.getId());
 		assertSame(responseContent, noConstraint.getContent());
-		assertSame(satisfiesConstraint, noConstraint.isSatisfied());
+		assertSame(satisfiesConstraint, noConstraint.isSatisfiedBy(null));
 	}
 	
 	@Before
@@ -39,7 +39,7 @@ public class NoConstraintTest {
 			assertFalse(noConstraint.hasAnswer());
 			assertSame(-1, noConstraint.getId());
 			assertSame("", noConstraint.getContent());
-			assertFalse(noConstraint.isSatisfied());
+			assertFalse(noConstraint.isSatisfiedBy(null));
 		}
 	}
 	
@@ -64,14 +64,14 @@ public class NoConstraintTest {
 			
 			@Before
 			public void givenAValidResponse(){
-				answer = AnswerMocker.makeMockNameAnswer("Joe");
+				answer = ConstrainableAnswerMocker.makeMockNameAnswer("Joe");
 				noConstraint.wrap(answer);
 			}			
 			
 			@Test
 			public void whenSatisfiesConstraintRuns_ThenItReturnsFalse(){
 				assertThat(noConstraint.hasAnswer(), is(equalTo(true)));
-				assertResponseDataIsConsistent(answer.getId(), answer.getContent(), answer.isSatisfied());
+				assertResponseDataIsConsistent(answer.getId(), answer.getContent(), answer.isSatisfiedBy(null));
 				assertThat(noConstraint.isConstraintSatisfied(), is(true));
 			}
 		}
