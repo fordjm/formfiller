@@ -11,7 +11,7 @@ import org.mockito.Mockito;
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
 import formfiller.FormFillerContext;
 import formfiller.appBoundaries.UseCase;
-import formfiller.entities.ConstrainableAnswer;
+import formfiller.entities.Answer;
 import formfiller.entities.FormComponent;
 import formfiller.entities.Question;
 import formfiller.request.models.AddAnswerRequest;
@@ -23,7 +23,7 @@ import formfiller.utilities.TestSetup;
 public class AddAnswerTest {
 	private AddAnswerUseCase addAnswer;
 	private AddAnswerRequest addAnswerRequest;
-	private ConstrainableAnswer foundAnswer;	
+	private Answer foundAnswer;	
 
 	private AddAnswerRequest makeAddAnswerRequest(String questionId, Object content) {
 		AddAnswerRequest result = new AddAnswerRequest();
@@ -32,13 +32,13 @@ public class AddAnswerTest {
 		return result;
 	}
 	
-	private ConstrainableAnswer findAnswerByName(String name) {
+	private Answer findAnswerByName(String name) {
 		FormComponent component = FormFillerContext.formComponentGateway.find(name);
 		return component.answer;
 	}
 	
-	private Object returnAnswerContent(ConstrainableAnswer foundAnswer) {
-		return foundAnswer.getContent();
+	private Object returnAnswerContent(Answer foundAnswer) {
+		return foundAnswer.content;
 	}
 	
 	private void addMockFormComponentsToGateway(){
@@ -51,7 +51,7 @@ public class AddAnswerTest {
 		FormComponent result = Mockito.mock(FormComponent.class);
 		result.id = mockQuestion.getId();
 		result.question = mockQuestion;
-		result.answer = ConstrainableAnswer.NONE;
+		result.answer = Answer.NONE;
 		return result;
 	}
 
@@ -80,7 +80,7 @@ public class AddAnswerTest {
 		foundAnswer = findAnswerByName("name");
 		
 		// Presenter result should be,  "No answer was received.  Please try again."
-		assertThat(foundAnswer, is(ConstrainableAnswer.NONE));
+		assertThat(foundAnswer, is(Answer.NONE));
 	}
 	
 	@Test

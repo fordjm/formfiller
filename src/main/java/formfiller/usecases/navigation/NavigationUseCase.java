@@ -2,8 +2,7 @@ package formfiller.usecases.navigation;
 
 import formfiller.FormFillerContext;
 import formfiller.appBoundaries.Presenter;
-import formfiller.appBoundaries.UseCase;
-import formfiller.entities.ConstrainableAnswer;
+import formfiller.entities.Answer;
 import formfiller.entities.FormComponent;
 import formfiller.entities.Prompt;
 import formfiller.enums.Outcome;
@@ -17,8 +16,8 @@ import formfiller.response.models.PresentableQuestion;
 import formfiller.response.models.PresentableResponse;
 import formfiller.utilities.PresenterSelector;
 
-//	TODO:	Extract UndoableUseCase abstraction.
-public class NavigationUseCase implements UseCase, Undoable {
+//	TODO:	MoveInDirectionUseCase?  MoveUseCase?
+public class NavigationUseCase implements UndoableUseCase {
 	private Direction direction = Direction.NONE;
 	private Outcome outcome = Outcome.NEUTRAL;
 
@@ -30,7 +29,7 @@ public class NavigationUseCase implements UseCase, Undoable {
 
 		if (NavigationValidator.isValidDirectionalMove(direction)) {
 			setOutcome(Outcome.POSITIVE);
-			executeDirectionalMove(direction);
+			executeMoveInDirection(direction);
 		} else 
 			setOutcome(Outcome.NEGATIVE);
 
@@ -53,7 +52,7 @@ public class NavigationUseCase implements UseCase, Undoable {
 				+ "The current question requires an answer.";
 	}
 
-	private void executeDirectionalMove(Direction direction) {
+	private void executeMoveInDirection(Direction direction) {
 		new InMemoryTransporter().moveInDirection(direction);
 	}
 
@@ -64,7 +63,7 @@ public class NavigationUseCase implements UseCase, Undoable {
 	}	
 
 	//	TODO:	Navigation should know nothing about PresentableResponses.
-	//			Make some factories.	
+	//			Make a factory.	
 	private PresentableResponse makePresentableResponse() {
 		PresentableResponse result = new PresentableResponse();
 		result.message = getAnswerRequiredMessage();
@@ -78,7 +77,7 @@ public class NavigationUseCase implements UseCase, Undoable {
 		result.question = makePresentableQuestion(current.question);
 		result.answer = makePresentableAnswer(current.answer);
 		result.outcome = Outcome.POSITIVE;
-		result.message = result.question.message;
+		result.message = result.question.message;	//	TODO:  Different FC message?
 		return result;
 	}
 
@@ -93,17 +92,17 @@ public class NavigationUseCase implements UseCase, Undoable {
 		return result;
 	}
 
-	private PresentableAnswer makePresentableAnswer(ConstrainableAnswer requestedAnswer) {
+	private PresentableAnswer makePresentableAnswer(Answer requestedAnswer) {
 		PresentableAnswer result = new PresentableAnswer();
-		result.id = requestedAnswer.getId();
-		result.message = requestedAnswer.getContent().toString();
+		result.id = requestedAnswer.id;
+		result.message = requestedAnswer.content.toString();
 		return result;
 	}
 
 	public void undo() {
 		if (outcome != Outcome.POSITIVE) return;
 		Direction direction = getUndoDirection();
-		executeDirectionalMove(direction);
+		executeMoveInDirection(direction);
 	}
 
 	private Direction getUndoDirection() {

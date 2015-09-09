@@ -7,8 +7,8 @@ import formfiller.delivery.presenter.FormComponentPresenter;
 import formfiller.delivery.presenter.ResponsePresenter;
 import formfiller.delivery.ui.consoleUi.ConsoleView;
 import formfiller.delivery.viewModel.PresentableResponseViewModel;
-import formfiller.entities.ConstrainableAnswer;
-import formfiller.usecases.navigation.NavigationUseCase;
+import formfiller.entities.Answer;
+import formfiller.usecases.navigation.UndoableUseCase;
 import formfiller.entities.FormComponent;
 import formfiller.entities.Question;
 import formfiller.gateways.InMemoryFormComponentState;
@@ -22,7 +22,7 @@ public class TestSetup {
 		
 		FormFillerContext.formComponentState = new InMemoryFormComponentState();
 		FormFillerContext.formComponentGateway = new InMemoryFormComponentGateway();
-		FormFillerContext.executedUseCases = new Stack<NavigationUseCase>();
+		FormFillerContext.executedUseCases = new Stack<UndoableUseCase>();
 		FormFillerContext.answerPresenter = makeResponsePresenter(consoleView);
 		FormFillerContext.responsePresenter = makeResponsePresenter(consoleView);
 		FormFillerContext.formComponentPresenter = makeFormComponentPresenter(consoleView);
@@ -58,10 +58,10 @@ public class TestSetup {
 	}
 	
 	private static FormComponent makeFormComponent(Question question){		
-		return makeFormComponent(question, ConstrainableAnswer.NONE);
+		return makeFormComponent(question, Answer.NONE);
 	}
 	
-	private static FormComponent makeFormComponent(Question question, ConstrainableAnswer answer){
+	private static FormComponent makeFormComponent(Question question, Answer answer){
 		FormComponent result = new FormComponent();
 		result.id = question.getId();
 		result.question = question;
@@ -75,8 +75,9 @@ public class TestSetup {
 		return result;
 	}
 	
-	private static ConstrainableAnswer makeAnswer(String content){
-		ConstrainableAnswer result = new ConstrainableAnswer(content);
+	private static Answer makeAnswer(String content){
+		Answer result = new Answer();
+		result.content = content;
 		return result;
 	}
 }

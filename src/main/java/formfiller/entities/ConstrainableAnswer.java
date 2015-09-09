@@ -1,5 +1,6 @@
 package formfiller.entities;
 
+//	TODO:	Delete after converting all Constraints to Constrainable.
 public class ConstrainableAnswer implements Constrainable {
 	public static final ConstrainableAnswer NONE = new ConstrainableAnswer(-1, "");
 	private Answer answer = new Answer();

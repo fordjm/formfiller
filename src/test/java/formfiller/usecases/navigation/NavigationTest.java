@@ -1,9 +1,10 @@
 package formfiller.usecases.navigation;
 
 import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
+
+import java.util.EmptyStackException;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -11,13 +12,13 @@ import org.junit.runner.RunWith;
 
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
 import formfiller.FormFillerContext;
-import formfiller.appBoundaries.UseCase;
-import formfiller.entities.ConstrainableAnswer;
+import formfiller.entities.Answer;
 import formfiller.entities.FormComponent;
 import formfiller.entities.Prompt;
 import formfiller.entities.Question;
 import formfiller.enums.Direction;
 import formfiller.request.models.NavigationRequest;
+import formfiller.request.models.Request;
 import formfiller.utilities.FormComponentMocker;
 import formfiller.utilities.QuestionMocker;
 import formfiller.utilities.TestSetup;
@@ -27,6 +28,12 @@ public class NavigationTest {
 	private NavigationUseCase navigationUseCase;
 	private NavigationRequest mockRequest;
 	private FormComponent expectedFormComponent;
+
+	private void setupNavigationTest(Direction direction, 
+			FormComponent formComponent) {
+		setMockRequestDirection(direction);
+		setExpectedFormComponent(formComponent);
+	}
 	
 	private void setMockRequestDirection(Direction direction){
 		mockRequest.direction = direction;
@@ -35,14 +42,48 @@ public class NavigationTest {
 	private void setExpectedFormComponent(FormComponent expected) {
 		expectedFormComponent = expected;
 	}
+
+	private void undoNavigationUseCase() {
+		navigationUseCase.undo();
+	}
+
+	private void executeNavigationRequest(NavigationRequest navigationRequest) {
+		navigationUseCase.execute(navigationRequest);
+	}
+
+	private void assertThatCurrentFormComponentHasExpectedValue() {
+		assertThat(getCurrentFormComponent(), is(expectedFormComponent));
+	}
 	
 	private FormComponent getCurrentFormComponent() {
 		return FormFillerContext.formComponentState.getCurrent();
 	}
-	
-	private FormComponent makeMockFormComponent(Prompt question){
-		return FormComponentMocker.makeMockFormComponent(question, ConstrainableAnswer.NONE);
+
+	private void assertThatExecutedUseCaseIsTopOfStack() {
+		assertEquals(navigationUseCase, checkTopOfStack());
 	}
+
+	//	TODO:	Create boundary wrapper class for the ExecutedUseCases Stack.
+	private UndoableUseCase checkTopOfStack() {
+		try{
+			return FormFillerContext.executedUseCases.peek();
+		} catch (EmptyStackException e) {
+			return makeNullUndoableUseCase();
+		} 
+	}	
+
+	private UndoableUseCase makeNullUndoableUseCase() {
+		UndoableUseCase result = new UndoableUseCase(){
+			public void execute(Request request) { }
+
+			public void undo() { } 
+		};
+		return result;
+	}
+
+	private void assertThatExecutedUseCaseIsNotTopOfStack() {
+		assertNotEquals(navigationUseCase, checkTopOfStack());
+	}	
 	
 	@Before
 	public void setUp(){
@@ -52,171 +93,151 @@ public class NavigationTest {
 	}
 	
 	@Test
-	public void isAUseCase() {
-		assertThat(navigationUseCase, is(instanceOf(UseCase.class)));
+	public void isAnUndoableUseCase() {
+		assertThat(navigationUseCase, is(instanceOf(UndoableUseCase.class)));
 	}
 	
-	@Test
-	public void isUndoable() {
-		assertThat(navigationUseCase, is(instanceOf(Undoable.class)));
-	}
-	
+	//	TODO:	Make the Undo use case.
 	@Test
 	public void undoBeforeExecutionDoesNotChangeCurrentFormComponent() {
 		setExpectedFormComponent(getCurrentFormComponent());
 		
-		navigationUseCase.undo();
+		undoNavigationUseCase();
 		
-		assertThat(getCurrentFormComponent(), is(expectedFormComponent));
+		assertThatCurrentFormComponentHasExpectedValue();
 	}
 	
 	@Test
-	public void canHandleNull() {
-		navigationUseCase.execute(null);
+	public void executingNullDoesNotChangeCurrentFormComponent() {
+		setExpectedFormComponent(getCurrentFormComponent());
+		
+		executeNavigationRequest(null);
+		
+		assertThatCurrentFormComponentHasExpectedValue();
+		assertThatExecutedUseCaseIsNotTopOfStack();
 	}
-
-	public class GivenNoFormComponents{
+	
+	@Test
+	public void gettingPrevQuestionGetsStartPrompt(){
+		setupNavigationTest(Direction.BACKWARD, FormComponent.START);
 		
-		public class GivenPrevQuestionRequest{
-			
-			@Before
-			public void givenPrevQuestionRequest(){
-				setMockRequestDirection(Direction.BACKWARD);
-			}
-			
-			@Test
-			public void gettingQuestionGetsStartPrompt(){			
-				setExpectedFormComponent(FormComponent.START);
-				
-				navigationUseCase.execute(mockRequest);
-				
-				assertEquals(navigationUseCase, 
-						FormFillerContext.executedUseCases.peek());
-				assertThat(getCurrentFormComponent(), is(expectedFormComponent));
-			}
-		}
+		executeNavigationRequest(mockRequest);
 		
-		public class GivenCurrentQuestionRequest{
-			
-			@Before
-			public void givenCurrentQuestionRequest(){
-				setMockRequestDirection(Direction.NONE);
-			}
-			
-			@Test
-			public void gettingQuestionGetsStartPrompt(){
-				setExpectedFormComponent(getCurrentFormComponent());
-				
-				navigationUseCase.execute(mockRequest);
-				
-				assertThat(getCurrentFormComponent(), is(expectedFormComponent));
-			}			
-		}
-		
-		public class GivenNextQuestionRequest{
-			
-			@Before
-			public void givenNextQuestionRequest(){
-				setMockRequestDirection(Direction.FORWARD);
-			}
-			
-			@Test
-			public void gettingQuestionGetsEndPrompt(){
-				setExpectedFormComponent(getCurrentFormComponent());
-				
-				navigationUseCase.execute(mockRequest);
-				
-				assertThat(getCurrentFormComponent(), is(expectedFormComponent));
-			}		
-		}
+		assertThatCurrentFormComponentHasExpectedValue();
+		assertThatExecutedUseCaseIsTopOfStack();
 	}
+	
+	@Test
+	public void gettingCurrentQuestionGetsStartPrompt(){
+		setupNavigationTest(Direction.NONE, getCurrentFormComponent());
+		
+		executeNavigationRequest(mockRequest);
+		
+		assertThatCurrentFormComponentHasExpectedValue();
+		assertThatExecutedUseCaseIsTopOfStack();
+	}
+	
+	@Test
+	public void gettingNextQuestionGetsEndPrompt(){
+		setupNavigationTest(Direction.FORWARD, getCurrentFormComponent());
+		
+		executeNavigationRequest(mockRequest);
+		
+		assertThatCurrentFormComponentHasExpectedValue();
+		assertThatExecutedUseCaseIsTopOfStack();
+	}	
 	
 	public class GivenTwoFormComponents {
 		FormComponent mockNameFormComponent;
 		FormComponent mockAgeFormComponent;
 		Question mockQuestion;
-		
-		private void setMockQuestion(Question mockQuestion){
-			this.mockQuestion = mockQuestion;
+
+		private FormComponent makeMockFormComponent(String id, String content, 
+				boolean isRequired) {
+			Question mockQuestion = makeMockQuestion(id, content, isRequired);
+			FormComponent result = makeMockFormComponent(mockQuestion);
+			return result;
+		}
+
+		private Question makeMockQuestion(String id, String content, 
+				boolean isRequired) {
+			return QuestionMocker.makeMockQuestion(id, content, isRequired);
 		}
 		
-		@Before
-		public void givenTwoFormComponents(){
-			setMockQuestion(QuestionMocker.makeMockNameQuestion());
-			mockNameFormComponent = makeMockFormComponent(mockQuestion);
-			setMockQuestion(QuestionMocker.makeMockAgeQuestion());
-			mockAgeFormComponent = makeMockFormComponent(mockQuestion);
-			saveFormComponents(mockNameFormComponent, mockAgeFormComponent);
+		private FormComponent makeMockFormComponent(Prompt question){
+			return FormComponentMocker.makeMockFormComponent(question, Answer.NONE);
 		}
 
 		private void saveFormComponents(FormComponent... formComponents) {
 			for (FormComponent formComponent : formComponents)
 				FormFillerContext.formComponentGateway.save(formComponent);
 		}
-		
-		public class GivenTransporterIsAtStart {
-			
-			@Test
-			public void gettingCurrent_ReturnsMockNameFormComponent(){
-				FormComponent currentComponent = getCurrentFormComponent();
-				
-				assertThat(currentComponent.id, is("name"));
-				assertThat(currentComponent.question.requiresAnswer(), is(false));
-			}
-			
-			@Test
-			public void movingBack_OutputsStartComponent(){
-				setMockRequestDirection(Direction.BACKWARD);
-				setExpectedFormComponent(FormComponent.START);
-				
-				navigationUseCase.execute(mockRequest);
-				
-				assertThat(getCurrentFormComponent(), is(expectedFormComponent));
-				assertThat(expectedFormComponent.id, is("start"));
-			}
-			
-			@Test
-			public void movingNowhere_OutputsFirstComponent(){
-				setMockRequestDirection(Direction.NONE);
-				setExpectedFormComponent(getCurrentFormComponent());
-				
-				navigationUseCase.execute(mockRequest);
-				
-				assertThat(getCurrentFormComponent(), is(expectedFormComponent));
-				assertThat(expectedFormComponent.id, is("name"));
-			}
-			
-			@Test
-			public void undoAfterMovingNowhereDoesNotChangeCurrentFormComponent() {
-				setMockRequestDirection(Direction.NONE);
-				setExpectedFormComponent(getCurrentFormComponent());
-				
-				navigationUseCase.execute(mockRequest);				
-				navigationUseCase.undo();
-				
-				assertThat(getCurrentFormComponent(), is(expectedFormComponent));
-			}
-			
-			@Test
-			public void movingForward_OutputsSecondComponent(){
-				setMockRequestDirection(Direction.FORWARD);
-				setExpectedFormComponent(mockAgeFormComponent);
-				
-				navigationUseCase.execute(mockRequest);
-				
-				assertThat(getCurrentFormComponent(), is(expectedFormComponent));
-			}
-			
-			@Test
-			public void undoAfterForwardMove_RevertsCurrentFormComponent() {
-				setMockRequestDirection(Direction.FORWARD);
-				setExpectedFormComponent(getCurrentFormComponent());
 
-				navigationUseCase.execute(mockRequest);
-				navigationUseCase.undo();
-				
-				assertThat(getCurrentFormComponent(), is(expectedFormComponent));
-			}		
+		private void executeAndUndoNavigationRequest(NavigationRequest navigationRequest) {
+			executeNavigationRequest(navigationRequest);
+			undoNavigationUseCase();
+		}	
+		
+		@Before
+		public void givenTwoFormComponents(){
+			mockNameFormComponent = makeMockFormComponent("name", 
+					"What is your name?", false);
+			mockAgeFormComponent = makeMockFormComponent("age", 
+					"What is your age?", true);
+			saveFormComponents(mockNameFormComponent, mockAgeFormComponent);
+		}
+		
+		@Test
+		public void gettingCurrent_ReturnsMockNameFormComponent(){
+			FormComponent currentComponent = getCurrentFormComponent();
+			
+			assertThat(currentComponent.id, is("name"));
+			assertThat(currentComponent.question.requiresAnswer(), is(false));
+		}
+		
+		@Test
+		public void movingBack_OutputsStartComponent(){
+			setupNavigationTest(Direction.BACKWARD, FormComponent.START);
+			
+			executeNavigationRequest(mockRequest);
+			
+			assertThatCurrentFormComponentHasExpectedValue();
+		}
+		
+		@Test
+		public void movingNowhere_OutputsFirstComponent(){
+			setupNavigationTest(Direction.NONE, getCurrentFormComponent());
+			
+			executeNavigationRequest(mockRequest);
+			
+			assertThatCurrentFormComponentHasExpectedValue();
+		}
+		
+		@Test
+		public void undoAfterMovingNowhereDoesNotChangeCurrentFormComponent() {
+			setupNavigationTest(Direction.NONE, getCurrentFormComponent());
+			
+			executeAndUndoNavigationRequest(mockRequest);
+			
+			assertThatCurrentFormComponentHasExpectedValue();
+		}
+		
+		@Test
+		public void movingForward_OutputsSecondComponent(){
+			setupNavigationTest(Direction.FORWARD, mockAgeFormComponent);
+			
+			executeNavigationRequest(mockRequest);
+			
+			assertThatCurrentFormComponentHasExpectedValue();
+		}
+		
+		@Test
+		public void undoAfterForwardMove_RevertsCurrentFormComponent() {
+			setupNavigationTest(Direction.FORWARD, getCurrentFormComponent());
+
+			executeAndUndoNavigationRequest(mockRequest);
+			
+			assertThatCurrentFormComponentHasExpectedValue();
 		}
 		
 		public class GivenTransporterHasMovedForward {
@@ -224,7 +245,7 @@ public class NavigationTest {
 			@Before
 			public void givenTransporterIsAtFirstComponent(){
 				setMockRequestDirection(Direction.FORWARD);
-				navigationUseCase.execute(mockRequest);
+				executeNavigationRequest(mockRequest);
 			}
 			
 			@Test
@@ -237,45 +258,38 @@ public class NavigationTest {
 			
 			@Test			
 			public void movingBack_OutputsFirstComponent(){
-				setMockRequestDirection(Direction.BACKWARD);
-				setExpectedFormComponent(mockNameFormComponent);
+				setupNavigationTest(Direction.BACKWARD, mockNameFormComponent);
 				
-				navigationUseCase.execute(mockRequest);
+				executeNavigationRequest(mockRequest);
 				
-				assertThat(getCurrentFormComponent(), is(expectedFormComponent));
+				assertThatCurrentFormComponentHasExpectedValue();
 			}
 			
 			@Test
 			public void undoAfterBackwardMove_RevertsCurrentFormComponent() {
-				setMockRequestDirection(Direction.BACKWARD);
-				setExpectedFormComponent(mockAgeFormComponent);
+				setupNavigationTest(Direction.BACKWARD, mockAgeFormComponent);
 
-				navigationUseCase.execute(mockRequest);
-				navigationUseCase.undo();
+				executeAndUndoNavigationRequest(mockRequest);
 				
-				assertThat(getCurrentFormComponent(), is(expectedFormComponent));
+				assertThatCurrentFormComponentHasExpectedValue();
 			}
 			
 			@Test
 			public void movingForward_DoesNotChangeComponent(){
-				setMockRequestDirection(Direction.FORWARD);
-				setExpectedFormComponent(getCurrentFormComponent());
+				setupNavigationTest(Direction.FORWARD, getCurrentFormComponent());
 				
-				navigationUseCase.execute(mockRequest);
+				executeNavigationRequest(mockRequest);
 				
-				assertThat(getCurrentFormComponent(), is(expectedFormComponent));
-				assertThat(expectedFormComponent.id, is("age"));
+				assertThatCurrentFormComponentHasExpectedValue();
 			}			
 			
 			@Test
 			public void undoAfterFailedExecutionDoesNotChangeCurrentFormComponent() {
-				setMockRequestDirection(Direction.FORWARD);
-				setExpectedFormComponent(getCurrentFormComponent());
+				setupNavigationTest(Direction.FORWARD, getCurrentFormComponent());
 
-				navigationUseCase.execute(mockRequest);
-				navigationUseCase.undo();
+				executeAndUndoNavigationRequest(mockRequest);
 				
-				assertThat(getCurrentFormComponent(), is(expectedFormComponent));
+				assertThatCurrentFormComponentHasExpectedValue();
 			}	
 		}		
 	}
