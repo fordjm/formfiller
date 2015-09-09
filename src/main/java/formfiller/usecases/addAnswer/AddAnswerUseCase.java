@@ -3,7 +3,7 @@ package formfiller.usecases.addAnswer;
 import formfiller.FormFillerContext;
 import formfiller.appBoundaries.UseCase;
 import formfiller.entities.Answer;
-import formfiller.entities.FormComponent;
+import formfiller.entities.formComponent.FormComponent;
 import formfiller.request.models.AddAnswerRequest;
 import formfiller.request.models.Request;
 

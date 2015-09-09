@@ -6,7 +6,8 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import formfiller.entities.FormComponent;
+import formfiller.entities.formComponent.FormComponent;
+import formfiller.entities.formComponent.NullFormComponents;
 import formfiller.utilities.FormComponentMocker;
 
 public class InMemoryFormComponentGatewayTest {
@@ -32,10 +33,15 @@ public class InMemoryFormComponentGatewayTest {
 	}
 	
 	@Test
+	public void saveCanHandleNullObject(){
+		gateway.save(NullFormComponents.NULL);
+	}
+	
+	@Test
 	public void findCanHandleNull(){
 		FormComponent result = gateway.find(null);
 		
-		assertThat(result, is(FormComponent.NULL));
+		assertThat(result, is(NullFormComponents.NULL));
 	}
 	
 	@Test

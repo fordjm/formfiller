@@ -1,14 +1,14 @@
-package formfiller.entities;
+package formfiller.entities.formComponent;
 
-public class FormComponent {	
+import formfiller.entities.Answer;
+import formfiller.entities.NoQuestion;
+
+public class NullFormComponents {
 	public static final FormComponent START = makeNullFormComponent(NoQuestion.START);
 	public static final FormComponent END = makeNullFormComponent(NoQuestion.END);
 	public static final FormComponent NULL = makeNullFormComponent(NoQuestion.NULL);
 	
-	public String id = "";
-	public Prompt question;
-	public Answer answer;
-		
+	
 	private static FormComponent makeNullFormComponent(NoQuestion noQuestion) {
 		FormComponent result = new FormComponent();
 		result.id = noQuestion.getId();

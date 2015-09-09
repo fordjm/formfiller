@@ -2,7 +2,7 @@ package formfiller.entities;
 
 public abstract class ValueBoundary implements Constrainable {
 	private Object boundaryValue;
-
+	
 	public ValueBoundary(Object boundaryValue) {
 		this.boundaryValue = boundaryValue;
 	}

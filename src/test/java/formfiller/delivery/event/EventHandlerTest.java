@@ -9,7 +9,8 @@ import org.mockito.Mockito;
 
 import formfiller.FormFillerContext;
 import formfiller.delivery.EventSource;
-import formfiller.entities.FormComponent;
+import formfiller.entities.formComponent.FormComponent;
+import formfiller.entities.formComponent.NullFormComponents;
 import formfiller.utilities.TestSetup;
 
 public class EventHandlerTest {	
@@ -18,6 +19,10 @@ public class EventHandlerTest {
 	
 	private FormComponent getCurrent() {
 		return FormFillerContext.formComponentState.getCurrent();
+	}
+
+	private FormComponent getEndFormComponent() {
+		return NullFormComponents.END;
 	}
 
 	@Before
@@ -29,20 +34,20 @@ public class EventHandlerTest {
 	
 	@Test
 	public void getCurrentIsFormComponentDotEnd() {
-		assertThat(getCurrent(), is(FormComponent.END));
+		assertThat(getCurrent(), is(getEndFormComponent()));
 	}
 
 	@Test
 	public void canHandleNull() {		
 		eventHandler.update(mockEventSource, null);
 		
-		assertThat(getCurrent(), is(FormComponent.END));
+		assertThat(getCurrent(), is(getEndFormComponent()));
 	}
 
 	@Test
 	public void canHandleEmptyString() {
 		eventHandler.update(mockEventSource, "");
 		
-		assertThat(getCurrent(), is(FormComponent.END));
+		assertThat(getCurrent(), is(getEndFormComponent()));
 	}
 }

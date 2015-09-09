@@ -3,8 +3,8 @@ package formfiller.utilities;
 import org.mockito.Mockito;
 
 import formfiller.entities.Answer;
-import formfiller.entities.FormComponent;
 import formfiller.entities.Prompt;
+import formfiller.entities.formComponent.FormComponent;
 
 public class FormComponentMocker {
 

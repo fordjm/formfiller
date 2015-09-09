@@ -9,8 +9,8 @@ import org.junit.runner.RunWith;
 
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
 import formfiller.FormFillerContext;
-import formfiller.entities.FormComponent;
 import formfiller.entities.Question;
+import formfiller.entities.formComponent.FormComponent;
 import formfiller.enums.Direction;
 import formfiller.utilities.FormComponentMocker;
 import formfiller.utilities.QuestionMocker;

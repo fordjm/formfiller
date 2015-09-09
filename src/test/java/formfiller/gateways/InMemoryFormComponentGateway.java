@@ -5,7 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import formfiller.entities.FormComponent;
+import formfiller.entities.formComponent.FormComponent;
+import formfiller.entities.formComponent.NullFormComponents;
 
 public class InMemoryFormComponentGateway implements FormComponentGateway {	
 	private Map<String, FormComponent> formComponents = new HashMap<String, FormComponent>();
@@ -24,9 +25,9 @@ public class InMemoryFormComponentGateway implements FormComponentGateway {
 	
 	private FormComponent getIllegalIndexComponent(int index){
 		if (index < 0) 
-			return FormComponent.START;
+			return NullFormComponents.START;
 		else
-			return FormComponent.END;
+			return NullFormComponents.END;
 	}
 
 	private FormComponent getFormComponentAtIndex(int index) {
@@ -41,12 +42,12 @@ public class InMemoryFormComponentGateway implements FormComponentGateway {
 	
 	public FormComponent screenNullFindResults(String requestedId){
 		FormComponent result = formComponents.get(requestedId);
-		if (result == null) result = FormComponent.NULL;
+		if (result == null) result = NullFormComponents.NULL;
 		return result;
 	}
 
 	public void save(FormComponent formComponent) {
-		if (formComponent == null || formComponent == FormComponent.NULL) 
+		if (formComponent == null || formComponent == NullFormComponents.NULL) 
 			return;
 		
 		formComponents.put(formComponent.id, formComponent);

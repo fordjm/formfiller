@@ -1,8 +1,8 @@
 package formfiller.usecases.navigation;
 
 import formfiller.FormFillerContext;
-import formfiller.entities.FormComponent;
 import formfiller.entities.Prompt;
+import formfiller.entities.formComponent.FormComponent;
 import formfiller.enums.Direction;
 
 public class NavigationValidator {

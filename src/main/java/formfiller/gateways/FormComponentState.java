@@ -1,6 +1,6 @@
 package formfiller.gateways;
 
-import formfiller.entities.FormComponent;
+import formfiller.entities.formComponent.FormComponent;
 import formfiller.enums.Direction;
 
 public interface FormComponentState {

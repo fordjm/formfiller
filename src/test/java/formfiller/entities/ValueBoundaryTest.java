@@ -9,6 +9,7 @@ import org.junit.runner.RunWith;
 
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
 
+//	TODO:	Pull out equals case into ValueMatches constraint.  Use OR of constraints.
 @RunWith(HierarchicalContextRunner.class)
 public class ValueBoundaryTest {
 	private ValueBoundary valueBoundary;

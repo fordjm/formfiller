@@ -1,7 +1,8 @@
 package formfiller.gateways;
 
 import formfiller.FormFillerContext;
-import formfiller.entities.FormComponent;
+import formfiller.entities.formComponent.FormComponent;
+import formfiller.entities.formComponent.NullFormComponents;
 import formfiller.enums.Direction;
 
 public class InMemoryFormComponentState implements FormComponentState {		
@@ -14,7 +15,7 @@ public class InMemoryFormComponentState implements FormComponentState {
 	}
 	
 	public boolean isAtEnd(){
-		return getCurrent() == FormComponent.END;
+		return getCurrent() == NullFormComponents.END;
 	}
 
 	//	TODO:	Name this more accurately

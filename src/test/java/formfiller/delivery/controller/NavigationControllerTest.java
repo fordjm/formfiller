@@ -9,7 +9,7 @@ import org.mockito.Mockito;
 
 import formfiller.FormFillerContext;
 import formfiller.delivery.event.ParsedEvent;
-import formfiller.entities.FormComponent;
+import formfiller.entities.formComponent.FormComponent;
 import formfiller.gateways.FormComponentGateway;
 import formfiller.gateways.InMemoryFormComponentGateway;
 import formfiller.utilities.*;

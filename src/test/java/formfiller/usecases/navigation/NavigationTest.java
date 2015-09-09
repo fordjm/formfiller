@@ -4,8 +4,6 @@ import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 
-import java.util.EmptyStackException;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,9 +11,10 @@ import org.junit.runner.RunWith;
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
 import formfiller.FormFillerContext;
 import formfiller.entities.Answer;
-import formfiller.entities.FormComponent;
 import formfiller.entities.Prompt;
 import formfiller.entities.Question;
+import formfiller.entities.formComponent.FormComponent;
+import formfiller.entities.formComponent.NullFormComponents;
 import formfiller.enums.Direction;
 import formfiller.request.models.NavigationRequest;
 import formfiller.usecases.undoable.UndoableUseCase;
@@ -60,16 +59,15 @@ public class NavigationTest {
 	}
 
 	private void assertThatExecutedUseCaseIsMostRecent() {
-		assertEquals(navigationUseCase, checkTopOfStack());
+		assertEquals(navigationUseCase, checkMostRecent());
 	}
 
-	//	TODO:	Create boundary wrapper class for the ExecutedUseCases Stack.
-	private UndoableUseCase checkTopOfStack() {
+	private UndoableUseCase checkMostRecent() {
 		return FormFillerContext.executedUseCases.getMostRecent();
 	}
 
-	private void assertThatExecutedUseCaseIsNotTopOfStack() {
-		assertNotEquals(navigationUseCase, checkTopOfStack());
+	private void assertThatExecutedUseCaseIsNotMostRecent() {
+		assertNotEquals(navigationUseCase, checkMostRecent());
 	}	
 	
 	@Before
@@ -101,12 +99,12 @@ public class NavigationTest {
 		executeNavigationRequest(null);
 		
 		assertThatCurrentFormComponentHasExpectedValue();
-		assertThatExecutedUseCaseIsNotTopOfStack();
+		assertThatExecutedUseCaseIsNotMostRecent();
 	}
 	
 	@Test
 	public void gettingPrevQuestionGetsStartPrompt(){
-		setupNavigationTest(Direction.BACKWARD, FormComponent.START);
+		setupNavigationTest(Direction.BACKWARD, NullFormComponents.START);
 		
 		executeNavigationRequest(mockRequest);
 		
@@ -184,7 +182,7 @@ public class NavigationTest {
 		
 		@Test
 		public void movingBack_OutputsStartComponent(){
-			setupNavigationTest(Direction.BACKWARD, FormComponent.START);
+			setupNavigationTest(Direction.BACKWARD, NullFormComponents.START);
 			
 			executeNavigationRequest(mockRequest);
 			
