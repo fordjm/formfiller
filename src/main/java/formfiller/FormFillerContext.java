@@ -5,7 +5,7 @@ import java.util.Stack;
 import formfiller.appBoundaries.Presenter;
 import formfiller.gateways.FormComponentGateway;
 import formfiller.gateways.InMemoryFormComponentState;
-import formfiller.usecases.navigation.UndoableUseCase;
+import formfiller.usecases.undoable.UndoableUseCase;
 
 // As presented in the Clean Coders Java Case Study codecast
 // https://cleancoders.com/episode/case-study-episode-1/show

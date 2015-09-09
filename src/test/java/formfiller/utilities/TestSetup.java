@@ -8,10 +8,10 @@ import formfiller.delivery.presenter.ResponsePresenter;
 import formfiller.delivery.ui.consoleUi.ConsoleView;
 import formfiller.delivery.viewModel.PresentableResponseViewModel;
 import formfiller.entities.Answer;
-import formfiller.usecases.navigation.UndoableUseCase;
 import formfiller.entities.FormComponent;
 import formfiller.entities.Question;
 import formfiller.gateways.InMemoryFormComponentState;
+import formfiller.usecases.undoable.UndoableUseCase;
 import formfiller.gateways.InMemoryFormComponentGateway;
 
 // TODO:  Credit CleanCoders JCS TestSetup

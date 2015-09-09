@@ -18,7 +18,7 @@ import formfiller.entities.Prompt;
 import formfiller.entities.Question;
 import formfiller.enums.Direction;
 import formfiller.request.models.NavigationRequest;
-import formfiller.request.models.Request;
+import formfiller.usecases.undoable.UndoableUseCase;
 import formfiller.utilities.FormComponentMocker;
 import formfiller.utilities.QuestionMocker;
 import formfiller.utilities.TestSetup;
@@ -68,17 +68,8 @@ public class NavigationTest {
 		try{
 			return FormFillerContext.executedUseCases.peek();
 		} catch (EmptyStackException e) {
-			return makeNullUndoableUseCase();
+			return UndoableUseCase.NULL;
 		} 
-	}	
-
-	private UndoableUseCase makeNullUndoableUseCase() {
-		UndoableUseCase result = new UndoableUseCase(){
-			public void execute(Request request) { }
-
-			public void undo() { } 
-		};
-		return result;
 	}
 
 	private void assertThatExecutedUseCaseIsNotTopOfStack() {

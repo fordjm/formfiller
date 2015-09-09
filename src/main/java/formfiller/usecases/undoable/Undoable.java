@@ -1,4 +1,4 @@
-package formfiller.usecases.navigation;
+package formfiller.usecases.undoable;
 
 public interface Undoable {
 	void undo();

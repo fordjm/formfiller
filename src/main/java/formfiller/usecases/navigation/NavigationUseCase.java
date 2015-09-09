@@ -14,6 +14,7 @@ import formfiller.response.models.PresentableAnswer;
 import formfiller.response.models.PresentableFormComponent;
 import formfiller.response.models.PresentableQuestion;
 import formfiller.response.models.PresentableResponse;
+import formfiller.usecases.undoable.UndoableUseCase;
 import formfiller.utilities.PresenterSelector;
 
 //	TODO:	MoveInDirectionUseCase?  MoveUseCase?
@@ -100,9 +101,13 @@ public class NavigationUseCase implements UndoableUseCase {
 	}
 
 	public void undo() {
-		if (outcome != Outcome.POSITIVE) return;
+		if (!succeeded()) return;
 		Direction direction = getUndoDirection();
 		executeMoveInDirection(direction);
+	}
+	
+	private boolean succeeded(){
+		return outcome == Outcome.POSITIVE;
 	}
 
 	private Direction getUndoDirection() {
