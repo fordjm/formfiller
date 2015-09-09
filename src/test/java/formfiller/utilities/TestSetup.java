@@ -1,6 +1,6 @@
 package formfiller.utilities;
 
-import java.util.Stack;
+import formfiller.ExecutedUseCases;
 import formfiller.FormFillerContext;
 import formfiller.delivery.View;
 import formfiller.delivery.presenter.FormComponentPresenter;
@@ -11,7 +11,6 @@ import formfiller.entities.Answer;
 import formfiller.entities.FormComponent;
 import formfiller.entities.Question;
 import formfiller.gateways.InMemoryFormComponentState;
-import formfiller.usecases.undoable.UndoableUseCase;
 import formfiller.gateways.InMemoryFormComponentGateway;
 
 // TODO:  Credit CleanCoders JCS TestSetup
@@ -22,7 +21,7 @@ public class TestSetup {
 		
 		FormFillerContext.formComponentState = new InMemoryFormComponentState();
 		FormFillerContext.formComponentGateway = new InMemoryFormComponentGateway();
-		FormFillerContext.executedUseCases = new Stack<UndoableUseCase>();
+		FormFillerContext.executedUseCases = new ExecutedUseCases();
 		FormFillerContext.answerPresenter = makeResponsePresenter(consoleView);
 		FormFillerContext.responsePresenter = makeResponsePresenter(consoleView);
 		FormFillerContext.formComponentPresenter = makeFormComponentPresenter(consoleView);

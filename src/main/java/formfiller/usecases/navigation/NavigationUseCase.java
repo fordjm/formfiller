@@ -36,7 +36,7 @@ public class NavigationUseCase implements UndoableUseCase {
 
 		PresentableResponse response = makeResponse();		
 		presentResponse(response);
-		FormFillerContext.executedUseCases.push(this);
+		FormFillerContext.executedUseCases.add(this);
 	}
 
 	private void setOutcome(Outcome outcome) {

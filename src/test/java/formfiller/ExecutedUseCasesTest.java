@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
+import formfiller.usecases.undoable.NullUndoableUseCase;
 import formfiller.usecases.undoable.UndoableUseCase;
 
 public class ExecutedUseCasesTest {
@@ -51,14 +52,16 @@ public class ExecutedUseCasesTest {
 	public void atStart_GettingMostRecent_ReturnsNullObject() {
 		updateMostRecent_ByGetting();
 		
-		assertThat_GetMostRecent_ReturnsUndoableUseCase(UndoableUseCase.NULL);
+		assertThat_GetMostRecent_ReturnsUndoableUseCase(
+				NullUndoableUseCase.instance());
 	}
 
 	@Test
 	public void atStart_RemovingMostRecent_ReturnsNullObject() {
 		updateMostRecent_ByRemoving();
 		
-		assertThat_GetMostRecent_ReturnsUndoableUseCase(UndoableUseCase.NULL);
+		assertThat_GetMostRecent_ReturnsUndoableUseCase(
+				NullUndoableUseCase.instance());
 	}
 	
 	@Test(expected = ExecutedUseCases.NullAddition.class)

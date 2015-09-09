@@ -59,17 +59,13 @@ public class NavigationTest {
 		return FormFillerContext.formComponentState.getCurrent();
 	}
 
-	private void assertThatExecutedUseCaseIsTopOfStack() {
+	private void assertThatExecutedUseCaseIsMostRecent() {
 		assertEquals(navigationUseCase, checkTopOfStack());
 	}
 
 	//	TODO:	Create boundary wrapper class for the ExecutedUseCases Stack.
 	private UndoableUseCase checkTopOfStack() {
-		try{
-			return FormFillerContext.executedUseCases.peek();
-		} catch (EmptyStackException e) {
-			return UndoableUseCase.NULL;
-		} 
+		return FormFillerContext.executedUseCases.getMostRecent();
 	}
 
 	private void assertThatExecutedUseCaseIsNotTopOfStack() {
@@ -115,7 +111,7 @@ public class NavigationTest {
 		executeNavigationRequest(mockRequest);
 		
 		assertThatCurrentFormComponentHasExpectedValue();
-		assertThatExecutedUseCaseIsTopOfStack();
+		assertThatExecutedUseCaseIsMostRecent();
 	}
 	
 	@Test
@@ -125,7 +121,7 @@ public class NavigationTest {
 		executeNavigationRequest(mockRequest);
 		
 		assertThatCurrentFormComponentHasExpectedValue();
-		assertThatExecutedUseCaseIsTopOfStack();
+		assertThatExecutedUseCaseIsMostRecent();
 	}
 	
 	@Test
@@ -135,7 +131,7 @@ public class NavigationTest {
 		executeNavigationRequest(mockRequest);
 		
 		assertThatCurrentFormComponentHasExpectedValue();
-		assertThatExecutedUseCaseIsTopOfStack();
+		assertThatExecutedUseCaseIsMostRecent();
 	}	
 	
 	public class GivenTwoFormComponents {

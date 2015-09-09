@@ -3,6 +3,7 @@ package formfiller;
 import java.util.EmptyStackException;
 import java.util.Stack;
 
+import formfiller.usecases.undoable.NullUndoableUseCase;
 import formfiller.usecases.undoable.UndoableUseCase;
 
 public class ExecutedUseCases {
@@ -25,7 +26,7 @@ public class ExecutedUseCases {
 		try{
 			return executedUseCases.peek();
 		} catch (EmptyStackException e) {
-			return UndoableUseCase.NULL;
+			return NullUndoableUseCase.instance();
 		} 
 	}
 
@@ -33,7 +34,7 @@ public class ExecutedUseCases {
 		try{
 			return executedUseCases.pop();
 		} catch (EmptyStackException e) {
-			return UndoableUseCase.NULL;
+			return NullUndoableUseCase.instance();
 		} 
 	}
 	
