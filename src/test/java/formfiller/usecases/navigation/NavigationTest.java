@@ -11,7 +11,6 @@ import org.junit.runner.RunWith;
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
 import formfiller.FormFillerContext;
 import formfiller.entities.Answer;
-import formfiller.entities.Prompt;
 import formfiller.entities.Question;
 import formfiller.entities.formComponent.FormComponent;
 import formfiller.entities.formComponent.NullFormComponents;
@@ -46,11 +45,11 @@ public class NavigationTest {
 		navigationUseCase.undo();
 	}
 
-	private void executeNavigationRequest(NavigationRequest navigationRequest) {
-		navigationUseCase.execute(navigationRequest);
+	private void executeNavigationRequest(NavigationRequest request) {
+		navigationUseCase.execute(request);
 	}
 
-	private void assertThatCurrentFormComponentHasExpectedValue() {
+	private void assertThat_CurrentAndExpectedComponents_AreTheSame() {
 		assertThat(getCurrentFormComponent(), is(expectedFormComponent));
 	}
 	
@@ -58,7 +57,7 @@ public class NavigationTest {
 		return FormFillerContext.formComponentState.getCurrent();
 	}
 
-	private void assertThatExecutedUseCaseIsMostRecent() {
+	private void assertThat_ExecutedUseCase_IsMostRecent() {
 		assertEquals(navigationUseCase, checkMostRecent());
 	}
 
@@ -66,7 +65,7 @@ public class NavigationTest {
 		return FormFillerContext.executedUseCases.getMostRecent();
 	}
 
-	private void assertThatExecutedUseCaseIsNotMostRecent() {
+	private void assertThat_ExecutedUseCase_IsNotMostRecent() {
 		assertNotEquals(navigationUseCase, checkMostRecent());
 	}	
 	
@@ -89,7 +88,7 @@ public class NavigationTest {
 		
 		undoNavigationUseCase();
 		
-		assertThatCurrentFormComponentHasExpectedValue();
+		assertThat_CurrentAndExpectedComponents_AreTheSame();
 	}
 	
 	@Test
@@ -98,8 +97,8 @@ public class NavigationTest {
 		
 		executeNavigationRequest(null);
 		
-		assertThatCurrentFormComponentHasExpectedValue();
-		assertThatExecutedUseCaseIsNotMostRecent();
+		assertThat_CurrentAndExpectedComponents_AreTheSame();
+		assertThat_ExecutedUseCase_IsNotMostRecent();
 	}
 	
 	@Test
@@ -108,8 +107,8 @@ public class NavigationTest {
 		
 		executeNavigationRequest(mockRequest);
 		
-		assertThatCurrentFormComponentHasExpectedValue();
-		assertThatExecutedUseCaseIsMostRecent();
+		assertThat_CurrentAndExpectedComponents_AreTheSame();
+		assertThat_ExecutedUseCase_IsMostRecent();
 	}
 	
 	@Test
@@ -118,8 +117,8 @@ public class NavigationTest {
 		
 		executeNavigationRequest(mockRequest);
 		
-		assertThatCurrentFormComponentHasExpectedValue();
-		assertThatExecutedUseCaseIsMostRecent();
+		assertThat_CurrentAndExpectedComponents_AreTheSame();
+		assertThat_ExecutedUseCase_IsMostRecent();
 	}
 	
 	@Test
@@ -128,8 +127,8 @@ public class NavigationTest {
 		
 		executeNavigationRequest(mockRequest);
 		
-		assertThatCurrentFormComponentHasExpectedValue();
-		assertThatExecutedUseCaseIsMostRecent();
+		assertThat_CurrentAndExpectedComponents_AreTheSame();
+		assertThat_ExecutedUseCase_IsMostRecent();
 	}	
 	
 	public class GivenTwoFormComponents {
@@ -139,18 +138,19 @@ public class NavigationTest {
 
 		private FormComponent makeMockFormComponent(String id, String content, 
 				boolean isRequired) {
-			Question mockQuestion = makeMockQuestion(id, content, isRequired);
-			FormComponent result = makeMockFormComponent(mockQuestion);
+			Question mockQuestion = makeMockQuestion(id, content);
+			FormComponent result = makeMockFormComponent(isRequired, mockQuestion);
 			return result;
 		}
 
-		private Question makeMockQuestion(String id, String content, 
-				boolean isRequired) {
-			return QuestionMocker.makeMockQuestion(id, content, isRequired);
+		private Question makeMockQuestion(String id, String content) {
+			return QuestionMocker.makeMockQuestion(id, content);
 		}
 		
-		private FormComponent makeMockFormComponent(Prompt question){
-			return FormComponentMocker.makeMockFormComponent(question, Answer.NONE);
+		private FormComponent makeMockFormComponent(boolean requiresAnswer, 
+				Question question){
+			return FormComponentMocker.makeMockFormComponent(requiresAnswer, 
+					question, Answer.NONE);
 		}
 
 		private void saveFormComponents(FormComponent... formComponents) {
@@ -177,7 +177,7 @@ public class NavigationTest {
 			FormComponent currentComponent = getCurrentFormComponent();
 			
 			assertThat(currentComponent.id, is("name"));
-			assertThat(currentComponent.question.requiresAnswer(), is(false));
+			assertThat(currentComponent.requiresAnswer, is(false));
 		}
 		
 		@Test
@@ -186,7 +186,7 @@ public class NavigationTest {
 			
 			executeNavigationRequest(mockRequest);
 			
-			assertThatCurrentFormComponentHasExpectedValue();
+			assertThat_CurrentAndExpectedComponents_AreTheSame();
 		}
 		
 		@Test
@@ -195,7 +195,7 @@ public class NavigationTest {
 			
 			executeNavigationRequest(mockRequest);
 			
-			assertThatCurrentFormComponentHasExpectedValue();
+			assertThat_CurrentAndExpectedComponents_AreTheSame();
 		}
 		
 		@Test
@@ -204,7 +204,7 @@ public class NavigationTest {
 			
 			executeAndUndoNavigationRequest(mockRequest);
 			
-			assertThatCurrentFormComponentHasExpectedValue();
+			assertThat_CurrentAndExpectedComponents_AreTheSame();
 		}
 		
 		@Test
@@ -213,7 +213,7 @@ public class NavigationTest {
 			
 			executeNavigationRequest(mockRequest);
 			
-			assertThatCurrentFormComponentHasExpectedValue();
+			assertThat_CurrentAndExpectedComponents_AreTheSame();
 		}
 		
 		@Test
@@ -222,7 +222,7 @@ public class NavigationTest {
 
 			executeAndUndoNavigationRequest(mockRequest);
 			
-			assertThatCurrentFormComponentHasExpectedValue();
+			assertThat_CurrentAndExpectedComponents_AreTheSame();
 		}
 		
 		public class GivenTransporterHasMovedForward {
@@ -238,7 +238,7 @@ public class NavigationTest {
 				FormComponent currentComponent = getCurrentFormComponent();
 				
 				assertThat(currentComponent.id, is("age"));
-				assertThat(currentComponent.question.requiresAnswer(), is(true));
+				assertThat(currentComponent.requiresAnswer, is(true));
 			}
 			
 			@Test			
@@ -247,7 +247,7 @@ public class NavigationTest {
 				
 				executeNavigationRequest(mockRequest);
 				
-				assertThatCurrentFormComponentHasExpectedValue();
+				assertThat_CurrentAndExpectedComponents_AreTheSame();
 			}
 			
 			@Test
@@ -256,7 +256,7 @@ public class NavigationTest {
 
 				executeAndUndoNavigationRequest(mockRequest);
 				
-				assertThatCurrentFormComponentHasExpectedValue();
+				assertThat_CurrentAndExpectedComponents_AreTheSame();
 			}
 			
 			@Test
@@ -265,7 +265,7 @@ public class NavigationTest {
 				
 				executeNavigationRequest(mockRequest);
 				
-				assertThatCurrentFormComponentHasExpectedValue();
+				assertThat_CurrentAndExpectedComponents_AreTheSame();
 			}			
 			
 			@Test
@@ -274,7 +274,7 @@ public class NavigationTest {
 
 				executeAndUndoNavigationRequest(mockRequest);
 				
-				assertThatCurrentFormComponentHasExpectedValue();
+				assertThat_CurrentAndExpectedComponents_AreTheSame();
 			}	
 		}		
 	}

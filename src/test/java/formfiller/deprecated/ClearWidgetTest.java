@@ -16,18 +16,25 @@ import formfiller.deprecated.FormWidget;
 import formfiller.deprecated.Transaction;
 import formfiller.entities.ConstrainableAnswer;
 import formfiller.entities.Constraint;
-import formfiller.entities.NoQuestion;
+import formfiller.entities.NullQuestions;
+import formfiller.entities.Question;
 import formfiller.enums.Cardinality;
 import formfiller.enums.ContentConstraint;
 
 @RunWith(HierarchicalContextRunner.class)
 public class ClearWidgetTest {
 	Transaction clearWidget;
+
+	private static boolean isANullQuestion(Question question) {
+		return (question == NullQuestions.START || 
+				question == NullQuestions.END || 
+						question == NullQuestions.NULL);
+	}
 	
 	static void assertGetPromptGetsANullPrompt() {
-		assertTrue(FormWidget.getPrompt() instanceof NoQuestion);
-		assertEquals("", FormWidget.getPrompt().getId());
-		assertEquals("", FormWidget.getPrompt().getContent());
+		assertTrue(isANullQuestion(FormWidget.getPrompt()));
+		assertEquals("null", FormWidget.getPrompt().id);
+		assertEquals("No such question exists.", FormWidget.getPrompt().content);
 	}
 	
 	static void assertGetAnswerGetsANullAnswer() {

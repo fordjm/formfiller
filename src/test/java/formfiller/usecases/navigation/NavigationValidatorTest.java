@@ -9,6 +9,7 @@ import org.junit.runner.RunWith;
 
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
 import formfiller.FormFillerContext;
+import formfiller.entities.Answer;
 import formfiller.entities.Question;
 import formfiller.entities.formComponent.FormComponent;
 import formfiller.enums.Direction;
@@ -18,52 +19,53 @@ import formfiller.utilities.TestSetup;
 
 @RunWith(HierarchicalContextRunner.class)
 public class NavigationValidatorTest {
-	private NavigationValidator validator;
 
-	private FormComponent makeMockFormComponent(Question mockQuestion) {
-		return FormComponentMocker.makeMockFormComponent(mockQuestion, null);
+	private FormComponent makeMockFormComponent(boolean requiresAnswer, 
+			Question mockQuestion) {
+		return FormComponentMocker.makeMockFormComponent(
+				requiresAnswer, mockQuestion, Answer.NONE);
 	}
 	
-	private void assertThatDirectionalMoveIsLegal(Direction direction) {
-		assertThat(validator.isValidDirectionalMove(direction), is(true));
+	private void assertThat_DirectionalMoveIsLegal(Direction direction) {
+		assertThat(NavigationValidator.isValidDirectionalMove(direction), is(true));
 	}
 	
 	private void assertThat_DirectionalMoveIsIllegal(Direction direction) {
-		assertThat(validator.isValidDirectionalMove(direction), is(false));
+		assertThat(NavigationValidator.isValidDirectionalMove(direction), is(false));
 	}
 
 	@Before
 	public void setUp() {
 		TestSetup.setupContext();
-		validator = new NavigationValidator();
 	}
 
 	@Test
 	public void movingBackwardIsLegal() {
-		assertThatDirectionalMoveIsLegal(Direction.BACKWARD);
+		assertThat_DirectionalMoveIsLegal(Direction.BACKWARD);
 	}
 
 	@Test
 	public void movingNowhereIsLegal() {
-		assertThatDirectionalMoveIsLegal(Direction.NONE);
+		assertThat_DirectionalMoveIsLegal(Direction.NONE);
 	}
 
 	@Test
 	public void movingForwardIsLegal() {
-		assertThatDirectionalMoveIsLegal(Direction.FORWARD);
+		assertThat_DirectionalMoveIsLegal(Direction.FORWARD);
 	}
 	
 	public class GivenAnswerIsNotRequired {
 		
 		@Before
 		public void givenAnswerIsNotRequired(){
-			FormComponent mockComponent = makeMockFormComponent(QuestionMocker.makeMockBirthDateQuestion());
+			FormComponent mockComponent = makeMockFormComponent(false, 
+					QuestionMocker.makeMockBirthDateQuestion());
 			FormFillerContext.formComponentGateway.save(mockComponent);
 		}
 		
 		@Test
 		public void movingForwardIsLegal() {
-			assertThatDirectionalMoveIsLegal(Direction.FORWARD);
+			assertThat_DirectionalMoveIsLegal(Direction.FORWARD);
 		}
 	}
 	
@@ -71,18 +73,19 @@ public class NavigationValidatorTest {
 		
 		@Before
 		public void givenAnswerIsRequired(){
-			FormComponent mockComponent = makeMockFormComponent(QuestionMocker.makeMockAgeQuestion());
+			FormComponent mockComponent = makeMockFormComponent(true, 
+					QuestionMocker.makeMockAgeQuestion());
 			FormFillerContext.formComponentGateway.save(mockComponent);
 		}
 
 		@Test
 		public void movingBackwardIsLegal() {
-			assertThatDirectionalMoveIsLegal(Direction.BACKWARD);
+			assertThat_DirectionalMoveIsLegal(Direction.BACKWARD);
 		}
 
 		@Test
 		public void movingNowhereIsLegal() {
-			assertThatDirectionalMoveIsLegal(Direction.NONE);
+			assertThat_DirectionalMoveIsLegal(Direction.NONE);
 		}
 
 		@Test

@@ -14,14 +14,11 @@ public class QuestionTest {
 	@Before
 	public void givenAQuestion(){
 		question = new Question(ID, CONTENT);
-		question.setResponseRequired(false);
 	}
 	
 	@Test
 	public void questionFieldsHaveExpectedValues(){
-		assertThat(question.getId(), is(ID));
-		assertThat(question.getContent(), is(CONTENT));
-		assertThat(question.hasAnswer(), is(false));
-		assertThat(question.requiresAnswer(), is(false));
+		assertThat(question.id, is(ID));
+		assertThat(question.content, is(CONTENT));
 	}
 }

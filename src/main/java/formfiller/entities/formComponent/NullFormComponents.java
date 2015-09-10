@@ -1,18 +1,20 @@
 package formfiller.entities.formComponent;
 
 import formfiller.entities.Answer;
-import formfiller.entities.NoQuestion;
+import formfiller.entities.NullQuestions;
+import formfiller.entities.Question;
 
 public class NullFormComponents {
-	public static final FormComponent START = makeNullFormComponent(NoQuestion.START);
-	public static final FormComponent END = makeNullFormComponent(NoQuestion.END);
-	public static final FormComponent NULL = makeNullFormComponent(NoQuestion.NULL);
+	public static final FormComponent START = makeNullFormComponent(NullQuestions.START);
+	public static final FormComponent END = makeNullFormComponent(NullQuestions.END);
+	public static final FormComponent NULL = makeNullFormComponent(NullQuestions.NULL);
 	
+	private NullFormComponents() { }
 	
-	private static FormComponent makeNullFormComponent(NoQuestion noQuestion) {
+	private static FormComponent makeNullFormComponent(Question nullQuestion) {
 		FormComponent result = new FormComponent();
-		result.id = noQuestion.getId();
-		result.question = noQuestion;
+		result.id = nullQuestion.id;
+		result.question = nullQuestion;
 		result.answer = Answer.NONE;
 		return result;
 	}

@@ -9,7 +9,7 @@ import org.junit.runner.RunWith;
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
 import formfiller.entities.Constraint;
 import formfiller.entities.NoConstraint;
-import formfiller.entities.Prompt;
+import formfiller.entities.Question;
 import formfiller.deprecated.AddAnswer;
 import formfiller.deprecated.FormWidget;
 import formfiller.deprecated.Transaction;
@@ -66,7 +66,7 @@ public class AddAnswerTest<T> {
 		@Before
 		public void givenWidgetHasAPrompt(){
 			FormWidget.clear();
-			Prompt prompt = QuestionMocker.makeMockNameQuestion();
+			Question prompt = QuestionMocker.makeMockNameQuestion();
 			FormWidget.addPrompt(prompt);
 		}
 		

@@ -12,7 +12,7 @@ import org.junit.runner.RunWith;
 import formfiller.deprecated.FormWidget;
 import formfiller.deprecated.PromptSubject;
 import formfiller.deprecated.Transaction;
-import formfiller.entities.Prompt;
+import formfiller.entities.Question;
 import formfiller.utilities.*;
 
 @RunWith(HierarchicalContextRunner.class)
@@ -63,15 +63,15 @@ public class PromptSubjectTest {
 				@Test
 				public void whenAddPromptRuns_ThenWidgetAddsNewPrompt(){
 					promptSubject.execute();
-					assertEquals("name", FormWidget.getPrompt().getId());
-					assertEquals("What is your name?", FormWidget.getPrompt().getContent());
+					assertEquals("name", FormWidget.getPrompt().id);
+					assertEquals("What is your name?", FormWidget.getPrompt().content);
 				}
 			}
 		}
 		
 		public class WidgetHasAPromptContext{
-			Prompt prompt = QuestionMocker.makeMockNameQuestion();
-			Prompt newPrompt;
+			Question prompt = QuestionMocker.makeMockNameQuestion();
+			Question newPrompt;
 			
 			@Before
 			public void givenWidgetHasAPrompt(){
@@ -91,8 +91,8 @@ public class PromptSubjectTest {
 					makeAgePromptTransaction();
 					promptSubject.execute();
 					newPrompt = FormWidget.getPrompt();
-					assertEquals("age", newPrompt.getId());
-					assertEquals("What is your age?", newPrompt.getContent());
+					assertEquals("age", newPrompt.id);
+					assertEquals("What is your age?", newPrompt.content);
 				}		
 			}
 			

@@ -5,15 +5,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import formfiller.entities.NoQuestion;
-import formfiller.entities.Prompt;
+import formfiller.entities.NullQuestions;
+import formfiller.entities.Question;
 import formfiller.entities.ConstrainableAnswer;
 import formfiller.enums.Cardinality;
 import formfiller.enums.ContentConstraint;
 import formfiller.entities.Constraint;
 
 public class FormWidget {
-	private static Prompt prompt = new NoQuestion();
+	private static Question prompt = new Question();
 	private static ConstrainableAnswer answer = ConstrainableAnswer.NONE;
 	private static Map<ContentConstraint, Constraint> contentConstraints = 
 			new HashMap<ContentConstraint, Constraint>();
@@ -24,7 +24,7 @@ public class FormWidget {
 		return answerCardinality;
 	}
 
-	public static Prompt getPrompt() {
+	public static Question getPrompt() {
 		return prompt;
 	}
 	
@@ -43,14 +43,20 @@ public class FormWidget {
 	}
 	
 	public static boolean hasQuestion(){
-		return !(prompt instanceof NoQuestion);
+		return !(isANullQuestion(prompt));
+	}
+
+	private static boolean isANullQuestion(Question question) {
+		return (question == NullQuestions.START || 
+				question == NullQuestions.END || 
+						question == NullQuestions.NULL);
 	}
 	
 	public static void setCardinality(Cardinality c){
 		answerCardinality = c;
 	}
 
-	public static void addPrompt(Prompt prompt) throws IllegalStateException, IllegalArgumentException {
+	public static void addPrompt(Question prompt) throws IllegalStateException, IllegalArgumentException {
 		if (answerRequired && answer.equals(ConstrainableAnswer.NONE))
 			throw new IllegalStateException("Previous question requires an answer!");
 		else if (prompt == null) 
@@ -116,7 +122,7 @@ public class FormWidget {
 	}
 
 	private static void clearPrompt() {
-		prompt = new NoQuestion();
+		prompt = NullQuestions.NULL;
 	}
 
 	private static void clearRequired() {

@@ -15,21 +15,21 @@ import org.junit.runner.RunWith;
 
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
 import formfiller.entities.ConstrainableAnswer;
-import formfiller.entities.Prompt;
+import formfiller.entities.Question;
 import formfiller.enums.Cardinality;
 import formfiller.utilities.ConstrainableAnswerMocker;
 import formfiller.utilities.QuestionMocker;
 
 @RunWith(HierarchicalContextRunner.class)
 public class FormWidgetTest {
-	static Prompt oldPrompt;
-	static Prompt addedPrompt;
-	static Prompt newPrompt;
+	static Question oldPrompt;
+	static Question addedPrompt;
+	static Question newPrompt;
 	static ConstrainableAnswer oldAnswer;
 	static ConstrainableAnswer addedAnswer;
 	static ConstrainableAnswer newAnswer;
 	
-	static Prompt makeMockNameQuestion() {
+	static Question makeMockNameQuestion() {
 		return QuestionMocker.makeMockNameQuestion();
 	}
 	
@@ -239,7 +239,7 @@ public class FormWidgetTest {
 			}
 		}
 		
-		Prompt makeMockAgeQuestion() {
+		Question makeMockAgeQuestion() {
 			return QuestionMocker.makeMockAgeQuestion();
 		}
 		

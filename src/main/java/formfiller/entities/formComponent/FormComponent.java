@@ -1,10 +1,11 @@
 package formfiller.entities.formComponent;
 
 import formfiller.entities.Answer;
-import formfiller.entities.Prompt;
+import formfiller.entities.Question;
 
 public class FormComponent {		
 	public String id = "";
-	public Prompt question;
+	public boolean requiresAnswer;
+	public Question question;
 	public Answer answer;
 }

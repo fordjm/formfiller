@@ -49,7 +49,7 @@ public class AddAnswerTest {
 	
 	private FormComponent makeMockFormComponent(Question mockQuestion){
 		FormComponent result = Mockito.mock(FormComponent.class);
-		result.id = mockQuestion.getId();
+		result.id = mockQuestion.id;
 		result.question = mockQuestion;
 		result.answer = Answer.NONE;
 		return result;

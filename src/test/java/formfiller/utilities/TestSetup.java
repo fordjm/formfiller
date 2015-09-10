@@ -45,32 +45,33 @@ public class TestSetup {
 	public static void setupSampleFormComponents(){
 		setupContext();
 		FormFillerContext.formComponentGateway.save(
-				makeFormComponent(
-						makeQuestion("name", "What is your name?", false)));
+				makeFormComponent(false, 
+						makeQuestion("name", "What is your name?")));
 		FormFillerContext.formComponentGateway.save(
-				makeFormComponent(
-						makeQuestion("birthDate", "What is your birth date?", false), 
+				makeFormComponent(false, 
+						makeQuestion("birthDate", "What is your birth date?"), 
 						makeAnswer("November 12, 1955")));
 		FormFillerContext.formComponentGateway.save(
-				makeFormComponent(
-						makeQuestion("age", "What is your age?", true)));
+				makeFormComponent(true, 
+						makeQuestion("age", "What is your age?")));
 	}
 	
-	private static FormComponent makeFormComponent(Question question){		
-		return makeFormComponent(question, Answer.NONE);
+	private static FormComponent makeFormComponent(boolean requiresAnswer, Question question){		
+		return makeFormComponent(requiresAnswer, question, Answer.NONE);
 	}
 	
-	private static FormComponent makeFormComponent(Question question, Answer answer){
+	private static FormComponent makeFormComponent(boolean requiresAnswer, 
+			Question question, Answer answer){
 		FormComponent result = new FormComponent();
-		result.id = question.getId();
+		result.id = question.id;
+		result.requiresAnswer = requiresAnswer;
 		result.question = question;
 		result.answer = answer;		
 		return result;
 	}
 	
-	private static Question makeQuestion(String id, String content, boolean isRequired){
+	private static Question makeQuestion(String id, String content){
 		Question result = new Question(id, content);
-		result.setResponseRequired(isRequired);
 		return result;
 	}
 	

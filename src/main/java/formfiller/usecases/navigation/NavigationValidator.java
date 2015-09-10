@@ -1,35 +1,30 @@
 package formfiller.usecases.navigation;
 
 import formfiller.FormFillerContext;
-import formfiller.entities.Prompt;
+import formfiller.entities.Answer;
 import formfiller.entities.formComponent.FormComponent;
 import formfiller.enums.Direction;
 
 public class NavigationValidator {
 	
 	public static boolean isValidDirectionalMove(Direction direction) {
-		Prompt currentQuestion = getCurrentQuestion();		
-		return !isInvalidMove(direction, currentQuestion);
+		FormComponent currentComponent = getCurrentFormComponent();
+		return !isInvalidMove(direction, currentComponent);
 	}
 	
-	private static boolean isInvalidMove(Direction direction, Prompt currentQuestion){
+	private static boolean isInvalidMove(Direction direction, FormComponent component){
 		return isMovingForward(direction) && 
-				isAnswerRequiredButAbsent(currentQuestion);
+				isAnswerRequiredButAbsent(component);
 	}
 	
 	private static boolean isMovingForward(Direction direction) {
 		return direction == Direction.FORWARD;
 	}
 	
-	private static boolean isAnswerRequiredButAbsent(Prompt currentQuestion){
-		boolean result = currentQuestion.requiresAnswer() && 
-				!currentQuestion.hasAnswer();
+	private static boolean isAnswerRequiredButAbsent(FormComponent component){
+		boolean result = component.requiresAnswer && 
+				component.answer == Answer.NONE;
 		return result;
-	}
-	
-	private static Prompt getCurrentQuestion() {
-		FormComponent component = getCurrentFormComponent();
-		return component.question;
 	}
 	
 	private static FormComponent getCurrentFormComponent() {

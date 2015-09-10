@@ -3,17 +3,13 @@ package formfiller.usecases.navigation;
 import formfiller.FormFillerContext;
 import formfiller.appBoundaries.Presenter;
 import formfiller.entities.Answer;
-import formfiller.entities.Prompt;
+import formfiller.entities.Question;
 import formfiller.entities.formComponent.FormComponent;
 import formfiller.enums.Outcome;
 import formfiller.enums.Direction;
 import formfiller.gateways.InMemoryTransporter;
-import formfiller.request.models.NavigationRequest;
-import formfiller.request.models.Request;
-import formfiller.response.models.PresentableAnswer;
-import formfiller.response.models.PresentableFormComponent;
-import formfiller.response.models.PresentableQuestion;
-import formfiller.response.models.PresentableResponse;
+import formfiller.request.models.*;
+import formfiller.response.models.*;
 import formfiller.usecases.undoable.UndoableUseCase;
 import formfiller.utilities.PresenterSelector;
 
@@ -86,10 +82,10 @@ public class NavigationUseCase implements UndoableUseCase {
 		return FormFillerContext.formComponentState.getCurrent();
 	}
 
-	private PresentableQuestion makePresentableQuestion(Prompt requestedQuestion) {
+	private PresentableQuestion makePresentableQuestion(Question requestedQuestion) {
 		PresentableQuestion result = new PresentableQuestion();
-		result.id = requestedQuestion.getId();
-		result.message = requestedQuestion.getContent();
+		result.id = requestedQuestion.id;
+		result.message = requestedQuestion.content;
 		return result;
 	}
 

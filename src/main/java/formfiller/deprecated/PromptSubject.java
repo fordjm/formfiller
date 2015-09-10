@@ -3,7 +3,6 @@ package formfiller.deprecated;
 import java.util.ArrayList;
 import java.util.List;
 
-import formfiller.entities.Prompt;
 import formfiller.entities.Question;
 
 public class PromptSubject implements Transaction {
@@ -31,7 +30,7 @@ public class PromptSubject implements Transaction {
 		}
 
 		public void execute() {
-			Prompt p = new Question(id, content);
+			Question p = new Question(id, content);
 			checkTransactionIsLegal();
 			FormWidget.addPrompt(p);
 		}
