@@ -1,10 +1,10 @@
-package formfiller.entities;
+package formfiller.deprecated;
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-public class NoAnswerTest {
+public class NoConstrainableAnswerTest {
 	private final int id = -1;
 	private final String content = "";
 

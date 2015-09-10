@@ -17,13 +17,4 @@ public class NullQuestions {
 		result.content = content;
 		return result;
 	}
-	
-	//	TODO:	Move these to FormComponent
-	public boolean hasAnswer() {
-		return false;
-	}
-	
-	public boolean requiresAnswer() {
-		return false;
-	}
 }

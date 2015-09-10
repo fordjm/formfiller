@@ -1,15 +1,15 @@
-package formfiller.entities;
+package formfiller.entities.constrainable;
 
 import formfiller.enums.ContentConstraint;
 
-public class ValueMinimum extends ValueBoundary {
+public class ValueOverBoundary extends ValueBoundary {
 	ContentConstraint name = ContentConstraint.VALUE_MINIMUM;
 
-	public ValueMinimum(Object minimum) {
+	public ValueOverBoundary(Object minimum) {
 		super(minimum);
 	}
 	
 	public boolean isLegalComparisonResult(int comparisonResult){
-		return comparisonResult >= 0;
+		return comparisonResult > 0;
 	}
 }

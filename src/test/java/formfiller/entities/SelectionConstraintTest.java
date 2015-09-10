@@ -14,6 +14,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
+import formfiller.deprecated.ConstrainableAnswer;
 import formfiller.enums.ContentConstraint;
 import formfiller.utilities.ConstrainableAnswerMocker;
 

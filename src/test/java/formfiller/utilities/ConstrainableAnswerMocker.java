@@ -3,7 +3,7 @@ package formfiller.utilities;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import formfiller.entities.ConstrainableAnswer;
+import formfiller.deprecated.ConstrainableAnswer;
 
 public class ConstrainableAnswerMocker {
 	

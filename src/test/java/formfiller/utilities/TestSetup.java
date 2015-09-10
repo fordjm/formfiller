@@ -56,15 +56,16 @@ public class TestSetup {
 						makeQuestion("age", "What is your age?")));
 	}
 	
-	private static FormComponent makeFormComponent(boolean requiresAnswer, Question question){		
+	private static FormComponent makeFormComponent(boolean requiresAnswer, 
+			Question question){		
 		return makeFormComponent(requiresAnswer, question, Answer.NONE);
 	}
 	
 	private static FormComponent makeFormComponent(boolean requiresAnswer, 
 			Question question, Answer answer){
 		FormComponent result = new FormComponent();
-		result.id = question.id;
 		result.requiresAnswer = requiresAnswer;
+		result.id = question.id;
 		result.question = question;
 		result.answer = answer;		
 		return result;

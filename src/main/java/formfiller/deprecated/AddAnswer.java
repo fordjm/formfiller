@@ -4,7 +4,6 @@ import java.util.Collection;
 import java.util.Map;
 
 import formfiller.entities.Constraint;
-import formfiller.entities.ConstrainableAnswer;
 import formfiller.enums.ContentConstraint;
 
 public class AddAnswer implements Transaction {

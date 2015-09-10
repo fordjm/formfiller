@@ -7,7 +7,6 @@ import java.util.Map;
 
 import formfiller.entities.NullQuestions;
 import formfiller.entities.Question;
-import formfiller.entities.ConstrainableAnswer;
 import formfiller.enums.Cardinality;
 import formfiller.enums.ContentConstraint;
 import formfiller.entities.Constraint;

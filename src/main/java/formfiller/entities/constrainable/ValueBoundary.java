@@ -1,4 +1,6 @@
-package formfiller.entities;
+package formfiller.entities.constrainable;
+
+import formfiller.entities.Constrainable;
 
 public abstract class ValueBoundary implements Constrainable {
 	private Object boundaryValue;

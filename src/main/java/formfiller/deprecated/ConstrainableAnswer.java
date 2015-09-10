@@ -1,13 +1,12 @@
-package formfiller.entities;
+package formfiller.deprecated;
+
+import formfiller.entities.Answer;
+import formfiller.entities.Constrainable;
 
 //	TODO:	Delete after converting all Constraints to Constrainable.
 public class ConstrainableAnswer implements Constrainable {
 	public static final ConstrainableAnswer NONE = new ConstrainableAnswer(-1, "");
 	private Answer answer = new Answer();
-
-	public ConstrainableAnswer(Answer answer){ 
-		this.answer = answer;
-	}
 
 	public ConstrainableAnswer(Object content){
 		answer.id = 0;
@@ -29,9 +28,5 @@ public class ConstrainableAnswer implements Constrainable {
 
 	public boolean isSatisfiedBy(Object objectUnderTest) {
 		return answer.id >= 0 && answer.content != null;
-	}
-
-	public Constrainable constrain(Object value) {
-		return null;
 	}
 }

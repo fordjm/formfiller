@@ -13,17 +13,19 @@ import formfiller.entities.Answer;
 import formfiller.entities.Question;
 import formfiller.entities.formComponent.FormComponent;
 import formfiller.enums.Direction;
+import formfiller.utilities.AnswerMocker;
 import formfiller.utilities.FormComponentMocker;
 import formfiller.utilities.QuestionMocker;
 import formfiller.utilities.TestSetup;
 
 @RunWith(HierarchicalContextRunner.class)
 public class NavigationValidatorTest {
+	private FormComponent mockFormComponent;
 
 	private FormComponent makeMockFormComponent(boolean requiresAnswer, 
-			Question mockQuestion) {
+			Question mockQuestion, Answer mockAnswer) {
 		return FormComponentMocker.makeMockFormComponent(
-				requiresAnswer, mockQuestion, Answer.NONE);
+				requiresAnswer, mockQuestion, mockAnswer);
 	}
 	
 	private void assertThat_DirectionalMoveIsLegal(Direction direction) {
@@ -58,9 +60,9 @@ public class NavigationValidatorTest {
 		
 		@Before
 		public void givenAnswerIsNotRequired(){
-			FormComponent mockComponent = makeMockFormComponent(false, 
-					QuestionMocker.makeMockBirthDateQuestion());
-			FormFillerContext.formComponentGateway.save(mockComponent);
+			mockFormComponent = makeMockFormComponent(false, 
+					QuestionMocker.makeMockBirthDateQuestion(), Answer.NONE);
+			FormFillerContext.formComponentGateway.save(mockFormComponent);
 		}
 		
 		@Test
@@ -69,13 +71,12 @@ public class NavigationValidatorTest {
 		}
 	}
 	
-	public class GivenAnswerIsRequired {
-		
+	public class GivenAnswerIsRequired {		
 		@Before
 		public void givenAnswerIsRequired(){
-			FormComponent mockComponent = makeMockFormComponent(true, 
-					QuestionMocker.makeMockAgeQuestion());
-			FormFillerContext.formComponentGateway.save(mockComponent);
+			mockFormComponent = makeMockFormComponent(true, 
+					QuestionMocker.makeMockAgeQuestion(), Answer.NONE);
+			FormFillerContext.formComponentGateway.save(mockFormComponent);
 		}
 
 		@Test
@@ -91,6 +92,13 @@ public class NavigationValidatorTest {
 		@Test
 		public void movingForwardIsIllegal() {
 			assertThat_DirectionalMoveIsIllegal(Direction.FORWARD);
+		}
+		
+		@Test
+		public void whenAnswerIsPresent_movingForwardIsLegal() {
+			mockFormComponent.answer = AnswerMocker.makeMockAnswer(0, 65);
+
+			assertThat_DirectionalMoveIsLegal(Direction.FORWARD);
 		}
 	}
 }

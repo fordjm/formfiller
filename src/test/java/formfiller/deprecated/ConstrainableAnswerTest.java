@@ -1,11 +1,11 @@
-package formfiller.entities;
+package formfiller.deprecated;
 
 import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
 
-public class AnswerTest {
+public class ConstrainableAnswerTest {
 	
 	public abstract static class GivenAnAnswer{
 		int id;

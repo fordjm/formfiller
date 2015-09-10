@@ -14,7 +14,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
-import formfiller.entities.ConstrainableAnswer;
 import formfiller.entities.Question;
 import formfiller.enums.Cardinality;
 import formfiller.utilities.ConstrainableAnswerMocker;

@@ -14,7 +14,6 @@ import de.bechte.junit.runners.context.HierarchicalContextRunner;
 import formfiller.deprecated.ClearWidget;
 import formfiller.deprecated.FormWidget;
 import formfiller.deprecated.Transaction;
-import formfiller.entities.ConstrainableAnswer;
 import formfiller.entities.Constraint;
 import formfiller.entities.NullQuestions;
 import formfiller.entities.Question;

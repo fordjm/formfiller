@@ -1,4 +1,4 @@
-package formfiller.entities;
+package formfiller.entities.constrainable;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
@@ -8,16 +8,18 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
+import formfiller.entities.constrainable.ValueBoundary;
+import formfiller.entities.constrainable.ValueOverBoundary;
+import formfiller.entities.constrainable.ValueUnderBoundary;
 
-//	TODO:	Pull out equals case into ValueMatches constraint.  Use OR of constraints.
 @RunWith(HierarchicalContextRunner.class)
 public class ValueBoundaryTest {
 	private ValueBoundary valueBoundary;
 	
-	public class ValueMaximumContext {		
+	public class ValueUnderBoundaryContext {		
 		@Before
 		public void setUp() {
-			valueBoundary = new ValueMaximum("max");
+			valueBoundary = new ValueUnderBoundary("max");
 		}
 		
 		@Test
@@ -31,8 +33,8 @@ public class ValueBoundaryTest {
 		}	
 		
 		@Test
-		public void equalValue_SatisfiesConstraint() {
-			assertThat(valueBoundary.isSatisfiedBy("max"), is(true));
+		public void equalValue_DoesNotSatisfyConstraint() {
+			assertThat(valueBoundary.isSatisfiedBy("max"), is(false));
 		}	
 		
 		@Test
@@ -41,10 +43,10 @@ public class ValueBoundaryTest {
 		}
 	}
 	
-	public class ValueMinimumContext {		
+	public class ValueOverBoundaryContext {		
 		@Before
 		public void setUp() {
-			valueBoundary = new ValueMinimum("min");
+			valueBoundary = new ValueOverBoundary("min");
 		}
 		
 		@Test
@@ -58,8 +60,8 @@ public class ValueBoundaryTest {
 		}
 		
 		@Test
-		public void equalValue_SatisfiesConstraint() {
-			assertThat(valueBoundary.isSatisfiedBy("min"), is(true));
+		public void equalValue_DoesNotSatisfyConstraint() {
+			assertThat(valueBoundary.isSatisfiedBy("min"), is(false));
 		}	
 		
 		@Test

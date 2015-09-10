@@ -10,6 +10,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
+import formfiller.deprecated.ConstrainableAnswer;
 import formfiller.enums.ContentConstraint;
 import formfiller.utilities.ConstrainableAnswerMocker;
 

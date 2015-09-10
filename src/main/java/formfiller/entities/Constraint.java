@@ -1,5 +1,6 @@
 package formfiller.entities;
 
+import formfiller.deprecated.ConstrainableAnswer;
 import formfiller.enums.ContentConstraint;
 
 public abstract class Constraint extends ConstrainableAnswer {
