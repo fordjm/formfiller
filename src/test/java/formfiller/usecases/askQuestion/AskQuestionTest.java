@@ -4,23 +4,23 @@ import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
 import formfiller.FormFillerContext;
-import formfiller.entities.Answer;
-import formfiller.entities.Question;
-import formfiller.entities.formComponent.FormComponent;
-import formfiller.entities.formComponent.NullFormComponents;
+import formfiller.entities.*;
+import formfiller.entities.formComponent.*;
+import formfiller.entities.format.*;
 import formfiller.enums.WhichQuestion;
 import formfiller.request.models.AskQuestionRequest;
 import formfiller.usecases.askQuestion.AskQuestionUseCase;
 import formfiller.usecases.undoable.UndoableUseCase;
-import formfiller.utilities.FormComponentMocker;
-import formfiller.utilities.QuestionMocker;
-import formfiller.utilities.TestSetup;
+import formfiller.utilities.*;
 
 @RunWith(HierarchicalContextRunner.class)
 public class AskQuestionTest {	
@@ -138,10 +138,10 @@ public class AskQuestionTest {
 		Question mockQuestion;
 
 		private FormComponent makeMockFormComponent(String id, String content, 
-				boolean requiresAnswer) {
+				boolean requiresAnswer, AnswerFormat answerFormat) {
 			Question mockQuestion = makeMockQuestion(id, content);
 			FormComponent result = makeMockFormComponent(requiresAnswer, 
-					mockQuestion);
+					mockQuestion, answerFormat);
 			return result;
 		}
 
@@ -150,9 +150,9 @@ public class AskQuestionTest {
 		}
 		
 		private FormComponent makeMockFormComponent(boolean requiresAnswer, 
-				Question question){
+				Question question, AnswerFormat answerFormat){
 			return FormComponentMocker.makeMockFormComponent(requiresAnswer, 
-					question, Answer.NONE);
+					question, Answer.NONE, answerFormat);
 		}
 
 		private void saveFormComponents(FormComponent... formComponents) {
@@ -165,13 +165,25 @@ public class AskQuestionTest {
 			executeAskQuestionRequest(request);
 			undoAskQuestionUseCase();
 		}	
+
+		private OptionVariableFormat makeOptionVariableFormat() {
+			OptionVariableFormat result = new OptionVariableFormat();
+			result.options = makeLegalAgeOptions();
+			return result;
+		}
+		
+		private List<Object> makeLegalAgeOptions(){
+			Object[] options = new Integer[] { 18, 35, 49, 64 };
+			return Arrays.asList(options);
+		}
+		//	This seems like a lot of private methods.
 		
 		@Before
 		public void givenTwoFormComponents(){
 			mockNameFormComponent = makeMockFormComponent("name", 
-					"What is your name?", false);
+					"What is your name?", false, AnswerFormat.UNSTRUCTURED);
 			mockAgeFormComponent = makeMockFormComponent("age", 
-					"What is your age?", true);
+					"What is your age?", true, makeOptionVariableFormat());
 			saveFormComponents(mockNameFormComponent, mockAgeFormComponent);
 		}
 		
@@ -181,6 +193,9 @@ public class AskQuestionTest {
 			
 			assertThat(currentComponent.id, is("name"));
 			assertThat(currentComponent.requiresAnswer, is(false));
+			assertThat(currentComponent.format, is(AnswerFormat.UNSTRUCTURED));
+			//	TODO:	Move below into UnstructuredFormat when it has its own class.
+			assertThat(currentComponent.format.matchesContent("myName"), is(true));
 		}
 		
 		@Test
@@ -239,9 +254,15 @@ public class AskQuestionTest {
 			@Test
 			public void gettingCurrent_ReturnsMockAgeFormComponent(){
 				FormComponent currentComponent = getCurrentFormComponent();
+				OptionVariableFormat castFormat = 
+						(OptionVariableFormat) currentComponent.format;
+				List<Object> options = castFormat.options;
 				
 				assertThat(currentComponent.id, is("age"));
 				assertThat(currentComponent.requiresAnswer, is(true));
+				assertThat(currentComponent.format, 
+						is(instanceOf(OptionVariableFormat.class)));
+				assertThat(options, is(makeLegalAgeOptions()));
 			}
 			
 			@Test			

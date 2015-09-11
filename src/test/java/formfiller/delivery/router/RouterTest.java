@@ -12,6 +12,7 @@ import formfiller.utilities.*;
 //Adapted from:
 //https://github.com/cleancoders/CleanCodeCaseStudy/blob/master/test/cleancoderscom/http/RouterTest.java
 //Retrieved 2015-08-14
+
 @RunWith(HierarchicalContextRunner.class)
 public class RouterTest {
 	Router router;
@@ -24,7 +25,7 @@ public class RouterTest {
 	
 	@Before
 	public void setUp() {
-		router = Router.makeRouter();
+		router = PlaceholderRouterFactory.makeRouter();
 	}
 	
 	@Test

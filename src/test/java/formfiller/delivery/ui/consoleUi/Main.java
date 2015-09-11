@@ -3,6 +3,8 @@ package formfiller.delivery.ui.consoleUi;
 import formfiller.delivery.EventSource;
 import formfiller.delivery.event.ConsoleEventSource;
 import formfiller.delivery.event.EventHandler;
+import formfiller.delivery.router.PlaceholderRouterFactory;
+import formfiller.delivery.router.Router;
 import formfiller.utilities.TestSetup;
 
 public class Main {
@@ -18,11 +20,12 @@ public class Main {
 	}
 	
 	private static void handleStartEvent() {
-		eventHandler.update(eventSource, "askquestion current");
+		eventHandler.update(eventSource, "AskQuestion current");
 	}
 	
 	private static void setupClassVariables() {
-		eventHandler = new EventHandler();
+		Router router = PlaceholderRouterFactory.makeRouter();
+		eventHandler = new EventHandler(router);
 		eventSource = new ConsoleEventSource();
 		eventSource.addObserver(eventHandler);
 	}

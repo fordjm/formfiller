@@ -10,10 +10,10 @@ import de.bechte.junit.runners.context.HierarchicalContextRunner;
 import formfiller.entities.Constraint;
 import formfiller.entities.NoConstraint;
 import formfiller.entities.Question;
+import formfiller.entities.constrainable.AnswerType;
 import formfiller.deprecated.AddAnswer;
 import formfiller.deprecated.FormWidget;
 import formfiller.deprecated.Transaction;
-import formfiller.entities.AnswerType;
 import formfiller.utilities.*;
 
 @RunWith(HierarchicalContextRunner.class)
@@ -140,21 +140,6 @@ public class AddAnswerTest<T> {
 			void addConstraints(Constraint... constraints){
 				for (Constraint constraint : constraints)
 					FormWidget.addConstraint(constraint);
-			}
-			
-			public class GivenTwoConstraintsWhereOneIsUnsatisfied{
-				Constraint noConstraint = new NoConstraint();
-				Constraint answerType = new AnswerType(Double.class);
-				
-				@Before
-				public void givenTwoConstraintsWhereOneIsUnsatisfied(){
-					addConstraints(noConstraint, answerType);
-				}
-				
-				@Test(expected = IllegalArgumentException.class)
-				public void whenAddAnswerRuns_ThenItThrowsAnException(){
-					addAnswer.execute();
-				}
 			}
 		}
 	}

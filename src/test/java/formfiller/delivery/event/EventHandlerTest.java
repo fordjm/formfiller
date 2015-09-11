@@ -9,6 +9,8 @@ import org.mockito.Mockito;
 
 import formfiller.FormFillerContext;
 import formfiller.delivery.EventSource;
+import formfiller.delivery.router.PlaceholderRouterFactory;
+import formfiller.delivery.router.Router;
 import formfiller.entities.formComponent.FormComponent;
 import formfiller.entities.formComponent.NullFormComponents;
 import formfiller.utilities.TestSetup;
@@ -28,7 +30,8 @@ public class EventHandlerTest {
 	@Before
 	public void setUp() {
 		TestSetup.setupContext();
-		eventHandler = new EventHandler();
+		Router router = PlaceholderRouterFactory.makeRouter();
+		eventHandler = new EventHandler(router);
 		mockEventSource = Mockito.mock(EventSource.class);
 	}
 	

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import formfiller.entities.Answer;
-import formfiller.entities.Constrainable;
+import formfiller.entities.constrainable.Constrainable;
 
 public class AnswerValidator {
 	Collection<Constrainable> constraints;

@@ -8,7 +8,7 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import formfiller.entities.Answer;
-import formfiller.entities.Constrainable;
+import formfiller.entities.constrainable.Constrainable;
 import formfiller.utilities.AnswerMocker;
 
 public class AnswerValidatorTest {

@@ -3,7 +3,6 @@ package formfiller.deprecated;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import java.lang.reflect.Type;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -13,12 +12,10 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
-import formfiller.deprecated.AddAnswerType;
 import formfiller.deprecated.AddNoConstraint;
 import formfiller.deprecated.AddSelectionConstraint;
 import formfiller.deprecated.FormWidget;
 import formfiller.deprecated.Transaction;
-import formfiller.entities.AnswerType;
 import formfiller.entities.Constraint;
 import formfiller.entities.NoConstraint;
 import formfiller.entities.SelectionConstraint;
@@ -71,26 +68,6 @@ public class AddConstraintTest {
 			SelectionConstraint selectionFormat = (SelectionConstraint) constraint;
 			assertTrue(constraint instanceof SelectionConstraint);
 			assertEquals(selections, selectionFormat.getSelections());
-		}
-	}
-	
-	public class AnswerTypeContext<T>{
-		Type type;
-		
-		@Before
-		public void givenAnAnswerType(){
-			type = String.class;
-			addConstraint = new AddAnswerType(type);
-		}
-		
-		@Test
-		public void whenAddConstraintExecutes_ThenFormWidgetHasAConstraint(){
-			addConstraint.execute();		
-			setConstraintsMap();
-			setConstraint(ContentConstraint.TYPE);
-			AnswerType answerType = (AnswerType) constraint;
-			assertTrue(constraint instanceof AnswerType);
-			assertEquals(type, answerType.getType());
 		}
 	}
 }

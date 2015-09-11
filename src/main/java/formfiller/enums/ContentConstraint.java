@@ -5,6 +5,6 @@ public enum ContentConstraint {
 	MOCK,
 	SELECTION,
 	TYPE,
-	VALUE_MAXIMUM,
-	VALUE_MINIMUM;
+	VALUE_UNDER,
+	VALUE_OVER;
 }

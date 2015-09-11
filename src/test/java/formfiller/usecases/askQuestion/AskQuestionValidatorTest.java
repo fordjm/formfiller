@@ -12,6 +12,7 @@ import formfiller.FormFillerContext;
 import formfiller.entities.Answer;
 import formfiller.entities.Question;
 import formfiller.entities.formComponent.FormComponent;
+import formfiller.entities.format.AnswerFormat;
 import formfiller.enums.WhichQuestion;
 import formfiller.usecases.askQuestion.AskQuestionValidator;
 import formfiller.utilities.AnswerMocker;
@@ -26,15 +27,15 @@ public class AskQuestionValidatorTest {
 	private FormComponent makeMockFormComponent(boolean requiresAnswer, 
 			Question mockQuestion, Answer mockAnswer) {
 		return FormComponentMocker.makeMockFormComponent(
-				requiresAnswer, mockQuestion, mockAnswer);
+				requiresAnswer, mockQuestion, mockAnswer, AnswerFormat.UNSTRUCTURED);
 	}
 	
-	private void assertThat_AskQuestionIsLegal(WhichQuestion direction) {
-		assertThat(AskQuestionValidator.isValidQuestion(direction), is(true));
+	private void assertThat_AskQuestionIsLegal(WhichQuestion which) {
+		assertThat(AskQuestionValidator.isValidQuestion(which), is(true));
 	}
 	
-	private void assertThat_DirectionalMoveIsIllegal(WhichQuestion direction) {
-		assertThat(AskQuestionValidator.isValidQuestion(direction), is(false));
+	private void assertThat_DirectionalMoveIsIllegal(WhichQuestion which) {
+		assertThat(AskQuestionValidator.isValidQuestion(which), is(false));
 	}
 
 	@Before
@@ -72,7 +73,9 @@ public class AskQuestionValidatorTest {
 		}
 	}
 	
-	public class GivenAnswerIsRequired {		
+	public class GivenAnswerIsRequired {
+		private final int RETIREMENT_AGE = 65;
+		
 		@Before
 		public void givenAnswerIsRequired(){
 			mockFormComponent = makeMockFormComponent(true, 
@@ -97,7 +100,7 @@ public class AskQuestionValidatorTest {
 		
 		@Test
 		public void whenAnswerIsPresent_movingForwardIsLegal() {
-			mockFormComponent.answer = AnswerMocker.makeMockAnswer(0, 65);
+			mockFormComponent.answer = AnswerMocker.makeMockAnswer(0, RETIREMENT_AGE);
 
 			assertThat_AskQuestionIsLegal(WhichQuestion.NEXT);
 		}

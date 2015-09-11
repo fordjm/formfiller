@@ -12,6 +12,7 @@ import formfiller.FormFillerContext;
 import formfiller.entities.Answer;
 import formfiller.entities.Question;
 import formfiller.entities.formComponent.FormComponent;
+import formfiller.entities.format.AnswerFormat;
 import formfiller.enums.WhichQuestion;
 import formfiller.utilities.FormComponentMocker;
 import formfiller.utilities.QuestionMocker;
@@ -91,7 +92,7 @@ public class InMemoryTransporterTest {
 		
 		private FormComponent makeMockFormComponent(Question question){
 			return FormComponentMocker.makeMockFormComponent(false, 
-					question, Answer.NONE);
+					question, Answer.NONE, AnswerFormat.UNSTRUCTURED);
 		}
 		
 		@Before

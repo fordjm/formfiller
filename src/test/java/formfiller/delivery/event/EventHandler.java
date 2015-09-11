@@ -8,13 +8,17 @@ import formfiller.delivery.router.Router;
 
 public class EventHandler implements Observer {
 	EventParser eventParser = new StringEventParser();
-	Router router = Router.makeRouter();
+	Router router;
+
+	public EventHandler(Router router) {
+		this.router = router;
+	}
 
 	public void update(Observable o, Object input) {
 		if (input == null) input = "";
 		
 		String event = (String) input;
-		handleEvent(event);
+		handleEvent(event.toLowerCase());
 	}
 	
 	private void handleEvent(String event){
