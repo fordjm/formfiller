@@ -9,6 +9,6 @@ public class NoConstraint extends Constraint {
 	}
 
 	public boolean isConstraintSatisfied() {
-		return answer.isSatisfiedBy(null);
+		return answer.isSatisfied();
 	}
 }

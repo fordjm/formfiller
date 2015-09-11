@@ -45,6 +45,7 @@ public class StringEventParserTest {
 		assertEquals("", parsedEvent.param);
 	}
 	
+	//	TODO:	Update.  This command was replaced.
 	@Test
 	public void canParsePresentQuestionCommand() {		
 		setParsedEvent("presentQuestion");
@@ -74,16 +75,16 @@ public class StringEventParserTest {
 	}
 	
 	@Test
-	public void canParseNavigationCommand() {
-		setParsedEvent("navigation -1");
-		assertEquals("navigation", parsedEvent.method);
-		assertEquals("-1", parsedEvent.param);
+	public void canParseAskQuestionCommand() {
+		setParsedEvent("askQuestion prev");
+		assertEquals("askQuestion", parsedEvent.method);
+		assertEquals("prev", parsedEvent.param);
 	}
 	
 	@Test
-	public void canParseNavigationCommandWithExtraSpaces() {
-		setParsedEvent("    navigation  -1  ");
-		assertEquals("navigation", parsedEvent.method);
-		assertEquals("-1", parsedEvent.param);
+	public void canParseAskQuestionCommandWithExtraSpaces() {
+		setParsedEvent("    askQuestion  prev  ");
+		assertEquals("askQuestion", parsedEvent.method);
+		assertEquals("prev", parsedEvent.param);
 	}
 }

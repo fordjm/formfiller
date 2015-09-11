@@ -1,4 +1,4 @@
-package formfiller.usecases.navigation;
+package formfiller.usecases.askQuestion;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
@@ -12,14 +12,15 @@ import formfiller.FormFillerContext;
 import formfiller.entities.Answer;
 import formfiller.entities.Question;
 import formfiller.entities.formComponent.FormComponent;
-import formfiller.enums.Direction;
+import formfiller.enums.WhichQuestion;
+import formfiller.usecases.askQuestion.AskQuestionValidator;
 import formfiller.utilities.AnswerMocker;
 import formfiller.utilities.FormComponentMocker;
 import formfiller.utilities.QuestionMocker;
 import formfiller.utilities.TestSetup;
 
 @RunWith(HierarchicalContextRunner.class)
-public class NavigationValidatorTest {
+public class AskQuestionValidatorTest {
 	private FormComponent mockFormComponent;
 
 	private FormComponent makeMockFormComponent(boolean requiresAnswer, 
@@ -28,12 +29,12 @@ public class NavigationValidatorTest {
 				requiresAnswer, mockQuestion, mockAnswer);
 	}
 	
-	private void assertThat_DirectionalMoveIsLegal(Direction direction) {
-		assertThat(NavigationValidator.isValidDirectionalMove(direction), is(true));
+	private void assertThat_AskQuestionIsLegal(WhichQuestion direction) {
+		assertThat(AskQuestionValidator.isValidQuestion(direction), is(true));
 	}
 	
-	private void assertThat_DirectionalMoveIsIllegal(Direction direction) {
-		assertThat(NavigationValidator.isValidDirectionalMove(direction), is(false));
+	private void assertThat_DirectionalMoveIsIllegal(WhichQuestion direction) {
+		assertThat(AskQuestionValidator.isValidQuestion(direction), is(false));
 	}
 
 	@Before
@@ -43,17 +44,17 @@ public class NavigationValidatorTest {
 
 	@Test
 	public void movingBackwardIsLegal() {
-		assertThat_DirectionalMoveIsLegal(Direction.BACKWARD);
+		assertThat_AskQuestionIsLegal(WhichQuestion.PREV);
 	}
 
 	@Test
 	public void movingNowhereIsLegal() {
-		assertThat_DirectionalMoveIsLegal(Direction.NONE);
+		assertThat_AskQuestionIsLegal(WhichQuestion.CURRENT);
 	}
 
 	@Test
 	public void movingForwardIsLegal() {
-		assertThat_DirectionalMoveIsLegal(Direction.FORWARD);
+		assertThat_AskQuestionIsLegal(WhichQuestion.NEXT);
 	}
 	
 	public class GivenAnswerIsNotRequired {
@@ -67,7 +68,7 @@ public class NavigationValidatorTest {
 		
 		@Test
 		public void movingForwardIsLegal() {
-			assertThat_DirectionalMoveIsLegal(Direction.FORWARD);
+			assertThat_AskQuestionIsLegal(WhichQuestion.NEXT);
 		}
 	}
 	
@@ -81,24 +82,24 @@ public class NavigationValidatorTest {
 
 		@Test
 		public void movingBackwardIsLegal() {
-			assertThat_DirectionalMoveIsLegal(Direction.BACKWARD);
+			assertThat_AskQuestionIsLegal(WhichQuestion.PREV);
 		}
 
 		@Test
 		public void movingNowhereIsLegal() {
-			assertThat_DirectionalMoveIsLegal(Direction.NONE);
+			assertThat_AskQuestionIsLegal(WhichQuestion.CURRENT);
 		}
 
 		@Test
 		public void movingForwardIsIllegal() {
-			assertThat_DirectionalMoveIsIllegal(Direction.FORWARD);
+			assertThat_DirectionalMoveIsIllegal(WhichQuestion.NEXT);
 		}
 		
 		@Test
 		public void whenAnswerIsPresent_movingForwardIsLegal() {
 			mockFormComponent.answer = AnswerMocker.makeMockAnswer(0, 65);
 
-			assertThat_DirectionalMoveIsLegal(Direction.FORWARD);
+			assertThat_AskQuestionIsLegal(WhichQuestion.NEXT);
 		}
 	}
 }

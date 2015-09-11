@@ -1,4 +1,4 @@
-package formfiller.usecases.navigation;
+package formfiller.usecases.askQuestion;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
@@ -14,39 +14,40 @@ import formfiller.entities.Answer;
 import formfiller.entities.Question;
 import formfiller.entities.formComponent.FormComponent;
 import formfiller.entities.formComponent.NullFormComponents;
-import formfiller.enums.Direction;
-import formfiller.request.models.NavigationRequest;
+import formfiller.enums.WhichQuestion;
+import formfiller.request.models.AskQuestionRequest;
+import formfiller.usecases.askQuestion.AskQuestionUseCase;
 import formfiller.usecases.undoable.UndoableUseCase;
 import formfiller.utilities.FormComponentMocker;
 import formfiller.utilities.QuestionMocker;
 import formfiller.utilities.TestSetup;
 
 @RunWith(HierarchicalContextRunner.class)
-public class NavigationTest {	
-	private NavigationUseCase navigationUseCase;
-	private NavigationRequest mockRequest;
+public class AskQuestionTest {	
+	private AskQuestionUseCase askQuestionUseCase;
+	private AskQuestionRequest mockRequest;
 	private FormComponent expectedFormComponent;
 
-	private void setupNavigationTest(Direction direction, 
+	private void setupAskQuestionTest(WhichQuestion which, 
 			FormComponent formComponent) {
-		setMockRequestDirection(direction);
+		setMockRequestQuestion(which);
 		setExpectedFormComponent(formComponent);
 	}
 	
-	private void setMockRequestDirection(Direction direction){
-		mockRequest.direction = direction;
+	private void setMockRequestQuestion(WhichQuestion which){
+		mockRequest.which = which;
 	}
 	
 	private void setExpectedFormComponent(FormComponent expected) {
 		expectedFormComponent = expected;
 	}
 
-	private void undoNavigationUseCase() {
-		navigationUseCase.undo();
+	private void undoAskQuestionUseCase() {
+		askQuestionUseCase.undo();
 	}
 
-	private void executeNavigationRequest(NavigationRequest request) {
-		navigationUseCase.execute(request);
+	private void executeAskQuestionRequest(AskQuestionRequest request) {
+		askQuestionUseCase.execute(request);
 	}
 
 	private void assertThat_CurrentAndExpectedComponents_AreTheSame() {
@@ -58,7 +59,7 @@ public class NavigationTest {
 	}
 
 	private void assertThat_ExecutedUseCase_IsMostRecent() {
-		assertEquals(navigationUseCase, checkMostRecent());
+		assertEquals(askQuestionUseCase, checkMostRecent());
 	}
 
 	private UndoableUseCase checkMostRecent() {
@@ -66,19 +67,19 @@ public class NavigationTest {
 	}
 
 	private void assertThat_ExecutedUseCase_IsNotMostRecent() {
-		assertNotEquals(navigationUseCase, checkMostRecent());
+		assertNotEquals(askQuestionUseCase, checkMostRecent());
 	}	
 	
 	@Before
 	public void setUp(){
 		TestSetup.setupContext();
-		navigationUseCase = new NavigationUseCase();
-		mockRequest = mock(NavigationRequest.class);		
+		askQuestionUseCase = new AskQuestionUseCase();
+		mockRequest = mock(AskQuestionRequest.class);		
 	}
 	
 	@Test
 	public void isAnUndoableUseCase() {
-		assertThat(navigationUseCase, is(instanceOf(UndoableUseCase.class)));
+		assertThat(askQuestionUseCase, is(instanceOf(UndoableUseCase.class)));
 	}
 	
 	//	TODO:	Make the Undo use case.
@@ -86,7 +87,7 @@ public class NavigationTest {
 	public void undoBeforeExecutionDoesNotChangeCurrentFormComponent() {
 		setExpectedFormComponent(getCurrentFormComponent());
 		
-		undoNavigationUseCase();
+		undoAskQuestionUseCase();
 		
 		assertThat_CurrentAndExpectedComponents_AreTheSame();
 	}
@@ -95,7 +96,7 @@ public class NavigationTest {
 	public void executingNullDoesNotChangeCurrentFormComponent() {
 		setExpectedFormComponent(getCurrentFormComponent());
 		
-		executeNavigationRequest(null);
+		executeAskQuestionRequest(null);
 		
 		assertThat_CurrentAndExpectedComponents_AreTheSame();
 		assertThat_ExecutedUseCase_IsNotMostRecent();
@@ -103,9 +104,9 @@ public class NavigationTest {
 	
 	@Test
 	public void gettingPrevQuestionGetsStartPrompt(){
-		setupNavigationTest(Direction.BACKWARD, NullFormComponents.START);
+		setupAskQuestionTest(WhichQuestion.PREV, NullFormComponents.START);
 		
-		executeNavigationRequest(mockRequest);
+		executeAskQuestionRequest(mockRequest);
 		
 		assertThat_CurrentAndExpectedComponents_AreTheSame();
 		assertThat_ExecutedUseCase_IsMostRecent();
@@ -113,9 +114,9 @@ public class NavigationTest {
 	
 	@Test
 	public void gettingCurrentQuestionGetsStartPrompt(){
-		setupNavigationTest(Direction.NONE, getCurrentFormComponent());
+		setupAskQuestionTest(WhichQuestion.CURRENT, getCurrentFormComponent());
 		
-		executeNavigationRequest(mockRequest);
+		executeAskQuestionRequest(mockRequest);
 		
 		assertThat_CurrentAndExpectedComponents_AreTheSame();
 		assertThat_ExecutedUseCase_IsMostRecent();
@@ -123,9 +124,9 @@ public class NavigationTest {
 	
 	@Test
 	public void gettingNextQuestionGetsEndPrompt(){
-		setupNavigationTest(Direction.FORWARD, getCurrentFormComponent());
+		setupAskQuestionTest(WhichQuestion.NEXT, getCurrentFormComponent());
 		
-		executeNavigationRequest(mockRequest);
+		executeAskQuestionRequest(mockRequest);
 		
 		assertThat_CurrentAndExpectedComponents_AreTheSame();
 		assertThat_ExecutedUseCase_IsMostRecent();
@@ -137,9 +138,10 @@ public class NavigationTest {
 		Question mockQuestion;
 
 		private FormComponent makeMockFormComponent(String id, String content, 
-				boolean isRequired) {
+				boolean requiresAnswer) {
 			Question mockQuestion = makeMockQuestion(id, content);
-			FormComponent result = makeMockFormComponent(isRequired, mockQuestion);
+			FormComponent result = makeMockFormComponent(requiresAnswer, 
+					mockQuestion);
 			return result;
 		}
 
@@ -158,9 +160,10 @@ public class NavigationTest {
 				FormFillerContext.formComponentGateway.save(formComponent);
 		}
 
-		private void executeAndUndoNavigationRequest(NavigationRequest navigationRequest) {
-			executeNavigationRequest(navigationRequest);
-			undoNavigationUseCase();
+		private void executeAndUndoAskQuestionRequest(
+				AskQuestionRequest request) {
+			executeAskQuestionRequest(request);
+			undoAskQuestionUseCase();
 		}	
 		
 		@Before
@@ -182,45 +185,45 @@ public class NavigationTest {
 		
 		@Test
 		public void movingBack_OutputsStartComponent(){
-			setupNavigationTest(Direction.BACKWARD, NullFormComponents.START);
+			setupAskQuestionTest(WhichQuestion.PREV, NullFormComponents.START);
 			
-			executeNavigationRequest(mockRequest);
+			executeAskQuestionRequest(mockRequest);
 			
 			assertThat_CurrentAndExpectedComponents_AreTheSame();
 		}
 		
 		@Test
 		public void movingNowhere_OutputsFirstComponent(){
-			setupNavigationTest(Direction.NONE, getCurrentFormComponent());
+			setupAskQuestionTest(WhichQuestion.CURRENT, getCurrentFormComponent());
 			
-			executeNavigationRequest(mockRequest);
+			executeAskQuestionRequest(mockRequest);
 			
 			assertThat_CurrentAndExpectedComponents_AreTheSame();
 		}
 		
 		@Test
-		public void undoAfterMovingNowhereDoesNotChangeCurrentFormComponent() {
-			setupNavigationTest(Direction.NONE, getCurrentFormComponent());
+		public void undoAfterMovingNowhere_DoesNotChangeCurrentFormComponent() {
+			setupAskQuestionTest(WhichQuestion.CURRENT, getCurrentFormComponent());
 			
-			executeAndUndoNavigationRequest(mockRequest);
+			executeAndUndoAskQuestionRequest(mockRequest);
 			
 			assertThat_CurrentAndExpectedComponents_AreTheSame();
 		}
 		
 		@Test
 		public void movingForward_OutputsSecondComponent(){
-			setupNavigationTest(Direction.FORWARD, mockAgeFormComponent);
+			setupAskQuestionTest(WhichQuestion.NEXT, mockAgeFormComponent);
 			
-			executeNavigationRequest(mockRequest);
+			executeAskQuestionRequest(mockRequest);
 			
 			assertThat_CurrentAndExpectedComponents_AreTheSame();
 		}
 		
 		@Test
 		public void undoAfterForwardMove_RevertsCurrentFormComponent() {
-			setupNavigationTest(Direction.FORWARD, getCurrentFormComponent());
+			setupAskQuestionTest(WhichQuestion.NEXT, getCurrentFormComponent());
 
-			executeAndUndoNavigationRequest(mockRequest);
+			executeAndUndoAskQuestionRequest(mockRequest);
 			
 			assertThat_CurrentAndExpectedComponents_AreTheSame();
 		}
@@ -228,9 +231,9 @@ public class NavigationTest {
 		public class GivenTransporterHasMovedForward {
 			
 			@Before
-			public void givenTransporterIsAtFirstComponent(){
-				setMockRequestDirection(Direction.FORWARD);
-				executeNavigationRequest(mockRequest);
+			public void givenTransporterHasMovedForward(){
+				setMockRequestQuestion(WhichQuestion.NEXT);
+				executeAskQuestionRequest(mockRequest);
 			}
 			
 			@Test
@@ -243,36 +246,36 @@ public class NavigationTest {
 			
 			@Test			
 			public void movingBack_OutputsFirstComponent(){
-				setupNavigationTest(Direction.BACKWARD, mockNameFormComponent);
+				setupAskQuestionTest(WhichQuestion.PREV, mockNameFormComponent);
 				
-				executeNavigationRequest(mockRequest);
+				executeAskQuestionRequest(mockRequest);
 				
 				assertThat_CurrentAndExpectedComponents_AreTheSame();
 			}
 			
 			@Test
 			public void undoAfterBackwardMove_RevertsCurrentFormComponent() {
-				setupNavigationTest(Direction.BACKWARD, mockAgeFormComponent);
+				setupAskQuestionTest(WhichQuestion.PREV, mockAgeFormComponent);
 
-				executeAndUndoNavigationRequest(mockRequest);
+				executeAndUndoAskQuestionRequest(mockRequest);
 				
 				assertThat_CurrentAndExpectedComponents_AreTheSame();
 			}
 			
 			@Test
 			public void movingForward_DoesNotChangeComponent(){
-				setupNavigationTest(Direction.FORWARD, getCurrentFormComponent());
+				setupAskQuestionTest(WhichQuestion.NEXT, getCurrentFormComponent());
 				
-				executeNavigationRequest(mockRequest);
+				executeAskQuestionRequest(mockRequest);
 				
 				assertThat_CurrentAndExpectedComponents_AreTheSame();
 			}			
 			
 			@Test
-			public void undoAfterFailedExecutionDoesNotChangeCurrentFormComponent() {
-				setupNavigationTest(Direction.FORWARD, getCurrentFormComponent());
+			public void undoAfterFailedExecution_DoesNotChangeCurrentFormComponent() {
+				setupAskQuestionTest(WhichQuestion.NEXT, getCurrentFormComponent());
 
-				executeAndUndoNavigationRequest(mockRequest);
+				executeAndUndoAskQuestionRequest(mockRequest);
 				
 				assertThat_CurrentAndExpectedComponents_AreTheSame();
 			}	

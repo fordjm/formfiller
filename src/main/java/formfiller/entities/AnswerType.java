@@ -19,7 +19,7 @@ public class AnswerType extends Constraint {
 	protected boolean isConstraintSatisfied() {
 		return responseTypeMatchesGivenType(
 				answer.getContent(), type) && 
-				answer.isSatisfiedBy(null);
+				answer.isSatisfied();
 	}
 	
 	private boolean responseTypeMatchesGivenType(

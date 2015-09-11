@@ -37,7 +37,8 @@ public class FormComponentPresenterTest {
 		presenter.present(null);
 		
 		PresentableResponse currentResponse = presenter.getPresentableResponse();
-		PresentableFormComponent castResponse = (PresentableFormComponent) currentResponse;
+		PresentableFormComponent castResponse = 
+				(PresentableFormComponent) currentResponse;
 		
 		assertThat(currentResponse, is(instanceOf(PresentableFormComponent.class)));
 		assertThat(castResponse.question.message, is(""));
@@ -52,13 +53,15 @@ public class FormComponentPresenterTest {
 		}
 		
 		@Test
-		public void gettingPresentableResponse_ReturnsGivenPresentableNavigation(){
+		public void gettingPresentableResponse_ReturnsGivenPresentableFormComponent(){
 			presenter.present(presentableFormComponent);
 			
-			PresentableResponse presentableResponse = presenter.getPresentableResponse();
+			PresentableResponse presentableResponse = 
+					presenter.getPresentableResponse();
 			
 			assertThat(presentableResponse, is(presentableFormComponent));
-			assertThat(presentableResponse, is(instanceOf(PresentableFormComponent.class)));
+			assertThat(presentableResponse, 
+					is(instanceOf(PresentableFormComponent.class)));
 		}
 	}
 }

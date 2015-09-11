@@ -14,11 +14,12 @@ import formfiller.gateways.FormComponentGateway;
 import formfiller.gateways.InMemoryFormComponentGateway;
 import formfiller.utilities.*;
 
-public class NavigationControllerTest {
-	private NavigationController navigationController;
+public class AskQuestionControllerTest {
+	private AskQuestionController askQuestionController;
 	private ParsedEvent mockParsedUserRequest;
 	private FormComponent formComponentFoundAtIndex;
 
+	//	TODO:	Break index dependency and remove below 3 functions
 	private void updateFormComponentFoundAtIndex(int index) {
 		formComponentFoundAtIndex = findFormComponentByIndex(index);
 	}
@@ -53,16 +54,16 @@ public class NavigationControllerTest {
 	public void setupTest(){
 		TestSetup.setupContext();
 		getFormComponentGatewayFromContext().save(makeMockNameFormComponent());
-		navigationController = new NavigationController();
+		askQuestionController = new AskQuestionController();
 	}
 
 	@Test
 	public void movingBackward_ReturnsStartComponent() {
 		updateFormComponentFoundAtIndex(-1);
 		mockParsedUserRequest = 
-				ParsedEventMocker.makeMockParsedEvent("navigation", "backward");
+				ParsedEventMocker.makeMockParsedEvent("askQuestion", "backward");
 		
-		navigationController.handle(mockParsedUserRequest);
+		askQuestionController.handle(mockParsedUserRequest);
 		
 		assertThat(getCurrentFormComponent(), is(formComponentFoundAtIndex));
 		assertThat(getCurrentFormComponent().id, is("start"));
@@ -72,9 +73,9 @@ public class NavigationControllerTest {
 	public void requestingCurrentQuestionReturnsStartPrompt() {
 		updateFormComponentFoundAtIndex(0);
 		mockParsedUserRequest = 
-				ParsedEventMocker.makeMockParsedEvent("navigation", "none");
+				ParsedEventMocker.makeMockParsedEvent("askQuestion", "none");
 		
-		navigationController.handle(mockParsedUserRequest);
+		askQuestionController.handle(mockParsedUserRequest);
 		
 		assertThat(getCurrentFormComponent(), is(formComponentFoundAtIndex));
 		assertThat(getCurrentFormComponent().id, is("name"));
@@ -84,9 +85,9 @@ public class NavigationControllerTest {
 	public void requestingNextQuestionReturnsGivenQuestion() {
 		updateFormComponentFoundAtIndex(1);
 		mockParsedUserRequest = 
-				ParsedEventMocker.makeMockParsedEvent("navigation", "forward");
+				ParsedEventMocker.makeMockParsedEvent("askQuestion", "forward");
 		
-		navigationController.handle(mockParsedUserRequest);
+		askQuestionController.handle(mockParsedUserRequest);
 		
 		assertThat(getCurrentFormComponent(), is(formComponentFoundAtIndex));
 		assertThat(getCurrentFormComponent().id, is("end"));

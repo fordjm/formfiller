@@ -1,11 +1,11 @@
 package formfiller.gateways;
 
 import formfiller.FormFillerContext;
-import formfiller.enums.Direction;
+import formfiller.enums.WhichQuestion;
 
 public class InMemoryTransporter implements Transporter {
 	
-	public void moveInDirection(Direction direction){
+	public void moveToElement(WhichQuestion direction){
 		if (!moveChangesPosition(direction)) 
 			return;
 		
@@ -16,13 +16,13 @@ public class InMemoryTransporter implements Transporter {
 		return FormFillerContext.formComponentState;
 	}
 
-	private static boolean moveChangesPosition(Direction direction) {
-		if (direction == Direction.NONE) 
+	private static boolean moveChangesPosition(WhichQuestion direction) {
+		if (direction == WhichQuestion.CURRENT) 
 			return false;
-		else if (direction == Direction.BACKWARD && 
+		else if (direction == WhichQuestion.PREV && 
 				getCurrentState().isAtStart())
 			return false;
-		else if (direction == Direction.FORWARD && 
+		else if (direction == WhichQuestion.NEXT && 
 				getCurrentState().isAtEnd())
 			return false;
 		else

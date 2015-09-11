@@ -1,4 +1,4 @@
-package formfiller.usecases.navigation;
+package formfiller.usecases.askQuestion;
 
 import formfiller.FormFillerContext;
 import formfiller.appBoundaries.Presenter;
@@ -6,27 +6,26 @@ import formfiller.entities.Answer;
 import formfiller.entities.Question;
 import formfiller.entities.formComponent.FormComponent;
 import formfiller.enums.Outcome;
-import formfiller.enums.Direction;
+import formfiller.enums.WhichQuestion;
 import formfiller.gateways.InMemoryTransporter;
 import formfiller.request.models.*;
 import formfiller.response.models.*;
 import formfiller.usecases.undoable.UndoableUseCase;
 import formfiller.utilities.PresenterSelector;
 
-//	TODO:	MoveInDirectionUseCase?  MoveUseCase?
-public class NavigationUseCase implements UndoableUseCase {
-	private Direction direction = Direction.NONE;
+public class AskQuestionUseCase implements UndoableUseCase {
+	private WhichQuestion whichQuestion = WhichQuestion.CURRENT;
 	private Outcome outcome = Outcome.NEUTRAL;
 
 	public void execute(Request request) {		
 		if (request == null) return;
 
-		NavigationRequest navigationRequest = (NavigationRequest) request;
-		direction = navigationRequest.direction;
+		AskQuestionRequest askQuestionRequest = (AskQuestionRequest) request;
+		whichQuestion = askQuestionRequest.which;
 
-		if (NavigationValidator.isValidDirectionalMove(direction)) {
+		if (AskQuestionValidator.isValidQuestion(whichQuestion)) {
 			setOutcome(Outcome.POSITIVE);
-			executeMoveInDirection(direction);
+			executeAskQuestion(whichQuestion);
 		} else 
 			setOutcome(Outcome.NEGATIVE);
 
@@ -49,8 +48,8 @@ public class NavigationUseCase implements UndoableUseCase {
 				+ "The current question requires an answer.";
 	}
 
-	private void executeMoveInDirection(Direction direction) {
-		new InMemoryTransporter().moveInDirection(direction);
+	private void executeAskQuestion(WhichQuestion which) {
+		new InMemoryTransporter().moveToElement(which);
 	}
 
 	private void presentResponse(PresentableResponse presentableResponse) {
@@ -59,7 +58,7 @@ public class NavigationUseCase implements UndoableUseCase {
 		presenter.present(presentableResponse);
 	}	
 
-	//	TODO:	Navigation should know nothing about PresentableResponses.
+	//	TODO:	AskQuestion should know nothing about PresentableResponses.
 	//			Make a factory.	
 	private PresentableResponse makePresentableResponse() {
 		PresentableResponse result = new PresentableResponse();
@@ -98,20 +97,20 @@ public class NavigationUseCase implements UndoableUseCase {
 
 	public void undo() {
 		if (!succeeded()) return;
-		Direction direction = getUndoDirection();
-		executeMoveInDirection(direction);
+		WhichQuestion which = getUndoWhichQuestion();
+		executeAskQuestion(which);
 	}
 	
 	private boolean succeeded(){
 		return outcome == Outcome.POSITIVE;
 	}
 
-	private Direction getUndoDirection() {
-		if (direction == Direction.NONE)
-			return direction;
-		else if (direction == Direction.FORWARD)
-			return Direction.BACKWARD;
+	private WhichQuestion getUndoWhichQuestion() {
+		if (whichQuestion == WhichQuestion.CURRENT)
+			return whichQuestion;
+		else if (whichQuestion == WhichQuestion.NEXT)
+			return WhichQuestion.PREV;
 		else
-			return Direction.FORWARD;
+			return WhichQuestion.NEXT;
 	}
 }

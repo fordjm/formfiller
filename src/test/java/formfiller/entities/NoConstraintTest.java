@@ -19,7 +19,7 @@ public class NoConstraintTest {
 	public <T> void assertResponseDataIsConsistent(int responseId, T responseContent, boolean satisfiesConstraint){
 		assertSame(responseId, noConstraint.getId());
 		assertSame(responseContent, noConstraint.getContent());
-		assertSame(satisfiesConstraint, noConstraint.isSatisfiedBy(null));
+		assertSame(satisfiesConstraint, noConstraint.isSatisfied());
 	}
 	
 	@Before
@@ -40,7 +40,7 @@ public class NoConstraintTest {
 			assertFalse(noConstraint.hasAnswer());
 			assertSame(-1, noConstraint.getId());
 			assertSame("", noConstraint.getContent());
-			assertFalse(noConstraint.isSatisfiedBy(null));
+			assertFalse(noConstraint.isSatisfied());
 		}
 	}
 	
@@ -72,7 +72,7 @@ public class NoConstraintTest {
 			@Test
 			public void whenSatisfiesConstraintRuns_ThenItReturnsFalse(){
 				assertThat(noConstraint.hasAnswer(), is(equalTo(true)));
-				assertResponseDataIsConsistent(answer.getId(), answer.getContent(), answer.isSatisfiedBy(null));
+				assertResponseDataIsConsistent(answer.getId(), answer.getContent(), answer.isSatisfied());
 				assertThat(noConstraint.isConstraintSatisfied(), is(true));
 			}
 		}

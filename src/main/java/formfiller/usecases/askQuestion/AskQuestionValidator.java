@@ -1,24 +1,24 @@
-package formfiller.usecases.navigation;
+package formfiller.usecases.askQuestion;
 
 import formfiller.FormFillerContext;
 import formfiller.entities.Answer;
 import formfiller.entities.formComponent.FormComponent;
-import formfiller.enums.Direction;
+import formfiller.enums.WhichQuestion;
 
-public class NavigationValidator {
+public class AskQuestionValidator {
 	
-	public static boolean isValidDirectionalMove(Direction direction) {
+	public static boolean isValidQuestion(WhichQuestion direction) {
 		FormComponent currentComponent = getCurrentFormComponent();
 		return !isInvalidMove(direction, currentComponent);
 	}
 	
-	private static boolean isInvalidMove(Direction direction, FormComponent component){
+	private static boolean isInvalidMove(WhichQuestion direction, FormComponent component){
 		return isMovingForward(direction) && 
 				isAnswerRequiredButAbsent(component);
 	}
 	
-	private static boolean isMovingForward(Direction direction) {
-		return direction == Direction.FORWARD;
+	private static boolean isMovingForward(WhichQuestion direction) {
+		return direction == WhichQuestion.NEXT;
 	}
 	
 	private static boolean isAnswerRequiredButAbsent(FormComponent component){

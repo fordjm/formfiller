@@ -1,16 +1,16 @@
 package formfiller.usecases.factory;
 
 import formfiller.appBoundaries.UseCase;
+import formfiller.usecases.askQuestion.AskQuestionUseCase;
 import formfiller.usecases.handleUnfoundController.HandleUnfoundUseCaseUseCase;
-import formfiller.usecases.navigation.NavigationUseCase;
 
 public class UseCaseFactoryImpl implements UseCaseFactory {
 
 	public UseCase make(String useCaseName) {
 		if (useCaseName == null) useCaseName = "";
 			
-		if (useCaseName.equalsIgnoreCase("navigation"))
-			return makeNavigationUseCase();
+		if (useCaseName.equalsIgnoreCase("askQuestion"))
+			return makeAskQuestionUseCase();
 		else
 			return makehandleUnfoundUseCaseUseCase();
 	}
@@ -19,7 +19,7 @@ public class UseCaseFactoryImpl implements UseCaseFactory {
 		return new HandleUnfoundUseCaseUseCase();
 	}
 
-	private UseCase makeNavigationUseCase() {
-		return new NavigationUseCase();
+	private UseCase makeAskQuestionUseCase() {
+		return new AskQuestionUseCase();
 	}
 }

@@ -15,6 +15,7 @@ public class ConsoleEventSource extends EventSource {
 
 	private void getInputEvent() {
 		String event = stdIn.nextLine();
+		event = event.toLowerCase();
 		setChanged();
 		notifyObservers(event);
 	}

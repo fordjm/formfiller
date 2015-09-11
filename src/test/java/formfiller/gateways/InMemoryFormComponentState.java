@@ -3,7 +3,7 @@ package formfiller.gateways;
 import formfiller.FormFillerContext;
 import formfiller.entities.formComponent.FormComponent;
 import formfiller.entities.formComponent.NullFormComponents;
-import formfiller.enums.Direction;
+import formfiller.enums.WhichQuestion;
 
 public class InMemoryFormComponentState implements FormComponentState {		
 	public int currentIndex = 0;
@@ -23,8 +23,8 @@ public class InMemoryFormComponentState implements FormComponentState {
 		return currentIndex < 0;
 	}
 	
-	public void update(Direction direction){
-		if (direction == Direction.FORWARD)
+	public void update(WhichQuestion direction){
+		if (direction == WhichQuestion.NEXT)
 			++currentIndex;
 		else
 			--currentIndex;

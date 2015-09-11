@@ -20,7 +20,7 @@ public class ConstrainableAnswerMocker {
 				(ConstrainableAnswer) mock(ConstrainableAnswer.class);
 		when(result.getId()).thenReturn(id);
 		when(result.getContent()).thenReturn(content);
-		when(result.isSatisfiedBy(null)).thenReturn(satisfiesConstraint);
+		when(result.isSatisfied()).thenReturn(satisfiesConstraint);
 		return result;
 	}
 	
@@ -28,7 +28,7 @@ public class ConstrainableAnswerMocker {
 		ConstrainableAnswer result = 
 				(ConstrainableAnswer) mock(ConstrainableAnswer.class);
 		when(result.getContent()).thenReturn("");
-		when(result.isSatisfiedBy(null)).thenReturn(satisfiesConstraint);
+		when(result.isSatisfied()).thenReturn(satisfiesConstraint);
 		return result;
 	}
 }

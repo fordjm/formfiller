@@ -45,7 +45,7 @@ public class ConstrainableAnswerTest {
 		
 		@Test
 		public void whenSatisfiesConstraintRuns_ThenItReturnsFalse(){
-			assertFalse(answer.isSatisfiedBy(null));
+			assertFalse(answer.isSatisfied());
 		}
 	}
 	
@@ -61,7 +61,7 @@ public class ConstrainableAnswerTest {
 		
 		@Test
 		public void whenSatisfiesConstraintRuns_ObjecthenItReturnsFalse(){
-			assertFalse(answer.isSatisfiedBy(null));
+			assertFalse(answer.isSatisfied());
 		}		
 	}
 	
@@ -77,7 +77,7 @@ public class ConstrainableAnswerTest {
 		
 		@Test
 		public void whenSatisfiesConstraintRuns_ObjecthenItReturnsObjectrue(){
-			assertTrue(answer.isSatisfiedBy(null));
+			assertTrue(answer.isSatisfied());
 		}			
 	}
 }

@@ -1,7 +1,7 @@
 package formfiller.gateways;
 
 import formfiller.entities.formComponent.FormComponent;
-import formfiller.enums.Direction;
+import formfiller.enums.WhichQuestion;
 
 public interface FormComponentState {
 
@@ -11,5 +11,5 @@ public interface FormComponentState {
 	
 	boolean isAtStart();
 
-	void update(Direction direction);
+	void update(WhichQuestion direction);
 }

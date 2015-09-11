@@ -5,7 +5,7 @@ import java.util.Map;
 
 import formfiller.delivery.Controller;
 import formfiller.delivery.controller.HandleUnfoundUseCaseController;
-import formfiller.delivery.controller.NavigationController;
+import formfiller.delivery.controller.AskQuestionController;
 import formfiller.delivery.event.ParsedEvent;
 
 //Adapted from:
@@ -19,7 +19,7 @@ public class Router {
 	
 	public static Router makeRouter(){
 		Router result = new Router();
-		result.addMethod("navigation", new NavigationController());
+		result.addMethod("askquestion", new AskQuestionController());
 		return result;
 	}
 	

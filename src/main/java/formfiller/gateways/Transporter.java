@@ -1,7 +1,7 @@
 package formfiller.gateways;
 
-import formfiller.enums.Direction;
+import formfiller.enums.WhichQuestion;
 
 public interface Transporter {	
-	void moveInDirection(Direction direction);
+	void moveToElement(WhichQuestion direction);
 }

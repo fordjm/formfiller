@@ -1,10 +1,9 @@
 package formfiller.deprecated;
 
 import formfiller.entities.Answer;
-import formfiller.entities.Constrainable;
 
 //	TODO:	Delete after converting all Constraints to Constrainable.
-public class ConstrainableAnswer implements Constrainable {
+public class ConstrainableAnswer {
 	public static final ConstrainableAnswer NONE = new ConstrainableAnswer(-1, "");
 	private Answer answer = new Answer();
 
@@ -26,7 +25,7 @@ public class ConstrainableAnswer implements Constrainable {
 		return answer.content;
 	}
 
-	public boolean isSatisfiedBy(Object objectUnderTest) {
+	public boolean isSatisfied() {
 		return answer.id >= 0 && answer.content != null;
 	}
 }

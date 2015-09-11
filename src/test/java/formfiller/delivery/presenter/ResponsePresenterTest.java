@@ -12,20 +12,6 @@ import formfiller.response.models.PresentableResponse;
 
 import static org.hamcrest.CoreMatchers.*;
 
-/* Orphans from NavigationTest (TODO:	Adapt to fit here):
-assertThat(getPresentedNavigation().outcome, is(ActionOutcome.FAILED));
-assertEquals(getFailedNavigationResult(), getPresentedNavigation().message);
-
-			private PresentableResponse getPresentedNavigation() {
-				return (PresentableResponse)
-						ApplicationContext.navigationPresenter.getPresentableResponse();
-			}
-
-			private String getFailedNavigationResult(){
-				return "Sorry, you cannot move ahead.  The current question requires a response.";
-			}
-*/
-
 public class ResponsePresenterTest {
 	ResponsePresenter responsePresenter;
 	

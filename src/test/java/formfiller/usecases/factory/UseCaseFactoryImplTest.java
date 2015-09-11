@@ -7,9 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import formfiller.appBoundaries.UseCase;
+import formfiller.usecases.askQuestion.AskQuestionUseCase;
 import formfiller.usecases.factory.UseCaseFactoryImpl;
 import formfiller.usecases.handleUnfoundController.HandleUnfoundUseCaseUseCase;
-import formfiller.usecases.navigation.NavigationUseCase;
 
 public class UseCaseFactoryImplTest {
 	private UseCaseFactoryImpl factory;
@@ -49,9 +49,9 @@ public class UseCaseFactoryImplTest {
 	}
 	
 	@Test
-	public void canCreateNavigationUseCase() {
-		useCase = factory.make("navigation");
+	public void canCreateAskQuestionUseCase() {
+		useCase = factory.make("askQuestion");
 		
-		assertThat(useCase, is(instanceOf(NavigationUseCase.class)));
+		assertThat(useCase, is(instanceOf(AskQuestionUseCase.class)));
 	}	
 }

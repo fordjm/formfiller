@@ -7,10 +7,10 @@ import org.junit.Before;
 import org.junit.Test;
 
 import formfiller.delivery.controller.Arguments;
-import formfiller.enums.Direction;
+import formfiller.enums.WhichQuestion;
 import formfiller.request.builders.RequestBuilderImpl;
 import formfiller.request.models.HandleUnfoundUseCaseRequest;
-import formfiller.request.models.NavigationRequest;
+import formfiller.request.models.AskQuestionRequest;
 import formfiller.request.models.Request;
 
 public class RequestBuilderImplTest {
@@ -43,17 +43,17 @@ public class RequestBuilderImplTest {
 	}
 	
 	@Test
-	public void canBuildNavigationRequest() {
-		Request navigationRequest = 
-				buildRequest("navigation", makeArguments("direction", Direction.FORWARD));
-		String name = navigationRequest.name;
-		NavigationRequest castNavigationRequest = 
-				(NavigationRequest) navigationRequest;
+	public void canBuildAskQuestionRequest() {
+		Request askQuestionRequest = 
+				buildRequest("askQuestion", makeArguments("which", WhichQuestion.NEXT));
+		String name = askQuestionRequest.name;
+		AskQuestionRequest castRequest = 
+				(AskQuestionRequest) askQuestionRequest;
 		
-		assertThat(navigationRequest, 
-				is(instanceOf(NavigationRequest.class)));
-		assertThat(name, is("Navigation"));
-		assertThat(castNavigationRequest.direction, is(Direction.FORWARD));
+		assertThat(askQuestionRequest, 
+				is(instanceOf(AskQuestionRequest.class)));
+		assertThat(name, is("AskQuestion"));
+		assertThat(castRequest.which, is(WhichQuestion.NEXT));
 	}
 	
 	@Test

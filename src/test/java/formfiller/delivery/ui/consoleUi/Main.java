@@ -18,7 +18,7 @@ public class Main {
 	}
 	
 	private static void handleStartEvent() {
-		eventHandler.update(eventSource, "navigation none");
+		eventHandler.update(eventSource, "askquestion current");
 	}
 	
 	private static void setupClassVariables() {

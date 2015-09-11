@@ -34,18 +34,18 @@ public class RouterTest {
 
 	// TODO:  public class GivenAnEmptyStringRequest{ ... }
 	//		  Should route() return a String with routing info?
-	public class GivenANavigationRequest {
+	public class GivenAnAskQuestionRequest {
 		
 		@Before
-		public void givenANavigationRequest() {
+		public void givenAnAskQuestionRequest() {
 			mockParsedRequest = 
-					ParsedEventMocker.makeMockParsedEvent("navigation", "forward");
-			mockController = ControllerMocker.makeMockNavigationController();
+					ParsedEventMocker.makeMockParsedEvent("askquestion", "next");
+			mockController = ControllerMocker.makeMockAskQuestionController();
 		}
 		
 		@Test
-		public void canRouteNavigationRequest() {
-			router.addMethod("navigation", mockController);
+		public void canRouteAskQuestionRequest() {
+			router.addMethod("askquestion", mockController);
 			router.route(mockParsedRequest);
 
 			verifyControllerHandledParsedRequest();

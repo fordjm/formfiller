@@ -39,6 +39,6 @@ public class AddAnswer implements Transaction {
 	}
 	
 	private boolean responseSatisfiesConstraints(){
-		return answer.isSatisfiedBy(null);
+		return answer.isSatisfied();
 	}
 }

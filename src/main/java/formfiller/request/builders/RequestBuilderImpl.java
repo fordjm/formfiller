@@ -1,7 +1,7 @@
 package formfiller.request.builders;
 
 import formfiller.delivery.controller.Arguments;
-import formfiller.enums.Direction;
+import formfiller.enums.WhichQuestion;
 import formfiller.request.models.Request;
 
 public class RequestBuilderImpl implements RequestBuilder {
@@ -10,8 +10,8 @@ public class RequestBuilderImpl implements RequestBuilder {
 		if(requestName.equalsIgnoreCase("handleUnfoundUseCase")) {
 			return buildHandleUnfoundControllerRequest(args);
 		}
-		else if(requestName.equalsIgnoreCase("navigation"))
-			return buildNavigationRequest(args);
+		else if(requestName.equalsIgnoreCase("askQuestion"))
+			return buildAskQuestionRequest(args);
 		else
 			return getNoRequest();
 	}
@@ -23,9 +23,9 @@ public class RequestBuilderImpl implements RequestBuilder {
 		return finishBuildingRequest(builder);
 	}
 	
-	private Request buildNavigationRequest(Arguments args) {
-		NavigationRequestBuilder builder = new NavigationRequestBuilder();
-		builder.buildDirection((Direction) args.getById("direction")); 
+	private Request buildAskQuestionRequest(Arguments args) {
+		AskQuestionRequestBuilder builder = new AskQuestionRequestBuilder();
+		builder.buildWhichQuestion((WhichQuestion) args.getById("which")); 
 		return finishBuildingRequest(builder);
 	}
 	
@@ -34,7 +34,7 @@ public class RequestBuilderImpl implements RequestBuilder {
 		return builder.getRequest();
 	}
 	
-	//	TODO:	Build a NoRequest object.
+	//	TODO:	Request.NULL object
 	private Request getNoRequest() {
 		Request result = new Request();
 		result.name = "NoRequest";
