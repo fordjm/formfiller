@@ -13,13 +13,13 @@ public class ExecutedUseCases {
 		executedUseCases = new Stack<UndoableUseCase>();
 	}
 	
-	public void add(UndoableUseCase undoableUseCase){
-		if (undoableUseCase == null) throw new NullAddition();
-		executedUseCases.push(undoableUseCase);
+	public void add(UndoableUseCase useCase){
+		if (useCase == null) throw new NullAddition();
+		executedUseCases.push(useCase);
 	}
 	
-	public boolean contains(UndoableUseCase undoableUseCase){
-		return executedUseCases.contains(undoableUseCase);
+	public boolean contains(UndoableUseCase useCase){
+		return executedUseCases.contains(useCase);
 	}
 
 	public UndoableUseCase getMostRecent() {
