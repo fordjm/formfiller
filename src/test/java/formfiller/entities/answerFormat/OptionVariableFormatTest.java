@@ -1,4 +1,4 @@
-package formfiller.entities.format;
+package formfiller.entities.answerFormat;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
@@ -7,6 +7,8 @@ import java.util.Arrays;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import formfiller.entities.answerFormat.OptionVariableFormat;
 
 //	TODO:	Separate classes for single and multi option variables?
 //			Pass a cardinality object? {SINGLE, ANY, SPECIFIC, RANGE}

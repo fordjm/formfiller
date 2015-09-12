@@ -4,8 +4,8 @@ import org.mockito.Mockito;
 
 import formfiller.entities.Answer;
 import formfiller.entities.Question;
+import formfiller.entities.answerFormat.AnswerFormat;
 import formfiller.entities.formComponent.FormComponent;
-import formfiller.entities.format.AnswerFormat;
 
 public class FormComponentMocker {
 

@@ -1,4 +1,4 @@
-package formfiller.entities.format;
+package formfiller.entities.answerFormat;
 
 public abstract class AnswerFormat {
 	public static final AnswerFormat UNSTRUCTURED = makeUnstructuredFormat();

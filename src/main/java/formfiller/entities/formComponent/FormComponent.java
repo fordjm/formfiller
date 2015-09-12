@@ -2,7 +2,7 @@ package formfiller.entities.formComponent;
 
 import formfiller.entities.Answer;
 import formfiller.entities.Question;
-import formfiller.entities.format.AnswerFormat;
+import formfiller.entities.answerFormat.AnswerFormat;
 
 public class FormComponent {		
 	public String id = "";

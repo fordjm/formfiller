@@ -1,4 +1,4 @@
-package formfiller.entities.format;
+package formfiller.entities.answerFormat;
 
 import java.util.List;
 

@@ -16,5 +16,10 @@
   		<version>4.12.1</version>
   		<scope>test</scope>
 	</dependency>
+  	<dependency>
+  		<groupId>org.fitnesse</groupId>
+  		<artifactId>fitnesse</artifactId>
+  		<version>20150814</version>
+  	</dependency>
   </dependencies>
 </project>
