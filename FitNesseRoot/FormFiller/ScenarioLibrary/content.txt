@@ -1,5 +1,2 @@
 | scenario | given no questions |
 | clear form components |
-
-| scenario | given questions |
-| setup default test form components |

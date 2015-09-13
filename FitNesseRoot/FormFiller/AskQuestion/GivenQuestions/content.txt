@@ -1,6 +1,11 @@
 <test page>
+| Given Questions |
+| id | questionContent | required | answerContent |
+| name | What is your name? | false | |
+| birthDate | What is your birth date? | false | November 12, 1955 |
+| age | What is your age? | true | |
+
 -!|script|
-|given questions|
 |when the system asks the question|prev|
 |check|then the question message is|You have reached the start of this form.|
 |when the system asks the question|current|
