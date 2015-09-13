@@ -12,16 +12,19 @@ import formfiller.utilities.TestSetup;
 
 //	TODO:	Clean and refactor:  Make scenarios, templates, etc.
 //			TestSetup should set up variables.  How to access EventHandler?
-public class GivenNoFormComponents {	
+public class FormComponentPresentation {	
 	private EventSource source;
 	private Router router;
 	private EventHandler handler;
 
-	public GivenNoFormComponents() {
-		TestSetup.setupContext();
+	public FormComponentPresentation() {
 		source = new ConsoleEventSource();
 		router = PlaceholderRouterFactory.makeRouter();
 		handler = new EventHandler(router);
+	}
+	
+	public void setupDefaultTestFormComponents() {
+		TestSetup.setupSampleFormComponents();
 	}
 	
 	public void whenTheSystemAsksTheQuestion(WhichQuestion which) {
@@ -29,9 +32,13 @@ public class GivenNoFormComponents {
 	}
 	
 	//	TODO:	Test whole FormComponent in FitNesse, not just Question.
-	public String getPresentableResponseMessage() {
+	public String thenTheQuestionMessageIs() {
 		PresentableResponse response = FormFillerContext.
 				questionPresenter.getPresentableResponse();
 		return response.message;
+	}
+	
+	public void clearFormComponents() {
+		FormFillerContext.formComponentGateway.removeAll();
 	}
 }

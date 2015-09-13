@@ -1,0 +1,4 @@
+!contents
+!define TEST_SYSTEM {slim}
+!path target/classes
+!path target/test-classes

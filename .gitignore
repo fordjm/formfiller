@@ -1,1 +1,7 @@
 /target/
+*.zip
+FitNesseRoot/files
+FitNesseRoot/ErrorLogs
+FitNesseRoot/FitNesse
+FitNesseRoot/RecentChanges
+fitnesse-standalone.jar

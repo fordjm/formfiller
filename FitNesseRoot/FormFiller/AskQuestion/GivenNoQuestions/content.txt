@@ -1,0 +1,10 @@
+<test page>
+
+-!|script|
+|given no questions|
+|when the system asks the question|prev|
+|check|then the question message is|You have reached the start of this form.|
+|when the system asks the question|current|
+|check|then the question message is|You have reached the start of this form.|
+|when the system asks the question|next|
+|check|then the question message is|You have reached the end of this form.|

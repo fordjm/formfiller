@@ -45,6 +45,11 @@ public class InMemoryFormComponentGateway implements FormComponentGateway {
 		if (result == null) result = NullFormComponents.NULL;
 		return result;
 	}
+	
+	public void removeAll() {
+		formComponents.clear();
+		orderedElements.clear();
+	}
 
 	public void save(FormComponent formComponent) {
 		if (formComponent == null || formComponent == NullFormComponents.NULL) 
