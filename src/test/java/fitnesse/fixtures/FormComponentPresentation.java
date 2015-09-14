@@ -1,4 +1,4 @@
-package fixtures;
+package fitnesse.fixtures;
 
 import formfiller.FormFillerContext;
 import formfiller.delivery.EventSource;
@@ -32,10 +32,22 @@ public class FormComponentPresentation {
 	}
 	
 	//	TODO:	Test whole FormComponent in FitNesse, not just Question.
+	//			Also, fix brokenness.
 	public String thenTheQuestionMessageIs() {
 		PresentableResponse response = FormFillerContext.
 				questionPresenter.getPresentableResponse();
-		return response.message;
+		return getErrorMessageIfUseCaseFailed(response.message);
+	}
+	
+	//	Temporary hack to get around multi-presenter bug.
+	private String getErrorMessageIfUseCaseFailed(String responseMessage){
+		if (responseMessage.equals("")){
+			PresentableResponse errorResponse = 
+					FormFillerContext.responsePresenter.getPresentableResponse();
+			return errorResponse.message;
+		}
+		else
+			return responseMessage;
 	}
 	
 	public void clearFormComponents() {

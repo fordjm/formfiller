@@ -1,0 +1,8 @@
+!define questionId (name)
+!define questionContent (What is your name?)
+!define required (true)
+!define answerContent ()
+${QuestionSetup}
+
+-!| script |
+| asking previous question presents the start prompt|

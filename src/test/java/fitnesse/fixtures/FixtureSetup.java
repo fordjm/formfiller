@@ -1,4 +1,4 @@
-package fixtures;
+package fitnesse.fixtures;
 
 import formfiller.utilities.TestSetup;
 

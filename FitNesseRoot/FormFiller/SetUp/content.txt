@@ -1,8 +1,17 @@
 | import |
-| fixtures |
+| fitnesse.fixtures |
 | formfiller.enums.WhichQuestion |
 
 | library |
 | form component presentation |
 
 | Fixture setup |
+
+!define QuestionSetup (!| given questions |
+| id | questionContent | required | answerContent |
+| ${questionId} | ${questionContent} | ${required}  | ${answerContent} |)
+
+!define CheckMessage (-!| script |
+| when the system asks the question | ${whichQuestion} |
+| check | then the question message is | ${questionMessage} |)
+

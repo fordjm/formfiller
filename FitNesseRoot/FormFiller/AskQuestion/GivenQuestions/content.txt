@@ -1,20 +1,2 @@
-<test page>
-| Given Questions |
-| id | questionContent | required | answerContent |
-| name | What is your name? | false | |
-| birthDate | What is your birth date? | false | November 12, 1955 |
-| age | What is your age? | true | |
-
--!|script|
-|when the system asks the question|prev|
-|check|then the question message is|You have reached the start of this form.|
-|when the system asks the question|current|
-|check|then the question message is|You have reached the start of this form.|
-|when the system asks the question|next|
-|check|then the question message is|What is your name?|
-|when the system asks the question|next|
-|check|then the question message is|What is your birth date?|
-|when the system asks the question|next|
-|check|then the question message is|What is your age?|
-|when the system asks the question|next|
-|check|then the question message is|What is your age?|
+!2 GivenQuestions
+!contents -R2 -g -p -f -h

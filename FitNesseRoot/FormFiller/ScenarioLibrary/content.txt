@@ -1,2 +1,10 @@
 | scenario | given no questions |
 | clear form components |
+
+| scenario | asking previous question presents the start prompt |
+| when the system asks the question | prev |
+| check | then the question message is | You have reached the start of this form. |
+
+| scenario | asking next question presents the end prompt |
+| when the system asks the question | next |
+| check | then the question message is | You have reached the end of this form. |

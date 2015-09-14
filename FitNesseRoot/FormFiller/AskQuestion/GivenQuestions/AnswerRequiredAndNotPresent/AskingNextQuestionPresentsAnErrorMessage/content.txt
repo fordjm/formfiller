@@ -1,0 +1,9 @@
+!define questionId (name)
+!define questionContent (What is your name?)
+!define required (true)
+!define answerContent ()
+${QuestionSetup}
+
+!define whichQuestion (next)
+!define questionMessage (Sorry, you cannot move ahead.  The current question requires an answer.)
+${CheckMessage}

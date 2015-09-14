@@ -26,8 +26,10 @@ public class AskQuestionUseCase implements UndoableUseCase {
 		if (AskQuestionValidator.isValidQuestion(whichQuestion)) {
 			setOutcome(Outcome.POSITIVE);
 			executeAskQuestion(whichQuestion);
-		} else 
+		} else {
+			// TODO:  Present failure in same presenter as success.
 			setOutcome(Outcome.NEGATIVE);
+		}			
 
 		PresentableResponse response = makeResponse();		
 		presentResponse(response);
