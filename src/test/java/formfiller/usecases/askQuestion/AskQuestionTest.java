@@ -104,7 +104,7 @@ public class AskQuestionTest {
 	
 	@Test
 	public void gettingPrevQuestionGetsStartPrompt(){
-		setupAskQuestionTest(WhichQuestion.PREV, NullFormComponents.START);
+		setupAskQuestionTest(WhichQuestion.PREVIOUS, NullFormComponents.START);
 		
 		executeAskQuestionRequest(mockRequest);
 		
@@ -200,7 +200,7 @@ public class AskQuestionTest {
 		
 		@Test
 		public void movingBack_OutputsStartComponent(){
-			setupAskQuestionTest(WhichQuestion.PREV, NullFormComponents.START);
+			setupAskQuestionTest(WhichQuestion.PREVIOUS, NullFormComponents.START);
 			
 			executeAskQuestionRequest(mockRequest);
 			
@@ -267,7 +267,7 @@ public class AskQuestionTest {
 			
 			@Test			
 			public void movingBack_OutputsFirstComponent(){
-				setupAskQuestionTest(WhichQuestion.PREV, mockNameFormComponent);
+				setupAskQuestionTest(WhichQuestion.PREVIOUS, mockNameFormComponent);
 				
 				executeAskQuestionRequest(mockRequest);
 				
@@ -276,7 +276,7 @@ public class AskQuestionTest {
 			
 			@Test
 			public void undoAfterBackwardMove_RevertsCurrentFormComponent() {
-				setupAskQuestionTest(WhichQuestion.PREV, mockAgeFormComponent);
+				setupAskQuestionTest(WhichQuestion.PREVIOUS, mockAgeFormComponent);
 
 				executeAndUndoAskQuestionRequest(mockRequest);
 				

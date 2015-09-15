@@ -1,3 +1,0 @@
--!|script|
-| given no questions |
-| asking previous question presents the start prompt |

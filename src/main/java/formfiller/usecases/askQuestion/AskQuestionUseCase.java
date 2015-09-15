@@ -111,7 +111,7 @@ public class AskQuestionUseCase implements UndoableUseCase {
 		if (whichQuestion == WhichQuestion.CURRENT)
 			return whichQuestion;
 		else if (whichQuestion == WhichQuestion.NEXT)
-			return WhichQuestion.PREV;
+			return WhichQuestion.PREVIOUS;
 		else
 			return WhichQuestion.NEXT;
 	}

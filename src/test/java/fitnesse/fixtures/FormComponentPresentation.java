@@ -1,6 +1,7 @@
 package fitnesse.fixtures;
 
 import formfiller.FormFillerContext;
+import formfiller.appBoundaries.Presenter;
 import formfiller.delivery.EventSource;
 import formfiller.delivery.event.ConsoleEventSource;
 import formfiller.delivery.event.EventHandler;
@@ -23,31 +24,45 @@ public class FormComponentPresentation {
 		handler = new EventHandler(router);
 	}
 	
-	public void setupDefaultTestFormComponents() {
-		TestSetup.setupSampleFormComponents();
+	public void askQuestion(WhichQuestion which) {
+		handler.update(source, "AskQuestion " + which.toString());
 	}
 	
 	public void whenTheSystemAsksTheQuestion(WhichQuestion which) {
-		handler.update(source, "AskQuestion " + which.toString());
+		askQuestion(which);
 	}
 	
 	//	TODO:	Test whole FormComponent in FitNesse, not just Question.
 	//			Also, fix brokenness.
 	public String thenTheQuestionMessageIs() {
-		PresentableResponse response = FormFillerContext.
-				questionPresenter.getPresentableResponse();
+		PresentableResponse response = getPresentableResponse(
+				FormFillerContext.questionPresenter);
 		return getErrorMessageIfUseCaseFailed(response.message);
+	}
+
+	private PresentableResponse getPresentableResponse(Presenter presenter) {
+		return presenter.getPresentableResponse();
 	}
 	
 	//	Temporary hack to get around multi-presenter bug.
 	private String getErrorMessageIfUseCaseFailed(String responseMessage){
 		if (responseMessage.equals("")){
-			PresentableResponse errorResponse = 
-					FormFillerContext.responsePresenter.getPresentableResponse();
-			return errorResponse.message;
+			return thenTheErrorMessageIs();
 		}
 		else
 			return responseMessage;
+	}
+	
+	public String thenTheAnswerMessageIs() {
+		PresentableResponse response = getPresentableResponse(FormFillerContext.
+				answerPresenter);
+		return response.message;
+	}
+	
+	public String thenTheErrorMessageIs() {
+		PresentableResponse response = getPresentableResponse(FormFillerContext.
+				responsePresenter);
+		return response.message;
 	}
 	
 	public void clearFormComponents() {

@@ -1,3 +1,0 @@
--!|script|
-| given no questions |
-| asking next question presents the end prompt |

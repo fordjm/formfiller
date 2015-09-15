@@ -2,6 +2,6 @@ package formfiller.enums;
 
 public enum WhichQuestion { 
 	CURRENT, 
-	PREV,
+	PREVIOUS,
 	NEXT 
 }

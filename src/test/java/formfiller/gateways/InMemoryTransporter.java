@@ -19,7 +19,7 @@ public class InMemoryTransporter implements Transporter {
 	private static boolean moveChangesPosition(WhichQuestion direction) {
 		if (direction == WhichQuestion.CURRENT) 
 			return false;
-		else if (direction == WhichQuestion.PREV && 
+		else if (direction == WhichQuestion.PREVIOUS && 
 				getCurrentState().isAtStart())
 			return false;
 		else if (direction == WhichQuestion.NEXT && 

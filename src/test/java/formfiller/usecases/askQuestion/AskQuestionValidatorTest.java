@@ -45,7 +45,7 @@ public class AskQuestionValidatorTest {
 
 	@Test
 	public void movingBackwardIsLegal() {
-		assertThat_AskQuestionIsLegal(WhichQuestion.PREV);
+		assertThat_AskQuestionIsLegal(WhichQuestion.PREVIOUS);
 	}
 
 	@Test
@@ -85,7 +85,7 @@ public class AskQuestionValidatorTest {
 
 		@Test
 		public void movingBackwardIsLegal() {
-			assertThat_AskQuestionIsLegal(WhichQuestion.PREV);
+			assertThat_AskQuestionIsLegal(WhichQuestion.PREVIOUS);
 		}
 
 		@Test

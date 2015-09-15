@@ -44,7 +44,7 @@ public class InMemoryTransporterTest {
 		
 		@Test
 		public void movingBackward_ReturnsFormComponentDotStart(){
-			transporter.moveToElement(WhichQuestion.PREV);
+			transporter.moveToElement(WhichQuestion.PREVIOUS);
 			
 			currentFormComponent = getCurrentFormComponent();
 			
@@ -53,8 +53,8 @@ public class InMemoryTransporterTest {
 		
 		@Test
 		public void movingBackwardTwice_ReturnsFormComponentDotStart(){
-			transporter.moveToElement(WhichQuestion.PREV);
-			transporter.moveToElement(WhichQuestion.PREV);
+			transporter.moveToElement(WhichQuestion.PREVIOUS);
+			transporter.moveToElement(WhichQuestion.PREVIOUS);
 			
 			currentFormComponent = getCurrentFormComponent();
 			
@@ -102,7 +102,7 @@ public class InMemoryTransporterTest {
 		
 		@Test
 		public void movingBackward_ReturnsFormComponentDotStart(){
-			transporter.moveToElement(WhichQuestion.PREV);
+			transporter.moveToElement(WhichQuestion.PREVIOUS);
 			
 			currentFormComponent = getCurrentFormComponent();
 			

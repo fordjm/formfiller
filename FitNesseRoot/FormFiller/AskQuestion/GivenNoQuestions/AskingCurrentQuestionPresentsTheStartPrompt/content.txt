@@ -1,4 +1,0 @@
--!| script |
-| given no questions |
-| when the system asks the question | current |
-| check | then the question message is | You have reached the end of this form. |
