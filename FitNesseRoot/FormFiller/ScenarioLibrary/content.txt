@@ -1,6 +1,9 @@
 | scenario | given no form components |
 | clear form components |
 
+| scenario | given a form component | id, questionContent, required, answerContent |
+| form component driver | @id | @questionContent | @required  | @answerContent |
+
 | scenario | asking the _ question | which |
 | reset |
 | askQuestion | @which |

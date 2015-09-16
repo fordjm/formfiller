@@ -1,8 +1,6 @@
-!define questionId (name)
-!define questionContent (What is your name?)
-!define required (true)
-!define answerContent ()
-${QuestionSetup}
+!| form component driver |
+| id | questionContent | required | answerContent |
+| name | What is your name? | true | |
 
 !| script |
 | asking the previous question |
