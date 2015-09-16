@@ -9,7 +9,7 @@ import org.junit.Test;
 public class NullUndoableUseCaseTest {
 	private NullUndoableUseCase useCase;
 	
-	@Before
+	/*@Before
 	public void setUp(){
 		useCase = NullUndoableUseCase.instance();		
 	}
@@ -27,5 +27,5 @@ public class NullUndoableUseCaseTest {
 	@Test(expected = NullUndoableUseCase.NullUndo.class)
 	public void undoingNullUseCase_ThrowsException() {
 		useCase.undo();
-	}
+	}*/
 }

@@ -1,9 +1,0 @@
-!define questionId (name)
-!define questionContent (What is your name?)
-!define required (true)
-!define answerContent (nameAnswer)
-${QuestionSetup}
-
-!define whichQuestion (current)
-!define questionMessage (What is your name?)
-${CheckMessage}

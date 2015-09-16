@@ -5,11 +5,17 @@ import formfiller.entities.Answer;
 import formfiller.entities.Question;
 import formfiller.entities.formComponent.FormComponent;
 
-public class GivenQuestions {
+public class GivenAFormComponent {
+	public Question question;
 	public String id;
 	public String questionContent;
 	public boolean required;
 	public String answerContent;
+
+	
+	public void setQuestion(String id, String questionContent) {
+		question = makeQuestion(id, questionContent);
+	}
 	
 	public void setId(String id) {
 		this.id = id;
@@ -37,6 +43,10 @@ public class GivenQuestions {
 	}
 
 	private Question makeQuestion() {
+		return makeQuestion(id, questionContent);
+	}
+	
+	private Question makeQuestion(String id, String content){
 		Question result = new Question();
 		result.id = id;
 		result.content = questionContent;		

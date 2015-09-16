@@ -58,7 +58,7 @@ public class AskQuestionControllerTest {
 	}
 
 	@Test
-	public void movingBackward_ReturnsStartComponent() {
+	public void movingBackward_ReturnsStartComponent() {		
 		updateFormComponentFoundAtIndex(-1);
 		mockParsedUserRequest = 
 				ParsedEventMocker.makeMockParsedEvent("askQuestion", "previous");

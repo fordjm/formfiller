@@ -1,8 +1,0 @@
-!define questionId (name)
-!define questionContent (What is your name?)
-!define required (false)
-!define answerContent ()
-${QuestionSetup}
-
--!| script |
-| asking next question presents the end prompt |

@@ -1,0 +1,13 @@
+!define questionId (name)
+!define questionContent (What is your name?)
+!define required (true)
+!define answerContent ()
+${QuestionSetup}
+
+!| script |
+| asking the previous question |
+| presents the question message | You have reached the start of this form. |
+| asking the current question |
+| presents the question message | What is your name? |
+| asking the next question |
+| presents the question message | What is your name? |

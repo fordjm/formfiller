@@ -9,7 +9,8 @@ import formfiller.delivery.router.PlaceholderRouterFactory;
 import formfiller.delivery.router.Router;
 import formfiller.enums.WhichQuestion;
 import formfiller.response.models.PresentableResponse;
-import formfiller.utilities.TestSetup;
+import formfiller.usecases.undoable.NullUndoableUseCase;
+import formfiller.usecases.undoable.UndoableUseCase;
 
 //	TODO:	Clean and refactor:  Make scenarios, templates, etc.
 //			TestSetup should set up variables.  How to access EventHandler?
@@ -63,6 +64,11 @@ public class FormComponentPresentation {
 		PresentableResponse response = getPresentableResponse(FormFillerContext.
 				responsePresenter);
 		return response.message;
+	}
+	
+	public void reset() {
+		UndoableUseCase mostRecent = FormFillerContext.executedUseCases.getMostRecent();
+		mostRecent.undo();
 	}
 	
 	public void clearFormComponents() {

@@ -1,11 +1,12 @@
-| scenario | given no questions |
+| scenario | given no form components |
 | clear form components |
 
 | scenario | asking the _ question | which |
+| reset |
 | askQuestion | @which |
 
-| scenario | presents the question message | questionPrompt |
-| check | then the question message is | @questionPrompt |
+| scenario | presents the question message | questionMessage |
+| check | then the question message is | @questionMessage |
 
 | scenario | asking previous question presents the start prompt |
 | when the system asks the question | previous |
