@@ -24,16 +24,29 @@ public class FormComponentPresentation {
 		handler = new EventHandler(router);
 	}
 	
+	public void doNothing() { }
+	
 	public void askQuestion(WhichQuestion which) {
 		handler.update(source, "AskQuestion " + which.toString());
 	}
 	
-	public void whenTheSystemAsksTheQuestion(WhichQuestion which) {
-		askQuestion(which);
+	public String thenTheMessageIs(String chooseMessage) {
+		Presenter presenter = choosePresenter(chooseMessage);
+		PresentableResponse response = getPresentableResponse(
+				presenter);
+		return response.message;
 	}
 	
-	//	TODO:	Test whole FormComponent in FitNesse, not just Question.
-	//			Also, fix brokenness.
+	private Presenter choosePresenter(String chooseMessage) {
+		if (chooseMessage.equalsIgnoreCase("question"))
+			return FormFillerContext.questionPresenter;
+		else if (chooseMessage.equalsIgnoreCase("answer"))
+			return FormFillerContext.answerPresenter;
+		else if (chooseMessage.equalsIgnoreCase("error"))
+			return FormFillerContext.responsePresenter;
+		throw new IllegalArgumentException();	//	TODO:	Customize
+	}
+
 	public String thenTheQuestionMessageIs() {
 		PresentableResponse response = getPresentableResponse(
 				FormFillerContext.questionPresenter);

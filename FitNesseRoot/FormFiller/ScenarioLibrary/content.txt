@@ -1,20 +1,15 @@
 | scenario | given no form components |
 | clear form components |
 
-| scenario | given a form component | id, questionContent, required, answerContent |
-| form component driver | @id | @questionContent | @required  | @answerContent |
-
 | scenario | asking the _ question | which |
 | reset |
 | askQuestion | @which |
 
-| scenario | presents the question message | questionMessage |
-| check | then the question message is | @questionMessage |
+| scenario | the presented _ message is | message,content |
+| check | then the message is | @message | @content |
 
-| scenario | asking previous question presents the start prompt |
-| when the system asks the question | previous |
-| check | then the question message is | You have reached the start of this form. |
-
-| scenario | asking next question presents the end prompt |
-| when the system asks the question | next |
-| check | then the question message is | You have reached the end of this form. |
+| scenario | the presented messages are _ | which, questionContent, answerContent, errorContent|
+| asking the question; | @which |
+| the presented message is; | question | @questionContent |
+| the presented message is; | answer | @answerContent |
+| the presented message is; | error | @errorContent |

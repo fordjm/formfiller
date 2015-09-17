@@ -1,11 +1,9 @@
-!| form component driver |
+!| given a form component |
 | id | questionContent | required | answerContent |
 | name | What is your name? | true | |
 
-!| script |
-| asking the previous question |
-| presents the question message | You have reached the start of this form. |
-| asking the current question |
-| presents the question message | What is your name? |
-| asking the next question |
-| presents the question message | What is your name? |
+| the presented messages are |
+| which | questionContent | answerContent | errorContent |
+| previous | You have reached the start of this form. | | |
+| current | What is your name? | | |
+| next | What is your name? | | Sorry, you cannot move ahead.  The current question requires an answer. |

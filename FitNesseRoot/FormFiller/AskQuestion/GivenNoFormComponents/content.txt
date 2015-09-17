@@ -1,8 +1,8 @@
 !| script |
 | given no form components |
-| asking the previous question |
-| presents the question message | You have reached the start of this form. |
-| asking the current question |
-| presents the question message | You have reached the end of this form. |
-| asking the next question |
-| presents the question message | You have reached the end of this form. |
+
+| the presented messages are |
+| which | questionContent | answerContent | errorContent |
+| previous | You have reached the start of this form. | | |
+| current | You have reached the end of this form. | | |
+| next | You have reached the end of this form. | | |

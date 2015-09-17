@@ -5,7 +5,7 @@ import formfiller.entities.Answer;
 import formfiller.entities.Question;
 import formfiller.entities.formComponent.FormComponent;
 
-public class FormComponentDriver {
+public class GivenAFormComponent {
 	public Question question;
 	public String id;
 	public String questionContent;
