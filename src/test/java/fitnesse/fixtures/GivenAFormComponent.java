@@ -11,11 +11,6 @@ public class GivenAFormComponent {
 	public String questionContent;
 	public boolean required;
 	public String answerContent;
-
-	
-	public void setQuestion(String id, String questionContent) {
-		question = makeQuestion(id, questionContent);
-	}
 	
 	public void setId(String id) {
 		this.id = id;
