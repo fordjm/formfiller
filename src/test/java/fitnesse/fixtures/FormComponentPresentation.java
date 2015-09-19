@@ -43,6 +43,58 @@ public class FormComponentPresentation {
 		return result;
 	}
 	
+	//	New stuff
+	public String presentsThePrompt() {
+		PresentableResponse response = getPresentableResponse(FormFillerContext.questionPresenter);
+		return response.message;
+	}
+
+	public String presentsTheAnswer() {
+		PresentableResponse response = getPresentableResponse(FormFillerContext.answerPresenter);
+		return response.message;
+	}
+
+	public String presentsTheFormat() {
+		return "";
+	}
+
+	public String presentsTheError() {
+		PresentableResponse response = getPresentableResponse(FormFillerContext.errorPresenter);
+		return response.message;
+	}
+	
+	public void givenOneFormComponentWithTooManyParameters(String id, 
+			String questionContent, String answerContent, boolean requiresAnswer){
+		clearFormComponents();
+		FormComponent component;
+		component = (requiresAnswer == true) 
+				? makeRequiredFormComponent(id, questionContent, answerContent) 
+				: makeNonrequiredFormComponent(id, questionContent, answerContent);
+		FormFillerContext.formComponentGateway.save(component);
+	}
+	
+	private FormComponent makeRequiredFormComponent(String id, String questionContent, String answerContent) {
+		FormComponent result = makeFormComponent(id, questionContent, answerContent);
+		result.requiresAnswer = true;
+		return result;
+	}
+	
+	private FormComponent makeNonrequiredFormComponent(String id, String questionContent, String answerContent) {
+		FormComponent result = makeFormComponent(id, questionContent, answerContent);
+		result.requiresAnswer = false;
+		return result;
+	}
+
+	private FormComponent makeFormComponent(String id, String questionContent, String answerContent) {
+		FormComponent result = new FormComponent();
+		result.id = id;
+		result.question = makeQuestion(id, questionContent);
+		result.answer = makeAnswer(answerContent);
+		return result;
+	}
+
+	//	Old stuff
+	
 	public void givenOneFormComponentWithRequirementAndAnswer(boolean requiresAnswer, 
 			String answerContent){
 		clearFormComponents();
