@@ -18,7 +18,7 @@ public class HandleUnfoundUseCaseTest {
 	private PresentableResponse currentPresentableResponse;
 
 	private PresentableResponse getPresentableResponseFromPresenter() {
-		return FormFillerContext.responsePresenter.getPresentableResponse();
+		return FormFillerContext.errorPresenter.getPresentableResponse();
 	}
 
 	@Before

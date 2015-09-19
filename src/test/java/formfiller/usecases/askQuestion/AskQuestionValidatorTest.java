@@ -13,7 +13,7 @@ import formfiller.entities.Answer;
 import formfiller.entities.Question;
 import formfiller.entities.answerFormat.AnswerFormat;
 import formfiller.entities.formComponent.FormComponent;
-import formfiller.enums.WhichQuestion;
+import formfiller.enums.QuestionAsked;
 import formfiller.usecases.askQuestion.AskQuestionValidator;
 import formfiller.utilities.AnswerMocker;
 import formfiller.utilities.FormComponentMocker;
@@ -30,11 +30,11 @@ public class AskQuestionValidatorTest {
 				requiresAnswer, mockQuestion, mockAnswer, AnswerFormat.UNSTRUCTURED);
 	}
 	
-	private void assertThat_AskQuestionIsLegal(WhichQuestion which) {
+	private void assertThat_AskQuestionIsLegal(QuestionAsked which) {
 		assertThat(AskQuestionValidator.isValidQuestion(which), is(true));
 	}
 	
-	private void assertThat_DirectionalMoveIsIllegal(WhichQuestion which) {
+	private void assertThat_DirectionalMoveIsIllegal(QuestionAsked which) {
 		assertThat(AskQuestionValidator.isValidQuestion(which), is(false));
 	}
 
@@ -45,17 +45,17 @@ public class AskQuestionValidatorTest {
 
 	@Test
 	public void movingBackwardIsLegal() {
-		assertThat_AskQuestionIsLegal(WhichQuestion.PREVIOUS);
+		assertThat_AskQuestionIsLegal(QuestionAsked.PREVIOUS);
 	}
 
 	@Test
 	public void movingNowhereIsLegal() {
-		assertThat_AskQuestionIsLegal(WhichQuestion.CURRENT);
+		assertThat_AskQuestionIsLegal(QuestionAsked.CURRENT);
 	}
 
 	@Test
 	public void movingForwardIsLegal() {
-		assertThat_AskQuestionIsLegal(WhichQuestion.NEXT);
+		assertThat_AskQuestionIsLegal(QuestionAsked.NEXT);
 	}
 	
 	public class GivenAnswerIsNotRequired {
@@ -69,7 +69,7 @@ public class AskQuestionValidatorTest {
 		
 		@Test
 		public void movingForwardIsLegal() {
-			assertThat_AskQuestionIsLegal(WhichQuestion.NEXT);
+			assertThat_AskQuestionIsLegal(QuestionAsked.NEXT);
 		}
 	}
 	
@@ -85,24 +85,24 @@ public class AskQuestionValidatorTest {
 
 		@Test
 		public void movingBackwardIsLegal() {
-			assertThat_AskQuestionIsLegal(WhichQuestion.PREVIOUS);
+			assertThat_AskQuestionIsLegal(QuestionAsked.PREVIOUS);
 		}
 
 		@Test
 		public void movingNowhereIsLegal() {
-			assertThat_AskQuestionIsLegal(WhichQuestion.CURRENT);
+			assertThat_AskQuestionIsLegal(QuestionAsked.CURRENT);
 		}
 
 		@Test
 		public void movingForwardIsIllegal() {
-			assertThat_DirectionalMoveIsIllegal(WhichQuestion.NEXT);
+			assertThat_DirectionalMoveIsIllegal(QuestionAsked.NEXT);
 		}
 		
 		@Test
 		public void whenAnswerIsPresent_movingForwardIsLegal() {
 			mockFormComponent.answer = AnswerMocker.makeMockAnswer(0, RETIREMENT_AGE);
 
-			assertThat_AskQuestionIsLegal(WhichQuestion.NEXT);
+			assertThat_AskQuestionIsLegal(QuestionAsked.NEXT);
 		}
 	}
 }

@@ -1,0 +1,10 @@
+#!| given a form component                      |
+#|id  |questionContent   |required|answerContent|
+#|name|What is your name?|false   |
+
+| given answer requirement and answer, the previous, current,  and next questions are presented as follows | 
+|requiresAnswer | answerContent | previousQuestion | currentQuestion | nextQuestion |
+| false | | asking the previous question presents the start message | asking the current question presents the message Q: What is your name? | asking the next question presents the end message |
+| false | myName | asking the previous question presents the start message | asking the current question presents the message Q: What is your name?, A: myName | asking the next question presents the end message |
+| true | | asking the previous question presents the start message | asking the current question presents the message Q: What is your name? | asking the next question presents the message E: Sorry, you cannot move ahead.  The current question requires an answer. |
+| true | myName | asking the previous question presents the start message | asking the current question presents the message Q: What is your name?, A: myName | asking the next question presents the end message |

@@ -1,12 +1,15 @@
 package formfiller.usecases.askQuestion;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import formfiller.FormFillerContext;
 import formfiller.appBoundaries.Presenter;
 import formfiller.entities.Answer;
 import formfiller.entities.Question;
 import formfiller.entities.formComponent.FormComponent;
 import formfiller.enums.Outcome;
-import formfiller.enums.WhichQuestion;
+import formfiller.enums.QuestionAsked;
 import formfiller.gateways.InMemoryTransporter;
 import formfiller.request.models.*;
 import formfiller.response.models.*;
@@ -14,12 +17,13 @@ import formfiller.usecases.undoable.UndoableUseCase;
 import formfiller.utilities.PresenterSelector;
 
 public class AskQuestionUseCase implements UndoableUseCase {
-	private WhichQuestion whichQuestion = WhichQuestion.CURRENT;
+	private QuestionAsked whichQuestion = QuestionAsked.CURRENT;
 	private Outcome outcome = Outcome.NEUTRAL;
 
 	public void execute(Request request) {		
 		if (request == null) return;
 
+		clearAllPresenters();
 		AskQuestionRequest askQuestionRequest = (AskQuestionRequest) request;
 		whichQuestion = askQuestionRequest.which;
 
@@ -27,13 +31,27 @@ public class AskQuestionUseCase implements UndoableUseCase {
 			setOutcome(Outcome.POSITIVE);
 			executeAskQuestion(whichQuestion);
 		} else {
-			// TODO:  Present failure in same presenter as success.
+			// TODO:  Present failure in same presenter as success.  Maybe.
 			setOutcome(Outcome.NEGATIVE);
 		}			
 
 		PresentableResponse response = makeResponse();		
 		presentResponse(response);
 		FormFillerContext.executedUseCases.add(this);
+	}
+
+	private void clearAllPresenters() {
+		for (Presenter presenter : getPresenters())
+			presenter.clearPresentableResponse();
+	}
+
+	//	TODO:	Fix duplication in FormComponentPresentation
+	private Collection<Presenter> getPresenters() {
+		Collection<Presenter> result = new ArrayList<Presenter>();
+		result.add(FormFillerContext.questionPresenter);
+		result.add(FormFillerContext.answerPresenter);
+		result.add(FormFillerContext.errorPresenter);
+		return result;
 	}
 
 	private void setOutcome(Outcome outcome) {
@@ -50,7 +68,7 @@ public class AskQuestionUseCase implements UndoableUseCase {
 				+ "The current question requires an answer.";
 	}
 
-	private void executeAskQuestion(WhichQuestion which) {
+	private void executeAskQuestion(QuestionAsked which) {
 		new InMemoryTransporter().moveToElement(which);
 	}
 
@@ -99,7 +117,7 @@ public class AskQuestionUseCase implements UndoableUseCase {
 
 	public void undo() {
 		if (!succeeded()) return;
-		WhichQuestion which = getUndoWhichQuestion();
+		QuestionAsked which = getUndoWhichQuestion();
 		executeAskQuestion(which);
 	}
 	
@@ -107,12 +125,12 @@ public class AskQuestionUseCase implements UndoableUseCase {
 		return outcome == Outcome.POSITIVE;
 	}
 
-	private WhichQuestion getUndoWhichQuestion() {
-		if (whichQuestion == WhichQuestion.CURRENT)
+	private QuestionAsked getUndoWhichQuestion() {
+		if (whichQuestion == QuestionAsked.CURRENT)
 			return whichQuestion;
-		else if (whichQuestion == WhichQuestion.NEXT)
-			return WhichQuestion.PREVIOUS;
+		else if (whichQuestion == QuestionAsked.NEXT)
+			return QuestionAsked.PREVIOUS;
 		else
-			return WhichQuestion.NEXT;
+			return QuestionAsked.NEXT;
 	}
 }

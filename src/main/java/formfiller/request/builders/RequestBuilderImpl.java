@@ -1,7 +1,7 @@
 package formfiller.request.builders;
 
 import formfiller.delivery.controller.Arguments;
-import formfiller.enums.WhichQuestion;
+import formfiller.enums.QuestionAsked;
 import formfiller.request.models.Request;
 
 public class RequestBuilderImpl implements RequestBuilder {
@@ -25,7 +25,7 @@ public class RequestBuilderImpl implements RequestBuilder {
 	
 	private Request buildAskQuestionRequest(Arguments args) {
 		AskQuestionRequestBuilder builder = new AskQuestionRequestBuilder();
-		builder.buildWhichQuestion((WhichQuestion) args.getById("which")); 
+		builder.buildWhichQuestion((QuestionAsked) args.getById("which")); 
 		return finishBuildingRequest(builder);
 	}
 	

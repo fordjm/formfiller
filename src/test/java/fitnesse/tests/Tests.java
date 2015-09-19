@@ -7,5 +7,4 @@ import org.junit.runner.RunWith;
 @FitNesseRunner.Suite("FormFiller.AskQuestion")
 @FitNesseRunner.FitnesseDir(".")
 @FitNesseRunner.OutputDir("./target/fitnesse-results")
-public class Tests {
-}
+public class Tests { }

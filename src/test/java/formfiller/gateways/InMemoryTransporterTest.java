@@ -13,7 +13,7 @@ import formfiller.entities.Answer;
 import formfiller.entities.Question;
 import formfiller.entities.answerFormat.AnswerFormat;
 import formfiller.entities.formComponent.FormComponent;
-import formfiller.enums.WhichQuestion;
+import formfiller.enums.QuestionAsked;
 import formfiller.utilities.FormComponentMocker;
 import formfiller.utilities.QuestionMocker;
 import formfiller.utilities.TestSetup;
@@ -44,7 +44,7 @@ public class InMemoryTransporterTest {
 		
 		@Test
 		public void movingBackward_ReturnsFormComponentDotStart(){
-			transporter.moveToElement(WhichQuestion.PREVIOUS);
+			transporter.moveToElement(QuestionAsked.PREVIOUS);
 			
 			currentFormComponent = getCurrentFormComponent();
 			
@@ -53,8 +53,8 @@ public class InMemoryTransporterTest {
 		
 		@Test
 		public void movingBackwardTwice_ReturnsFormComponentDotStart(){
-			transporter.moveToElement(WhichQuestion.PREVIOUS);
-			transporter.moveToElement(WhichQuestion.PREVIOUS);
+			transporter.moveToElement(QuestionAsked.PREVIOUS);
+			transporter.moveToElement(QuestionAsked.PREVIOUS);
 			
 			currentFormComponent = getCurrentFormComponent();
 			
@@ -63,7 +63,7 @@ public class InMemoryTransporterTest {
 		
 		@Test
 		public void movingForward_ReturnsFormComponentDotEnd(){
-			transporter.moveToElement(WhichQuestion.NEXT);
+			transporter.moveToElement(QuestionAsked.NEXT);
 			
 			currentFormComponent = getCurrentFormComponent();
 			
@@ -72,7 +72,7 @@ public class InMemoryTransporterTest {
 		
 		@Test
 		public void movingForwardTwice_ReturnsFormComponentDotEnd(){
-			transporter.moveToElement(WhichQuestion.NEXT);
+			transporter.moveToElement(QuestionAsked.NEXT);
 			
 			currentFormComponent = getCurrentFormComponent();
 			
@@ -102,7 +102,7 @@ public class InMemoryTransporterTest {
 		
 		@Test
 		public void movingBackward_ReturnsFormComponentDotStart(){
-			transporter.moveToElement(WhichQuestion.PREVIOUS);
+			transporter.moveToElement(QuestionAsked.PREVIOUS);
 			
 			currentFormComponent = getCurrentFormComponent();
 			
@@ -111,7 +111,7 @@ public class InMemoryTransporterTest {
 		
 		@Test
 		public void movingInPlace_ReturnsTheGivenFormComponent(){
-			transporter.moveToElement(WhichQuestion.CURRENT);
+			transporter.moveToElement(QuestionAsked.CURRENT);
 			
 			currentFormComponent = getCurrentFormComponent();
 			
@@ -120,7 +120,7 @@ public class InMemoryTransporterTest {
 		
 		@Test
 		public void movingForward_ReturnsQuestionDotEnd(){
-			transporter.moveToElement(WhichQuestion.NEXT);
+			transporter.moveToElement(QuestionAsked.NEXT);
 			
 			currentFormComponent = getCurrentFormComponent();
 			

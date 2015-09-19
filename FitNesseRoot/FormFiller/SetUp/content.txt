@@ -1,6 +1,6 @@
 | import |
 | fitnesse.fixtures |
-| formfiller.enums.WhichQuestion |
+| formfiller.enums.QuestionAsked |
 
 | library |
 | form component presentation |

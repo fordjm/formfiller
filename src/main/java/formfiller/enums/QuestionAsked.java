@@ -1,6 +1,6 @@
 package formfiller.enums;
 
-public enum WhichQuestion { 
+public enum QuestionAsked { 
 	CURRENT, 
 	PREVIOUS,
 	NEXT 

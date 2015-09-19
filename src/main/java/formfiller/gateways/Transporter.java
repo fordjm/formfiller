@@ -1,7 +1,7 @@
 package formfiller.gateways;
 
-import formfiller.enums.WhichQuestion;
+import formfiller.enums.QuestionAsked;
 
 public interface Transporter {	
-	void moveToElement(WhichQuestion which);
+	void moveToElement(QuestionAsked which);
 }

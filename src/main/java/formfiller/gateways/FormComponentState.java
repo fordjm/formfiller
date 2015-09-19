@@ -1,7 +1,7 @@
 package formfiller.gateways;
 
 import formfiller.entities.formComponent.FormComponent;
-import formfiller.enums.WhichQuestion;
+import formfiller.enums.QuestionAsked;
 
 public interface FormComponentState {
 	FormComponent getCurrent();
@@ -10,5 +10,5 @@ public interface FormComponentState {
 	
 	boolean isAtStart();
 
-	void update(WhichQuestion which);
+	void update(QuestionAsked which);
 }

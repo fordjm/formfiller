@@ -7,7 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import formfiller.delivery.controller.Arguments;
-import formfiller.enums.WhichQuestion;
+import formfiller.enums.QuestionAsked;
 import formfiller.request.builders.RequestBuilderImpl;
 import formfiller.request.models.HandleUnfoundUseCaseRequest;
 import formfiller.request.models.AskQuestionRequest;
@@ -45,7 +45,7 @@ public class RequestBuilderImplTest {
 	@Test
 	public void canBuildAskQuestionRequest() {
 		Request askQuestionRequest = 
-				buildRequest("askQuestion", makeArguments("which", WhichQuestion.NEXT));
+				buildRequest("askQuestion", makeArguments("which", QuestionAsked.NEXT));
 		String name = askQuestionRequest.name;
 		AskQuestionRequest castRequest = 
 				(AskQuestionRequest) askQuestionRequest;
@@ -53,7 +53,7 @@ public class RequestBuilderImplTest {
 		assertThat(askQuestionRequest, 
 				is(instanceOf(AskQuestionRequest.class)));
 		assertThat(name, is("AskQuestion"));
-		assertThat(castRequest.which, is(WhichQuestion.NEXT));
+		assertThat(castRequest.which, is(QuestionAsked.NEXT));
 	}
 	
 	@Test

@@ -27,7 +27,8 @@ public class GivenAFormComponent {
 	public void setAnswerContent(String answerContent) {
 		this.answerContent = answerContent;
 	}
-	
+
+	//	TODO:	Fix duplication in FormComponentPresentation
 	public void execute() {
 		FormComponent component = new FormComponent();
 		component.id = id;
@@ -55,5 +56,9 @@ public class GivenAFormComponent {
 		result.id = 0;
 		result.content = answerContent;
 		return result;
+	}
+	
+	public void reset() {
+		FormFillerContext.formComponentGateway.removeAll();
 	}
 }

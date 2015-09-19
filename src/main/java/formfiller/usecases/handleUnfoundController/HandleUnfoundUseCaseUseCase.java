@@ -14,7 +14,7 @@ public class HandleUnfoundUseCaseUseCase implements UseCase {
 		HandleUnfoundUseCaseRequest handleUnfoundUseCaseRequest = 
 				(HandleUnfoundUseCaseRequest) request;
 		String message = handleUnfoundUseCaseRequest.message;
-		FormFillerContext.responsePresenter.
+		FormFillerContext.errorPresenter.
 				present(makeHandleUnfoundUseCaseResponse(message));
 	}
 	

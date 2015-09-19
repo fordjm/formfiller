@@ -1,6 +1,6 @@
 package formfiller.request.builders;
 
-import formfiller.enums.WhichQuestion;
+import formfiller.enums.QuestionAsked;
 import formfiller.request.models.AskQuestionRequest;
 import formfiller.request.models.Request;
 
@@ -15,7 +15,7 @@ public class AskQuestionRequestBuilder implements RequestBuilderFunctions {
 		request.name = "AskQuestion";
 	}
 	
-	public void buildWhichQuestion(WhichQuestion which){
+	public void buildWhichQuestion(QuestionAsked which){
 		request.which = which;
 	}
 

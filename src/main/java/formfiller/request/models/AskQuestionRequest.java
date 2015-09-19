@@ -1,7 +1,7 @@
 package formfiller.request.models;
 
-import formfiller.enums.WhichQuestion;
+import formfiller.enums.QuestionAsked;
 
 public class AskQuestionRequest extends Request {
-	public WhichQuestion which = WhichQuestion.CURRENT;
+	public QuestionAsked which = QuestionAsked.CURRENT;
 }

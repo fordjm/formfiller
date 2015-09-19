@@ -16,7 +16,7 @@ import formfiller.FormFillerContext;
 import formfiller.entities.*;
 import formfiller.entities.answerFormat.*;
 import formfiller.entities.formComponent.*;
-import formfiller.enums.WhichQuestion;
+import formfiller.enums.QuestionAsked;
 import formfiller.request.models.AskQuestionRequest;
 import formfiller.usecases.askQuestion.AskQuestionUseCase;
 import formfiller.usecases.undoable.UndoableUseCase;
@@ -28,13 +28,13 @@ public class AskQuestionTest {
 	private AskQuestionRequest mockRequest;
 	private FormComponent expectedFormComponent;
 
-	private void setupAskQuestionTest(WhichQuestion which, 
+	private void setupAskQuestionTest(QuestionAsked which, 
 			FormComponent formComponent) {
 		setMockRequestQuestion(which);
 		setExpectedFormComponent(formComponent);
 	}
 	
-	private void setMockRequestQuestion(WhichQuestion which){
+	private void setMockRequestQuestion(QuestionAsked which){
 		mockRequest.which = which;
 	}
 	
@@ -104,7 +104,7 @@ public class AskQuestionTest {
 	
 	@Test
 	public void gettingPrevQuestionGetsStartPrompt(){
-		setupAskQuestionTest(WhichQuestion.PREVIOUS, NullFormComponents.START);
+		setupAskQuestionTest(QuestionAsked.PREVIOUS, NullFormComponents.START);
 		
 		executeAskQuestionRequest(mockRequest);
 		
@@ -114,7 +114,7 @@ public class AskQuestionTest {
 	
 	@Test
 	public void gettingCurrentQuestionGetsStartPrompt(){
-		setupAskQuestionTest(WhichQuestion.CURRENT, getCurrentFormComponent());
+		setupAskQuestionTest(QuestionAsked.CURRENT, getCurrentFormComponent());
 		
 		executeAskQuestionRequest(mockRequest);
 		
@@ -124,7 +124,7 @@ public class AskQuestionTest {
 	
 	@Test
 	public void gettingNextQuestionGetsEndPrompt(){
-		setupAskQuestionTest(WhichQuestion.NEXT, getCurrentFormComponent());
+		setupAskQuestionTest(QuestionAsked.NEXT, getCurrentFormComponent());
 		
 		executeAskQuestionRequest(mockRequest);
 		
@@ -200,7 +200,7 @@ public class AskQuestionTest {
 		
 		@Test
 		public void movingBack_OutputsStartComponent(){
-			setupAskQuestionTest(WhichQuestion.PREVIOUS, NullFormComponents.START);
+			setupAskQuestionTest(QuestionAsked.PREVIOUS, NullFormComponents.START);
 			
 			executeAskQuestionRequest(mockRequest);
 			
@@ -209,7 +209,7 @@ public class AskQuestionTest {
 		
 		@Test
 		public void movingNowhere_OutputsFirstComponent(){
-			setupAskQuestionTest(WhichQuestion.CURRENT, getCurrentFormComponent());
+			setupAskQuestionTest(QuestionAsked.CURRENT, getCurrentFormComponent());
 			
 			executeAskQuestionRequest(mockRequest);
 			
@@ -218,7 +218,7 @@ public class AskQuestionTest {
 		
 		@Test
 		public void undoAfterMovingNowhere_DoesNotChangeCurrentFormComponent() {
-			setupAskQuestionTest(WhichQuestion.CURRENT, getCurrentFormComponent());
+			setupAskQuestionTest(QuestionAsked.CURRENT, getCurrentFormComponent());
 			
 			executeAndUndoAskQuestionRequest(mockRequest);
 			
@@ -227,7 +227,7 @@ public class AskQuestionTest {
 		
 		@Test
 		public void movingForward_OutputsSecondComponent(){
-			setupAskQuestionTest(WhichQuestion.NEXT, mockAgeFormComponent);
+			setupAskQuestionTest(QuestionAsked.NEXT, mockAgeFormComponent);
 			
 			executeAskQuestionRequest(mockRequest);
 			
@@ -236,7 +236,7 @@ public class AskQuestionTest {
 		
 		@Test
 		public void undoAfterForwardMove_RevertsCurrentFormComponent() {
-			setupAskQuestionTest(WhichQuestion.NEXT, getCurrentFormComponent());
+			setupAskQuestionTest(QuestionAsked.NEXT, getCurrentFormComponent());
 
 			executeAndUndoAskQuestionRequest(mockRequest);
 			
@@ -247,7 +247,7 @@ public class AskQuestionTest {
 			
 			@Before
 			public void givenTransporterHasMovedForward(){
-				setMockRequestQuestion(WhichQuestion.NEXT);
+				setMockRequestQuestion(QuestionAsked.NEXT);
 				executeAskQuestionRequest(mockRequest);
 			}
 			
@@ -267,7 +267,7 @@ public class AskQuestionTest {
 			
 			@Test			
 			public void movingBack_OutputsFirstComponent(){
-				setupAskQuestionTest(WhichQuestion.PREVIOUS, mockNameFormComponent);
+				setupAskQuestionTest(QuestionAsked.PREVIOUS, mockNameFormComponent);
 				
 				executeAskQuestionRequest(mockRequest);
 				
@@ -276,7 +276,7 @@ public class AskQuestionTest {
 			
 			@Test
 			public void undoAfterBackwardMove_RevertsCurrentFormComponent() {
-				setupAskQuestionTest(WhichQuestion.PREVIOUS, mockAgeFormComponent);
+				setupAskQuestionTest(QuestionAsked.PREVIOUS, mockAgeFormComponent);
 
 				executeAndUndoAskQuestionRequest(mockRequest);
 				
@@ -285,7 +285,7 @@ public class AskQuestionTest {
 			
 			@Test
 			public void movingForward_DoesNotChangeComponent(){
-				setupAskQuestionTest(WhichQuestion.NEXT, getCurrentFormComponent());
+				setupAskQuestionTest(QuestionAsked.NEXT, getCurrentFormComponent());
 				
 				executeAskQuestionRequest(mockRequest);
 				
@@ -294,7 +294,7 @@ public class AskQuestionTest {
 			
 			@Test
 			public void undoAfterFailedExecution_DoesNotChangeCurrentFormComponent() {
-				setupAskQuestionTest(WhichQuestion.NEXT, getCurrentFormComponent());
+				setupAskQuestionTest(QuestionAsked.NEXT, getCurrentFormComponent());
 
 				executeAndUndoAskQuestionRequest(mockRequest);
 				

@@ -12,7 +12,7 @@ public class ResponsePresenter extends Observable implements Presenter {
 	
 	public ResponsePresenter(ViewModel viewModel){
 		this.viewModel = viewModel;
-		this.presentableResponse = new PresentableResponse();
+		clearPresentableResponse();
 	}
 
 	public PresentableResponse getPresentableResponse() {
@@ -22,5 +22,9 @@ public class ResponsePresenter extends Observable implements Presenter {
 	public void present(PresentableResponse presentableResponse) {
 		this.presentableResponse = presentableResponse;
 		viewModel.outputPresentableResponse(presentableResponse);
+	}
+	
+	public void clearPresentableResponse() {
+		presentableResponse = new PresentableResponse();
 	}
 }
