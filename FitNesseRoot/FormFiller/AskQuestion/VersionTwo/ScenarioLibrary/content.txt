@@ -20,34 +20,25 @@
 |reset                                                            |
 |askingTheQuestion|@questionAsked                                 |
 
-!| scenario|then it should present the|field|value|value|
-|check     |presents the @field       |@value           |
+!| scenario|then it should present the|field|message|message|
+|check     |presents the @field       |@message             |
 
-!| scenario                       |then it should present the prompt|prompt |
-|then it should present the value;|prompt                           |@prompt|
-
-!| scenario                       |and the answer|answer |
-|then it should present the value;|answer        |@answer|
-
-!| scenario                       |and the format|format |
-|then it should present the value;|format        |@format|
-
-!| scenario                       |and the error|error |
-|then it should present the value;|error        |@error|
+!| scenario                         |and the|field|message|message|
+|then it should present the message;|@field |@message             |
 
 !| scenario                       |when the system asks the question|question asked|then it should present the prompt|prompt|and the answer|answer|and the answer format|format|and the error|error|
 |when the system asks the question|@questionAsked                                                                                                                                                  |
-|then it should present the prompt|@prompt                                                                                                                                                         |
-|and the answer                   |@answer                                                                                                                                                         |
-|and the format                   |@format                                                                                                                                                         |
-|and the error                    |@error                                                                                                                                                          |
+|then it should present the       |prompt                           |message       |@prompt                                                                                                        |
+|and the                          |answer                           |message       |@answer                                                                                                        |
+|and the                          |format                           |message       |@format                                                                                                        |
+|and the                          |error                            |message       |@error                                                                                                         |
 
-!| scenario|then it should present no|field|value|
-|check     |presents the @field      |           |
+!| scenario|then it should present no|field|message|
+|check     |presents the @field      |             |
 
-!|scenario                        |when the system asks the previous question then it should present the start prompt and no answer and no answer format and no error|
-|when the system asks the question|previous                                                                                                                          |
-|then it should present the prompt|You have reached the start of this form.                                                                                          |
-|then it should present no value; |answer                                                                                                                            |
-|then it should present no value; |format                                                                                                                            |
-|then it should present no value; |error                                                                                                                             |
+!| scenario                        |when the system asks the previous question then it should present the start prompt and no answer and no answer format and no error|
+|when the system asks the question |previous                                                                                                                          |
+|then it should present the        |prompt                         |message                         |You have reached the start of this form.                         |
+|then it should present no message;|answer                                                                                                                            |
+|then it should present no message;|format                                                                                                                            |
+|then it should present no message;|error                                                                                                                             |
