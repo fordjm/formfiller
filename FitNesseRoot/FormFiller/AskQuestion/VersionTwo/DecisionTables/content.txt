@@ -1,14 +1,13 @@
 #	TODO week of 9/20:  Write acceptance tests and funcationality for answer format and allowable answers features
 
-|given a form component with no answer content and with no answer required and with answer format and with allowable answers|
-|answerFormat                                               |allowableAnswers                                               |
-|unstructured                                               |1                                                              |
-
-|when the system asks the question then it should present the prompt and the answer and the answer format and the error|
-|questionAsked         |prompt                                           |answer         |format         |error        |
-|previous              |You have reached the start of this form.         |               |               |             |
-|current               |What is your name?                               |               |               |             |
-|next                  |You have reached the end of this form.           |               |               |             |
+|given when then and                                                                                                                                                                                                                                                              |
+|given scenario                                                                                                                            |when scenario                             |then scenario                              |and scenario                                   |
+|given no form components                                                                                                                  |when the system asks the previous question|then it should present the start prompt    |and no answer and no answer format and no error|
+|given no form components                                                                                                                  |when the system asks the current question |then it should present the end prompt      |and no answer and no answer format and no error|
+|given no form components                                                                                                                  |when the system asks the next question    |then it should present the end prompt      |and no answer and no answer format and no error|
+|given a form component with no answer content and with no answer required and with unstructured answer format and with 1 allowable answers|when the system asks the previous question|then it should present the start prompt    |and no answer and no answer format and no error|
+|given a form component with no answer content and with no answer required and with unstructured answer format and with 1 allowable answers|when the system asks the current question |then it should present the current question|and no answer and no answer format and no error|
+|given a form component with no answer content and with no answer required and with unstructured answer format and with 1 allowable answers|when the system asks the next question    |then it should present the end prompt      |and no answer and no answer format and no error|
 
 |given a form component with some answer content and with no answer required and with answer format and with allowable answers|
 |answerFormat                                                |allowableAnswers                                                |

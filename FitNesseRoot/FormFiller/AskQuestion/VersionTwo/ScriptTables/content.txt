@@ -1,10 +1,15 @@
 #        TODO:  Make these read less like a five-year-old wrote them.
 
-!| script                                                                                                                                                                                                                                    |
-|given a form component with no answer content and with no answer required and with answer format|unstructured|and with allowable answers       |1                                                                                           |
-|when the system asks the previous question then it should present the start prompt and no answer and no answer format and no error                                                                                                          |
-|when the system asks the question                                                               |current     |then it should present the prompt|What is your name?                    |and the answer||and the answer format||and the error||
-|when the system asks the question                                                               |next        |then it should present the prompt|You have reached the end of this form.|and the answer||and the answer format||and the error||
+!|script                                                                                                                                   |
+|given a form component with no answer content and with no answer required and with unstructured answer format and with 1 allowable answers|
+
+!| script                                                                                                                                                                                                                                                                                             |
+|given|given no form components                                                                                                                  |when|when the system asks the previous question|then|then it should present the start prompt    |and|and no answer and no answer format and no error|
+|given|given no form components                                                                                                                  |when|when the system asks the current question |then|then it should present the end prompt      |and|and no answer and no answer format and no error|
+|given|given no form components                                                                                                                  |when|when the system asks the next question    |then|then it should present the end prompt      |and|and no answer and no answer format and no error|
+|given|given a form component with no answer content and with no answer required and with unstructured answer format and with 1 allowable answers|when|when the system asks the previous question|then|then it should present the start prompt    |and|and no answer and no answer format and no error|
+|given|given a form component with no answer content and with no answer required and with unstructured answer format and with 1 allowable answers|when|when the system asks the current question |then|then it should present the current question|and|and no answer and no answer format and no error|
+|given|given a form component with no answer content and with no answer required and with unstructured answer format and with 1 allowable answers|when|when the system asks the next question    |then|then it should present the end prompt      |and|and no answer and no answer format and no error|
 
 !| script                                                                                                                                                                                                                                            |
 |given a form component with some answer content and with no answer required and with answer format|unstructured|and with allowable answers       |1                                                                                                 |

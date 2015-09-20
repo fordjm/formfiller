@@ -1,11 +1,42 @@
+!|scenario|given no form components|
+|clear form components             |
+
+!|scenario|enable scenario|scenarioPointer|
+|@scenarioPointer                         |
+
+!| scenario      |given|given scenario|when|when scenario|then|then scenario|and|and scenario|
+|enable scenario;|@givenScenario                                                             |
+|enable scenario;|@whenScenario                                                              |
+|enable scenario;|@thenScenario                                                              |
+|enable scenario;|@andScenario                                                               |
+
+!| scenario|then it should present the|field|message|message|
+|check     |presents the @field       |@message             |
+
+!| scenario                |then it should present the _ prompt|prompt name                                           |
+|then it should present the|prompt                             |message|You have reached the @promptName of this form.|
+
+!| scenario|then it should present no|field|message|
+|check     |presents the @field      |             |
+
+!| scenario                        |and no answer and no answer format and no error|
+|then it should present no message;|answer                                         |
+|then it should present no message;|format                                         |
+|then it should present no message;|error                                          |
+
 !| scenario               |given a form component with id|id |and question content|question content|and with answer content|answer content|and with answer required|answer required|and with answer format|answer format|and with allowable answers|allowable answers|
 |givenOneFormComponentWith|@id                           |Too|@questionContent    |Many            |@answerContent         |Parameters    |@answerRequired                                                                                                           |
 
 !| scenario                                                                                                                                             |given a form component with answer content|answer content    |and with answer required|answer required|and with answer format|answer format|and with allowable answers|allowable answers|
 |given a form component with id and question content and with answer content and with answer required and with answer format and with allowable answers;|name                                      |What is your name?|@answerContent          |@answerRequired|@answerFormat         |@allowableAnswers                                         |
 
-!| scenario                                |given a form component with no answer content and with no answer required and with answer format|answer format           |and with allowable answers|allowable answers                                               |
-|given a form component with answer content|                                                                                                |and with answer required|FALSE                     |and with answer format|unstructured|and with allowable answers|1|
+# Construction
+!| scenario                                |given a form component with no answer content and with no answer required and with _ answer format and with _ allowable answers|answerFormat, allowableAnswers                                                                                |
+|given a form component with answer content|                                                                                                                               |and with answer required|FALSE|and with answer format|answerFormat|and with allowable answers|allowableAnswers|
+
+!| scenario                |then it should present the current question|
+|then it should present the|prompt    |message   |What is your name?   |
+# End construction
 
 !| scenario                                |given a form component with some answer content and with no answer required and with answer format|answer format           |and with allowable answers|allowable answers                                               |
 |given a form component with answer content|myName                                                                                            |and with answer required|FALSE                     |and with answer format|unstructured|and with allowable answers|1|
@@ -16,12 +47,9 @@
 !| scenario                                |given a form component with some answer content and with an answer required and with answer format|answer format           |and with allowable answers|allowable answers                                               |
 |given a form component with answer content|myName                                                                                            |and with answer required|TRUE                      |and with answer format|unstructured|and with allowable answers|1|
 
-!| scenario       |when the system asks the question|questionAsked|
-|reset                                                            |
-|askingTheQuestion|@questionAsked                                 |
-
-!| scenario|then it should present the|field|message|message|
-|check     |presents the @field       |@message             |
+!| scenario       |when the system asks the _ question|questionAsked|
+|reset                                                              |
+|askingTheQuestion|@questionAsked                                   |
 
 !| scenario                         |and the|field|message|message|
 |then it should present the message;|@field |@message             |
@@ -32,9 +60,6 @@
 |and the                          |answer                           |message       |@answer                                                                                                        |
 |and the                          |format                           |message       |@format                                                                                                        |
 |and the                          |error                            |message       |@error                                                                                                         |
-
-!| scenario|then it should present no|field|message|
-|check     |presents the @field      |             |
 
 !| scenario                        |when the system asks the previous question then it should present the start prompt and no answer and no answer format and no error|
 |when the system asks the question |previous                                                                                                                          |
