@@ -1,8 +1,5 @@
 #        TODO:  Make these read less like a five-year-old wrote them.
 
-!|script                                                                                                                                   |
-|given a form component with no answer content and with no answer required and with unstructured answer format and with 1 allowable answers|
-
 !| script                                                                                                                                                                                                                                                                                             |
 |given|given no form components                                                                                                                  |when|when the system asks the previous question|then|then it should present the start prompt    |and|and no answer and no answer format and no error|
 |given|given no form components                                                                                                                  |when|when the system asks the current question |then|then it should present the end prompt      |and|and no answer and no answer format and no error|
