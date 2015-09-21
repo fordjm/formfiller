@@ -3,11 +3,15 @@ package formfiller.usecases.addAnswer;
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
 import formfiller.entities.Answer;
+import formfiller.entities.constrainable.AnswerType;
 import formfiller.entities.constrainable.Constrainable;
 import formfiller.utilities.AnswerMocker;
 
@@ -19,7 +23,7 @@ public class AnswerValidatorTest {
 		answer = mockAnswer;
 	}
 	
-	private Answer makeMockAnswer(int id, Object content){
+	private Answer makeMockAnswer(String id, Object content){
 		return AnswerMocker.makeMockAnswer(id, content);
 	}
 
@@ -54,19 +58,19 @@ public class AnswerValidatorTest {
 	
 	@Test
 	public void newAnswerIsInvalid() {
-		assertThat(answerValidator.isValid(makeMockAnswer(-1, "")), is(false));
+		assertThat(answerValidator.isValid(makeMockAnswer("", "")), is(false));
 	}
 	
 	@Test
 	public void validAnswerWithNoConstraintsIsValid() {
-		setAnswerField(makeMockAnswer(0, "Banana"));
+		setAnswerField(makeMockAnswer("questionId", "Banana"));
 		
 		assertThat(answerValidator.isValid(answer), is(true));
 	}
 	
 	@Test
 	public void answerThatViolatesAllConstraintsIsInvalid() {
-		setAnswerField(makeMockAnswer(0, 10));
+		setAnswerField(makeMockAnswer("questionId", 10));
 		addConstraints(makeUnsatisfiedConstraint(10));
 		
 		assertThat(answerValidator.isValid(answer), is(false));
@@ -74,7 +78,7 @@ public class AnswerValidatorTest {
 	
 	@Test
 	public void validAnswerThatSatisfiesAllConstraintsIsValid() {
-		setAnswerField(makeMockAnswer(0, 3));
+		setAnswerField(makeMockAnswer("questionId", 3));
 		addConstraints(makeSatisfiedConstraint(3));
 		
 		assertThat(answerValidator.isValid(answer), is(true));
@@ -82,9 +86,34 @@ public class AnswerValidatorTest {
 	
 	@Test
 	public void validAnswerThatViolatesOneConstraintIsInvalid() {
-		setAnswerField(makeMockAnswer(0, 3));
+		setAnswerField(makeMockAnswer("questionId", 3));
 		addConstraints(makeUnsatisfiedConstraint(10), makeSatisfiedConstraint(3));
 		
 		assertThat(answerValidator.isValid(answer), is(false));
+	}
+	
+	//	Added 2015-09-21
+	
+	@Test
+	public void testAnswerValidator() {
+		Collection<Constrainable> constraints = new ArrayList<Constrainable>();
+		constraints.add(new AnswerType(String.class));
+		AnswerValidator validator = new AnswerValidator(constraints);
+		Answer validAnswer = makeValidAnswer();
+		
+		assertThat(validator.isValid(new Answer()), is(false));
+		assertThat(validator.isValid(validAnswer), is(true));
+	}
+	
+	private Answer makeValidAnswer() {
+		Answer result = makeAnswer("answerContent");
+		return result;
+	}
+
+	private Answer makeAnswer(Object questionContent) {
+		Answer result = new Answer();
+		result.questionId = "questionId";
+		result.content = questionContent;
+		return result;
 	}
 }

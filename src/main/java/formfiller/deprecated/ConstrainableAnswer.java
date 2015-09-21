@@ -1,11 +1,9 @@
 package formfiller.deprecated;
 
-import formfiller.entities.Answer;
-
 //	TODO:	Delete after converting all Constraints to Constrainable.
 public class ConstrainableAnswer {
 	public static final ConstrainableAnswer NONE = new ConstrainableAnswer(-1, "");
-	private Answer answer = new Answer();
+	private DeprecatedAnswerWithId answer = new DeprecatedAnswerWithId();
 
 	public ConstrainableAnswer(Object content){
 		answer.id = 0;
@@ -27,5 +25,10 @@ public class ConstrainableAnswer {
 
 	public boolean isSatisfied() {
 		return answer.id >= 0 && answer.content != null;
+	}
+	
+	private class DeprecatedAnswerWithId {
+		public int id = -1;
+		public Object content = "";
 	}
 }

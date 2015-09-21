@@ -1,6 +1,8 @@
-package formfiller.request.models;
+package formfiller.usecases.addFormComponent;
 
 import java.lang.reflect.Type;
+
+import formfiller.request.models.Request;
 
 public class AddFormComponentRequest extends Request {
 	public String name = "AddFormComponentRequest";

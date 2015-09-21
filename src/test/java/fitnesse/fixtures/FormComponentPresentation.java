@@ -118,12 +118,12 @@ public class FormComponentPresentation {
 			result.content = questionContent;		
 			return result;
 		}
-
+		//	TODO:	Update FitNesse tests to use String answer ID.
 		private Answer makeAnswer(String answerContent) {
 			if (answerContent.length() == 0) return Answer.NONE;
 			
 			Answer result = new Answer();		
-			result.id = 0;
+			result.questionId = "questionId";
 			result.content = answerContent;
 			return result;
 		}

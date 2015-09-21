@@ -42,7 +42,7 @@ public class AskQuestionControllerTest {
 		FormComponent result = Mockito.mock(FormComponent.class);
 		result.id = "name";
 		result.question = QuestionMocker.makeMockNameQuestion();
-		result.answer = AnswerMocker.makeMockAnswer(0, "myName");
+		result.answer = AnswerMocker.makeMockAnswer("name", "myName");
 		return result;
 	}
 	

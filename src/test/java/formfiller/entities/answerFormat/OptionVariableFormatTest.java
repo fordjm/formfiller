@@ -25,14 +25,14 @@ public class OptionVariableFormatTest {
 	
 	@Before
 	public void setUp() {
-		format = new OptionVariableFormat();
+		format = new OptionVariableFormat(0, 1);
 		Object[] options = makeScantronOptions();
 		format.options = Arrays.asList(options);
 	}
 
 	@Test
 	public void nullContent_DoesNotMatchFormat() {
-		assertThat(format.matchesContent(null), is(false));
+		assertThat(format.matchesFormat(null), is(false));
 	}
 
 	@Test
@@ -40,11 +40,11 @@ public class OptionVariableFormatTest {
 		Double randomDouble = Math.random() * 5;
 		Object randomOption = getOption(randomDouble.intValue());
 		
-		assertThat(format.matchesContent(randomOption), is(true));
+		assertThat(format.matchesFormat(randomOption), is(true));
 	}
 
 	@Test
 	public void uncontainedOption_DoesNotMatchFormat() {
-		assertThat(format.matchesContent('f'), is(false));
+		assertThat(format.matchesFormat('f'), is(false));
 	}
 }

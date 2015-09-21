@@ -167,7 +167,7 @@ public class AskQuestionTest {
 		}	
 
 		private OptionVariableFormat makeOptionVariableFormat() {
-			OptionVariableFormat result = new OptionVariableFormat();
+			OptionVariableFormat result = new OptionVariableFormat(0, 1);
 			result.options = makeLegalAgeOptions();
 			return result;
 		}
@@ -181,7 +181,7 @@ public class AskQuestionTest {
 		@Before
 		public void givenTwoFormComponents(){
 			mockNameFormComponent = makeMockFormComponent("name", 
-					"What is your name?", false, AnswerFormat.UNSTRUCTURED);
+					"What is your name?", false, new UnstructuredAnswerFormat(0, 1));
 			mockAgeFormComponent = makeMockFormComponent("age", 
 					"What is your age?", true, makeOptionVariableFormat());
 			saveFormComponents(mockNameFormComponent, mockAgeFormComponent);
@@ -193,9 +193,9 @@ public class AskQuestionTest {
 			
 			assertThat(currentComponent.id, is("name"));
 			assertThat(currentComponent.requiresAnswer, is(false));
-			assertThat(currentComponent.format, is(AnswerFormat.UNSTRUCTURED));
+			assertThat(currentComponent.format, is(instanceOf(UnstructuredAnswerFormat.class)));
 			//	TODO:	Move below into UnstructuredFormat when it has its own class.
-			assertThat(currentComponent.format.matchesContent("myName"), is(true));
+			assertThat(currentComponent.format.matchesFormat("myName"), is(true));
 		}
 		
 		@Test

@@ -13,6 +13,10 @@ public class AnswerValidator {
 		this.constraints = new ArrayList<Constrainable>();
 	}
 
+	public AnswerValidator(Collection<Constrainable> constraints) {
+		this.constraints = constraints;
+	}
+
 	public boolean isValid(Answer answer) {
 		if (answer == null) return false;
 		
@@ -20,7 +24,7 @@ public class AnswerValidator {
 	}
 
 	private boolean hasValidFieldValues(Answer answer) {
-		return answer.id >= 0 && answer.content != "";
+		return answer.questionId != "" && answer.content != "";
 	}
 
 	private boolean satisfiesConstraints(Object object) {
