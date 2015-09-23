@@ -23,7 +23,8 @@ import formfiller.usecases.undoable.UndoableUseCase;
 
 //	TODO:	FixtureSetup/TestSetup should set up variables.  
 //			How to access EventHandler?
-public class FormComponentPresentation {	
+public class FormComponentPresentation {
+	//	TODO:	Fix duplication in AddFormComponent.
 	private EventSource source;
 	private Router router;
 	private EventHandler handler;
@@ -34,6 +35,7 @@ public class FormComponentPresentation {
 		router = PlaceholderRouterFactory.makeRouter();
 		handler = new EventHandler(router);
 	}
+	//			End duplication
 	
 	private Map<Class<?>, String> makePrefixes() {
 		Map<Class<?>, String> result = new HashMap<Class<?>, String>();

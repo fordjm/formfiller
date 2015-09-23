@@ -7,6 +7,7 @@ import org.mockito.Mockito;
 
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
 import formfiller.delivery.Controller;
+import formfiller.delivery.controller.AddUnstructuredFormComponentController;
 import formfiller.delivery.event.ParsedEvent;
 import formfiller.utilities.*;
 //Adapted from:
@@ -35,6 +36,24 @@ public class RouterTest {
 
 	// TODO:  public class GivenAnEmptyStringRequest{ ... }
 	//		  Should route() return a String with routing info?
+	public class GivenAnAddUnstructuredFormComponentRequest {
+		
+		@Before
+		public void givenAnAddUnstructuredFormComponentRequest() {
+			mockParsedRequest = 
+					ParsedEventMocker.makeMockParsedEvent("addunstructuredformcomponent", "questionId");
+			mockController = Mockito.mock(AddUnstructuredFormComponentController.class);
+		}
+		
+		@Test
+		public void canRouteAddUnstructuredFormComponentRequest() {
+			router.addMethod("addunstructuredformcomponent", mockController);
+			router.route(mockParsedRequest);
+
+			verifyControllerHandledParsedRequest();
+		}
+	}
+	
 	public class GivenAnAskQuestionRequest {
 		
 		@Before

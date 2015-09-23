@@ -27,9 +27,9 @@ public class AskQuestionController implements Controller {
 		return result;
 	}
 
-	private Arguments makeArguments(QuestionAsked direction) {
+	private Arguments makeArguments(QuestionAsked which) {
 		Arguments arguments = new Arguments();
-		arguments.add("which", direction);
+		arguments.add("which", which);
 		return arguments;
 	}
 	

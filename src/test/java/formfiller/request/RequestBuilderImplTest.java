@@ -3,13 +3,18 @@ package formfiller.request;
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.junit.Before;
 import org.junit.Test;
 
 import formfiller.delivery.controller.Arguments;
+import formfiller.entities.answerFormat.Unstructured;
 import formfiller.enums.QuestionAsked;
 import formfiller.request.builders.RequestBuilderImpl;
 import formfiller.request.models.HandleUnfoundUseCaseRequest;
+import formfiller.request.models.AddUnstructuredFormComponentRequest;
 import formfiller.request.models.AskQuestionRequest;
 import formfiller.request.models.Request;
 
@@ -18,6 +23,15 @@ public class RequestBuilderImplTest {
 	
 	private Request buildRequest(String requestName, Arguments args) {
 		return builder.build(requestName, args);
+	}
+	
+	private Arguments makeArguments(Map<String,Object> argumentsMap) {
+		Arguments result = new Arguments();
+		for (String key : argumentsMap.keySet()){
+			Object value = argumentsMap.get(key);
+			result.add(key, value);			
+		}			
+		return result;
 	}
 	
 	private Arguments makeArguments(String key, Object value) {
@@ -32,6 +46,33 @@ public class RequestBuilderImplTest {
 	}
 	
 	@Test
+	public void canBuildAddUnstructuredFormComponentRequest() {
+		Map<String, Object> argumentsMap = makeArgumentsMap();
+		Request request = 
+				buildRequest("addUnstructuredFormComponent", 
+						makeArguments(argumentsMap));
+		String name = request.name;
+		AddUnstructuredFormComponentRequest castRequest = 
+				(AddUnstructuredFormComponentRequest) request;
+		
+		assertThat(request, 
+				is(instanceOf(AddUnstructuredFormComponentRequest.class)));
+		assertThat(name, is("AddUnstructuredFormComponent"));
+		assertThat(castRequest.questionId, is("questionId"));
+		assertThat(castRequest.questionContent, is("questionContent"));
+		assertThat(castRequest.format, instanceOf(Unstructured.class));
+	}
+
+	//	TODO:	Test other formats, other min/maxAnswers values.
+	private HashMap<String, Object> makeArgumentsMap() {
+		HashMap<String, Object> result = new HashMap<String,Object>();
+		result.put("questionId", "questionId");
+		result.put("questionContent", "questionContent");
+		result.put("format", new Unstructured());
+		return result;
+	}
+	
+	@Test
 	public void canBuildHandleUnfoundUseCaseRequest() {
 		Request handleUnfoundUseCaseRequest = 
 				builder.build("handleUnfoundUseCase", new Arguments());
@@ -39,7 +80,7 @@ public class RequestBuilderImplTest {
 		assertThat(handleUnfoundUseCaseRequest, 
 				is(instanceOf(HandleUnfoundUseCaseRequest.class)));
 		assertThat(handleUnfoundUseCaseRequest.name, 
-				is("HandleUnfoundUseCaseRequest"));
+				is("HandleUnfoundUseCase"));
 	}
 	
 	@Test

@@ -2,10 +2,15 @@ package formfiller.entities.answerFormat;
 
 import java.util.List;
 
-public class OptionVariableFormat extends AnswerFormat {
+//	TODO:	Make abstract.  Add subclasses Single- and MultiOptionVariable
+public class OptionVariable extends AnswerFormat {
 	public List<Object> options;
 	
-	public OptionVariableFormat(int minAnswers, int maxAnswers) {
+	public OptionVariable() {
+		super();
+	}
+	
+	public OptionVariable(int minAnswers, int maxAnswers) {
 		super(minAnswers, maxAnswers);
 	}
 

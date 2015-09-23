@@ -1,0 +1,9 @@
+!| script                                                                                               |
+|given the question ID name, the question content What is your name?, and the answer format unstructured|
+|when the user adds a form component                                                                    |
+|then the system should present the message, You successfully added the new form component, "name."     |
+
+!| form component addition table                                                                    |
+|question id|question content  |answer format|message                                               |
+|name       |What is your name?|unstructured |You successfully added the new form component, "name."|
+|age        |What is your age? |unstructured |You successfully added the new form component, "age." |

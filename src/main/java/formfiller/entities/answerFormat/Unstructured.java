@@ -1,11 +1,11 @@
 package formfiller.entities.answerFormat;
 
-public class UnstructuredAnswerFormat extends AnswerFormat {
-	public UnstructuredAnswerFormat() {
+public class Unstructured extends AnswerFormat {
+	public Unstructured() {
 		super();
 	}
 	
-	public UnstructuredAnswerFormat(int minAnswers, int maxAnswers) {
+	public Unstructured(int minAnswers, int maxAnswers) {
 		super(minAnswers, maxAnswers);
 	}
 

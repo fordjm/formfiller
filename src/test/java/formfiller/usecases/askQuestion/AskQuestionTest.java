@@ -166,8 +166,8 @@ public class AskQuestionTest {
 			undoAskQuestionUseCase();
 		}	
 
-		private OptionVariableFormat makeOptionVariableFormat() {
-			OptionVariableFormat result = new OptionVariableFormat(0, 1);
+		private OptionVariable makeOptionVariableFormat() {
+			OptionVariable result = new OptionVariable(0, 1);
 			result.options = makeLegalAgeOptions();
 			return result;
 		}
@@ -181,7 +181,7 @@ public class AskQuestionTest {
 		@Before
 		public void givenTwoFormComponents(){
 			mockNameFormComponent = makeMockFormComponent("name", 
-					"What is your name?", false, new UnstructuredAnswerFormat(0, 1));
+					"What is your name?", false, new Unstructured(0, 1));
 			mockAgeFormComponent = makeMockFormComponent("age", 
 					"What is your age?", true, makeOptionVariableFormat());
 			saveFormComponents(mockNameFormComponent, mockAgeFormComponent);
@@ -193,7 +193,7 @@ public class AskQuestionTest {
 			
 			assertThat(currentComponent.id, is("name"));
 			assertThat(currentComponent.requiresAnswer, is(false));
-			assertThat(currentComponent.format, is(instanceOf(UnstructuredAnswerFormat.class)));
+			assertThat(currentComponent.format, is(instanceOf(Unstructured.class)));
 			//	TODO:	Move below into UnstructuredFormat when it has its own class.
 			assertThat(currentComponent.format.matchesFormat("myName"), is(true));
 		}
@@ -254,14 +254,14 @@ public class AskQuestionTest {
 			@Test
 			public void gettingCurrent_ReturnsMockAgeFormComponent(){
 				FormComponent currentComponent = getCurrentFormComponent();
-				OptionVariableFormat castFormat = 
-						(OptionVariableFormat) currentComponent.format;
+				OptionVariable castFormat = 
+						(OptionVariable) currentComponent.format;
 				List<Object> options = castFormat.options;
 				
 				assertThat(currentComponent.id, is("age"));
 				assertThat(currentComponent.requiresAnswer, is(true));
 				assertThat(currentComponent.format, 
-						is(instanceOf(OptionVariableFormat.class)));
+						is(instanceOf(OptionVariable.class)));
 				assertThat(options, is(makeLegalAgeOptions()));
 			}
 			

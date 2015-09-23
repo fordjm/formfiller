@@ -1,17 +1,19 @@
-| import |
-| fitnesse.fixtures |
-| formfiller.enums.QuestionAsked |
+|import                                                   |
+|fitnesse.fixtures                                        |
+|formfiller.enums.QuestionAsked                           |
+|formfiller.entities.answerFormat.UnstructuredAnswerFormat|
 
-| library |
-| form component presentation |
+|library                    |
+|add form component         |
+|form component presentation|
 
-| Fixture setup |
+|Fixture setup|
 
 !define QuestionSetup (!| given a form component |
-| id | questionContent | required | answerContent |
-| ${questionId} | ${questionContent} | ${required}  | ${answerContent} |)
+|id           |questionContent   |required   |answerContent   |
+|${questionId}|${questionContent}|${required}|${answerContent}|)
 
 !define CheckMessage (!| script |
-| when the system asks the question | ${whichQuestion} |
-| check | then the question message is | ${questionMessage} |)
+|when the system asks the question|${whichQuestion}                               |
+|check                            |then the question message is|${questionMessage}|)
 

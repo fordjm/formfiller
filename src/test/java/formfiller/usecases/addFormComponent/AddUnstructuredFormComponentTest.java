@@ -13,8 +13,9 @@ import formfiller.FormFillerContext;
 import formfiller.entities.Answer;
 import formfiller.entities.Question;
 import formfiller.entities.answerFormat.AnswerFormat;
-import formfiller.entities.answerFormat.UnstructuredAnswerFormat;
+import formfiller.entities.answerFormat.Unstructured;
 import formfiller.entities.formComponent.FormComponent;
+import formfiller.request.models.AddFormComponentRequest;
 import formfiller.request.models.AddUnstructuredFormComponentRequest;
 import formfiller.request.models.Request;
 import formfiller.usecases.addAnswer.AnswerValidator;
@@ -51,7 +52,7 @@ public class AddUnstructuredFormComponentTest {
 		AddFormComponentRequest request = 
 				new AddFormComponentRequest();
 		assertThat(request, is(instanceOf(Request.class)));
-		assertThat(request.name, is("AddFormComponentRequest"));
+		assertThat(request.name, is("Request"));
 		assertThat(request.questionId, is(""));
 		assertThat(request.questionContent, is(""));
 		assertThat(request.minAnswerCount, is(0));
@@ -72,7 +73,8 @@ public class AddUnstructuredFormComponentTest {
 	//	TODO:	How to handle malformed request?	
 	@Test
 	public void testExecutingMalformedRequest() {
-		AddUnstructuredFormComponentRequest request = makeMockAddUnstructuredRequest();
+		AddUnstructuredFormComponentRequest request = 
+				makeMockAddUnstructuredRequest();
 		
 		addUnstructured.execute(request);
 		UndoableUseCase mostRecent = 
@@ -101,7 +103,7 @@ public class AddUnstructuredFormComponentTest {
 		assertThat(addedAnswer, is(Answer.NONE));
 		
 		AnswerFormat addedFormat = addedComponent.format;
-		assertThat(addedFormat, is(instanceOf(UnstructuredAnswerFormat.class)));
+		assertThat(addedFormat, is(instanceOf(Unstructured.class)));
 		
 		AnswerValidator addedValidator = addedComponent.validator;
 		assertNotNull(addedValidator);

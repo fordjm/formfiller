@@ -8,12 +8,12 @@ import java.util.Arrays;
 import org.junit.Before;
 import org.junit.Test;
 
-import formfiller.entities.answerFormat.OptionVariableFormat;
+import formfiller.entities.answerFormat.OptionVariable;
 
 //	TODO:	Separate classes for single and multi option variables?
 //			Pass a cardinality object? {SINGLE, ANY, SPECIFIC, RANGE}
 public class OptionVariableFormatTest {
-	private OptionVariableFormat format;
+	private OptionVariable format;
 
 	private Character[] makeScantronOptions() {
 		return new Character[] {'a', 'b', 'c', 'd', 'e'};
@@ -25,7 +25,7 @@ public class OptionVariableFormatTest {
 	
 	@Before
 	public void setUp() {
-		format = new OptionVariableFormat(0, 1);
+		format = new OptionVariable(0, 1);
 		Object[] options = makeScantronOptions();
 		format.options = Arrays.asList(options);
 	}

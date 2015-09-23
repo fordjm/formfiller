@@ -13,7 +13,7 @@ public class UnstructuredAnswerFormatTest {
 
 	@Test
 	public void testUnstructuredSingleAnswerFormat() {
-		UnstructuredAnswerFormat format = new UnstructuredAnswerFormat(0, 1);
+		Unstructured format = new Unstructured(0, 1);
 		assertThat(format.matchesFormat(null), is(false));
 		assertThat(format.matchesFormat(""), is(true));
 		assertThat(format.matchesCardinality(makeLegalSingleAnswer()), is(true));
@@ -22,7 +22,7 @@ public class UnstructuredAnswerFormatTest {
 
 	@Test
 	public void testUnstructuredMultipleAnswerFormat() {
-		UnstructuredAnswerFormat format = new UnstructuredAnswerFormat(2, 5);
+		Unstructured format = new Unstructured(2, 5);
 		assertThat(format.matchesFormat(null), is(false));
 		assertThat(format.matchesFormat(""), is(true));
 		assertThat(format.matchesCardinality(makeLegalSingleAnswer()), is(false));

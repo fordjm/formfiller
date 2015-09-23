@@ -15,6 +15,7 @@ public class StringEventParser implements EventParser {
 		String[] split = preprocessInputString(input);
 		if (split.length > 0)
 			result.method = split[0];
+		//	TODO:	For each loop and add params to List<String>
 		if (split.length > 1)
 			result.param = split[1];
 		return result;

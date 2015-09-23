@@ -11,7 +11,7 @@ public class HandleUnfoundUseCaseRequestBuilder implements RequestBuilderFunctio
 	}
 
 	public void buildName() {
-		handleUnfoundUseCaseRequest.name = "HandleUnfoundUseCaseRequest";
+		handleUnfoundUseCaseRequest.name = "HandleUnfoundUseCase";
 	}
 	
 	public void buildMessage(String message) {
