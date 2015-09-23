@@ -13,7 +13,7 @@ public class FormFillerContext {
 	public static FormComponentGateway formComponentGateway;
 	public static ExecutedUseCases executedUseCases;
 	public static Presenter answerPresenter;
-	public static Presenter errorPresenter;
+	public static Presenter outcomePresenter;
 	public static Presenter formComponentPresenter;
 	public static Presenter questionPresenter;
 }

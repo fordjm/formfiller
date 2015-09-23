@@ -20,7 +20,7 @@ public class Main {
 	}
 	
 	private static void handleStartEvent() {
-		eventHandler.update(eventSource, "AskQuestion current");
+		eventHandler.update(eventSource, "AskQues current");
 	}
 	
 	private static void setupClassVariables() {

@@ -1,21 +1,23 @@
 package formfiller.request.builders;
 
 import formfiller.delivery.controller.Arguments;
-import formfiller.entities.answerFormat.AnswerFormat;
 import formfiller.enums.QuestionAsked;
 import formfiller.request.models.Request;
 
 public class RequestBuilderImpl implements RequestBuilder {
+	Arguments args;
 
 	public Request build(String requestName, Arguments args) {
+		this.args = args;
+		
 		if(requestName.equalsIgnoreCase("handleUnfoundUseCase"))
 			return buildHandleUnfoundControllerRequest(args);
-		else if(requestName.equalsIgnoreCase("addUnstructuredFormComponent"))
-			return buildAddUnstructuredFormComponentRequest(args);
+		else if(requestName.equalsIgnoreCase("addFormComponent"))
+			return buildAddFormComponentRequest(args);
 		else if(requestName.equalsIgnoreCase("askQuestion"))
 			return buildAskQuestionRequest(args);
 		else
-			return getNoRequest();
+			return Request.NULL;
 	}
 
 	private Request buildHandleUnfoundControllerRequest(Arguments args) {
@@ -25,13 +27,22 @@ public class RequestBuilderImpl implements RequestBuilder {
 		return finishBuildingRequest(builder);
 	}
 
-	private Request buildAddUnstructuredFormComponentRequest(Arguments args) {
-		AddUnstructuredFormComponentRequestBuilder builder = 
-				new AddUnstructuredFormComponentRequestBuilder();
+	private Request buildAddFormComponentRequest(Arguments args) {
+		AddFormComponentRequestBuilder builder = 
+				selectBuilderByAnswerFormat();
 		builder.buildQuestionId((String) args.getById("questionId"));
 		builder.buildQuestionContent((String) args.getById("questionContent"));
-		builder.buildAnswerFormat((AnswerFormat) args.getById("format"));
+		builder.buildAnswerFormat();
 		return finishBuildingRequest(builder);
+	}
+
+	private AddFormComponentRequestBuilder selectBuilderByAnswerFormat() {
+		String format = (String) args.getById("answerFormat");
+		if (format.equalsIgnoreCase("U"))
+			return new AddUnstructuredFormComponentRequestBuilder();
+		else
+			throw new IllegalArgumentException("No builder for the answer format " + 
+					format + " exists.");
 	}
 	
 	private Request buildAskQuestionRequest(Arguments args) {
@@ -43,12 +54,5 @@ public class RequestBuilderImpl implements RequestBuilder {
 	private Request finishBuildingRequest(RequestBuilderFunctions builder){
 		builder.buildName();
 		return builder.getRequest();
-	}
-	
-	//	TODO:	Request.NULL object
-	private Request getNoRequest() {
-		Request result = new Request();
-		result.name = "NoRequest";
-		return result;
 	}
 }

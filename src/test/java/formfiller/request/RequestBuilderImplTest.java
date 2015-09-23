@@ -14,6 +14,7 @@ import formfiller.entities.answerFormat.Unstructured;
 import formfiller.enums.QuestionAsked;
 import formfiller.request.builders.RequestBuilderImpl;
 import formfiller.request.models.HandleUnfoundUseCaseRequest;
+import formfiller.request.models.AddFormComponentRequest;
 import formfiller.request.models.AddUnstructuredFormComponentRequest;
 import formfiller.request.models.AskQuestionRequest;
 import formfiller.request.models.Request;
@@ -49,10 +50,10 @@ public class RequestBuilderImplTest {
 	public void canBuildAddUnstructuredFormComponentRequest() {
 		Map<String, Object> argumentsMap = makeArgumentsMap();
 		Request request = 
-				buildRequest("addUnstructuredFormComponent", 
+				buildRequest("addFormComponent", 
 						makeArguments(argumentsMap));
 		String name = request.name;
-		AddUnstructuredFormComponentRequest castRequest = 
+		AddFormComponentRequest castRequest = 
 				(AddUnstructuredFormComponentRequest) request;
 		
 		assertThat(request, 
@@ -63,12 +64,13 @@ public class RequestBuilderImplTest {
 		assertThat(castRequest.format, instanceOf(Unstructured.class));
 	}
 
-	//	TODO:	Test other formats, other min/maxAnswers values.
+	//	TODO:	Fix duplication in AddFormComponentController
+	//			Test other formats, other min/maxAnswers values.
 	private HashMap<String, Object> makeArgumentsMap() {
 		HashMap<String, Object> result = new HashMap<String,Object>();
 		result.put("questionId", "questionId");
 		result.put("questionContent", "questionContent");
-		result.put("format", new Unstructured());
+		result.put("answerFormat", "U");
 		return result;
 	}
 	
@@ -98,9 +100,9 @@ public class RequestBuilderImplTest {
 	}
 	
 	@Test
-	public void canBuildNoRequest() {
-		Request noRequest = builder.build("unknown", new Arguments());
+	public void canBuildUnknownRequest() {
+		Request request = builder.build("unknown", new Arguments());
 		
-		assertThat(noRequest.name, is("NoRequest"));
+		assertThat(request, is(Request.NULL));
 	}
 }

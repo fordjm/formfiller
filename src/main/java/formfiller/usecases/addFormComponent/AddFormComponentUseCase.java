@@ -86,7 +86,7 @@ public abstract class AddFormComponentUseCase implements UndoableUseCase {
 	}
 	
 	private void presentResponse(PresentableResponse presentableResponse) {
-		FormFillerContext.errorPresenter.present(presentableResponse);
+		FormFillerContext.outcomePresenter.present(presentableResponse);
 	}
 
 	public void undo() {

@@ -61,7 +61,7 @@ public class FormComponentPresentation {
 	}
 
 	public String presentsTheError() {
-		PresentableResponse response = getPresentableResponse(FormFillerContext.errorPresenter);
+		PresentableResponse response = getPresentableResponse(FormFillerContext.outcomePresenter);
 		return response.message;
 	}
 	
@@ -131,7 +131,7 @@ public class FormComponentPresentation {
 		}
 
 	public void askingTheQuestion(QuestionAsked which) {
-		handler.update(source, "AskQuestion " + which.toString());
+		handler.update(source, "AskQues " + which.toString());
 	}
 	
 	public String presentsTheMessage() {
@@ -173,7 +173,7 @@ public class FormComponentPresentation {
 		Collection<Presenter> result = new ArrayList<Presenter>();
 		result.add(FormFillerContext.questionPresenter);
 		result.add(FormFillerContext.answerPresenter);
-		result.add(FormFillerContext.errorPresenter);
+		result.add(FormFillerContext.outcomePresenter);
 		return result;
 	}
 

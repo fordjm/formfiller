@@ -18,7 +18,7 @@ public class HandleUnfoundUseCaseControllerTest {
 	
 	private PresentableResponse getPresentableUnfoundUseCaseResponse(){
 		PresentableResponse result = 
-				FormFillerContext.errorPresenter.getPresentableResponse();
+				FormFillerContext.outcomePresenter.getPresentableResponse();
 		return result;
 	}
 	

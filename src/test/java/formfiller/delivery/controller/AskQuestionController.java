@@ -11,23 +11,27 @@ import formfiller.usecases.factory.UseCaseFactoryImpl;
 import formfiller.utilities.*;
 
 public class AskQuestionController implements Controller {
+	private QuestionAsked which;
+	private Arguments arguments;
 
 	public void handle(ParsedEvent parsedEvent) {
-		QuestionAsked which = WhichQuestionParser.parseWhich(parsedEvent.param);
-		Arguments arguments = makeArguments(which);
-		Request request = makeAskQuestionRequest(arguments);
+		String questionAsked = parsedEvent.parameters.get(0);
+		which = WhichQuestionParser.parseWhich(questionAsked);
+		arguments = makeArguments();
+		Request request = makeAskQuestionRequest();
 		UseCase useCase = makeAskQuestionUseCase();
 		
 		useCase.execute(request);
 	}	
 	
-	protected Request makeAskQuestionRequest(Arguments arguments){
+	protected Request makeAskQuestionRequest(){
 		RequestBuilder requestBuilder = new RequestBuilderImpl();
 		Request result = requestBuilder.build("askQuestion", arguments);
 		return result;
 	}
 
-	private Arguments makeArguments(QuestionAsked which) {
+	//	TODO:  Use reflection to add fieldNameOf(param).toString(), valueOf(param)?
+	private Arguments makeArguments() {
 		Arguments arguments = new Arguments();
 		arguments.add("which", which);
 		return arguments;

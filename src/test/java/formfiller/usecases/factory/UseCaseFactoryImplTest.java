@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import formfiller.appBoundaries.UseCase;
+import formfiller.usecases.addFormComponent.AddUnstructuredFormComponentUseCase;
 import formfiller.usecases.askQuestion.AskQuestionUseCase;
 import formfiller.usecases.factory.UseCaseFactoryImpl;
 import formfiller.usecases.handleUnfoundController.HandleUnfoundUseCaseUseCase;
@@ -46,6 +47,13 @@ public class UseCaseFactoryImplTest {
 		useCase = factory.make("handleUnfoundUseCase");
 		
 		assertThat(useCase, is(instanceOf(HandleUnfoundUseCaseUseCase.class)));
+	}
+	
+	@Test
+	public void canCreateAddUnstructuredFormComponentUseCase() {
+		useCase = factory.make("addUnstructuredFormComponent");
+		
+		assertThat(useCase, is(instanceOf(AddUnstructuredFormComponentUseCase.class)));
 	}
 	
 	@Test

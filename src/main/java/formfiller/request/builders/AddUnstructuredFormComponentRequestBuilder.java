@@ -1,11 +1,9 @@
 package formfiller.request.builders;
 
-import formfiller.entities.answerFormat.AnswerFormat;
+import formfiller.entities.answerFormat.Unstructured;
 import formfiller.request.models.AddUnstructuredFormComponentRequest;
-import formfiller.request.models.Request;
 
-public class AddUnstructuredFormComponentRequestBuilder implements RequestBuilderFunctions {
-	AddUnstructuredFormComponentRequest request;
+public class AddUnstructuredFormComponentRequestBuilder extends AddFormComponentRequestBuilder {
 	
 	public AddUnstructuredFormComponentRequestBuilder(){
 		request = new AddUnstructuredFormComponentRequest();
@@ -15,19 +13,7 @@ public class AddUnstructuredFormComponentRequestBuilder implements RequestBuilde
 		request.name = "AddUnstructuredFormComponent";
 	}
 	
-	public void buildQuestionId(String questionId) {
-		request.questionId = questionId;
-	}
-	
-	public void buildQuestionContent(String questionContent) {
-		request.questionContent = questionContent;
-	}
-	
-	public void buildAnswerFormat(AnswerFormat format){
-		request.format = format;
-	}
-
-	public Request getRequest() {
-		return request;
+	public void buildAnswerFormat(){
+		request.format = new Unstructured();
 	}
 }

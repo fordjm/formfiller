@@ -7,7 +7,7 @@ import org.mockito.Mockito;
 
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
 import formfiller.delivery.Controller;
-import formfiller.delivery.controller.AddUnstructuredFormComponentController;
+import formfiller.delivery.controller.AddFormComponentController;
 import formfiller.delivery.event.ParsedEvent;
 import formfiller.utilities.*;
 //Adapted from:
@@ -42,7 +42,7 @@ public class RouterTest {
 		public void givenAnAddUnstructuredFormComponentRequest() {
 			mockParsedRequest = 
 					ParsedEventMocker.makeMockParsedEvent("addunstructuredformcomponent", "questionId");
-			mockController = Mockito.mock(AddUnstructuredFormComponentController.class);
+			mockController = Mockito.mock(AddFormComponentController.class);
 		}
 		
 		@Test

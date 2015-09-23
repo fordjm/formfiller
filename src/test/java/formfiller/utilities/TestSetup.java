@@ -23,7 +23,7 @@ public class TestSetup {
 		FormFillerContext.formComponentGateway = new InMemoryFormComponentGateway();
 		FormFillerContext.executedUseCases = new ExecutedUseCases();
 		FormFillerContext.answerPresenter = makeResponsePresenter(consoleView);
-		FormFillerContext.errorPresenter = makeResponsePresenter(consoleView);
+		FormFillerContext.outcomePresenter = makeResponsePresenter(consoleView);
 		FormFillerContext.formComponentPresenter = makeFormComponentPresenter(consoleView);
 		FormFillerContext.questionPresenter = makeResponsePresenter(consoleView);
 	}

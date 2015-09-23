@@ -50,7 +50,7 @@ public class AskQuestionUseCase implements UndoableUseCase {
 		Collection<Presenter> result = new ArrayList<Presenter>();
 		result.add(FormFillerContext.questionPresenter);
 		result.add(FormFillerContext.answerPresenter);
-		result.add(FormFillerContext.errorPresenter);
+		result.add(FormFillerContext.outcomePresenter);
 		return result;
 	}
 

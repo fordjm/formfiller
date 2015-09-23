@@ -6,17 +6,14 @@ import formfiller.delivery.event.ConsoleEventSource;
 import formfiller.delivery.event.EventHandler;
 import formfiller.delivery.router.PlaceholderRouterFactory;
 import formfiller.delivery.router.Router;
-import formfiller.entities.Question;
-import formfiller.entities.answerFormat.AnswerFormat;
-import formfiller.entities.answerFormat.OptionVariable;
-import formfiller.entities.answerFormat.Unstructured;
 import formfiller.entities.formComponent.FormComponent;
 import formfiller.response.models.PresentableResponse;
 
 public class AddFormComponent {
 	private String questionId;
 	private String questionContent;
-	private AnswerFormat format;
+	private String answerFormat;
+	private FormComponent addedComponent;
 
 	//	TODO:	Fix duplication in FormComponentPresentation.
 	private EventSource source;
@@ -24,56 +21,51 @@ public class AddFormComponent {
 	private EventHandler handler;
 
 	public AddFormComponent() {
-		source = new ConsoleEventSource();	//	TODO:  More abstract name.
+//		TODO:  Make fixture event source
+		source = new ConsoleEventSource();
 		router = PlaceholderRouterFactory.makeRouter();
 		handler = new EventHandler(router);
 	}
 	//			End duplication
 	
-	public void givenAQuestionIdAndQuestionContentAndAnswerFormat(String questionId, String questionContent, String format){
+	public void givenAQuestionIdAndQuestionContentAndAnswerFormat(String questionId, 
+			String questionContent, String answerFormat){
 		this.questionId = questionId;
 		this.questionContent = questionContent;
-		this.format = convertToAnswerFormat(format);
-	}
-	
-	//	TODO:	Condense to "UnstructuredFormat"
-	//			Find out how to make a converter FitNesse recognizes.
-	private AnswerFormat convertToAnswerFormat(String format) {
-		if (format.equalsIgnoreCase("OptionVariable"))
-			return new OptionVariable();
-		else if (format.equalsIgnoreCase("Unstructured"))
-			return new Unstructured();
-		else
-			throw new IllegalArgumentException();
+		this.answerFormat = answerFormat;
 	}
 
-	//	TODO:	Handle multiple formats.
 	public void whenTheUserAddsAFormComponent(){
-		handler.update(source, "AddUnstructuredFormComponent " + questionId);
-		
-		FormComponent component = createFormComponentWithIdAndQuestionAndFormat();
-		FormFillerContext.formComponentGateway.save(component);
+		handler.update(source, makeConsoleInputString());
+	}
+	
+	private String makeConsoleInputString() {
+		return String.format("%s " + "%s " + "%s " + "%s ",
+				"AddFC", questionId, questionContent, answerFormat);
+
+	}
+	
+	public void addedComponent() {
+		this.addedComponent = FormFillerContext.formComponentGateway.find(questionId);
+	}
+	
+	public String addedId() {
+		return addedComponent.id;
+	}
+	
+	public String addedContent() {
+		return addedComponent.question.content;
+	}
+	
+	public String addedFormat() {
+		String className = addedComponent.format.getClass().getName();
+		int startIndex = className.lastIndexOf('.') + 1;
+		return className.substring(startIndex);
 	}
 	
 	public String messagePresented() {
-		//	TODO:	Generalize name for both successful and failed user messages.
 		PresentableResponse response = 
-				FormFillerContext.errorPresenter.getPresentableResponse();
+				FormFillerContext.outcomePresenter.getPresentableResponse();
 		return response.message;
-	}
-
-	private FormComponent createFormComponentWithIdAndQuestionAndFormat() {
-		FormComponent result = new FormComponent();
-		result.id = questionId;
-		result.question = createQuestionWithIdAndContent();
-		result.format = format;
-		return result;
-	}
-
-	private Question createQuestionWithIdAndContent() {
-		Question result = new Question();
-		result.id = questionId;
-		result.content = questionContent;
-		return result;
 	}
 }

@@ -18,7 +18,7 @@ public class EventHandler implements Observer {
 		if (input == null) input = "";
 		
 		String event = (String) input;
-		handleEvent(event.toLowerCase());
+		handleEvent(event);
 	}
 	
 	private void handleEvent(String event){

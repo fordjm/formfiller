@@ -9,6 +9,6 @@ public class PresenterSelector {
 		if (outcome == Outcome.POSITIVE)
 			return FormFillerContext.formComponentPresenter;
 		else
-			return FormFillerContext.errorPresenter;
+			return FormFillerContext.outcomePresenter;
 	}
 }
