@@ -1,0 +1,4 @@
+!| form component addition table                                                                                                                   |
+|question id|question content    |answer format|message                                               |added id|added content       |added format  |
+|name       |"What is your name?"|V            |You successfully added the new form component, "name."|name    |"What is your name?"|OptionVariable|
+|age        |"What is your age?" |V            |You successfully added the new form component, "age." |age     |"What is your age?" |OptionVariable|

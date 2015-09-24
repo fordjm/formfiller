@@ -7,11 +7,11 @@
 |check    |added content                                                                    |@addedContent                     |
 |check    |added format                                                                     |@addedFormat                      |
 
-!| scenario|and the system should present the message, _|message |
-|check     |messagePresented                            |@message|
+!| scenario|then the system should present the message, _|message |
+|check     |messagePresented                             |@message|
 
 !| scenario|form component addition table|question id||question content||answer format||added id||added content||added format||message|
 |given the question ID @questionId, the question content @questionContent, and the answer format @answerFormat                        |
 |when the user adds a form component                                                                                                  |
+|then the system should present the message, @message                                                                                 |
 |then the added component should have id @addedId, the content @addedContent, and the answer format @addedFormat                      |
-|and the system should present the message, @message                                                                                  |

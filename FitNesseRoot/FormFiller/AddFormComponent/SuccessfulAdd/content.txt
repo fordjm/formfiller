@@ -1,4 +1,0 @@
-!| form component addition table                                                                                                                 |
-|question id|question content    |answer format|added id|added content       |added format|message                                               |
-|name       |"What is your name?"|U            |name    |"What is your name?"|Unstructured|You successfully added the new form component, "name."|
-|age        |"What is your age?" |U            |age     |"What is your age?" |Unstructured|You successfully added the new form component, "age." |
