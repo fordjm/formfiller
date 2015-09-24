@@ -8,12 +8,3 @@
 |form component presentation|
 
 |Fixture setup|
-
-!define QuestionSetup (!| given a form component |
-|id           |questionContent   |required   |answerContent   |
-|${questionId}|${questionContent}|${required}|${answerContent}|)
-
-!define CheckMessage (!| script |
-|when the system asks the question|${whichQuestion}                               |
-|check                            |then the question message is|${questionMessage}|)
-

@@ -1,6 +1,7 @@
 package formfiller.delivery.event;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import formfiller.delivery.EventParser;
@@ -17,26 +18,28 @@ public class StringEventParser implements EventParser {
 		ParsedEvent result = new ParsedEvent();
 		if (input == null) return result;
 		
-		String[] split = makeSplitArray(input);
-		if (split.length > 0)
-			result.method = split[0];
-		if (split.length > 1)
-			result.parameters = makeParams(split);
+		List<String> split = splitParameters(input);
+		result.method = split.remove(0);
+		if (split.size() > 0)
+			result.parameters = split;
 		return result;
 	}
 
-	private String[] makeSplitArray(String input) {
+	private List<String> splitParameters(String input) {
 		input = input.trim();
 		if (input.contains(QUOTATION_MARK))
-			return parseStringWithQuotes(input);
-		else	
-			return input.split("\\s+");
+			return splitQuotedParameters(input);
+		else	{
+			List<String> result = new ArrayList<String>();
+			result.addAll(Arrays.asList(input.split("\\s+")));
+			return result;
+		}
 	}
 
-	private String[] parseStringWithQuotes(String input) {
+	//	TODO:	Consider separating into quote and non-quote parser classes.
+	private List<String> splitQuotedParameters(String input) {
 		List<String> strings = new ArrayList<String>();
 		String quotedString = "";
-		//	 Split on space and combine elements?
 		for (String word : input.split("\\s+")){
 			if (quotedString == "" && !word.contains(QUOTATION_MARK))
 				strings.add(word);
@@ -52,13 +55,6 @@ public class StringEventParser implements EventParser {
 			else if (word.indexOf(QUOTATION_MARK) < word.length() - 1)
 				throw new IllegalArgumentException("Quotation marks cannot appear in the middle of a word.");
 		}
-		return strings.toArray(new String[0]);
-	}
-
-	private List<String> makeParams(String[] split) {
-		List<String> result = new ArrayList<String>();
-		for (int i=1; i<split.length; ++i)
-			result.add(split[i]);
-		return  result;
+		return strings;
 	}
 }
