@@ -9,12 +9,11 @@ import formfiller.delivery.router.Router;
 import formfiller.entities.formComponent.FormComponent;
 import formfiller.response.models.PresentableResponse;
 
-public class AddFormComponent {
+public abstract class AddFormComponent {
 	private String questionId;
 	private String questionContent;
 	private String answerFormat;
-	String options;	//TODO:	Move into subclass for OVs.
-	FormComponent addedComponent;
+	protected FormComponent addedComponent;
 
 	//	TODO:	Fix duplication in FormComponentPresentation.
 	private EventSource source;
@@ -37,14 +36,16 @@ public class AddFormComponent {
 	}
 
 	public void whenTheUserAddsAFormComponent(){
-		handler.update(source, makeConsoleInputString());
+		handler.update(source, makeConsoleRequiredParametersString());
 	}
 	
-	private String makeConsoleInputString() {
-		return String.format("%s " + "%s " + "%s " + "%s " + "%s ",
-				"AddFC", questionId, questionContent, answerFormat, options);
-
+	protected String makeConsoleRequiredParametersString() {
+		String command = getCommandString();
+		return String.format("%s " + "%s " + "%s " + "%s ",
+				command, questionId, questionContent, answerFormat);
 	}
+	
+	protected abstract String getCommandString();
 	
 	public void addedComponent() {
 		this.addedComponent = FormFillerContext.formComponentGateway.find(questionId);

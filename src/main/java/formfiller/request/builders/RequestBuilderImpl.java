@@ -11,44 +11,46 @@ public class RequestBuilderImpl implements RequestBuilder {
 		this.args = args;
 		
 		if(requestName.equalsIgnoreCase("handleUnfoundUseCase"))
-			return buildHandleUnfoundControllerRequest(args);
-		else if(requestName.equalsIgnoreCase("addFormComponent"))
-			return buildAddFormComponentRequest(args);
+			return buildHandleUnfoundControllerRequest();
+		else if(requestName.equalsIgnoreCase("addUnstructuredFormComponent"))
+			return buildAddUnstructuredFormComponentRequest();
+		else if(requestName.equalsIgnoreCase("addOptionVariableFormComponent"))
+			return buildAddOptionVariableFormComponentRequest();
 		else if(requestName.equalsIgnoreCase("askQuestion"))
-			return buildAskQuestionRequest(args);
+			return buildAskQuestionRequest();
 		else
 			return Request.NULL;
 	}
 
-	private Request buildHandleUnfoundControllerRequest(Arguments args) {
+	private Request buildHandleUnfoundControllerRequest() {
 		HandleUnfoundUseCaseRequestBuilder builder = 
 				new HandleUnfoundUseCaseRequestBuilder();
 		builder.buildMessage((String) args.getById("message"));
 		return finishBuildingRequest(builder);
 	}
 
-	private Request buildAddFormComponentRequest(Arguments args) {
+	private Request buildAddUnstructuredFormComponentRequest() {
 		AddFormComponentRequestBuilder builder = 
-				selectBuilderByAnswerFormat();
+				new AddUnstructuredFormComponentRequestBuilder();
+
+		return buildAddFormComponentRequest(builder);
+	}
+
+	private Request buildAddOptionVariableFormComponentRequest() {
+		AddFormComponentRequestBuilder builder = 
+				new AddOptionVariableFormComponentRequestBuilder(
+						(String) args.getById("options"));
+		return buildAddFormComponentRequest(builder);
+	}
+
+	private Request buildAddFormComponentRequest(AddFormComponentRequestBuilder builder) {
 		builder.buildQuestionId((String) args.getById("questionId"));
 		builder.buildQuestionContent((String) args.getById("questionContent"));
 		builder.buildAnswerFormat();
 		return finishBuildingRequest(builder);
 	}
-
-	private AddFormComponentRequestBuilder selectBuilderByAnswerFormat() {
-		String format = (String) args.getById("answerFormat");
-		if (format.equalsIgnoreCase("U"))
-			return new AddUnstructuredFormComponentRequestBuilder();
-		else if (format.equalsIgnoreCase("V"))
-			return new AddOptionVariableFormComponentRequestBuilder(
-					(String) args.getById("options"));
-		else
-			throw new IllegalArgumentException("No request builder for the answer "
-					+ "format " + format + " exists.");
-	}
 	
-	private Request buildAskQuestionRequest(Arguments args) {
+	private Request buildAskQuestionRequest() {
 		AskQuestionRequestBuilder builder = new AskQuestionRequestBuilder();
 		builder.buildWhichQuestion((QuestionAsked) args.getById("which")); 
 		return finishBuildingRequest(builder);

@@ -50,7 +50,7 @@ public class RequestBuilderImplTest {
 	public void canBuildAddUnstructuredFormComponentRequest() {
 		Map<String, Object> argumentsMap = makeArgumentsMap();
 		Request request = 
-				buildRequest("addFormComponent", 
+				buildRequest("addUnstructuredFormComponent", 
 						makeArguments(argumentsMap));
 		String name = request.name;
 		AddFormComponentRequest castRequest = 

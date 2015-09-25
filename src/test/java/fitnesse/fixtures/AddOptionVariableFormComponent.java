@@ -5,6 +5,7 @@ import java.util.List;
 import formfiller.entities.answerFormat.OptionVariable;
 
 public class AddOptionVariableFormComponent extends AddFormComponent {
+	private String options;
 
 	public void givenAQuestionIdAndQuestionContentAndAnswerFormatAndOptions(String questionId, 
 			String questionContent, String answerFormat, String options){
@@ -13,11 +14,23 @@ public class AddOptionVariableFormComponent extends AddFormComponent {
 		this.options = options;
 	}
 	
+	protected String makeConsoleRequiredParametersString() {
+		String result = super.makeConsoleRequiredParametersString() + formattedOptions();
+		return result;
+	}
+
+	protected String getCommandString() {
+		return "AddFCOV";
+	}
+	
+	private String formattedOptions() {
+		return String.format("%s ", options);
+	}
+
 	public String addedOptions() {
 		OptionVariable castFormat = (OptionVariable) addedComponent.format;
 		String result = makeOptionsString(castFormat.options);
 		return result;
-		//return "option1, option2";
 	}
 
 	private String makeOptionsString(List<Object> options) {

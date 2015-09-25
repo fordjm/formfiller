@@ -3,8 +3,9 @@
 |formfiller.enums.QuestionAsked                           |
 |formfiller.entities.answerFormat.UnstructuredAnswerFormat|
 
-|library                    |
-|add form component         |
-|form component presentation|
+|library                           |
+|add option variable form component|
+|add unstructured form component   |
+|form component presentation       |
 
 |Fixture setup|
