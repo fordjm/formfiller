@@ -18,17 +18,19 @@ import formfiller.usecases.undoable.UndoableUseCase;
 
 public abstract class AddFormComponentUseCase implements UndoableUseCase {
 	private Outcome outcome = Outcome.POSITIVE;
-	// TODO:	Handle malformed requests.
+	AddFormComponentRequest castRequest;
+	
+	// TODO:	Handle malformed requests and set outcome.
 	//			Add questionId, questionContent, format, and validator here.
 	//			Use IVs in class methods.
 	
+	//	TODO:	Remove mandatory params.
 	protected abstract AnswerFormat makeAnswerFormat(int minAnswers, int maxAnswers);
 	
 	public void execute(Request request) {
 		if (request == null) return;
 		
-		AddFormComponentRequest castRequest = 
-				(AddFormComponentRequest) request;
+		castRequest = (AddFormComponentRequest) request;
 		if (isMalformedRequest(castRequest)) return;
 		
 		FormComponent newComponent = makeNewFormComponent(castRequest.questionId, castRequest.questionContent);

@@ -1,4 +1,19 @@
-!| form component addition table                                                                                                                   |
-|question id|question content    |answer format|message                                               |added id|added content       |added format  |
-|name       |"What is your name?"|V            |You successfully added the new form component, "name."|name    |"What is your name?"|OptionVariable|
-|age        |"What is your age?" |V            |You successfully added the new form component, "age." |age     |"What is your age?" |OptionVariable|
+!| scenario      |given the question ID _, the question content _, the answer format _, and the options _|questionId, questionContent, answerFormat, options                                   |
+|givenAQuestionId|@questionId                                                                            |AndQuestionContent|@questionContent|AndAnswerFormat|@answerFormat|AndOptions|@options|
+
+!| scenario|then the added component should have the id _, the content _, the answer format _, and the options _|addedId, addedContent, addedFormat, addedOptions|
+|then the added component should have the id @addedId, the content @addedContent, and the answer format @addedFormat                                             |
+|check     |added options                                                                                       |@addedOptions                                   |
+
+!| scenario|option variable form component addition table|question id||question content||answer format||options||message||added id||added content||added format||added options|
+|given the question ID @questionId, the question content @questionContent, the answer format @answerFormat, and the options @options                                          |
+|when the user adds a form component                                                                                                                                          |
+|then the system should present the message, @message                                                                                                                         |
+|then the added component should have the id @addedId, the content @addedContent, the answer format @addedFormat, and the options @addedOptions                               |
+
+|script|add option variable form component|
+
+!| option variable form component addition table                                                                                                                                     |
+|question id|question content    |answer format|options         |message                                               |added id|added content       |added format  |added options   |
+|name       |"What is your name?"|V            |option1         |You successfully added the new form component, "name."|name    |"What is your name?"|OptionVariable|option1         |
+|age        |"What is your age?" |V            |option1, option2|You successfully added the new form component, "age." |age     |"What is your age?" |OptionVariable|option1, option2|

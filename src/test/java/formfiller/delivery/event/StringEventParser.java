@@ -26,13 +26,24 @@ public class StringEventParser implements EventParser {
 	}
 
 	private List<String> splitParameters(String input) {
+		List<String> result;
 		input = input.trim();
 		if (input.contains(QUOTATION_MARK))
-			return splitQuotedParameters(input);
+			result = splitQuotedParameters(input);
 		else	{
-			List<String> result = new ArrayList<String>();
+			result = new ArrayList<String>();
 			result.addAll(Arrays.asList(input.split("\\s+")));
-			return result;
+		}
+		joinCommaSeparatedElements(result);
+		return result;
+	}
+
+	//	TODO:	Could just insist these elements not be separated by " "
+	private void joinCommaSeparatedElements(List<String> input) {
+		for (int i=0; i<input.size(); ++i){
+			String temp = input.get(i);
+			if (temp.endsWith(","))
+				input.set(i, temp + input.remove(i+1));
 		}
 	}
 

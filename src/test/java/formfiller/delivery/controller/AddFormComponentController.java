@@ -1,8 +1,6 @@
 package formfiller.delivery.controller;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import formfiller.appBoundaries.UseCase;
 import formfiller.delivery.Controller;
@@ -13,14 +11,18 @@ import formfiller.request.models.Request;
 import formfiller.usecases.factory.UseCaseFactoryImpl;
 
 public class AddFormComponentController implements Controller {
-	private String questionId;
-	private String questionContent;
-	private String answerFormat;
-	private Arguments arguments;
+	String questionId;
+	String questionContent;
+	String answerFormat;
+	
+	//	JUNK
+	String options;
+
+	Arguments arguments;
 	
 	public void handle(ParsedEvent parsedEvent) {
 		assignInstanceVariables(parsedEvent.parameters);
-		arguments = makeArguments(makeArgumentsMap());
+		arguments = makeArguments();
 		Request request = makeAddFormComponentRequest();
 		UseCase useCase = makeAddFormComponentUseCase(request.name);
 		
@@ -31,6 +33,14 @@ public class AddFormComponentController implements Controller {
 		questionId = assignInstanceVariable(parameters, 0);
 		questionContent = assignInstanceVariable(parameters, 1);
 		answerFormat = assignInstanceVariable(parameters, 2);
+		
+		//	JUNK
+		if (isOptionVariable())
+			options = assignInstanceVariable(parameters, 3);
+	}
+
+	private boolean isOptionVariable() {
+		return answerFormat.equals("V");
 	}
 
 	private String assignInstanceVariable(List<String> parameters, int index) {
@@ -38,22 +48,17 @@ public class AddFormComponentController implements Controller {
 		
 		return parameters.get(index);
 	}
-
-	//	TODO:	Fix duplication in RequestBuilderImplTest
-	private HashMap<String, Object> makeArgumentsMap() {
-		HashMap<String, Object> result = new HashMap<String,Object>();
-		result.put("questionId", questionId);
-		result.put("questionContent", questionContent);
-		result.put("answerFormat", answerFormat);
-		return result;
-	}
 	
-	private Arguments makeArguments(Map<String,Object> argumentsMap) {
+	private Arguments makeArguments() {
 		Arguments result = new Arguments();
-		for (String key : argumentsMap.keySet()){
-			Object value = argumentsMap.get(key);
-			result.add(key, value);			
-		}			
+		result.add("questionId", questionId);
+		result.add("questionContent", questionContent);
+		result.add("answerFormat", answerFormat);
+		
+		//		JUNK
+		if (isOptionVariable())
+			result.add("options", options);
+		
 		return result;
 	}
 

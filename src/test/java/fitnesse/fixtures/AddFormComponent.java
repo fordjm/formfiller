@@ -13,7 +13,8 @@ public class AddFormComponent {
 	private String questionId;
 	private String questionContent;
 	private String answerFormat;
-	private FormComponent addedComponent;
+	String options;	//TODO:	Move into subclass for OVs.
+	FormComponent addedComponent;
 
 	//	TODO:	Fix duplication in FormComponentPresentation.
 	private EventSource source;
@@ -40,8 +41,8 @@ public class AddFormComponent {
 	}
 	
 	private String makeConsoleInputString() {
-		return String.format("%s " + "%s " + "%s " + "%s ",
-				"AddFC", questionId, questionContent, answerFormat);
+		return String.format("%s " + "%s " + "%s " + "%s " + "%s ",
+				"AddFC", questionId, questionContent, answerFormat, options);
 
 	}
 	

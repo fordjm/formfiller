@@ -64,7 +64,8 @@ public class RequestBuilderImplTest {
 		assertThat(castRequest.format, instanceOf(Unstructured.class));
 	}
 
-	//	TODO:	Fix duplication in AddFormComponentController
+	//	TODO:	Fix duplication in AddFormComponentController by
+	//			using mock Arguments object.
 	//			Test other formats, other min/maxAnswers values.
 	private HashMap<String, Object> makeArgumentsMap() {
 		HashMap<String, Object> result = new HashMap<String,Object>();

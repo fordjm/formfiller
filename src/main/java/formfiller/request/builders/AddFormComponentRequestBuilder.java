@@ -4,7 +4,7 @@ import formfiller.request.models.AddFormComponentRequest;
 import formfiller.request.models.Request;
 
 public abstract class AddFormComponentRequestBuilder implements RequestBuilderFunctions {
-	AddFormComponentRequest request;
+	AddFormComponentRequest request;	//	TODO:	Fix this.  It's cheating.
 	
 	public abstract void buildName();
 	

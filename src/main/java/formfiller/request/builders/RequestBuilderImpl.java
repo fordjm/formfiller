@@ -41,7 +41,8 @@ public class RequestBuilderImpl implements RequestBuilder {
 		if (format.equalsIgnoreCase("U"))
 			return new AddUnstructuredFormComponentRequestBuilder();
 		else if (format.equalsIgnoreCase("V"))
-			return new AddOptionVariableFormComponentRequestBuilder();
+			return new AddOptionVariableFormComponentRequestBuilder(
+					(String) args.getById("options"));
 		else
 			throw new IllegalArgumentException("No request builder for the answer "
 					+ "format " + format + " exists.");
