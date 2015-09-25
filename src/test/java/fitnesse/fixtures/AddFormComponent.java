@@ -52,7 +52,8 @@ public abstract class AddFormComponent {
 		int startIndex = className.lastIndexOf('.') + 1;
 		return className.substring(startIndex);
 	}
-	
+
+	//	TODO:	Fix duplication in DeleteFormComponent fixture.
 	public String messagePresented() {
 		PresentableResponse response = 
 				FormFillerContext.outcomePresenter.getPresentableResponse();

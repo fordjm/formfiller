@@ -1,0 +1,24 @@
+!| scenario      |given a form component with the question ID _|questionId                                             |
+|givenAQuestionId|@questionId                                  |AndQuestionContent|"question content"|AndAnswerFormat|U|
+|when the user adds a form component                                                                                   |
+
+# TODO:  Fix duplication in AddFormComponent scenario library.
+
+!| scenario|then the system should present the message, _|message |
+|check     |messagePresented                             |@message|
+
+!| scenario|then the system should not find the component with id _.|componentId      |
+|check     |did not find component                                  |@componentId|true|
+
+!| scenario                              |form component deletion table|componentId||message||did not find component|
+|given a form component with the question ID @componentId                                                           |
+|when the user deletes the form component|@componentId                                                              |
+|then the system should present the message, You successfully deleted the form component, "@componentId."           |
+|then the system should not find the component with id @componentId.                                                |
+
+|script|delete form component|
+
+!| form component deletion table                                                         |
+|component id|message                                             |did not find component|
+|name        |You successfully deleted the form component, "name."|true                  |
+|age         |You successfully deleted the form component, "age." |true                  |
