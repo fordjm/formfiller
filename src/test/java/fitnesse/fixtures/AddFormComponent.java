@@ -1,32 +1,19 @@
 package fitnesse.fixtures;
 
 import formfiller.FormFillerContext;
-import formfiller.delivery.EventSource;
-import formfiller.delivery.event.ConsoleEventSource;
-import formfiller.delivery.event.EventHandler;
-import formfiller.delivery.router.PlaceholderRouterFactory;
-import formfiller.delivery.router.Router;
 import formfiller.entities.formComponent.FormComponent;
 import formfiller.response.models.PresentableResponse;
 
 public abstract class AddFormComponent {
+	private FixtureEventHandler fixtureEventHandler;
 	private String questionId;
 	private String questionContent;
 	private String answerFormat;
 	protected FormComponent addedComponent;
 
-	//	TODO:	Fix duplication in FormComponentPresentation.
-	private EventSource source;
-	private Router router;
-	private EventHandler handler;
-
 	public AddFormComponent() {
-//		TODO:  Make fixture event source
-		source = new ConsoleEventSource();
-		router = PlaceholderRouterFactory.makeRouter();
-		handler = new EventHandler(router);
+		fixtureEventHandler = new FixtureEventHandler();
 	}
-	//			End duplication
 	
 	public void givenAQuestionIdAndQuestionContentAndAnswerFormat(String questionId, 
 			String questionContent, String answerFormat){
@@ -36,7 +23,8 @@ public abstract class AddFormComponent {
 	}
 
 	public void whenTheUserAddsAFormComponent(){
-		handler.update(source, makeConsoleRequiredParametersString());
+		String event = makeConsoleRequiredParametersString();
+		fixtureEventHandler.updateHandler(event);
 	}
 	
 	protected String makeConsoleRequiredParametersString() {

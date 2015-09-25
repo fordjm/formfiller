@@ -17,6 +17,6 @@ public class AddOptionVariableFormComponentController extends AddFormComponentCo
 	}
 	
 	protected String makeRequestName() {
-		return "addOptionVariableFormComponent";
+		return "AddOptionVariableFormComponent";
 	}
 }

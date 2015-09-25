@@ -7,11 +7,6 @@ import java.util.Map;
 
 import formfiller.FormFillerContext;
 import formfiller.appBoundaries.Presenter;
-import formfiller.delivery.EventSource;
-import formfiller.delivery.event.ConsoleEventSource;
-import formfiller.delivery.event.EventHandler;
-import formfiller.delivery.router.PlaceholderRouterFactory;
-import formfiller.delivery.router.Router;
 import formfiller.entities.Answer;
 import formfiller.entities.Question;
 import formfiller.entities.formComponent.FormComponent;
@@ -21,21 +16,14 @@ import formfiller.response.models.PresentableQuestion;
 import formfiller.response.models.PresentableResponse;
 import formfiller.usecases.undoable.UndoableUseCase;
 
-//	TODO:	FixtureSetup/TestSetup should set up variables.  
-//			How to access EventHandler?
+//	TODO:	Clean this.
 public class FormComponentPresentation {
-	//	TODO:	Fix duplication in AddFormComponent.
-	private EventSource source;
-	private Router router;
-	private EventHandler handler;
+	private FixtureEventHandler fixtureEventHandler;
 	private Map<Class<?>, String> prefixes = makePrefixes();
 
 	public FormComponentPresentation() {
-		source = new ConsoleEventSource();	//	TODO:  More abstract name.
-		router = PlaceholderRouterFactory.makeRouter();
-		handler = new EventHandler(router);
+		fixtureEventHandler = new FixtureEventHandler();
 	}
-	//			End duplication
 	
 	private Map<Class<?>, String> makePrefixes() {
 		Map<Class<?>, String> result = new HashMap<Class<?>, String>();
@@ -131,7 +119,7 @@ public class FormComponentPresentation {
 		}
 
 	public void askingTheQuestion(QuestionAsked which) {
-		handler.update(source, "AskQues " + which.toString());
+		fixtureEventHandler.updateHandler("AskQues " + which.toString());
 	}
 	
 	public String presentsTheMessage() {
