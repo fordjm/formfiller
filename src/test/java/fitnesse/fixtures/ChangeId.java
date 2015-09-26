@@ -1,7 +1,10 @@
 package fitnesse.fixtures;
 
+import fitnesse.request.models.ChangeIdRequest;
 import formfiller.FormFillerContext;
-import formfiller.response.models.PresentableResponse;
+import formfiller.entities.formComponent.FormComponent;
+import formfiller.entities.formComponent.NullFormComponents;
+import formfiller.usecases.changeFormComponent.ChangeIdUseCase;
 
 public class ChangeId {
 	String oldId = ""; 
@@ -10,18 +13,29 @@ public class ChangeId {
 	public void whenTheUserChangesTheIdFromOldToNew(String oldId, String newId){
 		this.oldId = oldId;
 		this.newId = newId;
-		makeBogusResultForFitNesseTest();
+		executeUseCase();
 	}
 
-	private void makeBogusResultForFitNesseTest() {
-		PresentableResponse response = new PresentableResponse();
-		response.message = "You successfully changed the id from " + 
-				makeQuotedString(oldId) + " to " + makeQuotedString(newId);
-		FormFillerContext.outcomePresenter.present(response);
+	private void executeUseCase() {
+		ChangeIdRequest request = makeRequest();
+		ChangeIdUseCase useCase = new ChangeIdUseCase();
+		useCase.execute(request);
 	}
 
-	private String makeQuotedString(String input) {
-		String result = "\""+ input + "\"";
+	private ChangeIdRequest makeRequest() {
+		ChangeIdRequest result = new ChangeIdRequest();
+		result.oldId = oldId;
+		result.newId = newId;
 		return result;
+	}
+	
+	public boolean foundComponent(String id){
+		FormComponent foundComponent = 
+				FormFillerContext.formComponentGateway.find(id);
+		return !componentIsNull(foundComponent);
+	}
+
+	private boolean componentIsNull(FormComponent component) {
+		return component.equals(NullFormComponents.NULL);
 	}
 }

@@ -17,9 +17,11 @@ import formfiller.usecases.addAnswer.AnswerValidator;
 import formfiller.usecases.undoable.UndoableUseCase;
 
 public abstract class AddFormComponentUseCase implements UndoableUseCase {
+	protected AddFormComponentRequest castRequest;
+	private String questionId;
+	private String questionContent;
 	private Outcome outcome = Outcome.POSITIVE;
 	private String message = "";
-	protected AddFormComponentRequest castRequest;
 	
 	// TODO:	Handle malformed requests and set outcome.
 	//			Add questionId, questionContent, format, and validator here.
@@ -29,21 +31,30 @@ public abstract class AddFormComponentUseCase implements UndoableUseCase {
 	protected abstract AnswerFormat makeAnswerFormat(int minAnswers, int maxAnswers);
 	
 	public void execute(Request request) {
-		castRequest = (AddFormComponentRequest) request;
+		castRequest(request);
+		assignInstanceVariables();
 		checkForMalformedRequest();
-		addComponent();		
+		execute();		
 		PresentableResponse response = makeResponse();		
 		presentResponse(response);
 	}
 
-	private void checkForMalformedRequest() {
+	protected void castRequest(Request request) {
+		castRequest = (AddFormComponentRequest) request;
+	}
+
+	protected void checkForMalformedRequest() {
 		if (castRequest.questionId == null || castRequest.questionId == "")
 			throw new MalformedRequest("The question I.D. was illegal.");
 	}
 
-	private void addComponent() {
-		FormComponent newComponent = makeNewFormComponent(castRequest.questionId, 
-				castRequest.questionContent);
+	protected void assignInstanceVariables() {
+		questionId = castRequest.questionId;
+		questionContent = castRequest.questionContent;
+	}
+
+	protected void execute() {
+		FormComponent newComponent = makeNewFormComponent();
 		newComponent.format = makeAnswerFormat(0, 1);
 		newComponent.validator = new AnswerValidator(
 				makeAnswerConstraints(castRequest));
@@ -51,14 +62,14 @@ public abstract class AddFormComponentUseCase implements UndoableUseCase {
 		handleSuccessfulUseCase();
 	}
 
-	private FormComponent makeNewFormComponent(String questionId, String questionContent) {
+	private FormComponent makeNewFormComponent() {
 		FormComponent result = new FormComponent();
 		result.id = questionId;
-		result.question = makeNewQuestion(questionId, questionContent);
+		result.question = makeNewQuestion();
 		return result;
 	}
 
-	private Question makeNewQuestion(String questionId, String questionContent) {
+	private Question makeNewQuestion() {
 		Question result = new Question();
 		result.id = questionId;
 		result.content = questionContent;
@@ -71,7 +82,7 @@ public abstract class AddFormComponentUseCase implements UndoableUseCase {
 		addToExecutedUseCases();
 	}
 
-	private void addToExecutedUseCases() {
+	protected void addToExecutedUseCases() {
 		FormFillerContext.executedUseCases.add(this);
 	}
 
@@ -81,8 +92,8 @@ public abstract class AddFormComponentUseCase implements UndoableUseCase {
 		return result;
 	}
 	
-	//	TODO:	Fix duplication in DeleteFormComponentUseCase
-	private PresentableResponse makeResponse() {
+	//	TODO:	Extract to abstract superclass
+	protected PresentableResponse makeResponse() {
 		PresentableResponse result = new PresentableResponse();
 		result.message = message;
 		result.outcome = outcome;
@@ -95,7 +106,7 @@ public abstract class AddFormComponentUseCase implements UndoableUseCase {
 		return result;
 	}
 	
-	private void presentResponse(PresentableResponse presentableResponse) {
+	protected void presentResponse(PresentableResponse presentableResponse) {
 		FormFillerContext.outcomePresenter.present(presentableResponse);
 	}
 

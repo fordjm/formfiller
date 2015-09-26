@@ -9,21 +9,29 @@ import formfiller.response.models.PresentableResponse;
 import formfiller.usecases.undoable.UndoableUseCase;
 
 public class DeleteFormComponentUseCase implements UndoableUseCase {
+	private DeleteFormComponentRequest castRequest;
 	private Outcome outcome = Outcome.NEUTRAL;
 	private String message = "";
 	private String componentId;
 
 	public void execute(Request request) {		
-		DeleteFormComponentRequest castRequest = 
-				(DeleteFormComponentRequest) request;
-		componentId = castRequest.componentId;
-		deleteComponent();
+		castRequest(request);
+		assignInstanceVariables();
+		execute();
 		PresentableResponse response = makeResponse();		
 		presentResponse(response);
 		addToExecutedUseCases();
 	}
 
-	private void deleteComponent() {
+	protected void castRequest(Request request) {
+		castRequest = (DeleteFormComponentRequest) request;
+	}
+
+	protected void assignInstanceVariables() {
+		componentId = castRequest.componentId;
+	}
+
+	protected void execute() {
 		FormComponent deleted = 
 				FormFillerContext.formComponentGateway.remove(componentId);
 		if (deleted == null) throw new AbsentElementDeletion(
@@ -38,23 +46,25 @@ public class DeleteFormComponentUseCase implements UndoableUseCase {
 	}
 
 	//	TODO:	Fix duplication in AddFormComponentUseCase
-	private PresentableResponse makeResponse() {
+	//			Extract to abstract superclass
+	protected PresentableResponse makeResponse() {
 		PresentableResponse result = new PresentableResponse();
 		result.message = message;
 		result.outcome = outcome;
 		return result;
 	}
 	
-	private void presentResponse(PresentableResponse presentableResponse) {
+	protected void presentResponse(PresentableResponse presentableResponse) {
 		FormFillerContext.outcomePresenter.present(presentableResponse);
 	}
 
+	//	TODO:	Extract to utilities class
 	private String makeQuotedComponentId() {
 		String result = "\"" + componentId + ".\"";
 		return result;
 	}
 
-	private void addToExecutedUseCases() {
+	protected void addToExecutedUseCases() {
 		FormFillerContext.executedUseCases.add(this);
 	}
 

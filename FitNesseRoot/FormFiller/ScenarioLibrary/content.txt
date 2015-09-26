@@ -4,3 +4,6 @@
 
 !| scenario|then the system should present the message, _|message |
 |check     |messagePresented                             |@message|
+
+!| scenario|then the system should find the component with id _ _|componentId,truthValue  |
+|check     |found component                                      |@componentId|@truthValue|
