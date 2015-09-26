@@ -18,7 +18,8 @@ import formfiller.usecases.undoable.UndoableUseCase;
 
 public abstract class AddFormComponentUseCase implements UndoableUseCase {
 	private Outcome outcome = Outcome.POSITIVE;
-	AddFormComponentRequest castRequest;
+	private String message = "";
+	protected AddFormComponentRequest castRequest;
 	
 	// TODO:	Handle malformed requests and set outcome.
 	//			Add questionId, questionContent, format, and validator here.
@@ -28,30 +29,26 @@ public abstract class AddFormComponentUseCase implements UndoableUseCase {
 	protected abstract AnswerFormat makeAnswerFormat(int minAnswers, int maxAnswers);
 	
 	public void execute(Request request) {
-		if (request == null) return;
-		
 		castRequest = (AddFormComponentRequest) request;
-		if (isMalformedRequest(castRequest)) return;
-		
-		FormComponent newComponent = makeNewFormComponent(castRequest.questionId, castRequest.questionContent);
-		newComponent.format = makeAnswerFormat(0, 1);
-		newComponent.validator = new AnswerValidator(makeAnswerConstraints(castRequest));
-		
-		FormFillerContext.formComponentGateway.save(newComponent);
-		
-		PresentableResponse response = makeResponse(castRequest.questionId);		
+		checkForMalformedRequest();
+		addComponent();		
+		PresentableResponse response = makeResponse();		
 		presentResponse(response);
-		addToExecutedUseCasesIfSuccessful();
 	}
 
-	//	TODO:	Expand coverage, return error message.
-	private boolean isMalformedRequest(AddFormComponentRequest castRequest) {
-		return castRequest.questionId == null || castRequest.questionId == "";
+	private void checkForMalformedRequest() {
+		if (castRequest.questionId == null || castRequest.questionId == "")
+			throw new MalformedRequest("The question I.D. was illegal.");
 	}
 
-	private void addToExecutedUseCasesIfSuccessful() {
-		if (outcome == Outcome.POSITIVE)
-			FormFillerContext.executedUseCases.add(this);
+	private void addComponent() {
+		FormComponent newComponent = makeNewFormComponent(castRequest.questionId, 
+				castRequest.questionContent);
+		newComponent.format = makeAnswerFormat(0, 1);
+		newComponent.validator = new AnswerValidator(
+				makeAnswerConstraints(castRequest));
+		FormFillerContext.formComponentGateway.save(newComponent);
+		handleSuccessfulUseCase();
 	}
 
 	private FormComponent makeNewFormComponent(String questionId, String questionContent) {
@@ -61,29 +58,40 @@ public abstract class AddFormComponentUseCase implements UndoableUseCase {
 		return result;
 	}
 
-	private Collection<Constrainable> makeAnswerConstraints(AddFormComponentRequest castRequest) {
-		Collection<Constrainable> result = new ArrayList<Constrainable>();
-		result.add(new AnswerType(castRequest.answerType));
-		return result;
-	}
-
 	private Question makeNewQuestion(String questionId, String questionContent) {
 		Question result = new Question();
 		result.id = questionId;
 		result.content = questionContent;
 		return result;
 	}
+
+	private void handleSuccessfulUseCase() {
+		outcome = Outcome.POSITIVE;
+		this.message = makeSuccessfulMessage();
+		addToExecutedUseCases();
+	}
+
+	private void addToExecutedUseCases() {
+		FormFillerContext.executedUseCases.add(this);
+	}
+
+	private Collection<Constrainable> makeAnswerConstraints(AddFormComponentRequest castRequest) {
+		Collection<Constrainable> result = new ArrayList<Constrainable>();
+		result.add(new AnswerType(castRequest.answerType));
+		return result;
+	}
 	
-	private PresentableResponse makeResponse(String questionId) {
+	//	TODO:	Fix duplication in DeleteFormComponentUseCase
+	private PresentableResponse makeResponse() {
 		PresentableResponse result = new PresentableResponse();
-		result.message = makeMessage(questionId);
-		result.outcome = Outcome.NEGATIVE;
+		result.message = message;
+		result.outcome = outcome;
 		return result;
 	}
 
-	private String makeMessage(String questionId) {
+	private String makeSuccessfulMessage() {
 		String result = "You successfully added the new form component, \"" +
-				questionId + ".\"";
+				castRequest.questionId + ".\"";
 		return result;
 	}
 	
@@ -96,4 +104,14 @@ public abstract class AddFormComponentUseCase implements UndoableUseCase {
 		
 	}
 
+	public class MalformedRequest extends RuntimeException {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+
+		public MalformedRequest(String message){
+			super(message);
+		}
+	}
 }

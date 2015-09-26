@@ -60,28 +60,16 @@ public class AddUnstructuredFormComponentTest {
 		assertEquals(Object.class, request.answerType);
 	}
 
-	@Test
+	@Test(expected = NullPointerException.class)
 	public void executingNull_DoesNotAddUseCaseToExecutedUseCases() {
 		addUnstructured.execute(null);
-		UndoableUseCase mostRecent = 
-				FormFillerContext.executedUseCases.getMostRecent();
-
-		// TODO:	assert correct error-handling behavior
-		assertNotEquals(mostRecent, addUnstructured);
 	}
 	
-	//	TODO:	How to handle malformed request?	
-	@Test
+	@Test(expected = AddFormComponentUseCase.MalformedRequest.class)
 	public void testExecutingMalformedRequest() {
 		AddUnstructuredFormComponentRequest request = 
-				makeMockAddUnstructuredRequest();
-		
+				makeMockAddUnstructuredRequest();		
 		addUnstructured.execute(request);
-		UndoableUseCase mostRecent = 
-				FormFillerContext.executedUseCases.getMostRecent();
-
-		// TODO:	assert correct error-handling behavior
-		assertNotEquals(mostRecent, addUnstructured);
 	}
 
 	@Test

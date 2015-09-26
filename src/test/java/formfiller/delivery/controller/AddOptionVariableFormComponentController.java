@@ -7,7 +7,7 @@ public class AddOptionVariableFormComponentController extends AddFormComponentCo
 
 	protected void assignRequiredParameters(List<String> parameters) {
 		super.assignRequiredParameters(parameters);
-		options = assignInstanceVariable(parameters, 3);
+		options = assignRequiredParameter(parameters, 3);
 	}
 	
 	protected Arguments makeArguments() {

@@ -4,18 +4,21 @@ import formfiller.appBoundaries.UseCase;
 import formfiller.usecases.addFormComponent.AddOptionVariableFormComponentUseCase;
 import formfiller.usecases.addFormComponent.AddUnstructuredFormComponentUseCase;
 import formfiller.usecases.askQuestion.AskQuestionUseCase;
+import formfiller.usecases.deleteFormComponent.DeleteFormComponentUseCase;
 import formfiller.usecases.handleUnfoundController.HandleUnfoundUseCaseUseCase;
 
 public class UseCaseFactoryImpl implements UseCaseFactory {
 	public UseCase make(String useCaseName) {
 		if (useCaseName == null) useCaseName = "";
 			
-		if (useCaseName.equalsIgnoreCase("addUnstructuredFormComponent"))
+		if (useCaseName.equalsIgnoreCase("AddUnstructuredFormComponent"))
 			return makeAddUnstructuredFormComponentUseCase();
-		else if (useCaseName.equalsIgnoreCase("addOptionVariableFormComponent"))
+		else if (useCaseName.equalsIgnoreCase("AddOptionVariableFormComponent"))
 			return makeAddOptionVariableFormComponentUseCase();
-		else if (useCaseName.equalsIgnoreCase("askQuestion"))
+		else if (useCaseName.equalsIgnoreCase("AskQuestion"))
 			return makeAskQuestionUseCase();
+		else if (useCaseName.equalsIgnoreCase("DeleteFormComponent"))
+			return makeDeleteFormComponentUseCase();
 		else
 			return makeHandleUnfoundUseCaseUseCase();
 	}
@@ -30,6 +33,10 @@ public class UseCaseFactoryImpl implements UseCaseFactory {
 
 	private UseCase makeAskQuestionUseCase() {
 		return new AskQuestionUseCase();
+	}
+
+	private UseCase makeDeleteFormComponentUseCase() {
+		return new DeleteFormComponentUseCase();
 	}
 
 	private UseCase makeHandleUnfoundUseCaseUseCase() {

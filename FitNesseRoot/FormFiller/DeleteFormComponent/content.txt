@@ -7,18 +7,19 @@
 !| scenario|then the system should present the message, _|message |
 |check     |messagePresented                             |@message|
 
-!| scenario|then the system should not find the component with id _.|componentId      |
-|check     |did not find component                                  |@componentId|true|
+!| scenario|then the system should not find the component with id _ _|componentId,truthValue  |
+|check     |did not find component                                   |@componentId|@truthValue|
 
-!| scenario                              |form component deletion table|componentId||message||did not find component|
-|given a form component with the question ID @componentId                                                           |
-|when the user deletes the form component|@componentId                                                              |
-|then the system should present the message, You successfully deleted the form component, "@componentId."           |
-|then the system should not find the component with id @componentId.                                                |
+!| scenario                              |form component deletion table|componentId||deletedId||message||did not find component|
+|given a form component with the question ID @componentId                                                                      |
+|when the user deletes the form component|@deletedId                                                                           |
+|then the system should present the message, @message                                                                          |
+|then the system should not find the component with id @componentId @didNotFindComponent                                       |
 
 |script|delete form component|
 
-!| form component deletion table                                                         |
-|component id|message                                             |did not find component|
-|name        |You successfully deleted the form component, "name."|true                  |
-|age         |You successfully deleted the form component, "age." |true                  |
+!| form component deletion table                                                                   |
+|component id|deletedId|message                                             |did not find component|
+|name        |unknown  |No component existed with id unknown                |false                 |
+|name        |name     |You successfully deleted the form component, "name."|true                  |
+|age         |age      |You successfully deleted the form component, "age." |true                  |

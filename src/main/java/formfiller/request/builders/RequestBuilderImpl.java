@@ -10,14 +10,16 @@ public class RequestBuilderImpl implements RequestBuilder {
 	public Request build(String requestName, Arguments args) {
 		this.args = args;
 		
-		if(requestName.equalsIgnoreCase("handleUnfoundUseCase"))
+		if(requestName.equalsIgnoreCase("HandleUnfoundUseCase"))
 			return buildHandleUnfoundControllerRequest();
-		else if(requestName.equalsIgnoreCase("addUnstructuredFormComponent"))
+		else if(requestName.equalsIgnoreCase("AddUnstructuredFormComponent"))
 			return buildAddUnstructuredFormComponentRequest();
-		else if(requestName.equalsIgnoreCase("addOptionVariableFormComponent"))
+		else if(requestName.equalsIgnoreCase("AddOptionVariableFormComponent"))
 			return buildAddOptionVariableFormComponentRequest();
-		else if(requestName.equalsIgnoreCase("askQuestion"))
+		else if(requestName.equalsIgnoreCase("AskQuestion"))
 			return buildAskQuestionRequest();
+		else if(requestName.equalsIgnoreCase("DeleteFormComponent"))
+			return buildDeleteFormComponentRequest();
 		else
 			return Request.NULL;
 	}
@@ -53,6 +55,12 @@ public class RequestBuilderImpl implements RequestBuilder {
 	private Request buildAskQuestionRequest() {
 		AskQuestionRequestBuilder builder = new AskQuestionRequestBuilder();
 		builder.buildWhichQuestion((QuestionAsked) args.getById("which")); 
+		return finishBuildingRequest(builder);
+	}
+
+	private Request buildDeleteFormComponentRequest() {
+		DeleteFormComponentRequestBuilder builder = new DeleteFormComponentRequestBuilder();
+		builder.buildComponentId((String) args.getById("componentId"));
 		return finishBuildingRequest(builder);
 	}
 	

@@ -6,29 +6,26 @@ import formfiller.entities.formComponent.NullFormComponents;
 import formfiller.response.models.PresentableResponse;
 
 public class DeleteFormComponent {
-	private String componentId;
+	private StringEventManager fixtureEventHandler;
 
-	public void whenTheUserDeletesTheFormComponent(String componentId){
-		this.componentId = componentId;
+	public DeleteFormComponent() {
+		fixtureEventHandler = new StringEventManager();
 	}
 	
+	public void whenTheUserDeletesTheFormComponent(String componentId){
+		fixtureEventHandler.updateHandler("DelFC " + componentId);
+	}
+
 	//	TODO:	Fix duplication in AddFormComponent fixture.
 	//			Add fixture utilities class?
 	public String messagePresented() {
 		PresentableResponse response = 
 				FormFillerContext.outcomePresenter.getPresentableResponse();
-		//return response.message;
-		return "You successfully deleted the form component, " + makeQuotedComponentId();
-	}
-
-	private String makeQuotedComponentId() {
-		String result = "\"" + componentId + ".\"";
-		return result;
+		return response.message;
 	}
 	
 	public boolean didNotFindComponent(String componentId) {
 		FormComponent foundComponent = FormFillerContext.formComponentGateway.find(componentId);
-		//return foundComponent.equals(NullFormComponents.NULL);
-		return true;
+		return foundComponent.equals(NullFormComponents.NULL);
 	}
 }

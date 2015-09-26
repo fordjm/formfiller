@@ -5,14 +5,14 @@ import formfiller.entities.formComponent.FormComponent;
 import formfiller.response.models.PresentableResponse;
 
 public abstract class AddFormComponent {
-	private FixtureEventHandler fixtureEventHandler;
+	private StringEventManager fixtureEventHandler;
 	private String questionId;
 	private String questionContent;
 	private String answerFormat;
 	protected FormComponent addedComponent;
 
 	public AddFormComponent() {
-		fixtureEventHandler = new FixtureEventHandler();
+		fixtureEventHandler = new StringEventManager();
 	}
 	
 	public void givenAQuestionIdAndQuestionContentAndAnswerFormat(String questionId, 

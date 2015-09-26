@@ -8,6 +8,7 @@ import org.mockito.Mockito;
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
 import formfiller.delivery.Controller;
 import formfiller.delivery.controller.AddFormComponentController;
+import formfiller.delivery.controller.AskQuestionController;
 import formfiller.delivery.event.ParsedEvent;
 import formfiller.utilities.*;
 //Adapted from:
@@ -16,7 +17,7 @@ import formfiller.utilities.*;
 
 @RunWith(HierarchicalContextRunner.class)
 public class RouterTest {
-	Router router;
+	private Router router;
 	private ParsedEvent mockParsedRequest;
 	private Controller mockController;
 
@@ -36,8 +37,7 @@ public class RouterTest {
 
 	// TODO:  public class GivenAnEmptyStringRequest{ ... }
 	//		  Should route() return a String with routing info?
-	public class GivenAnAddUnstructuredFormComponentRequest {
-		
+	public class GivenAnAddUnstructuredFormComponentRequest {		
 		@Before
 		public void givenAnAddUnstructuredFormComponentRequest() {
 			mockParsedRequest = 
@@ -54,13 +54,12 @@ public class RouterTest {
 		}
 	}
 	
-	public class GivenAnAskQuestionRequest {
-		
+	public class GivenAnAskQuestionRequest {		
 		@Before
 		public void givenAnAskQuestionRequest() {
 			mockParsedRequest = 
 					ParsedEventMocker.makeMockParsedEvent("askquestion", "next");
-			mockController = ControllerMocker.makeMockAskQuestionController();
+			mockController = Mockito.mock(AskQuestionController.class);
 		}
 		
 		@Test

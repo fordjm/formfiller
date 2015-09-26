@@ -46,6 +46,11 @@ public class InMemoryFormComponentGateway implements FormComponentGateway {
 		return result;
 	}
 	
+	public FormComponent remove(String componentId) {
+		orderedElements.remove(componentId);
+		return formComponents.remove(componentId);
+	}
+	
 	public void removeAll() {
 		formComponents.clear();
 		orderedElements.clear();

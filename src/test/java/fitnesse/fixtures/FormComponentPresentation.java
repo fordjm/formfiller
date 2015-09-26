@@ -18,11 +18,11 @@ import formfiller.usecases.undoable.UndoableUseCase;
 
 //	TODO:	Clean this.
 public class FormComponentPresentation {
-	private FixtureEventHandler fixtureEventHandler;
+	private StringEventManager fixtureEventHandler;
 	private Map<Class<?>, String> prefixes = makePrefixes();
 
 	public FormComponentPresentation() {
-		fixtureEventHandler = new FixtureEventHandler();
+		fixtureEventHandler = new StringEventManager();
 	}
 	
 	private Map<Class<?>, String> makePrefixes() {
