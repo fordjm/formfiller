@@ -1,11 +1,11 @@
-|import                                                   |
-|fitnesse.fixtures                                        |
-|formfiller.enums.QuestionAsked                           |
-|formfiller.entities.answerFormat.UnstructuredAnswerFormat|
+|import                        |
+|fitnesse.fixtures             |
+|formfiller.enums.QuestionAsked|
 
 |library                           |
 |add option variable form component|
 |add unstructured form component   |
 |form component presentation       |
+|fixture utilities                 |
 
 |Fixture setup|

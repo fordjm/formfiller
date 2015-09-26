@@ -2,7 +2,6 @@ package fitnesse.fixtures;
 
 import formfiller.FormFillerContext;
 import formfiller.entities.formComponent.FormComponent;
-import formfiller.response.models.PresentableResponse;
 
 public abstract class AddFormComponent {
 	private StringEventManager fixtureEventHandler;
@@ -51,12 +50,5 @@ public abstract class AddFormComponent {
 		String className = addedComponent.format.getClass().getName();
 		int startIndex = className.lastIndexOf('.') + 1;
 		return className.substring(startIndex);
-	}
-
-	//	TODO:	Fix duplication in DeleteFormComponent fixture.
-	public String messagePresented() {
-		PresentableResponse response = 
-				FormFillerContext.outcomePresenter.getPresentableResponse();
-		return response.message;
 	}
 }

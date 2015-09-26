@@ -1,0 +1,15 @@
+!|scenario                     |when the user changes the id from _ to _|oldId,newId |
+|whenTheUserChangesTheIdFromOld|@oldId                                  |ToNew|@newId|
+
+!| scenario        |change id table        |oldId        |        |newId       |       |message       |
+|given a form component with the question ID @oldId                                                   |
+|when the user changes the id from @oldId to @newId                                                   |
+|then the system should present the message, You successfully changed the id from "@oldId" to "@newId"|
+
+
+|script|change id|
+
+!| change id table                                                 |
+|old id|new id|message                                             |
+|name  |age   |You successfully changed the id from "name" to "age"|
+|age   |name  |You successfully changed the id from "age" to "name"|
