@@ -3,7 +3,7 @@ package formfiller.usecases;
 import formfiller.enums.Outcome;
 import formfiller.request.models.Request;
 import formfiller.response.models.PresentableResponse;
-import formfiller.usecases.addFormComponent.AddFormComponentUseCase;
+import formfiller.usecases.addFormComponent.UndoableUseCaseExecution;
 import formfiller.usecases.deleteFormComponent.DeleteFormComponentUseCase;
 import formfiller.usecases.undoable.UndoableUseCase;
 import formfiller.FormFillerContext;
@@ -26,7 +26,7 @@ public class LocalUseCase implements UseCase {
 		} catch (ClassCastException cce){
 			handleFailedUseCase("The request with name " + request.name + 
 					" did not match the use case.");
-		} catch (AddFormComponentUseCase.MalformedRequest mr) {
+		} catch (UndoableUseCaseExecution.MalformedRequest mr) {
 			handleFailedUseCase(mr.getMessage());
 		} catch (DeleteFormComponentUseCase.AbsentElementDeletion aed){
 			handleFailedUseCase(aed.getMessage());

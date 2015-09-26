@@ -18,8 +18,8 @@
 
 |script|delete form component|
 
-!| form component deletion table                                                                   |
-|component id|deletedId|message                                             |did not find component|
-|name        |unknown  |No component existed with id unknown                |false                 |
-|name        |name     |You successfully deleted the form component, "name."|true                  |
-|age         |age      |You successfully deleted the form component, "age." |true                  |
+!| form component deletion table                                                                  |
+|component id|deletedId|message                                            |did not find component|
+|name        |unknown  |No component existed with id unknown               |false                 |
+|name        |name     |You successfully deleted the form component, "name"|true                  |
+|age         |age      |You successfully deleted the form component, "age" |true                  |

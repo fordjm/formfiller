@@ -1,10 +1,10 @@
 package formfiller.usecases.changeFormComponent;
 
-import fitnesse.request.models.ChangeIdRequest;
 import formfiller.FormFillerContext;
 import formfiller.entities.formComponent.FormComponent;
+import formfiller.request.models.ChangeIdRequest;
 import formfiller.request.models.Request;
-import formfiller.response.models.PresentableResponse;
+import formfiller.utilities.GeneralUtilities;
 
 public class ChangeIdUseCase extends ChangeFormComponent {
 	private ChangeIdRequest castRequest;
@@ -14,12 +14,17 @@ public class ChangeIdUseCase extends ChangeFormComponent {
 		castRequest = (ChangeIdRequest) request;
 	}
 
+	protected boolean isRequestMalformed() {
+		return GeneralUtilities.isStringNullOrEmpty(castRequest.oldId) || 
+				GeneralUtilities.isStringNullOrEmpty(castRequest.newId);
+	}
+
 	protected void assignInstanceVariables() {
 		id = castRequest.oldId;
 		newId = castRequest.newId;
 	}
 
-	//	TODO:	Fix fragile duplicated value.
+	//	TODO:	Fix fragile duplicated value?
 	protected void change(FormComponent component) {
 		FormFillerContext.formComponentGateway.remove(id);
 		component.question.id = newId;
@@ -27,27 +32,11 @@ public class ChangeIdUseCase extends ChangeFormComponent {
 		FormFillerContext.formComponentGateway.save(component);
 	}
 
-	protected PresentableResponse makeResponse() {
-		PresentableResponse result = new PresentableResponse();
-		result.message = "You successfully changed the id from " + 
-				makeQuotedString(id) + " to " + makeQuotedString(newId);
+	protected String makeSuccessfulMessage() {
+		String result = "You successfully changed the id from " + 
+				GeneralUtilities.makeQuotedString(id) + " to " + 
+				GeneralUtilities.makeQuotedString(newId);
 		return result;
-	}
-
-	//	TODO:	Extract to abstract class
-	protected void presentResponse(PresentableResponse response) {
-		FormFillerContext.outcomePresenter.present(response);
-	}
-
-	//	TODO:	Extract to utilities class
-	private String makeQuotedString(String input) {
-		String result = "\""+ input + "\"";
-		return result;
-	}
-
-	//	TODO:	Extract to abstract class
-	protected void addToExecutedUseCases() {
-		FormFillerContext.executedUseCases.add(this);
 	}
 
 	//	TODO:	Implement

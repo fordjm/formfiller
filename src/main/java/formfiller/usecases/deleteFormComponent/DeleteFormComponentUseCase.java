@@ -2,29 +2,21 @@ package formfiller.usecases.deleteFormComponent;
 
 import formfiller.FormFillerContext;
 import formfiller.entities.formComponent.FormComponent;
-import formfiller.enums.Outcome;
 import formfiller.request.models.DeleteFormComponentRequest;
 import formfiller.request.models.Request;
-import formfiller.response.models.PresentableResponse;
-import formfiller.usecases.undoable.UndoableUseCase;
+import formfiller.usecases.addFormComponent.UndoableUseCaseExecution;
+import formfiller.utilities.GeneralUtilities;
 
-public class DeleteFormComponentUseCase implements UndoableUseCase {
+public class DeleteFormComponentUseCase extends UndoableUseCaseExecution {
 	private DeleteFormComponentRequest castRequest;
-	private Outcome outcome = Outcome.NEUTRAL;
-	private String message = "";
-	private String componentId;
-
-	public void execute(Request request) {		
-		castRequest(request);
-		assignInstanceVariables();
-		execute();
-		PresentableResponse response = makeResponse();		
-		presentResponse(response);
-		addToExecutedUseCases();
-	}
+	private String componentId = "";
 
 	protected void castRequest(Request request) {
 		castRequest = (DeleteFormComponentRequest) request;
+	}
+
+	protected boolean isRequestMalformed() {
+		return castRequest.componentId == null || castRequest.componentId == "";
 	}
 
 	protected void assignInstanceVariables() {
@@ -35,37 +27,12 @@ public class DeleteFormComponentUseCase implements UndoableUseCase {
 		FormComponent deleted = 
 				FormFillerContext.formComponentGateway.remove(componentId);
 		if (deleted == null) throw new AbsentElementDeletion(
-					"No component existed with id " + componentId);
-		handleSuccessfulUseCase("You successfully deleted the form component, " + 
-				makeQuotedComponentId());					
+					"No component existed with id " + componentId);					
 	}
 
-	private void handleSuccessfulUseCase(String message) {
-		outcome = Outcome.POSITIVE;
-		this.message = message;
-	}
-
-	//	TODO:	Fix duplication in AddFormComponentUseCase
-	//			Extract to abstract superclass
-	protected PresentableResponse makeResponse() {
-		PresentableResponse result = new PresentableResponse();
-		result.message = message;
-		result.outcome = outcome;
-		return result;
-	}
-	
-	protected void presentResponse(PresentableResponse presentableResponse) {
-		FormFillerContext.outcomePresenter.present(presentableResponse);
-	}
-
-	//	TODO:	Extract to utilities class
-	private String makeQuotedComponentId() {
-		String result = "\"" + componentId + ".\"";
-		return result;
-	}
-
-	protected void addToExecutedUseCases() {
-		FormFillerContext.executedUseCases.add(this);
+	protected String makeSuccessfulMessage() {
+		return "You successfully deleted the form component, " + 
+				GeneralUtilities.makeQuotedString(componentId);
 	}
 
 	//	TODO:	Implement

@@ -1,6 +1,4 @@
-package fitnesse.request.models;
-
-import formfiller.request.models.Request;
+package formfiller.request.models;
 
 public class ChangeIdRequest extends Request {
 	public String oldId = "";

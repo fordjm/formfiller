@@ -1,9 +1,9 @@
 package fitnesse.fixtures;
 
-import fitnesse.request.models.ChangeIdRequest;
 import formfiller.FormFillerContext;
 import formfiller.entities.formComponent.FormComponent;
 import formfiller.entities.formComponent.NullFormComponents;
+import formfiller.request.models.ChangeIdRequest;
 import formfiller.usecases.changeFormComponent.ChangeIdUseCase;
 
 public class ChangeId {

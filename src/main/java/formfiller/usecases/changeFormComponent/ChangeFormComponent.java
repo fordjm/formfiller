@@ -2,41 +2,17 @@ package formfiller.usecases.changeFormComponent;
 
 import formfiller.FormFillerContext;
 import formfiller.entities.formComponent.FormComponent;
-import formfiller.entities.formComponent.NullFormComponents;
-import formfiller.request.models.Request;
-import formfiller.response.models.PresentableResponse;
-import formfiller.usecases.undoable.UndoableUseCase;
+import formfiller.usecases.addFormComponent.UndoableUseCaseExecution;
+import formfiller.utilities.FormComponentUtilities;
 
-public abstract class ChangeFormComponent implements UndoableUseCase {
+public abstract class ChangeFormComponent extends UndoableUseCaseExecution {
 	protected String id = "";
 
-	public void execute(Request request) {
-		castRequest(request);
-		assignInstanceVariables();
-		
+	protected void execute() {
 		FormComponent found = FormFillerContext.formComponentGateway.find(id);
-		if (!componentIsNull(found))
+		if (!FormComponentUtilities.componentIsNull(found))
 			change(found);
-		
-		PresentableResponse response = makeResponse();	
-		presentResponse(response);
-		addToExecutedUseCases();
 	}
-
-	//	TODO:	Extract to utilities class
-	private boolean componentIsNull(FormComponent component) {
-		return component.equals(NullFormComponents.NULL);
-	}
-
-	protected abstract void castRequest(Request request);
-
-	protected abstract void assignInstanceVariables();
 
 	protected abstract void change(FormComponent component);
-
-	protected abstract PresentableResponse makeResponse();
-
-	protected abstract void presentResponse(PresentableResponse response);
-
-	protected abstract void addToExecutedUseCases();
 }
