@@ -4,6 +4,10 @@ import java.util.List;
 
 public class AddOptionVariableFormComponentController extends AddFormComponentController{
 	private String options;	
+	
+	protected String getName() {
+		return "AddOptionVariableFormComponent";
+	}
 
 	protected void assignRequiredParameters(List<String> parameters) {
 		super.assignRequiredParameters(parameters);
@@ -14,9 +18,5 @@ public class AddOptionVariableFormComponentController extends AddFormComponentCo
 		Arguments result = super.makeArguments();
 		result.add("options", options);		
 		return result;
-	}
-	
-	protected String makeRequestName() {
-		return "AddOptionVariableFormComponent";
 	}
 }

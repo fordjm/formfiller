@@ -2,6 +2,10 @@
 |givenAQuestionId|@questionId                                  |AndQuestionContent|"question content"|AndAnswerFormat|U|
 |when the user adds a form component                                                                                   |
 
+!| scenario      |given a form component with the question ID _, the question content _, the answer format _, and the options _|questionId, questionContent, answerFormat, options                                   |
+|givenAQuestionId|@questionId                                                                                                  |AndQuestionContent|@questionContent|AndAnswerFormat|@answerFormat|AndOptions|@options|
+|when the user adds a form component                                                                                                                                                                                 |
+
 !| scenario|then the system should present the message, _|message |
 |check     |messagePresented                             |@message|
 

@@ -2,11 +2,11 @@ package formfiller.delivery.controller;
 
 import java.util.List;
 
-public class DeleteFormComponentController extends UndoableUseCaseController {
-	private String componentId = "";
+public class ChangeUnstructuredController extends UndoableUseCaseController {
+	private String componentId;
 	
 	protected String getName() {
-		return "DeleteFormComponent";
+		return "ChangeUnstructured";
 	}
 
 	protected void assignRequiredParameters(List<String> parameters) {

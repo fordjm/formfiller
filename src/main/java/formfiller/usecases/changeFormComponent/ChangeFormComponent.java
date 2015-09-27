@@ -12,7 +12,16 @@ public abstract class ChangeFormComponent extends UndoableUseCaseExecution {
 		FormComponent found = FormFillerContext.formComponentGateway.find(id);
 		if (!FormComponentUtilities.isComponentNull(found))
 			change(found);
+		else
+			throw new AbsentFormComponentChange();
 	}
 
 	protected abstract void change(FormComponent component);
+	
+	public class AbsentFormComponentChange extends RuntimeException {
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L; }
 }

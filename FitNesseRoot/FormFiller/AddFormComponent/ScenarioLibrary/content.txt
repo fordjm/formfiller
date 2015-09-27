@@ -1,5 +1,3 @@
-!include .FormFiller.ScenarioLibrary
-
 !| scenario      |given the question ID _, the question content _, and the answer format _|questionId, questionContent, answerFormat                        |
 |givenAQuestionId|@questionId                                                             |AndQuestionContent|@questionContent|AndAnswerFormat|@answerFormat|
 

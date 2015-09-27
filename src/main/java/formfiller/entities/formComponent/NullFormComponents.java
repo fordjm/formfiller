@@ -3,6 +3,7 @@ package formfiller.entities.formComponent;
 import formfiller.entities.Answer;
 import formfiller.entities.NullQuestions;
 import formfiller.entities.Question;
+import formfiller.entities.answerFormat.Unstructured;
 
 //	TODO:	Make this an enum.
 public class NullFormComponents {
@@ -15,6 +16,7 @@ public class NullFormComponents {
 		result.id = nullQuestion.id;
 		result.question = nullQuestion;
 		result.answer = Answer.NONE;
+		result.format = new Unstructured();
 		return result;
 	}
 }

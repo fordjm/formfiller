@@ -4,13 +4,18 @@ import java.util.List;
 
 import formfiller.delivery.Controller;
 import formfiller.delivery.event.ParsedEvent;
+import formfiller.request.builders.RequestBuilderImpl;
 import formfiller.request.models.Request;
 import formfiller.usecases.LocalUseCase;
+import formfiller.usecases.factory.UseCaseFactory;
+import formfiller.usecases.factory.UseCaseFactoryImpl;
 import formfiller.usecases.undoable.UndoableUseCase;
 
 public abstract class UndoableUseCaseController implements Controller {
+	private String name = "";
 
 	public void handle(ParsedEvent parsedEvent) {
+		name = getName();
 		assignRequiredParameters(parsedEvent.parameters);
 		Arguments arguments = makeArguments();
 		Request request = makeRequest(arguments);
@@ -19,6 +24,8 @@ public abstract class UndoableUseCaseController implements Controller {
 		
 		local.execute(request);
 	}
+	
+	protected abstract String getName();
 
 	protected String assignRequiredParameter(List<String> parameters, int index) {
 		if (parameters == null || index >= parameters.size()) 
@@ -31,7 +38,14 @@ public abstract class UndoableUseCaseController implements Controller {
 
 	protected abstract Arguments makeArguments();
 	
-	protected abstract Request makeRequest(Arguments arguments);
-	
-	protected abstract UndoableUseCase makeUseCase();
+	protected Request makeRequest(Arguments arguments) {
+		RequestBuilderImpl builder = new RequestBuilderImpl();
+		return builder.build(name, arguments);
+	}
+
+	protected UndoableUseCase makeUseCase() {
+		UseCaseFactory factory = new UseCaseFactoryImpl();
+		UndoableUseCase castUseCase = (UndoableUseCase) factory.make(name);
+		return castUseCase;
+	}
 }

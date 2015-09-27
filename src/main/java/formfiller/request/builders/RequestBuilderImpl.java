@@ -20,17 +20,12 @@ public class RequestBuilderImpl implements RequestBuilder {
 			return buildAskQuestionRequest();
 		else if(requestName.equalsIgnoreCase("ChangeId"))
 			return buildChangeIdRequest();
+		else if(requestName.equalsIgnoreCase("ChangeUnstructured"))
+			return buildChangeUnstructuredRequest();
 		else if(requestName.equalsIgnoreCase("DeleteFormComponent"))
 			return buildDeleteFormComponentRequest();
 		else
 			return Request.NULL;
-	}
-
-	private Request buildChangeIdRequest() {
-		ChangeIdRequestBuilder builder = new ChangeIdRequestBuilder();
-		builder.buildOldId((String) args.getById("oldId"));
-		builder.buildNewId((String) args.getById("newId"));
-		return finishBuildingRequest(builder);
 	}
 
 	private Request buildHandleUnfoundControllerRequest() {
@@ -64,6 +59,20 @@ public class RequestBuilderImpl implements RequestBuilder {
 	private Request buildAskQuestionRequest() {
 		AskQuestionRequestBuilder builder = new AskQuestionRequestBuilder();
 		builder.buildWhichQuestion((QuestionAsked) args.getById("which")); 
+		return finishBuildingRequest(builder);
+	}
+
+	private Request buildChangeIdRequest() {
+		ChangeIdRequestBuilder builder = new ChangeIdRequestBuilder();
+		builder.buildOldId((String) args.getById("oldId"));
+		builder.buildNewId((String) args.getById("newId"));
+		return finishBuildingRequest(builder);
+	}
+
+	private Request buildChangeUnstructuredRequest() {
+		ChangeUnstructuredRequestBuilder builder = 
+				new ChangeUnstructuredRequestBuilder();
+		builder.buildComponentId((String) args.getById("componentId"));
 		return finishBuildingRequest(builder);
 	}
 
