@@ -4,14 +4,14 @@ import formfiller.FormFillerContext;
 import formfiller.entities.formComponent.FormComponent;
 
 public abstract class AddFormComponent {
-	private StringEventManager fixtureEventHandler;
+	private StringEventManager stringEventManager;
 	private String questionId;
 	private String questionContent;
 	private String answerFormat;
 	protected FormComponent addedComponent;
 
 	public AddFormComponent() {
-		fixtureEventHandler = new StringEventManager();
+		stringEventManager = new StringEventManager();
 	}
 	
 	public void givenAQuestionIdAndQuestionContentAndAnswerFormat(String questionId, 
@@ -23,7 +23,7 @@ public abstract class AddFormComponent {
 
 	public void whenTheUserAddsAFormComponent(){
 		String event = makeConsoleRequiredParametersString();
-		fixtureEventHandler.updateHandler(event);
+		stringEventManager.updateHandler(event);
 	}
 	
 	protected String makeConsoleRequiredParametersString() {

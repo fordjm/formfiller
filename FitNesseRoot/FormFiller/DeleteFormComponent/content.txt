@@ -1,25 +1,13 @@
-# TODO:  Fix duplication in parent scenario library.
-!| scenario      |given a form component with the question ID _|questionId                                             |
-|givenAQuestionId|@questionId                                  |AndQuestionContent|"question content"|AndAnswerFormat|U|
-|when the user adds a form component                                                                                   |
-
-!| scenario|then the system should present the message, _|message |
-|check     |messagePresented                             |@message|
-#		End duplication
-
-!| scenario|then the system should not find the component with id _ _|componentId,truthValue  |
-|check     |did not find component                                   |@componentId|@truthValue|
-
-!| scenario                              |form component deletion table|componentId||deletedId||message||did not find component|
-|given a form component with the question ID @componentId                                                                      |
-|when the user deletes the form component|@deletedId                                                                           |
-|then the system should present the message, @message                                                                          |
-|then the system should not find the component with id @componentId @didNotFindComponent                                       |
+!| scenario                              |form component deletion table|componentId||deletedId||message||found component|
+|given a form component with the question ID @componentId                                                               |
+|when the user deletes the form component|@deletedId                                                                    |
+|then the system should present the message, @message                                                                   |
+|then the system should find the component with id @componentId @foundComponent                                         |
 
 |script|delete form component|
 
-!| form component deletion table                                                                  |
-|component id|deletedId|message                                            |did not find component|
-|name        |unknown  |No component existed with id unknown               |false                 |
-|name        |name     |You successfully deleted the form component, "name"|true                  |
-|age         |age      |You successfully deleted the form component, "age" |true                  |
+!| form component deletion table                                                           |
+|component id|deletedId|message                                            |found component|
+|name        |unknown  |No component existed with id unknown               |true           |
+|name        |name     |You successfully deleted the form component, "name"|false          |
+|age         |age      |You successfully deleted the form component, "age" |false          |

@@ -1,4 +1,4 @@
-package formfiller.utilities;
+package formfiller.usecases.askQuestion;
 
 import formfiller.FormFillerContext;
 import formfiller.appBoundaries.Presenter;

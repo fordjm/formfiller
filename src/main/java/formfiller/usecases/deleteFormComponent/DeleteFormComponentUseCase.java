@@ -4,8 +4,8 @@ import formfiller.FormFillerContext;
 import formfiller.entities.formComponent.FormComponent;
 import formfiller.request.models.DeleteFormComponentRequest;
 import formfiller.request.models.Request;
-import formfiller.usecases.addFormComponent.UndoableUseCaseExecution;
-import formfiller.utilities.GeneralUtilities;
+import formfiller.usecases.undoable.UndoableUseCaseExecution;
+import formfiller.utilities.StringUtilities;
 
 public class DeleteFormComponentUseCase extends UndoableUseCaseExecution {
 	private DeleteFormComponentRequest castRequest;
@@ -16,7 +16,7 @@ public class DeleteFormComponentUseCase extends UndoableUseCaseExecution {
 	}
 
 	protected boolean isRequestMalformed() {
-		return castRequest.componentId == null || castRequest.componentId == "";
+		return StringUtilities.isStringNullOrEmpty(castRequest.componentId);
 	}
 
 	protected void assignInstanceVariables() {
@@ -32,7 +32,7 @@ public class DeleteFormComponentUseCase extends UndoableUseCaseExecution {
 
 	protected String makeSuccessfulMessage() {
 		return "You successfully deleted the form component, " + 
-				GeneralUtilities.makeQuotedString(componentId);
+				StringUtilities.makeQuotedString(componentId);
 	}
 
 	//	TODO:	Implement

@@ -1,41 +1,16 @@
 package fitnesse.fixtures;
 
-import formfiller.FormFillerContext;
-import formfiller.entities.formComponent.FormComponent;
-import formfiller.entities.formComponent.NullFormComponents;
-import formfiller.request.models.ChangeIdRequest;
-import formfiller.usecases.changeFormComponent.ChangeIdUseCase;
+import formfiller.utilities.StringUtilities;
 
 public class ChangeId {
-	String oldId = ""; 
-	String newId = "";
+	private StringEventManager stringEventManager;
+	
+	public ChangeId() {
+		stringEventManager = new StringEventManager();
+	}
 	
 	public void whenTheUserChangesTheIdFromOldToNew(String oldId, String newId){
-		this.oldId = oldId;
-		this.newId = newId;
-		executeUseCase();
-	}
-
-	private void executeUseCase() {
-		ChangeIdRequest request = makeRequest();
-		ChangeIdUseCase useCase = new ChangeIdUseCase();
-		useCase.execute(request);
-	}
-
-	private ChangeIdRequest makeRequest() {
-		ChangeIdRequest result = new ChangeIdRequest();
-		result.oldId = oldId;
-		result.newId = newId;
-		return result;
-	}
-	
-	public boolean foundComponent(String id){
-		FormComponent foundComponent = 
-				FormFillerContext.formComponentGateway.find(id);
-		return !componentIsNull(foundComponent);
-	}
-
-	private boolean componentIsNull(FormComponent component) {
-		return component.equals(NullFormComponents.NULL);
+		String spacedIds = StringUtilities.makeSpacedString(oldId, newId);
+		stringEventManager.updateHandler("ChangeId " + spacedIds);
 	}
 }

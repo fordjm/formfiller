@@ -18,10 +18,19 @@ public class RequestBuilderImpl implements RequestBuilder {
 			return buildAddOptionVariableFormComponentRequest();
 		else if(requestName.equalsIgnoreCase("AskQuestion"))
 			return buildAskQuestionRequest();
+		else if(requestName.equalsIgnoreCase("ChangeId"))
+			return buildChangeIdRequest();
 		else if(requestName.equalsIgnoreCase("DeleteFormComponent"))
 			return buildDeleteFormComponentRequest();
 		else
 			return Request.NULL;
+	}
+
+	private Request buildChangeIdRequest() {
+		ChangeIdRequestBuilder builder = new ChangeIdRequestBuilder();
+		builder.buildOldId((String) args.getById("oldId"));
+		builder.buildNewId((String) args.getById("newId"));
+		return finishBuildingRequest(builder);
 	}
 
 	private Request buildHandleUnfoundControllerRequest() {

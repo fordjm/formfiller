@@ -2,7 +2,7 @@ package formfiller.usecases.changeFormComponent;
 
 import formfiller.FormFillerContext;
 import formfiller.entities.formComponent.FormComponent;
-import formfiller.usecases.addFormComponent.UndoableUseCaseExecution;
+import formfiller.usecases.undoable.UndoableUseCaseExecution;
 import formfiller.utilities.FormComponentUtilities;
 
 public abstract class ChangeFormComponent extends UndoableUseCaseExecution {
@@ -10,7 +10,7 @@ public abstract class ChangeFormComponent extends UndoableUseCaseExecution {
 
 	protected void execute() {
 		FormComponent found = FormFillerContext.formComponentGateway.find(id);
-		if (!FormComponentUtilities.componentIsNull(found))
+		if (!FormComponentUtilities.isComponentNull(found))
 			change(found);
 	}
 

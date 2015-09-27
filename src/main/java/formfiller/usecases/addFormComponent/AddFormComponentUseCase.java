@@ -12,6 +12,8 @@ import formfiller.entities.formComponent.FormComponent;
 import formfiller.request.models.AddFormComponentRequest;
 import formfiller.request.models.Request;
 import formfiller.usecases.addAnswer.AnswerValidator;
+import formfiller.usecases.undoable.UndoableUseCaseExecution;
+import formfiller.utilities.StringUtilities;
 
 public abstract class AddFormComponentUseCase extends UndoableUseCaseExecution {
 	protected AddFormComponentRequest castRequest;
@@ -26,7 +28,7 @@ public abstract class AddFormComponentUseCase extends UndoableUseCaseExecution {
 	}
 
 	protected boolean isRequestMalformed() {
-		return castRequest.questionId == null || castRequest.questionId == "";
+		return StringUtilities.isStringNullOrEmpty(castRequest.questionId);
 	}
 
 	protected void assignInstanceVariables() {

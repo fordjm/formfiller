@@ -1,10 +1,9 @@
-package formfiller.usecases.addFormComponent;
+package formfiller.usecases.undoable;
 
 import formfiller.FormFillerContext;
 import formfiller.enums.Outcome;
 import formfiller.request.models.Request;
 import formfiller.response.models.PresentableResponse;
-import formfiller.usecases.undoable.UndoableUseCase;
 
 public abstract class UndoableUseCaseExecution implements UndoableUseCase {
 	protected Outcome outcome = Outcome.NEUTRAL;

@@ -1,3 +1,5 @@
+!include .FormFiller.ScenarioLibrary
+
 !| scenario      |given the question ID _, the question content _, and the answer format _|questionId, questionContent, answerFormat                        |
 |givenAQuestionId|@questionId                                                             |AndQuestionContent|@questionContent|AndAnswerFormat|@answerFormat|
 
@@ -7,12 +9,21 @@
 |check    |added content                                                                        |@addedContent                     |
 |check    |added format                                                                         |@addedFormat                      |
 
-# TODO:  Fix duplication in DeleteFormComponent scenario library.
-!| scenario|then the system should present the message, _|message |
-|check     |messagePresented                             |@message|
+!| scenario      |given the question ID _, the question content _, the answer format _, and the options _|questionId, questionContent, answerFormat, options                                   |
+|givenAQuestionId|@questionId                                                                            |AndQuestionContent|@questionContent|AndAnswerFormat|@answerFormat|AndOptions|@options|
+
+!| scenario|then the added component should have the id _, the content _, the answer format _, and the options _|addedId, addedContent, addedFormat, addedOptions|
+|then the added component should have the id @addedId, the content @addedContent, and the answer format @addedFormat                                             |
+|check     |added options                                                                                       |@addedOptions                                   |
 
 !| scenario|form component addition table|question id||question content||answer format||message||added id||added content||added format|
 |given the question ID @questionId, the question content @questionContent, and the answer format @answerFormat                        |
 |when the user adds a form component                                                                                                  |
 |then the system should present the message, @message                                                                                 |
 |then the added component should have the id @addedId, the content @addedContent, and the answer format @addedFormat                  |
+
+!| scenario|option variable form component addition table|question id||question content||answer format||options||message||added id||added content||added format||added options|
+|given the question ID @questionId, the question content @questionContent, the answer format @answerFormat, and the options @options                                          |
+|when the user adds a form component                                                                                                                                          |
+|then the system should present the message, @message                                                                                                                         |
+|then the added component should have the id @addedId, the content @addedContent, the answer format @addedFormat, and the options @addedOptions                               |

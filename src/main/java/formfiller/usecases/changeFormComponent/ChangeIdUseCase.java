@@ -4,7 +4,7 @@ import formfiller.FormFillerContext;
 import formfiller.entities.formComponent.FormComponent;
 import formfiller.request.models.ChangeIdRequest;
 import formfiller.request.models.Request;
-import formfiller.utilities.GeneralUtilities;
+import formfiller.utilities.StringUtilities;
 
 public class ChangeIdUseCase extends ChangeFormComponent {
 	private ChangeIdRequest castRequest;
@@ -15,8 +15,8 @@ public class ChangeIdUseCase extends ChangeFormComponent {
 	}
 
 	protected boolean isRequestMalformed() {
-		return GeneralUtilities.isStringNullOrEmpty(castRequest.oldId) || 
-				GeneralUtilities.isStringNullOrEmpty(castRequest.newId);
+		return StringUtilities.isStringNullOrEmpty(castRequest.oldId) || 
+				StringUtilities.isStringNullOrEmpty(castRequest.newId);
 	}
 
 	protected void assignInstanceVariables() {
@@ -34,8 +34,8 @@ public class ChangeIdUseCase extends ChangeFormComponent {
 
 	protected String makeSuccessfulMessage() {
 		String result = "You successfully changed the id from " + 
-				GeneralUtilities.makeQuotedString(id) + " to " + 
-				GeneralUtilities.makeQuotedString(newId);
+				StringUtilities.makeQuotedString(id) + " to " + 
+				StringUtilities.makeQuotedString(newId);
 		return result;
 	}
 

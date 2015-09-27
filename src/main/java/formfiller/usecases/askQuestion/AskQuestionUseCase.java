@@ -14,7 +14,6 @@ import formfiller.gateways.InMemoryTransporter;
 import formfiller.request.models.*;
 import formfiller.response.models.*;
 import formfiller.usecases.undoable.UndoableUseCase;
-import formfiller.utilities.PresenterSelector;
 
 public class AskQuestionUseCase implements UndoableUseCase {
 	private QuestionAsked whichQuestion = QuestionAsked.CURRENT;
