@@ -22,6 +22,8 @@ public class RequestBuilderImpl implements RequestBuilder {
 			return buildChangeIdRequest();
 		else if(requestName.equalsIgnoreCase("ChangeUnstructured"))
 			return buildChangeUnstructuredRequest();
+		else if(requestName.equalsIgnoreCase("ChangeOptionVariable"))
+			return buildChangeOptionVariableRequest();
 		else if(requestName.equalsIgnoreCase("DeleteFormComponent"))
 			return buildDeleteFormComponentRequest();
 		else
@@ -44,14 +46,13 @@ public class RequestBuilderImpl implements RequestBuilder {
 
 	private Request buildAddOptionVariableFormComponentRequest() {
 		AddFormComponentRequestBuilder builder = 
-				new AddOptionVariableFormComponentRequestBuilder(
-						(String) args.getById("options"));
+				new AddOptionVariableFormComponentRequestBuilder();
 		return buildAddFormComponentRequest(builder);
 	}
 
 	private Request buildAddFormComponentRequest(AddFormComponentRequestBuilder builder) {
-		builder.buildQuestionId((String) args.getById("questionId"));
-		builder.buildQuestionContent((String) args.getById("questionContent"));
+		builder.buildQuestionId(getArgumentAsString("questionId"));
+		builder.buildQuestionContent(getArgumentAsString("questionContent"));
 		builder.buildAnswerFormat();
 		return finishBuildingRequest(builder);
 	}
@@ -64,21 +65,33 @@ public class RequestBuilderImpl implements RequestBuilder {
 
 	private Request buildChangeIdRequest() {
 		ChangeIdRequestBuilder builder = new ChangeIdRequestBuilder();
-		builder.buildOldId((String) args.getById("oldId"));
-		builder.buildNewId((String) args.getById("newId"));
+		builder.buildOldId(getArgumentAsString("oldId"));
+		builder.buildNewId(getArgumentAsString("newId"));
 		return finishBuildingRequest(builder);
+	}
+
+	private Request buildChangeOptionVariableRequest() {
+		ChangeOptionVariableRequestBuilder builder = 
+				new ChangeOptionVariableRequestBuilder();
+		builder.buildComponentId(getArgumentAsString("componentId"));
+		return finishBuildingRequest(builder);
+	}
+
+	private String getArgumentAsString(String key) {
+		return (String) args.getById(key);
 	}
 
 	private Request buildChangeUnstructuredRequest() {
 		ChangeUnstructuredRequestBuilder builder = 
 				new ChangeUnstructuredRequestBuilder();
-		builder.buildComponentId((String) args.getById("componentId"));
+		builder.buildComponentId(getArgumentAsString("componentId"));
 		return finishBuildingRequest(builder);
 	}
 
 	private Request buildDeleteFormComponentRequest() {
-		DeleteFormComponentRequestBuilder builder = new DeleteFormComponentRequestBuilder();
-		builder.buildComponentId((String) args.getById("componentId"));
+		DeleteFormComponentRequestBuilder builder = 
+				new DeleteFormComponentRequestBuilder();
+		builder.buildComponentId(getArgumentAsString("componentId"));
 		return finishBuildingRequest(builder);
 	}
 	
@@ -86,4 +99,5 @@ public class RequestBuilderImpl implements RequestBuilder {
 		builder.buildName();
 		return builder.getRequest();
 	}
+	
 }

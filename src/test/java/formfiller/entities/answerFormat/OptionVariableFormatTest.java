@@ -25,7 +25,7 @@ public class OptionVariableFormatTest {
 	
 	@Before
 	public void setUp() {
-		format = new OptionVariable(0, 1);
+		format = new OptionVariable();
 		Object[] options = makeScantronOptions();
 		format.options = Arrays.asList(options);
 	}

@@ -4,19 +4,21 @@ import formfiller.entities.answerFormat.AnswerFormat;
 import formfiller.entities.formComponent.FormComponent;
 
 public abstract class ChangeFormat extends ChangeFormComponent {
-	protected void change(FormComponent component) {
-		component.format = getAnswerFormat();
-	}
+	protected AnswerFormat oldFormat;
+	protected AnswerFormat newFormat;
 
-	protected abstract AnswerFormat getAnswerFormat();
+	protected void createUndoInfo(FormComponent component) {
+		oldFormat = component.format;
+	}
+	
+	protected void change(FormComponent component) {
+		component.format = newFormat;
+	}
 
 	protected String makeSuccessfulMessage() {
-		return "You successfully changed the format to " + getName();
+		return "You successfully changed the format to " + newFormat.getName();
 	}
 
-	//	TODO:	Remove this and give formats a name field.
-	protected abstract String getName();
-
-	//	TODO:	Implement
+	//	TODO:	Find component and revert format.
 	public void undo() { }
 }

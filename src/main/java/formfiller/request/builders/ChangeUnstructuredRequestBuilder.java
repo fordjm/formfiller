@@ -21,4 +21,5 @@ public class ChangeUnstructuredRequestBuilder implements RequestBuilderFunctions
 	public Request getRequest() { 
 		return request;
 	}
+	
 }

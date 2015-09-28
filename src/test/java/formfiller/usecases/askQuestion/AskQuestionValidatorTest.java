@@ -11,7 +11,6 @@ import de.bechte.junit.runners.context.HierarchicalContextRunner;
 import formfiller.FormFillerContext;
 import formfiller.entities.Answer;
 import formfiller.entities.Question;
-import formfiller.entities.answerFormat.AnswerFormat;
 import formfiller.entities.answerFormat.Unstructured;
 import formfiller.entities.formComponent.FormComponent;
 import formfiller.enums.QuestionAsked;
@@ -28,7 +27,7 @@ public class AskQuestionValidatorTest {
 	private FormComponent makeMockFormComponent(boolean requiresAnswer, 
 			Question mockQuestion, Answer mockAnswer) {
 		return FormComponentMocker.makeMockFormComponent(
-				requiresAnswer, mockQuestion, mockAnswer, new Unstructured(0, 1));
+				requiresAnswer, mockQuestion, mockAnswer, new Unstructured());
 	}
 	
 	private void assertThat_AskQuestionIsLegal(QuestionAsked which) {

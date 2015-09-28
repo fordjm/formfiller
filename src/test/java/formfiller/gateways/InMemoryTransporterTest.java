@@ -93,7 +93,7 @@ public class InMemoryTransporterTest {
 		
 		private FormComponent makeMockFormComponent(Question question){
 			return FormComponentMocker.makeMockFormComponent(false, 
-					question, Answer.NONE, new Unstructured(0, 1));
+					question, Answer.NONE, new Unstructured());
 		}
 		
 		@Before

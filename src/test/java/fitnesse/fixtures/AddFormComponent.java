@@ -47,8 +47,6 @@ public abstract class AddFormComponent {
 	}
 	
 	public String addedFormat() {
-		String className = addedComponent.format.getClass().getName();
-		int startIndex = className.lastIndexOf('.') + 1;
-		return className.substring(startIndex);
+		return addedComponent.format.getName();
 	}
 }

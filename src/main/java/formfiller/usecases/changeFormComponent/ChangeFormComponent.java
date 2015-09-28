@@ -10,11 +10,15 @@ public abstract class ChangeFormComponent extends UndoableUseCaseExecution {
 
 	protected void execute() {
 		FormComponent found = FormFillerContext.formComponentGateway.find(id);
-		if (!FormComponentUtilities.isComponentNull(found))
-			change(found);
+		if (!FormComponentUtilities.isComponentNull(found)){
+			createUndoInfo(found);
+			change(found);			
+		}
 		else
 			throw new AbsentFormComponentChange();
 	}
+
+	protected abstract void createUndoInfo(FormComponent found);
 
 	protected abstract void change(FormComponent component);
 	

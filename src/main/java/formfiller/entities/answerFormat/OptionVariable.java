@@ -9,13 +9,11 @@ public class OptionVariable extends AnswerFormat {
 	
 	public OptionVariable() {
 		super();
-	}
-	
-	public OptionVariable(int minAnswers, int maxAnswers) {
-		super(minAnswers, maxAnswers);
+		name = "OptionVariable";
 	}
 
 	public boolean matchesFormat(Object content) {
 		return options.contains(content);
 	}
+	
 }

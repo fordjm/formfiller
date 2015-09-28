@@ -16,12 +16,11 @@ import formfiller.usecases.undoable.UndoableUseCaseExecution;
 import formfiller.utilities.StringUtilities;
 
 public abstract class AddFormComponentUseCase extends UndoableUseCaseExecution {
-	protected AddFormComponentRequest castRequest;
+	private AddFormComponentRequest castRequest;
 	private String questionId = "";
 	private String questionContent = "";
 	
-	//	TODO:	Remove mandatory params.
-	protected abstract AnswerFormat makeAnswerFormat(int minAnswers, int maxAnswers);
+	protected abstract AnswerFormat makeAnswerFormat();
 	
 	protected void castRequest(Request request) {
 		castRequest = (AddFormComponentRequest) request;
@@ -38,7 +37,7 @@ public abstract class AddFormComponentUseCase extends UndoableUseCaseExecution {
 
 	protected void execute() {
 		FormComponent newComponent = makeNewFormComponent();
-		newComponent.format = makeAnswerFormat(0, 1);
+		newComponent.format = makeAnswerFormat();
 		newComponent.validator = new AnswerValidator(
 				makeAnswerConstraints(castRequest));
 		FormFillerContext.formComponentGateway.save(newComponent);
@@ -70,6 +69,6 @@ public abstract class AddFormComponentUseCase extends UndoableUseCaseExecution {
 		return result;
 	}
 
-	//	TODO:	Implement
+	//	TODO:	Remove added component
 	public void undo() { }
 }

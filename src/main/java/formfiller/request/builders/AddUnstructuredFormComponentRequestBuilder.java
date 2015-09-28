@@ -4,7 +4,6 @@ import formfiller.entities.answerFormat.Unstructured;
 import formfiller.request.models.AddUnstructuredFormComponentRequest;
 
 public class AddUnstructuredFormComponentRequestBuilder extends AddFormComponentRequestBuilder {
-	
 	public AddUnstructuredFormComponentRequestBuilder(){
 		request = new AddUnstructuredFormComponentRequest();
 	}
@@ -16,4 +15,5 @@ public class AddUnstructuredFormComponentRequestBuilder extends AddFormComponent
 	public void buildAnswerFormat(){
 		request.format = new Unstructured();
 	}
+	
 }

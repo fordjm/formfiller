@@ -167,7 +167,7 @@ public class AskQuestionTest {
 		}	
 
 		private OptionVariable makeOptionVariableFormat() {
-			OptionVariable result = new OptionVariable(0, 1);
+			OptionVariable result = new OptionVariable();
 			result.options = makeLegalAgeOptions();
 			return result;
 		}
@@ -181,7 +181,7 @@ public class AskQuestionTest {
 		@Before
 		public void givenTwoFormComponents(){
 			mockNameFormComponent = makeMockFormComponent("name", 
-					"What is your name?", false, new Unstructured(0, 1));
+					"What is your name?", false, new Unstructured());
 			mockAgeFormComponent = makeMockFormComponent("age", 
 					"What is your age?", true, makeOptionVariableFormat());
 			saveFormComponents(mockNameFormComponent, mockAgeFormComponent);

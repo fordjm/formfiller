@@ -5,17 +5,17 @@ import java.util.Collection;
 import formfiller.entities.Answer;
 
 public abstract class AnswerFormat {
+	protected String name = "";
 	int minAnswers;
-	private int maxAnswers;
+	int maxAnswers;
 	
 	public AnswerFormat() {
 		minAnswers = 0;
 		maxAnswers = 1;
 	}
 	
-	public AnswerFormat(int minAnswers, int maxAnswers) {
-		this.minAnswers = minAnswers;
-		this.maxAnswers = maxAnswers;
+	public String getName() {
+		return name;
 	}
 	
 	public boolean matchesCardinality(Answer toMatch) {

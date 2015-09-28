@@ -8,6 +8,7 @@ import formfiller.utilities.StringUtilities;
 
 public class ChangeIdUseCase extends ChangeFormComponent {
 	private ChangeIdRequest castRequest;
+	private String oldId = "";
 	private String newId = "";
 	
 	protected void castRequest(Request request) {
@@ -22,6 +23,10 @@ public class ChangeIdUseCase extends ChangeFormComponent {
 	protected void assignInstanceVariables() {
 		id = castRequest.oldId;
 		newId = castRequest.newId;
+	}
+
+	protected void createUndoInfo(FormComponent found) {
+		oldId = found.id;
 	}
 
 	//	TODO:	Fix fragile duplicated value?
@@ -39,6 +44,6 @@ public class ChangeIdUseCase extends ChangeFormComponent {
 		return result;
 	}
 
-	//	TODO:	Implement
+	//	TODO:	Find component and revert id.
 	public void undo() { }
 }
