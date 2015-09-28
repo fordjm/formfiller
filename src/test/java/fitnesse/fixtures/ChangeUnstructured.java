@@ -3,6 +3,7 @@ package fitnesse.fixtures;
 import formfiller.FormFillerContext;
 import formfiller.entities.answerFormat.AnswerFormat;
 import formfiller.entities.formComponent.FormComponent;
+import formfiller.entities.formComponent.NullFormComponents;
 
 public class ChangeUnstructured {
 	private StringEventManager stringEventManager;
@@ -17,6 +18,8 @@ public class ChangeUnstructured {
 	
 	public String componentFormat(String componentId){
 		FormComponent found = FormFillerContext.formComponentGateway.find(componentId);
+		if (found == NullFormComponents.NULL) 
+			throw new IllegalArgumentException("Requested component not found at gateway.");
 		return trimmedClassName(found.format);
 	}
 

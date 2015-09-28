@@ -1,5 +1,5 @@
 !| scenario                              |form component deletion table|componentId||deletedId||message||found component|
-|given a form component with the question ID @componentId                                                               |
+|given a form component with the component ID @componentId, the question content content, and the answer format U       |
 |when the user deletes the form component|@deletedId                                                                    |
 |then the system should present the message, @message                                                                   |
 |then the system should find the component with id @componentId @foundComponent                                         |

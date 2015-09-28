@@ -1,11 +1,11 @@
 !|scenario                     |when the user changes the id from _ to _|oldId,newId |
 |whenTheUserChangesTheIdFromOld|@oldId                                  |ToNew|@newId|
 
-!| scenario     |change id table     |oldId     |     |newId     |     |message    |    |currentId    |
-|given a form component with the question ID @oldId                                                   |
-|when the user changes the id from @oldId to @newId                                                   |
-|then the system should present the message, You successfully changed the id from "@oldId" to "@newId"|
-|then the system should find the component with id @currentId true                                    |
+!| scenario      |change id table      |oldId     |     |newId     |     |message     |     |currentId     |
+|given a form component with the component ID @oldId, the question content content, and the answer format U|
+|when the user changes the id from @oldId to @newId                                                        |
+|then the system should present the message, You successfully changed the id from "@oldId" to "@newId"     |
+|then the system should find the component with id @currentId true                                         |
 
 
 |script|change id|
