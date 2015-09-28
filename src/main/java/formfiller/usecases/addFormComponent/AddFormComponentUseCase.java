@@ -9,6 +9,7 @@ import formfiller.entities.answerFormat.AnswerFormat;
 import formfiller.entities.constrainable.AnswerType;
 import formfiller.entities.constrainable.Constrainable;
 import formfiller.entities.formComponent.FormComponent;
+import formfiller.enums.Outcome;
 import formfiller.request.models.AddFormComponentRequest;
 import formfiller.request.models.Request;
 import formfiller.usecases.addAnswer.AnswerValidator;
@@ -69,6 +70,9 @@ public abstract class AddFormComponentUseCase extends UndoableUseCaseExecution {
 		return result;
 	}
 
-	//	TODO:	Remove added component
-	public void undo() { }
+	public void undo() { 
+		ensureUseCaseIsUndoable();
+		FormFillerContext.formComponentGateway.remove(questionId);
+	}
+	
 }

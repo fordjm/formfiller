@@ -54,6 +54,10 @@ public abstract class UndoableUseCaseExecution implements UndoableUseCase {
 	protected void addToExecutedUseCases() {
 		FormFillerContext.executedUseCases.add(this);
 	}
+	
+	protected void ensureUseCaseIsUndoable() {
+		if (outcome != Outcome.POSITIVE) throw new UnsuccessfulUseCaseUndo();
+	}
 
 	public class MalformedRequest extends RuntimeException {
 		/**
@@ -61,4 +65,11 @@ public abstract class UndoableUseCaseExecution implements UndoableUseCase {
 		 */
 		private static final long serialVersionUID = 1L;
 	}
+	
+	public class UnsuccessfulUseCaseUndo extends RuntimeException {
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L; }
 }
