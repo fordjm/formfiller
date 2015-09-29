@@ -1,11 +1,11 @@
 package formfiller.request.builders;
 
 import formfiller.entities.answerFormat.OptionVariable;
-import formfiller.request.models.AddOptionVariableFormComponentRequest;
+import formfiller.request.models.AddFormComponentRequest;
 
 public class AddOptionVariableFormComponentRequestBuilder extends AddFormComponentRequestBuilder {
 	public AddOptionVariableFormComponentRequestBuilder(){
-		request = new AddOptionVariableFormComponentRequest();
+		request = new AddFormComponentRequest();
 	}
 	
 	public void buildName() {

@@ -71,7 +71,7 @@ public abstract class AddFormComponentUseCase extends UndoableUseCaseExecution {
 	}
 
 	public void undo() { 
-		ensureUseCaseIsUndoable();
+		ensureUseCaseStateIsUndoable();
 		FormFillerContext.formComponentGateway.remove(questionId);
 	}
 	

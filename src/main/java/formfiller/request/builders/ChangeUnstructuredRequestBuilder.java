@@ -1,13 +1,13 @@
 package formfiller.request.builders;
 
-import formfiller.request.models.ChangeUnstructuredRequest;
+import formfiller.request.models.ChangeFormatRequest;
 import formfiller.request.models.Request;
 
 public class ChangeUnstructuredRequestBuilder implements RequestBuilderFunctions {
-	private ChangeUnstructuredRequest request;
+	private ChangeFormatRequest request;
 
 	public ChangeUnstructuredRequestBuilder() {
-		request = new ChangeUnstructuredRequest();
+		request = new ChangeFormatRequest();
 	}
 
 	public void buildName() {

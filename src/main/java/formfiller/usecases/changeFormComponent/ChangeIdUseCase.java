@@ -6,7 +6,7 @@ import formfiller.request.models.ChangeIdRequest;
 import formfiller.request.models.Request;
 import formfiller.utilities.StringUtilities;
 
-public class ChangeIdUseCase extends ChangeFormComponent {
+public class ChangeIdUseCase extends ChangeFormComponentUseCase {
 	private ChangeIdRequest castRequest;
 	private String oldId = "";
 	private String newId = "";
@@ -49,7 +49,7 @@ public class ChangeIdUseCase extends ChangeFormComponent {
 	}
 
 	public void undo() {
-		ensureUseCaseIsUndoable();
+		ensureUseCaseStateIsUndoable();
 		swapNames(newId, oldId);
 	}
 	

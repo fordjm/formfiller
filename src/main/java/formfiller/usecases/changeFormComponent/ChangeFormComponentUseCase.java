@@ -5,7 +5,7 @@ import formfiller.entities.formComponent.FormComponent;
 import formfiller.usecases.undoable.UndoableUseCaseExecution;
 import formfiller.utilities.FormComponentUtilities;
 
-public abstract class ChangeFormComponent extends UndoableUseCaseExecution {
+public abstract class ChangeFormComponentUseCase extends UndoableUseCaseExecution {
 	protected String id = "";
 
 	protected void execute() {

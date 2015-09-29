@@ -16,7 +16,6 @@ import formfiller.entities.answerFormat.Unstructured;
 import formfiller.entities.formComponent.FormComponent;
 import formfiller.entities.formComponent.NullFormComponents;
 import formfiller.request.models.AddFormComponentRequest;
-import formfiller.request.models.AddUnstructuredFormComponentRequest;
 import formfiller.request.models.Request;
 import formfiller.usecases.addAnswer.AnswerValidator;
 import formfiller.usecases.undoable.UndoableUseCase;
@@ -31,13 +30,13 @@ public class AddUnstructuredFormComponentTest {
 		addUnstructured = new AddUnstructuredFormComponentUseCase();
 	}
 
-	private AddUnstructuredFormComponentRequest makeMockAddUnstructuredRequest() {
-		return Mockito.mock(AddUnstructuredFormComponentRequest.class);
+	private AddFormComponentRequest makeMockAddUnstructuredRequest() {
+		return Mockito.mock(AddFormComponentRequest.class);
 	}
 
-	private AddUnstructuredFormComponentRequest makeMockAddUnstructuredRequest(
+	private AddFormComponentRequest makeMockAddUnstructuredRequest(
 			String questionId, String questionContent, Type answerType) {
-		AddUnstructuredFormComponentRequest result = 
+		AddFormComponentRequest result = 
 				makeMockAddUnstructuredRequest();
 		result.questionId = questionId;
 		result.questionContent = questionContent;

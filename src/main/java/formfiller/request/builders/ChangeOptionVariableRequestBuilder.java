@@ -1,13 +1,13 @@
 package formfiller.request.builders;
 
-import formfiller.request.models.ChangeOptionVariableRequest;
+import formfiller.request.models.ChangeFormatRequest;
 import formfiller.request.models.Request;
 
 public class ChangeOptionVariableRequestBuilder implements RequestBuilderFunctions {
-	ChangeOptionVariableRequest request;
+	private ChangeFormatRequest request;
 
 	public ChangeOptionVariableRequestBuilder() {
-		request = new ChangeOptionVariableRequest();
+		request = new ChangeFormatRequest();
 	}
 	
 	public void buildComponentId(String componentId) {

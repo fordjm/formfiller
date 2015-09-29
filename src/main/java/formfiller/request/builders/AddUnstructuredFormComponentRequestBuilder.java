@@ -1,11 +1,11 @@
 package formfiller.request.builders;
 
 import formfiller.entities.answerFormat.Unstructured;
-import formfiller.request.models.AddUnstructuredFormComponentRequest;
+import formfiller.request.models.AddFormComponentRequest;
 
 public class AddUnstructuredFormComponentRequestBuilder extends AddFormComponentRequestBuilder {
 	public AddUnstructuredFormComponentRequestBuilder(){
-		request = new AddUnstructuredFormComponentRequest();
+		request = new AddFormComponentRequest();
 	}
 	
 	public void buildName() {

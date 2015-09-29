@@ -15,7 +15,6 @@ import formfiller.enums.QuestionAsked;
 import formfiller.request.builders.RequestBuilderImpl;
 import formfiller.request.models.HandleUnfoundUseCaseRequest;
 import formfiller.request.models.AddFormComponentRequest;
-import formfiller.request.models.AddUnstructuredFormComponentRequest;
 import formfiller.request.models.AskQuestionRequest;
 import formfiller.request.models.Request;
 
@@ -54,10 +53,10 @@ public class RequestBuilderImplTest {
 						makeArguments(argumentsMap));
 		String name = request.name;
 		AddFormComponentRequest castRequest = 
-				(AddUnstructuredFormComponentRequest) request;
+				(AddFormComponentRequest) request;
 		
 		assertThat(request, 
-				is(instanceOf(AddUnstructuredFormComponentRequest.class)));
+				is(instanceOf(AddFormComponentRequest.class)));
 		assertThat(name, is("AddUnstructuredFormComponent"));
 		assertThat(castRequest.questionId, is("questionId"));
 		assertThat(castRequest.questionContent, is("questionContent"));

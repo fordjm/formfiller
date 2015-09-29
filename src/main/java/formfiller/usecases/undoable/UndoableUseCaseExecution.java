@@ -55,7 +55,7 @@ public abstract class UndoableUseCaseExecution implements UndoableUseCase {
 		FormFillerContext.executedUseCases.add(this);
 	}
 	
-	protected void ensureUseCaseIsUndoable() {
+	protected void ensureUseCaseStateIsUndoable() {
 		if (outcome != Outcome.POSITIVE) throw new UnsuccessfulUseCaseUndo();
 	}
 

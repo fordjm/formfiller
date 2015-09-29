@@ -36,7 +36,7 @@ public class DeleteFormComponentUseCase extends UndoableUseCaseExecution {
 	}
 
 	public void undo() {
-		ensureUseCaseIsUndoable();
+		ensureUseCaseStateIsUndoable();
 		FormFillerContext.formComponentGateway.save(deleted);
 	}
 	
