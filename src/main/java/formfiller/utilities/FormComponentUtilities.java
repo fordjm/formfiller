@@ -12,4 +12,5 @@ public class FormComponentUtilities {
 	public static boolean isComponentNull(FormComponent component) {
 		return component.equals(NullFormComponents.NULL);
 	}
+	
 }

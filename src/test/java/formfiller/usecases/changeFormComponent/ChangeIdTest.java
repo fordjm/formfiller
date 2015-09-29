@@ -14,17 +14,13 @@ import formfiller.usecases.changeFormComponent.ChangeFormComponentUseCase.Absent
 import formfiller.usecases.undoable.UndoableUseCase;
 import formfiller.usecases.undoable.UndoableUseCaseExecution.MalformedRequest;
 import formfiller.usecases.undoable.UndoableUseCaseExecution.UnsuccessfulUseCaseUndo;
-import formfiller.utilities.FormComponentUtilities;
 import formfiller.utilities.TestSetup;
 
 public class ChangeIdTest {
 	private ChangeIdUseCase useCase;
 	private ChangeIdRequest mockRequest;
 	private FormComponent original;
-	private FormComponent found;
-	private boolean isNull;
 	
-	//	TODO:	Get rid of found and test original id field directly.
 	@Before
 	public void setUp() {
 		TestSetup.setupContext();
@@ -80,11 +76,8 @@ public class ChangeIdTest {
 		mockRequest = makeMockChangeRequestWithFieldValues();
 		
 		useCase.execute(mockRequest);	
-		found = FormComponentUtilities.findFormComponent("name");
-		isNull = FormComponentUtilities.isComponentNull(found);
 		
-		assertThat(isNull, is(false));
-		assertThat(original, is(found));
+		assertThat(original.id, is("name"));
 	}
 	
 	@Test
@@ -96,11 +89,7 @@ public class ChangeIdTest {
 		UndoableUseCase mostRecent = FormFillerContext.executedUseCases.getMostRecent();
 		mostRecent.undo();
 		
-		found = FormComponentUtilities.findFormComponent("unknown");
-		isNull = FormComponentUtilities.isComponentNull(found);
-		
-		assertThat(isNull, is(false));
-		assertThat(original, is(found));
+		assertThat(original.id, is("unknown"));
 	}
 
 }
