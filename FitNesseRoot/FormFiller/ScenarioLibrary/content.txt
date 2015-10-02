@@ -1,6 +1,6 @@
-!| scenario      |given a form component with the component ID _, the question content _, and the answer format _|componentId, questionContent, answerFormat                     |
-|givenAQuestionId|@componentId                                                                                   |AndQuestionContent|questionContent|AndAnswerFormat|answerFormat|
-|when the user adds a form component                                                                                                                                             |
+!| scenario      |given a form component with the component ID _, the question content _, and the answer format _|componentId, questionContent, answerFormat                       |
+|givenAQuestionId|@componentId                                                                                   |AndQuestionContent|@questionContent|AndAnswerFormat|@answerFormat|
+|when the user adds a form component                                                                                                                                               |
 
 !| scenario|then the system should present the message, _|message |
 |check     |messagePresented                             |@message|

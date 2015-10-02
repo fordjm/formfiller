@@ -1,11 +1,13 @@
 package formfiller.entities.answerFormat;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 
 //	TODO:	Make abstract.  Add subclasses Single- and MultiOptionVariable
 public class OptionVariable extends AnswerFormat {
-	public List<Object> options = Collections.emptyList();
+	//	TODO:	Make this variable private.
+	//			Consider changing to a List<String>
+	public List<Object> options = new ArrayList<Object>();
 	
 	public OptionVariable() {
 		super();
@@ -15,5 +17,9 @@ public class OptionVariable extends AnswerFormat {
 	public boolean matchesFormat(Object content) {
 		return options.contains(content);
 	}
+
+	public void addOption(String option) {
+		options.add(option);
+	}	
 	
 }

@@ -1,4 +1,4 @@
-|script|add unstructured form component|
+|script|add form component|
 
 !| form component addition table                                                                                                                 |
 |question id|question content    |answer format|message                                               |added id|added content       |added format|

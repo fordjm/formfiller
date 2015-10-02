@@ -3,7 +3,7 @@ package fitnesse.fixtures;
 import formfiller.FormFillerContext;
 import formfiller.entities.formComponent.FormComponent;
 
-public abstract class AddFormComponent {
+public class AddFormComponent {
 	private StringEventManager stringEventManager;
 	private String questionId;
 	private String questionContent;
@@ -14,6 +14,8 @@ public abstract class AddFormComponent {
 		stringEventManager = new StringEventManager();
 	}
 	
+	//	TODO:	Determining subclass by script actor.
+	//			The format string does nothing.
 	public void givenAQuestionIdAndQuestionContentAndAnswerFormat(String questionId, 
 			String questionContent, String answerFormat){
 		this.questionId = questionId;
@@ -27,12 +29,14 @@ public abstract class AddFormComponent {
 	}
 	
 	protected String makeConsoleRequiredParametersString() {
-		String command = getCommandString();
-		return String.format("%s " + "%s " + "%s " + "%s ",
-				command, questionId, questionContent, answerFormat);
+		String command = getCommandString(answerFormat);
+		return String.format("%s " + "%s " + "%s",
+				command, questionId, questionContent);
 	}
 	
-	protected abstract String getCommandString();
+	private String getCommandString(String answerFormat) {
+		return "AddFC" + answerFormat;
+	}
 	
 	public void addedComponent() {
 		this.addedComponent = FormFillerContext.formComponentGateway.find(questionId);
