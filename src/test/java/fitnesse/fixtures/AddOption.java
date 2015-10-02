@@ -3,21 +3,23 @@ package fitnesse.fixtures;
 import formfiller.entities.answerFormat.OptionVariable;
 import formfiller.entities.formComponent.FormComponent;
 import formfiller.utilities.FormComponentUtilities;
+import formfiller.utilities.StringUtilities;
 
 public class AddOption {
-	//	TODO:	Move functionality to proper classes.
-	public void addOption(String componentId, String option){
-		executeTemporaryAddOptionCode(componentId, option);
+	private StringEventManager stringEventManager;
+
+	public AddOption() {
+		stringEventManager = new StringEventManager();
 	}
 	
-	private void executeTemporaryAddOptionCode(String componentId, String option) {
-		FormComponent component = FormComponentUtilities.findFormComponent(componentId);
-		OptionVariable format = (OptionVariable) component.format;
-		format.addOption(option);
+	public void addOption(String componentId, String option){
+		String eventString = StringUtilities.makeSpacedString("AddOpt", 
+				componentId, option);
+		stringEventManager.updateHandler(eventString);
 	}
 
 	public boolean hasOption(String componentId, String option){
-		FormComponent component = FormComponentUtilities.findFormComponent(componentId);
+		FormComponent component = FormComponentUtilities.find(componentId);
 		OptionVariable format = (OptionVariable) component.format;
 		return format.options.contains(option);
 	}

@@ -38,7 +38,7 @@ public abstract class ChangeFormatUseCase extends ChangeFormComponentUseCase {
 
 	public void undo() {
 		ensureUseCaseStateIsUndoable();
-		FormComponent toRevert = FormComponentUtilities.findFormComponent(id);
+		FormComponent toRevert = FormComponentUtilities.find(id);
 		toRevert.format = oldFormat;
 	}
 	

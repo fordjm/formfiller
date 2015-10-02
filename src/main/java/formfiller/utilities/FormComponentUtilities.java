@@ -5,7 +5,7 @@ import formfiller.entities.formComponent.FormComponent;
 import formfiller.entities.formComponent.NullFormComponents;
 
 public class FormComponentUtilities {
-	public static FormComponent findFormComponent(String componentId){
+	public static FormComponent find(String componentId){
 		return FormFillerContext.formComponentGateway.find(componentId);
 	}
 	

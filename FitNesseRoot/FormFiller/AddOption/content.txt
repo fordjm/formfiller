@@ -1,16 +1,13 @@
-!|scenario|when the user adds the options _, _, and _ to the component with ID _|option1, option2, option3, componentId|
-|add      |@componentId                                                         |option            |@option1           |
-|add      |@componentId                                                         |option            |@option2           |
-|add      |@componentId                                                         |option            |@option3           |
+!|scenario|when the user adds the option _ to the component with ID _|option, componentId|
+|add      |@componentId                                              |option   |@option  |
 
-!|scenario|then the component with id _ should have the options _, _, and _|componentId, option1, option2, option3|
-|check    |has                                                             |@componentId  |option |@option1 |true |
-|check    |has                                                             |@componentId  |option |@option2 |true |
-|check    |has                                                             |@componentId  |option |@option3 |true |
+!|scenario|then the component with id _ should have the option _|componentId, option             |
+|check    |has                                                  |@componentId|option|@option|true|
 
 |script|add option|
 
 !|script                                                                                                                  |
 |given a form component with the component ID isHappy, the question content "I am a happy person", and the answer format V|
-|when the user adds the options agree, unsure, and disagree to the component with ID isHappy                              |
-|then the component with id isHappy should have the options agree, unsure, and disagree                                   |
+|when the user adds the option agree to the component with ID isHappy                                                     |
+|then the component with id isHappy should have the option agree                                                          |
+|then the system should present the message, You successfully added the option, "agree"                                   |

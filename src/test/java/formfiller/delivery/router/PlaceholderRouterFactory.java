@@ -1,5 +1,6 @@
 package formfiller.delivery.router;
 
+import formfiller.delivery.controller.AddOptionController;
 import formfiller.delivery.controller.AddOptionVariableFormComponentController;
 import formfiller.delivery.controller.AddUnstructuredFormComponentController;
 import formfiller.delivery.controller.AskQuestionController;
@@ -15,6 +16,7 @@ public class PlaceholderRouterFactory {
 		// TODO:  Find another way to distinguish AddFC, ChangeFormat controllers.
 		result.addMethod("AddFCU", new AddUnstructuredFormComponentController());
 		result.addMethod("AddFCV", new AddOptionVariableFormComponentController());
+		result.addMethod("AddOpt", new AddOptionController());
 		result.addMethod("AskQues", new AskQuestionController());
 		result.addMethod("ChangeId", new ChangeIdController());
 		result.addMethod("ChgFmtU", new ChangeUnstructuredController());

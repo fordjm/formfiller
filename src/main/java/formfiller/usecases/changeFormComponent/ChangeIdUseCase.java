@@ -31,10 +31,10 @@ public class ChangeIdUseCase extends ChangeFormComponentUseCase {
 
 	//	TODO:	Fix fragile duplicated value?
 	protected void change(FormComponent component) {
-		swapNames(component.id, newId);
+		swapIds(component.id, newId);
 	}
 
-	private void swapNames(String prevId, String nextId) {
+	private void swapIds(String prevId, String nextId) {
 		FormComponent changed = FormFillerContext.formComponentGateway.remove(prevId);
 		changed.question.id = nextId;
 		changed.id = nextId;
@@ -50,7 +50,7 @@ public class ChangeIdUseCase extends ChangeFormComponentUseCase {
 
 	public void undo() {
 		ensureUseCaseStateIsUndoable();
-		swapNames(newId, oldId);
+		swapIds(newId, oldId);
 	}
 	
 }

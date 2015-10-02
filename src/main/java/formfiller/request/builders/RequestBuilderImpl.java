@@ -14,6 +14,8 @@ public class RequestBuilderImpl implements RequestBuilder {
 			return buildHandleUnfoundControllerRequest();
 		else if(requestName.equalsIgnoreCase("AddUnstructuredFormComponent"))
 			return buildAddUnstructuredFormComponentRequest();
+		else if(requestName.equalsIgnoreCase("AddOption"))
+			return buildAddOptionRequest();
 		else if(requestName.equalsIgnoreCase("AddOptionVariableFormComponent"))
 			return buildAddOptionVariableFormComponentRequest();
 		else if(requestName.equalsIgnoreCase("AskQuestion"))
@@ -30,11 +32,16 @@ public class RequestBuilderImpl implements RequestBuilder {
 			return Request.NULL;
 	}
 
-	private Request buildHandleUnfoundControllerRequest() {
-		HandleUnfoundUseCaseRequestBuilder builder = 
-				new HandleUnfoundUseCaseRequestBuilder();
-		builder.buildMessage((String) args.getById("message"));
+	private Request buildAddOptionRequest() {
+		AddOptionRequestBuilder builder = new AddOptionRequestBuilder();
+		builder.buildComponentId((String) args.getById("componentId"));
+		builder.buildOption((String) args.getById("option"));		
 		return finishBuildingRequest(builder);
+	}
+	
+	private Request finishBuildingRequest(RequestBuilderFunctions builder){
+		builder.buildName();
+		return builder.getRequest();
 	}
 
 	private Request buildAddUnstructuredFormComponentRequest() {
@@ -94,10 +101,12 @@ public class RequestBuilderImpl implements RequestBuilder {
 		builder.buildComponentId(getArgumentAsString("componentId"));
 		return finishBuildingRequest(builder);
 	}
-	
-	private Request finishBuildingRequest(RequestBuilderFunctions builder){
-		builder.buildName();
-		return builder.getRequest();
+
+	private Request buildHandleUnfoundControllerRequest() {
+		HandleUnfoundUseCaseRequestBuilder builder = 
+				new HandleUnfoundUseCaseRequestBuilder();
+		builder.buildMessage((String) args.getById("message"));
+		return finishBuildingRequest(builder);
 	}
 	
 }

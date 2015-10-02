@@ -17,9 +17,5 @@ public class OptionVariable extends AnswerFormat {
 	public boolean matchesFormat(Object content) {
 		return options.contains(content);
 	}
-
-	public void addOption(String option) {
-		options.add(option);
-	}	
 	
 }
