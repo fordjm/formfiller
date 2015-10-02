@@ -17,4 +17,5 @@ public class StringUtilities {
 	public static boolean isStringNullOrEmpty(String input) {
 		return input == null || input == "";
 	}
+	
 }

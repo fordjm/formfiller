@@ -9,7 +9,6 @@ import formfiller.utilities.StringUtilities;
 
 public class DeleteFormComponentUseCase extends UndoableUseCaseExecution {
 	private DeleteFormComponentRequest castRequest;
-	private String componentId = "";
 	private FormComponent deleted;
 
 	protected void castRequest(Request request) {
@@ -20,19 +19,16 @@ public class DeleteFormComponentUseCase extends UndoableUseCaseExecution {
 		return StringUtilities.isStringNullOrEmpty(castRequest.componentId);
 	}
 
-	protected void assignInstanceVariables() {
-		componentId = castRequest.componentId;
-	}
-
 	protected void execute() {
-		deleted = FormFillerContext.formComponentGateway.remove(componentId);
+		deleted = FormFillerContext.formComponentGateway.remove(
+				castRequest.componentId);
 		if (deleted == null) throw new AbsentElementDeletion(
-					"No component existed with id " + componentId);					
+					"No component existed with id " + castRequest.componentId);					
 	}
 
 	protected String makeSuccessfulMessage() {
 		return "You successfully deleted the form component, " + 
-				StringUtilities.makeQuotedString(componentId);
+				StringUtilities.makeQuotedString(castRequest.componentId);
 	}
 
 	public void undo() {

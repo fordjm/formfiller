@@ -12,7 +12,6 @@ public abstract class UndoableUseCaseExecution implements UndoableUseCase {
 	public void execute(Request request) {
 		castRequest(request);
 		checkForMalformedRequest();
-		assignInstanceVariables();
 		execute();		
 		handleSuccessfulUseCase();
 		PresentableResponse response = makeResponse();		
@@ -22,13 +21,10 @@ public abstract class UndoableUseCaseExecution implements UndoableUseCase {
 	protected abstract void castRequest(Request request);
 
 	protected void checkForMalformedRequest() {
-		if (isRequestMalformed())
-			throw new MalformedRequest();
+		if (isRequestMalformed()) throw new MalformedRequest();
 	}
 
 	protected abstract boolean isRequestMalformed();
-
-	protected abstract void assignInstanceVariables();
 
 	protected abstract void execute();
 
@@ -36,6 +32,10 @@ public abstract class UndoableUseCaseExecution implements UndoableUseCase {
 		outcome = Outcome.POSITIVE;
 		this.message = makeSuccessfulMessage();
 		addToExecutedUseCases();
+	}
+
+	protected void addToExecutedUseCases() {
+		FormFillerContext.executedUseCases.add(this);
 	}
 
 	protected abstract String makeSuccessfulMessage();
@@ -49,10 +49,6 @@ public abstract class UndoableUseCaseExecution implements UndoableUseCase {
 	
 	protected void presentResponse(PresentableResponse presentableResponse) {
 		FormFillerContext.outcomePresenter.present(presentableResponse);
-	}
-
-	protected void addToExecutedUseCases() {
-		FormFillerContext.executedUseCases.add(this);
 	}
 	
 	protected void ensureUseCaseStateIsUndoable() {

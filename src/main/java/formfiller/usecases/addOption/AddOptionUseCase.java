@@ -27,12 +27,6 @@ public class AddOptionUseCase extends UndoableUseCaseExecution {
 				StringUtilities.isStringNullOrEmpty(castRequest.option);
 	}
 
-	//	TODO:	Determine whether this method is redundant in all cases.
-	@Override
-	protected void assignInstanceVariables() {
-
-	}
-
 	protected void execute() {
 		FormComponent component = FormComponentUtilities.find(castRequest.componentId);
 		OptionVariable format = (OptionVariable) component.format;
@@ -40,7 +34,8 @@ public class AddOptionUseCase extends UndoableUseCaseExecution {
 	}
 
 	protected String makeSuccessfulMessage() {
-		return "You successfully added the option, \"" + castRequest.option + "\"";
+		String quotedOption = StringUtilities.makeQuotedString(castRequest.option);
+		return "You successfully added the option, " + quotedOption;
 	}
 
 }

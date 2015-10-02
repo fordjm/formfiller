@@ -9,7 +9,6 @@ import formfiller.entities.answerFormat.AnswerFormat;
 import formfiller.entities.constrainable.AnswerType;
 import formfiller.entities.constrainable.Constrainable;
 import formfiller.entities.formComponent.FormComponent;
-import formfiller.enums.Outcome;
 import formfiller.request.models.AddFormComponentRequest;
 import formfiller.request.models.Request;
 import formfiller.usecases.addAnswer.AnswerValidator;
@@ -18,8 +17,6 @@ import formfiller.utilities.StringUtilities;
 
 public abstract class AddFormComponentUseCase extends UndoableUseCaseExecution {
 	private AddFormComponentRequest castRequest;
-	private String questionId = "";
-	private String questionContent = "";
 	
 	protected abstract AnswerFormat makeAnswerFormat();
 	
@@ -29,11 +26,6 @@ public abstract class AddFormComponentUseCase extends UndoableUseCaseExecution {
 
 	protected boolean isRequestMalformed() {
 		return StringUtilities.isStringNullOrEmpty(castRequest.questionId);
-	}
-
-	protected void assignInstanceVariables() {
-		questionId = castRequest.questionId;
-		questionContent = castRequest.questionContent;
 	}
 
 	protected void execute() {
@@ -46,15 +38,15 @@ public abstract class AddFormComponentUseCase extends UndoableUseCaseExecution {
 
 	private FormComponent makeNewFormComponent() {
 		FormComponent result = new FormComponent();
-		result.id = questionId;
+		result.id = castRequest.questionId;
 		result.question = makeNewQuestion();
 		return result;
 	}
 
 	private Question makeNewQuestion() {
 		Question result = new Question();
-		result.id = questionId;
-		result.content = questionContent;
+		result.id = castRequest.questionId;
+		result.content = castRequest.questionContent;
 		return result;
 	}
 
@@ -72,7 +64,7 @@ public abstract class AddFormComponentUseCase extends UndoableUseCaseExecution {
 
 	public void undo() { 
 		ensureUseCaseStateIsUndoable();
-		FormFillerContext.formComponentGateway.remove(questionId);
+		FormFillerContext.formComponentGateway.remove(castRequest.questionId);
 	}
 	
 }

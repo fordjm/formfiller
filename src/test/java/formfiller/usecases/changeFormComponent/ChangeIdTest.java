@@ -12,8 +12,8 @@ import formfiller.entities.formComponent.FormComponent;
 import formfiller.request.models.ChangeIdRequest;
 import formfiller.usecases.changeFormComponent.ChangeFormComponentUseCase.AbsentFormComponentChange;
 import formfiller.usecases.undoable.UndoableUseCase;
+import formfiller.usecases.undoable.UndoableUseCaseExecution;
 import formfiller.usecases.undoable.UndoableUseCaseExecution.MalformedRequest;
-import formfiller.usecases.undoable.UndoableUseCaseExecution.UnsuccessfulUseCaseUndo;
 import formfiller.utilities.TestSetup;
 
 public class ChangeIdTest {
@@ -27,14 +27,12 @@ public class ChangeIdTest {
 		useCase = new ChangeIdUseCase();
 	}
 
-
-	//	TODO:	Fix duplication in ChangeFormatTest
-	private ChangeIdRequest makeMockEmptyChangeRequest() {
+	private ChangeIdRequest makeMockEmptyChangeIdRequest() {
 		return Mockito.mock(ChangeIdRequest.class);
 	}
 
-	private ChangeIdRequest makeMockChangeRequestWithFieldValues() {
-		ChangeIdRequest result = makeMockEmptyChangeRequest();
+	private ChangeIdRequest makeMockWellFormedChangeIdRequest() {
+		ChangeIdRequest result = makeMockEmptyChangeIdRequest();
 		result.oldId = "unknown";
 		result.newId = "name";
 		return result;
@@ -51,29 +49,39 @@ public class ChangeIdTest {
 		return result;
 	}
 
-	//	TODO:	Fix duplication in ChangeFormatTest
-	@Test(expected = UnsuccessfulUseCaseUndo.class)
+	//	Boilerplate duplicate tests		===
+	@Test
+	public void extendsUndoableUseCaseExecution() {		
+		assertThat(useCase, instanceOf(UndoableUseCaseExecution.class));
+	}
+	
+	@Test(expected = UndoableUseCaseExecution.UnsuccessfulUseCaseUndo.class)
 	public void undoingBeforeExecutingThrowsException(){
 		useCase.undo();
 	}
 
+	@Test(expected = NullPointerException.class)
+	public void executingNull_DoesNotAddUseCaseToExecutedUseCases() {
+		useCase.execute(null);
+	}
+	//	End boilerplate duplicate tests	===
+
 	@Test(expected = MalformedRequest.class)
-	public void executingEmptyRequestThrowsException() {
-		mockRequest = makeMockEmptyChangeRequest();		
+	public void executingMalformedRequestThrowsException() {
+		mockRequest = makeMockEmptyChangeIdRequest();		
 		useCase.execute(mockRequest);
 	}
-	//	End duplication
 	
 	@Test(expected = AbsentFormComponentChange.class)
 	public void changingAbsentComponentIdThrowsException() {
-		mockRequest = makeMockChangeRequestWithFieldValues();	
+		mockRequest = makeMockWellFormedChangeIdRequest();	
 		useCase.execute(mockRequest);		
 	}
 	
 	@Test
 	public void executingWellFormedRequestChangesComponentId() {
 		addUnknownFormComponent();
-		mockRequest = makeMockChangeRequestWithFieldValues();
+		mockRequest = makeMockWellFormedChangeIdRequest();
 		
 		useCase.execute(mockRequest);	
 		
@@ -83,7 +91,7 @@ public class ChangeIdTest {
 	@Test
 	public void undoingSuccessfulIdChangeRevertsId() {
 		addUnknownFormComponent();
-		mockRequest = makeMockChangeRequestWithFieldValues();		
+		mockRequest = makeMockWellFormedChangeIdRequest();		
 		useCase.execute(mockRequest);
 		
 		UndoableUseCase mostRecent = FormFillerContext.executedUseCases.getMostRecent();

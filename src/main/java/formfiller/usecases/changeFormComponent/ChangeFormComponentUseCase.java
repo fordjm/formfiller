@@ -9,6 +9,7 @@ public abstract class ChangeFormComponentUseCase extends UndoableUseCaseExecutio
 	protected String id = "";
 
 	protected void execute() {
+		assignInstanceVariables();
 		FormComponent found = FormFillerContext.formComponentGateway.find(id);
 		if (!FormComponentUtilities.isComponentNull(found)){
 			createUndoInfo(found);
@@ -17,6 +18,8 @@ public abstract class ChangeFormComponentUseCase extends UndoableUseCaseExecutio
 		else
 			throw new AbsentFormComponentChange();
 	}
+	
+	protected abstract void assignInstanceVariables();
 
 	protected abstract void createUndoInfo(FormComponent found);
 

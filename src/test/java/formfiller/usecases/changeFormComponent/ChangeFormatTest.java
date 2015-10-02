@@ -15,8 +15,8 @@ import formfiller.entities.answerFormat.OptionVariable;
 import formfiller.entities.answerFormat.Unstructured;
 import formfiller.entities.formComponent.FormComponent;
 import formfiller.request.models.ChangeFormatRequest;
+import formfiller.usecases.undoable.UndoableUseCaseExecution;
 import formfiller.usecases.undoable.UndoableUseCaseExecution.MalformedRequest;
-import formfiller.usecases.undoable.UndoableUseCaseExecution.UnsuccessfulUseCaseUndo;
 
 @RunWith(HierarchicalContextRunner.class)
 public class ChangeFormatTest {
@@ -24,14 +24,12 @@ public class ChangeFormatTest {
 	private ChangeFormatRequest mockRequest;
 	private FormComponent original;
 
-	//	TODO:	Fix test duplication here and in ChangeIdTest
-	//			Consider making utility request creator and downcasting
-	//			How to fix duplicate tests?
+	//	TODO:	How to fix duplicate tests?
 	private ChangeFormatRequest makeMockEmptyChangeRequest() {
 		return Mockito.mock(ChangeFormatRequest.class);
 	}
 
-	private ChangeFormatRequest makeMockChangeRequestWithFieldValues() {
+	private ChangeFormatRequest makeMockWellFormedChangeFormatRequest() {
 		ChangeFormatRequest result = makeMockEmptyChangeRequest();
 		result.componentId = "name";
 		return result;
@@ -43,85 +41,109 @@ public class ChangeFormatTest {
 		original.format = Mockito.mock(originalFormat);
 		FormFillerContext.formComponentGateway.save(original);
 	}
-	
+
 	public class ChangeUnstructuredContext {
 		@Before
 		public void setUp() {
 			useCase = new ChangeUnstructuredUseCase();		
 		}
-		
-		@Test(expected = UnsuccessfulUseCaseUndo.class)
+
+		//	Boilerplate duplicate tests		===
+		@Test
+		public void extendsUndoableUseCaseExecution() {		
+			assertThat(useCase, instanceOf(UndoableUseCaseExecution.class));
+		}
+
+		@Test(expected = UndoableUseCaseExecution.UnsuccessfulUseCaseUndo.class)
 		public void undoingBeforeExecutingThrowsException(){
 			useCase.undo();
 		}
 
+		@Test(expected = NullPointerException.class)
+		public void executingNull_DoesNotAddUseCaseToExecutedUseCases() {
+			useCase.execute(null);
+		}
+		//	End boilerplate duplicate tests	===
+
 		@Test(expected = MalformedRequest.class)
-		public void executingEmptyRequestThrowsException() {
-			mockRequest = makeMockEmptyChangeRequest();	
-			
+		public void executingMalformedRequestThrowsException() {
+			mockRequest = makeMockEmptyChangeRequest();				
 			useCase.execute(mockRequest);
 		}
-		
+
 		@Test
 		public void executingWellFormedRequestChangesFormat() {
 			addFormComponentToChange(OptionVariable.class);
-			mockRequest = makeMockChangeRequestWithFieldValues();
-			
+			mockRequest = makeMockWellFormedChangeFormatRequest();
+
 			useCase.execute(mockRequest);
-			
+
 			assertThat(original.format, instanceOf(Unstructured.class));
 		}
-		
+
 		@Test
 		public void undoingSuccessfulChangeRevertsFormat() {
 			addFormComponentToChange(OptionVariable.class);
-			mockRequest = makeMockChangeRequestWithFieldValues();
-			
+			mockRequest = makeMockWellFormedChangeFormatRequest();
+
 			useCase.execute(mockRequest);
 			useCase.undo();
-			
+
 			assertThat(original.format, instanceOf(OptionVariable.class));
 		}
+		
 	}
-	
+
 	public class ChangeOptionVariableContext {
 		@Before
 		public void setUp() {
 			useCase = new ChangeOptionVariableUseCase();		
 		}
-		
-		@Test(expected = UnsuccessfulUseCaseUndo.class)
+
+		//		Boilerplate duplicate tests		===
+		@Test
+		public void extendsUndoableUseCaseExecution() {		
+			assertThat(useCase, instanceOf(UndoableUseCaseExecution.class));
+		}
+
+		@Test(expected = UndoableUseCaseExecution.UnsuccessfulUseCaseUndo.class)
 		public void undoingBeforeExecutingThrowsException(){
 			useCase.undo();
 		}
 
+		@Test(expected = NullPointerException.class)
+		public void executingNull_DoesNotAddUseCaseToExecutedUseCases() {
+			useCase.execute(null);
+		}
+		//	End boilerplate duplicate tests		===
+
 		@Test(expected = MalformedRequest.class)
 		public void executingEmptyRequestThrowsException() {
 			mockRequest = makeMockEmptyChangeRequest();	
-			
+
 			useCase.execute(mockRequest);
 		}
-		
+
 		@Test
 		public void executingWellFormedRequestChangesFormat() {
 			addFormComponentToChange(Unstructured.class);
-			mockRequest = makeMockChangeRequestWithFieldValues();
-			
+			mockRequest = makeMockWellFormedChangeFormatRequest();
+
 			useCase.execute(mockRequest);
-			
+
 			assertThat(original.format, instanceOf(OptionVariable.class));
 		}
-		
+
 		@Test
 		public void undoingSuccessfulChangeRevertsFormat() {
 			addFormComponentToChange(Unstructured.class);
-			mockRequest = makeMockChangeRequestWithFieldValues();
-			
+			mockRequest = makeMockWellFormedChangeFormatRequest();
+
 			useCase.execute(mockRequest);
 			useCase.undo();
-			
+
 			assertThat(original.format, instanceOf(Unstructured.class));
 		}
+		
 	}
-
 }

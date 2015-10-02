@@ -11,7 +11,6 @@ import formfiller.FormFillerContext;
 import formfiller.entities.answerFormat.OptionVariable;
 import formfiller.entities.formComponent.FormComponent;
 import formfiller.request.models.AddOptionRequest;
-import formfiller.usecases.addFormComponent.AddFormComponentUseCase;
 import formfiller.usecases.undoable.UndoableUseCaseExecution;
 import formfiller.utilities.FormComponentUtilities;
 
@@ -62,7 +61,7 @@ public class AddOptionTest {
 	}
 	//	End boilerplate duplicate tests	===
 	
-	@Test(expected = AddFormComponentUseCase.MalformedRequest.class)
+	@Test(expected = UndoableUseCaseExecution.MalformedRequest.class)
 	public void executingMalformedRequestThrowsException() {
 		mockRequest = makeEmptyMockAddOptionRequest();
 		useCase.execute(mockRequest);
