@@ -6,7 +6,7 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import formfiller.FormFillerContext;
+import formfiller.Context;
 import formfiller.entities.formComponent.FormComponent;
 
 public class TestSetupTest {
@@ -57,7 +57,7 @@ public class TestSetupTest {
 	public void testNameComponent() {
 		setExpectedValues("name", "What is your name?", "", false);
 		
-		component = FormFillerContext.formComponentGateway.find("name");
+		component = Context.formComponentGateway.find("name");
 		
 		assertThat_ReturnedComponent_HasExpectedFieldValues(component);
 	}
@@ -67,7 +67,7 @@ public class TestSetupTest {
 		setExpectedValues("birthDate", "What is your birth date?", 
 				"November 12, 1955", false);
 		
-		component = FormFillerContext.formComponentGateway.find("birthDate");
+		component = Context.formComponentGateway.find("birthDate");
 		
 		assertThat_ReturnedComponent_HasExpectedFieldValues(component);
 	}
@@ -76,7 +76,7 @@ public class TestSetupTest {
 	public void testAgeComponent() {
 		setExpectedValues("age", "What is your age?", "", true);
 		
-		component = FormFillerContext.formComponentGateway.find("age");
+		component = Context.formComponentGateway.find("age");
 		
 		assertThat_ReturnedComponent_HasExpectedFieldValues(component);
 	}

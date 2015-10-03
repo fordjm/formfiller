@@ -7,7 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import formfiller.FormFillerContext;
+import formfiller.Context;
 import formfiller.request.models.HandleUnfoundUseCaseRequest;
 import formfiller.response.models.PresentableResponse;
 import formfiller.utilities.TestSetup;
@@ -18,7 +18,7 @@ public class HandleUnfoundUseCaseTest {
 	private PresentableResponse currentPresentableResponse;
 
 	private PresentableResponse getPresentableResponseFromPresenter() {
-		return FormFillerContext.outcomePresenter.getPresentableResponse();
+		return Context.outcomePresenter.getPresentableResponse();
 	}
 
 	@Before

@@ -1,6 +1,6 @@
 package formfiller.gateways;
 
-import formfiller.FormFillerContext;
+import formfiller.Context;
 import formfiller.enums.QuestionAsked;
 
 public class InMemoryTransporter implements Transporter {
@@ -13,7 +13,7 @@ public class InMemoryTransporter implements Transporter {
 	}
 	
 	private static FormComponentState getCurrentState(){
-		return FormFillerContext.formComponentState;
+		return Context.formComponentState;
 	}
 
 	private static boolean moveChangesPosition(QuestionAsked direction) {

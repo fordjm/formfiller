@@ -8,7 +8,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
-import formfiller.FormFillerContext;
+import formfiller.Context;
 import formfiller.entities.Answer;
 import formfiller.entities.Question;
 import formfiller.entities.answerFormat.AnswerFormat;
@@ -31,7 +31,7 @@ public class InMemoryTransporterTest {
 	}
 	
 	private FormComponent getCurrentFormComponent() {
-		return FormFillerContext.formComponentState.getCurrent();
+		return Context.formComponentState.getCurrent();
 	}
 
 	public class GivenNoFormComponents {
@@ -84,7 +84,7 @@ public class InMemoryTransporterTest {
 	public class GivenAFormComponent {
 
 		private void addQuestionToFormComponentGateway() {
-			FormFillerContext.formComponentGateway.save(makeMockNameQuestionComponent());
+			Context.formComponentGateway.save(makeMockNameQuestionComponent());
 		}
 
 		private FormComponent makeMockNameQuestionComponent() {			

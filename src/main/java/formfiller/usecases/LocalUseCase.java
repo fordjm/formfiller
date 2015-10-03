@@ -6,7 +6,7 @@ import formfiller.response.models.PresentableResponse;
 import formfiller.usecases.deleteFormComponent.DeleteFormComponentUseCase;
 import formfiller.usecases.undoable.UndoableUseCase;
 import formfiller.usecases.undoable.UndoableUseCaseExecution;
-import formfiller.FormFillerContext;
+import formfiller.Context;
 import formfiller.appBoundaries.UseCase;
 
 public class LocalUseCase implements UseCase {
@@ -52,6 +52,6 @@ public class LocalUseCase implements UseCase {
 	}
 	
 	private void presentResponse(PresentableResponse presentableResponse) {
-		FormFillerContext.outcomePresenter.present(presentableResponse);
+		Context.outcomePresenter.present(presentableResponse);
 	}
 }

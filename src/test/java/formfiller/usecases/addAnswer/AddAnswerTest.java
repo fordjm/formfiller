@@ -9,7 +9,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
-import formfiller.FormFillerContext;
+import formfiller.Context;
 import formfiller.appBoundaries.UseCase;
 import formfiller.entities.Answer;
 import formfiller.entities.Question;
@@ -33,7 +33,7 @@ public class AddAnswerTest {
 	}
 	
 	private Answer findAnswerByName(String name) {
-		FormComponent component = FormFillerContext.formComponentGateway.find(name);
+		FormComponent component = Context.formComponentGateway.find(name);
 		return component.answer;
 	}
 	
@@ -57,7 +57,7 @@ public class AddAnswerTest {
 
 	private void saveFormComponents(FormComponent... formComponents) {
 		for (FormComponent formComponent : formComponents)
-			FormFillerContext.formComponentGateway.save(formComponent);
+			Context.formComponentGateway.save(formComponent);
 	}
 
 	@Before

@@ -1,6 +1,6 @@
 package formfiller.usecases.askQuestion;
 
-import formfiller.FormFillerContext;
+import formfiller.Context;
 import formfiller.entities.Answer;
 import formfiller.entities.formComponent.FormComponent;
 import formfiller.enums.QuestionAsked;
@@ -28,6 +28,6 @@ public class AskQuestionValidator {
 	}
 	
 	private static FormComponent getCurrentFormComponent() {
-		return FormFillerContext.formComponentState.getCurrent();
+		return Context.formComponentState.getCurrent();
 	}
 }

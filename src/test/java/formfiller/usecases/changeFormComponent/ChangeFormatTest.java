@@ -9,14 +9,14 @@ import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
-import formfiller.FormFillerContext;
+import formfiller.Context;
 import formfiller.entities.answerFormat.AnswerFormat;
 import formfiller.entities.answerFormat.OptionVariable;
 import formfiller.entities.answerFormat.Unstructured;
 import formfiller.entities.formComponent.FormComponent;
 import formfiller.request.models.ChangeFormatRequest;
-import formfiller.usecases.undoable.UndoableUseCaseExecution;
 import formfiller.usecases.undoable.UndoableUseCaseExecution.MalformedRequest;
+import formfiller.utilities.UndoableUseCaseExecutionCommonTests;
 
 @RunWith(HierarchicalContextRunner.class)
 public class ChangeFormatTest {
@@ -39,7 +39,7 @@ public class ChangeFormatTest {
 		original = new FormComponent();
 		original.id = "name";
 		original.format = Mockito.mock(originalFormat);
-		FormFillerContext.formComponentGateway.save(original);
+		Context.formComponentGateway.save(original);
 	}
 
 	public class ChangeUnstructuredContext {
@@ -47,23 +47,13 @@ public class ChangeFormatTest {
 		public void setUp() {
 			useCase = new ChangeUnstructuredUseCase();		
 		}
-
-		//	Boilerplate duplicate tests		===
+		
 		@Test
-		public void extendsUndoableUseCaseExecution() {		
-			assertThat(useCase, instanceOf(UndoableUseCaseExecution.class));
+		public void commonTestsPass() {
+			boolean result = 
+					UndoableUseCaseExecutionCommonTests.runTestsOnUseCase(useCase);
+			assertThat(result, is(true));
 		}
-
-		@Test(expected = UndoableUseCaseExecution.UnsuccessfulUseCaseUndo.class)
-		public void undoingBeforeExecutingThrowsException(){
-			useCase.undo();
-		}
-
-		@Test(expected = NullPointerException.class)
-		public void executingNull_DoesNotAddUseCaseToExecutedUseCases() {
-			useCase.execute(null);
-		}
-		//	End boilerplate duplicate tests	===
 
 		@Test(expected = MalformedRequest.class)
 		public void executingMalformedRequestThrowsException() {
@@ -99,23 +89,13 @@ public class ChangeFormatTest {
 		public void setUp() {
 			useCase = new ChangeOptionVariableUseCase();		
 		}
-
-		//		Boilerplate duplicate tests		===
+		
 		@Test
-		public void extendsUndoableUseCaseExecution() {		
-			assertThat(useCase, instanceOf(UndoableUseCaseExecution.class));
+		public void commonTestsPass() {
+			boolean result = 
+					UndoableUseCaseExecutionCommonTests.runTestsOnUseCase(useCase);
+			assertThat(result, is(true));
 		}
-
-		@Test(expected = UndoableUseCaseExecution.UnsuccessfulUseCaseUndo.class)
-		public void undoingBeforeExecutingThrowsException(){
-			useCase.undo();
-		}
-
-		@Test(expected = NullPointerException.class)
-		public void executingNull_DoesNotAddUseCaseToExecutedUseCases() {
-			useCase.execute(null);
-		}
-		//	End boilerplate duplicate tests		===
 
 		@Test(expected = MalformedRequest.class)
 		public void executingEmptyRequestThrowsException() {

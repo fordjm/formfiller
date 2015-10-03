@@ -1,18 +1,18 @@
 package formfiller.usecases.deleteFormComponent;
 
-import formfiller.FormFillerContext;
+import formfiller.Context;
 import formfiller.entities.formComponent.FormComponent;
-import formfiller.request.models.DeleteFormComponentRequest;
+import formfiller.request.models.RequestWithComponentId;
 import formfiller.request.models.Request;
 import formfiller.usecases.undoable.UndoableUseCaseExecution;
 import formfiller.utilities.StringUtilities;
 
 public class DeleteFormComponentUseCase extends UndoableUseCaseExecution {
-	private DeleteFormComponentRequest castRequest;
+	private RequestWithComponentId castRequest;
 	private FormComponent deleted;
 
 	protected void castRequest(Request request) {
-		castRequest = (DeleteFormComponentRequest) request;
+		castRequest = (RequestWithComponentId) request;
 	}
 
 	protected boolean isRequestMalformed() {
@@ -20,7 +20,7 @@ public class DeleteFormComponentUseCase extends UndoableUseCaseExecution {
 	}
 
 	protected void execute() {
-		deleted = FormFillerContext.formComponentGateway.remove(
+		deleted = Context.formComponentGateway.remove(
 				castRequest.componentId);
 		if (deleted == null) throw new AbsentElementDeletion(
 					"No component existed with id " + castRequest.componentId);					
@@ -33,7 +33,7 @@ public class DeleteFormComponentUseCase extends UndoableUseCaseExecution {
 
 	public void undo() {
 		ensureUseCaseStateIsUndoable();
-		FormFillerContext.formComponentGateway.save(deleted);
+		Context.formComponentGateway.save(deleted);
 	}
 	
 	public class AbsentElementDeletion extends RuntimeException {

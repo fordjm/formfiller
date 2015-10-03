@@ -1,6 +1,6 @@
 package formfiller.usecases.undoable;
 
-import formfiller.FormFillerContext;
+import formfiller.Context;
 import formfiller.enums.Outcome;
 import formfiller.request.models.Request;
 import formfiller.response.models.PresentableResponse;
@@ -35,7 +35,7 @@ public abstract class UndoableUseCaseExecution implements UndoableUseCase {
 	}
 
 	protected void addToExecutedUseCases() {
-		FormFillerContext.executedUseCases.add(this);
+		Context.executedUseCases.add(this);
 	}
 
 	protected abstract String makeSuccessfulMessage();
@@ -48,7 +48,7 @@ public abstract class UndoableUseCaseExecution implements UndoableUseCase {
 	}
 	
 	protected void presentResponse(PresentableResponse presentableResponse) {
-		FormFillerContext.outcomePresenter.present(presentableResponse);
+		Context.outcomePresenter.present(presentableResponse);
 	}
 	
 	protected void ensureUseCaseStateIsUndoable() {

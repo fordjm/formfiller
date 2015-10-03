@@ -6,7 +6,7 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import formfiller.FormFillerContext;
+import formfiller.Context;
 import formfiller.delivery.event.ParsedEvent;
 import formfiller.enums.Outcome;
 import formfiller.response.models.PresentableResponse;
@@ -18,7 +18,7 @@ public class HandleUnfoundUseCaseControllerTest {
 	
 	private PresentableResponse getPresentableUnfoundUseCaseResponse(){
 		PresentableResponse result = 
-				FormFillerContext.outcomePresenter.getPresentableResponse();
+				Context.outcomePresenter.getPresentableResponse();
 		return result;
 	}
 	

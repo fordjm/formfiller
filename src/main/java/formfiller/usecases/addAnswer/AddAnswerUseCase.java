@@ -1,6 +1,6 @@
 package formfiller.usecases.addAnswer;
 
-import formfiller.FormFillerContext;
+import formfiller.Context;
 import formfiller.appBoundaries.UseCase;
 import formfiller.entities.Answer;
 import formfiller.entities.formComponent.FormComponent;
@@ -18,7 +18,7 @@ public class AddAnswerUseCase implements UseCase {
 		//		Then add the answer at the Gateway and tell the user.
 		Answer answer = makeAnswer(content);
 		
-		FormComponent foundComponent = FormFillerContext.formComponentGateway.find(questionId);
+		FormComponent foundComponent = Context.formComponentGateway.find(questionId);
 		foundComponent.answer = answer;	// TODO:	Should this work?
 		//	TODO:	Otherwise, inform the user why the answer could not be added.
 	}

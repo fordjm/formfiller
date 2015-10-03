@@ -1,6 +1,6 @@
 package formfiller.usecases.handleUnfoundController;
 
-import formfiller.FormFillerContext;
+import formfiller.Context;
 import formfiller.appBoundaries.UseCase;
 import formfiller.enums.Outcome;
 import formfiller.request.models.*;
@@ -14,7 +14,7 @@ public class HandleUnfoundUseCaseUseCase implements UseCase {
 		HandleUnfoundUseCaseRequest handleUnfoundUseCaseRequest = 
 				(HandleUnfoundUseCaseRequest) request;
 		String message = handleUnfoundUseCaseRequest.message;
-		FormFillerContext.outcomePresenter.
+		Context.outcomePresenter.
 				present(makeHandleUnfoundUseCaseResponse(message));
 	}
 	

@@ -7,14 +7,14 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import formfiller.FormFillerContext;
+import formfiller.Context;
 import formfiller.entities.formComponent.FormComponent;
 import formfiller.request.models.ChangeIdRequest;
 import formfiller.usecases.changeFormComponent.ChangeFormComponentUseCase.AbsentFormComponentChange;
 import formfiller.usecases.undoable.UndoableUseCase;
-import formfiller.usecases.undoable.UndoableUseCaseExecution;
 import formfiller.usecases.undoable.UndoableUseCaseExecution.MalformedRequest;
 import formfiller.utilities.TestSetup;
+import formfiller.utilities.UndoableUseCaseExecutionCommonTests;
 
 public class ChangeIdTest {
 	private ChangeIdUseCase useCase;
@@ -40,7 +40,7 @@ public class ChangeIdTest {
 
 	private void addUnknownFormComponent() {
 		original = makeUnknownFormComponent();
-		FormFillerContext.formComponentGateway.save(original);
+		Context.formComponentGateway.save(original);
 	}
 
 	private FormComponent makeUnknownFormComponent() {
@@ -49,22 +49,12 @@ public class ChangeIdTest {
 		return result;
 	}
 
-	//	Boilerplate duplicate tests		===
 	@Test
-	public void extendsUndoableUseCaseExecution() {		
-		assertThat(useCase, instanceOf(UndoableUseCaseExecution.class));
+	public void commonTestsPass() {
+		boolean result = 
+				UndoableUseCaseExecutionCommonTests.runTestsOnUseCase(useCase);
+		assertThat(result, is(true));
 	}
-	
-	@Test(expected = UndoableUseCaseExecution.UnsuccessfulUseCaseUndo.class)
-	public void undoingBeforeExecutingThrowsException(){
-		useCase.undo();
-	}
-
-	@Test(expected = NullPointerException.class)
-	public void executingNull_DoesNotAddUseCaseToExecutedUseCases() {
-		useCase.execute(null);
-	}
-	//	End boilerplate duplicate tests	===
 
 	@Test(expected = MalformedRequest.class)
 	public void executingMalformedRequestThrowsException() {
@@ -94,7 +84,7 @@ public class ChangeIdTest {
 		mockRequest = makeMockWellFormedChangeIdRequest();		
 		useCase.execute(mockRequest);
 		
-		UndoableUseCase mostRecent = FormFillerContext.executedUseCases.getMostRecent();
+		UndoableUseCase mostRecent = Context.executedUseCases.getMostRecent();
 		mostRecent.undo();
 		
 		assertThat(original.id, is("unknown"));

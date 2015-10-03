@@ -1,3 +1,6 @@
+!|scenario                       |given that the form component|component id        |accepts|count|answers|boundary|
+|given that the component with id|@componentId                 |has existing maximum|@count                        |
+
 !|scenario|when the user adds a _ answer _ to _|num, boundary, componentId            |
 |add      |@num                                |answer|@boundary|boundary|@componentId|
 
@@ -5,11 +8,12 @@
 |check    |is                                   |@componentId|boundary|@boundary|equal to|@num |true |
 |check    |is                                   |@componentId|boundary|@boundary|equal to|-@num|false|
 
-!| scenario     |answer count boundary addition table     |boundary    |    |value    |    |was added    |    |message    |
-|given a form component with the component ID isHappy, the question content "I am a happy person", and the answer format V|
-|when the user adds a @value answer @boundary to isHappy                                                                  |
-|then isHappy should accept a @boundary of @value answers                                                                 |
-|then the system should present the message, @message                                                                     |
+!| scenario     |answer count boundary addition table     |boundary     |    |value    |    |was added    |    |message    |
+|given a form component with the component ID multiOption, the question content "question content", and the answer format V|
+|given that the form component multiOption accepts 5 answers maximum                                                       |
+|when the user adds a @value answer @boundary to multiOption                                                               |
+|then multiOption should accept a @boundary of @value answers                                                              |
+|then the system should present the message, @message                                                                      |
 
 |script|add answer count boundary|
 

@@ -1,13 +1,13 @@
 package formfiller.request.builders;
 
-import formfiller.request.models.DeleteFormComponentRequest;
+import formfiller.request.models.RequestWithComponentId;
 import formfiller.request.models.Request;
 
 public class DeleteFormComponentRequestBuilder implements RequestBuilderFunctions{
-	private DeleteFormComponentRequest request;
+	private RequestWithComponentId request;
 	
 	public DeleteFormComponentRequestBuilder() {
-		request = new DeleteFormComponentRequest();
+		request = new RequestWithComponentId();
 	}
 
 	public void buildComponentId(String componentId) {

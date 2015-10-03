@@ -7,7 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import formfiller.FormFillerContext;
+import formfiller.Context;
 import formfiller.delivery.EventSource;
 import formfiller.delivery.router.PlaceholderRouterFactory;
 import formfiller.delivery.router.Router;
@@ -20,7 +20,7 @@ public class EventHandlerTest {
 	private EventSource mockEventSource;
 	
 	private FormComponent getCurrent() {
-		return FormFillerContext.formComponentState.getCurrent();
+		return Context.formComponentState.getCurrent();
 	}
 
 	private FormComponent getEndFormComponent() {

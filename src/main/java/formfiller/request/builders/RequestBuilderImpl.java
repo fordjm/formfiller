@@ -4,20 +4,23 @@ import formfiller.delivery.controller.Arguments;
 import formfiller.enums.QuestionAsked;
 import formfiller.request.models.Request;
 
+//	TODO:	Move all these functions into one Builder interface.
 public class RequestBuilderImpl implements RequestBuilder {
-	Arguments args;
+	private Arguments args;
 
 	public Request build(String requestName, Arguments args) {
 		this.args = args;
 		
 		if(requestName.equalsIgnoreCase("HandleUnfoundUseCase"))
 			return buildHandleUnfoundControllerRequest();
-		else if(requestName.equalsIgnoreCase("AddUnstructuredFormComponent"))
-			return buildAddUnstructuredFormComponentRequest();
+		else if(requestName.equalsIgnoreCase("AddAnswerCountBoundary"))
+			return buildAddAnswerCountBoundaryRequest();
 		else if(requestName.equalsIgnoreCase("AddOption"))
 			return buildAddOptionRequest();
 		else if(requestName.equalsIgnoreCase("AddOptionVariableFormComponent"))
 			return buildAddOptionVariableFormComponentRequest();
+		else if(requestName.equalsIgnoreCase("AddUnstructuredFormComponent"))
+			return buildAddUnstructuredFormComponentRequest();
 		else if(requestName.equalsIgnoreCase("AskQuestion"))
 			return buildAskQuestionRequest();
 		else if(requestName.equalsIgnoreCase("ChangeId"))
@@ -30,6 +33,16 @@ public class RequestBuilderImpl implements RequestBuilder {
 			return buildDeleteFormComponentRequest();
 		else
 			return Request.NULL;
+	}
+
+	private Request buildAddAnswerCountBoundaryRequest() {
+		AddAnswerCountBoundaryRequestBuilder builder = 
+				new AddAnswerCountBoundaryRequestBuilder();
+		builder.buildComponentId((String) args.getById("componentId"));
+		builder.buildBoundary((String) args.getById("boundary"));
+		builder.buildCount((Integer) args.getById("count"));
+		
+		return finishBuildingRequest(builder);
 	}
 
 	private Request buildAddOptionRequest() {

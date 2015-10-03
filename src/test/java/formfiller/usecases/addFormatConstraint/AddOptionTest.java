@@ -1,4 +1,4 @@
-package formfiller.usecases.addOption;
+package formfiller.usecases.addFormatConstraint;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
@@ -7,12 +7,13 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import formfiller.FormFillerContext;
 import formfiller.entities.answerFormat.OptionVariable;
 import formfiller.entities.formComponent.FormComponent;
 import formfiller.request.models.AddOptionRequest;
+import formfiller.usecases.addFormatConstraint.AddOptionUseCase;
 import formfiller.usecases.undoable.UndoableUseCaseExecution;
 import formfiller.utilities.FormComponentUtilities;
+import formfiller.utilities.UndoableUseCaseExecutionCommonTests;
 
 public class AddOptionTest {
 	private AddOptionUseCase useCase;
@@ -23,14 +24,7 @@ public class AddOptionTest {
 	@Before
 	public void setUp() {
 		useCase = new AddOptionUseCase();
-		addFormComponentToChange();
-	}
-
-	private void addFormComponentToChange() {
-		FormComponent toChange = new FormComponent();
-		toChange.id = "isHappy";
-		toChange.format = new OptionVariable();
-		FormFillerContext.formComponentGateway.save(toChange);
+		AddFormatConstraintTestUtilities.addFormComponentToChange();
 	}
 
 	private AddOptionRequest makeEmptyMockAddOptionRequest() {
@@ -39,27 +33,17 @@ public class AddOptionTest {
 
 	private AddOptionRequest makeWellFormedMockAddOptionRequest() {
 		AddOptionRequest result = makeEmptyMockAddOptionRequest();
-		result.componentId = "isHappy";
+		result.componentId = "toChange";
 		result.option = "agree";
 		return result;
 	}
-
-	//	Boilerplate duplicate tests		===
-	@Test
-	public void extendsUndoableUseCaseExecution() {		
-		assertThat(useCase, instanceOf(UndoableUseCaseExecution.class));
-	}
 	
-	@Test(expected = UndoableUseCaseExecution.UnsuccessfulUseCaseUndo.class)
-	public void undoingBeforeExecutingThrowsException(){
-		useCase.undo();
+	@Test
+	public void commonTestsPass() {
+		boolean result = 
+				UndoableUseCaseExecutionCommonTests.runTestsOnUseCase(useCase);
+		assertThat(result, is(true));
 	}
-
-	@Test(expected = NullPointerException.class)
-	public void executingNull_DoesNotAddUseCaseToExecutedUseCases() {
-		useCase.execute(null);
-	}
-	//	End boilerplate duplicate tests	===
 	
 	@Test(expected = UndoableUseCaseExecution.MalformedRequest.class)
 	public void executingMalformedRequestThrowsException() {

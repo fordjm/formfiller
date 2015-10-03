@@ -3,7 +3,7 @@ package formfiller.usecases.askQuestion;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import formfiller.FormFillerContext;
+import formfiller.Context;
 import formfiller.appBoundaries.Presenter;
 import formfiller.entities.Answer;
 import formfiller.entities.Question;
@@ -36,7 +36,7 @@ public class AskQuestionUseCase implements UndoableUseCase {
 
 		PresentableResponse response = makeResponse();		
 		presentResponse(response);
-		FormFillerContext.executedUseCases.add(this);
+		Context.executedUseCases.add(this);
 	}
 
 	private void clearAllPresenters() {
@@ -47,9 +47,9 @@ public class AskQuestionUseCase implements UndoableUseCase {
 	//	TODO:	Fix duplication in FormComponentPresentation
 	private Collection<Presenter> getPresenters() {
 		Collection<Presenter> result = new ArrayList<Presenter>();
-		result.add(FormFillerContext.questionPresenter);
-		result.add(FormFillerContext.answerPresenter);
-		result.add(FormFillerContext.outcomePresenter);
+		result.add(Context.questionPresenter);
+		result.add(Context.answerPresenter);
+		result.add(Context.outcomePresenter);
 		return result;
 	}
 
@@ -97,7 +97,7 @@ public class AskQuestionUseCase implements UndoableUseCase {
 	}
 
 	private FormComponent getCurrentFormComponent() {
-		return FormFillerContext.formComponentState.getCurrent();
+		return Context.formComponentState.getCurrent();
 	}
 
 	private PresentableQuestion makePresentableQuestion(Question requestedQuestion) {

@@ -1,7 +1,7 @@
 package formfiller.utilities;
 
 import formfiller.ExecutedUseCases;
-import formfiller.FormFillerContext;
+import formfiller.Context;
 import formfiller.delivery.View;
 import formfiller.delivery.presenter.FormComponentPresenter;
 import formfiller.delivery.presenter.ResponsePresenter;
@@ -11,6 +11,7 @@ import formfiller.entities.Answer;
 import formfiller.entities.Question;
 import formfiller.entities.formComponent.FormComponent;
 import formfiller.gateways.InMemoryFormComponentState;
+import formfiller.utilities.stringMatcher.CaseIgnoringStringMatcher;
 import formfiller.gateways.InMemoryFormComponentGateway;
 
 // TODO:  Credit CleanCoders JCS TestSetup
@@ -19,13 +20,14 @@ public class TestSetup {
 	public static void setupContext(){
 		View consoleView = new ConsoleView();
 		
-		FormFillerContext.formComponentState = new InMemoryFormComponentState();
-		FormFillerContext.formComponentGateway = new InMemoryFormComponentGateway();
-		FormFillerContext.executedUseCases = new ExecutedUseCases();
-		FormFillerContext.answerPresenter = makeResponsePresenter(consoleView);
-		FormFillerContext.outcomePresenter = makeResponsePresenter(consoleView);
-		FormFillerContext.formComponentPresenter = makeFormComponentPresenter(consoleView);
-		FormFillerContext.questionPresenter = makeResponsePresenter(consoleView);
+		Context.stringMatcher = new CaseIgnoringStringMatcher();
+		Context.formComponentState = new InMemoryFormComponentState();
+		Context.formComponentGateway = new InMemoryFormComponentGateway();
+		Context.executedUseCases = new ExecutedUseCases();
+		Context.answerPresenter = makeResponsePresenter(consoleView);
+		Context.outcomePresenter = makeResponsePresenter(consoleView);
+		Context.formComponentPresenter = makeFormComponentPresenter(consoleView);
+		Context.questionPresenter = makeResponsePresenter(consoleView);
 	}
 
 	private static ResponsePresenter makeResponsePresenter(View view) {
@@ -44,14 +46,14 @@ public class TestSetup {
 	
 	public static void setupSampleFormComponents(){
 		setupContext();
-		FormFillerContext.formComponentGateway.save(
+		Context.formComponentGateway.save(
 				makeFormComponent(false, 
 						makeQuestion("name", "What is your name?")));
-		FormFillerContext.formComponentGateway.save(
+		Context.formComponentGateway.save(
 				makeFormComponent(false, 
 						makeQuestion("birthDate", "What is your birth date?"), 
 						makeAnswer("November 12, 1955")));
-		FormFillerContext.formComponentGateway.save(
+		Context.formComponentGateway.save(
 				makeFormComponent(true, 
 						makeQuestion("age", "What is your age?")));
 	}

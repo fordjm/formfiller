@@ -1,6 +1,6 @@
 package formfiller.usecases.changeFormComponent;
 
-import formfiller.FormFillerContext;
+import formfiller.Context;
 import formfiller.entities.formComponent.FormComponent;
 import formfiller.usecases.undoable.UndoableUseCaseExecution;
 import formfiller.utilities.FormComponentUtilities;
@@ -10,7 +10,7 @@ public abstract class ChangeFormComponentUseCase extends UndoableUseCaseExecutio
 
 	protected void execute() {
 		assignInstanceVariables();
-		FormComponent found = FormFillerContext.formComponentGateway.find(id);
+		FormComponent found = Context.formComponentGateway.find(id);
 		if (!FormComponentUtilities.isComponentNull(found)){
 			createUndoInfo(found);
 			change(found);			

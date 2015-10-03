@@ -3,7 +3,8 @@ package formfiller.usecases.factory;
 import formfiller.appBoundaries.UseCase;
 import formfiller.usecases.addFormComponent.AddOptionVariableFormComponentUseCase;
 import formfiller.usecases.addFormComponent.AddUnstructuredFormComponentUseCase;
-import formfiller.usecases.addOption.AddOptionUseCase;
+import formfiller.usecases.addFormatConstraint.AddAnswerCountBoundaryUseCase;
+import formfiller.usecases.addFormatConstraint.AddOptionUseCase;
 import formfiller.usecases.askQuestion.AskQuestionUseCase;
 import formfiller.usecases.changeFormComponent.ChangeIdUseCase;
 import formfiller.usecases.changeFormComponent.ChangeOptionVariableUseCase;
@@ -14,8 +15,10 @@ import formfiller.usecases.handleUnfoundController.HandleUnfoundUseCaseUseCase;
 public class UseCaseFactoryImpl implements UseCaseFactory {
 	public UseCase make(String useCaseName) {
 		if (useCaseName == null) useCaseName = "";
-			
-		if (useCaseName.equalsIgnoreCase("AddOption"))
+
+		if (useCaseName.equalsIgnoreCase("AddAnswerCountBoundary"))
+			return makeAddAnswerCountBoundaryUseCase();
+		else if (useCaseName.equalsIgnoreCase("AddOption"))
 			return makeAddOptionUseCase();
 		else if (useCaseName.equalsIgnoreCase("AddOptionVariableFormComponent"))
 			return makeAddOptionVariableFormComponentUseCase();
@@ -33,6 +36,10 @@ public class UseCaseFactoryImpl implements UseCaseFactory {
 			return makeDeleteFormComponentUseCase();
 		else
 			return makeHandleUnfoundUseCaseUseCase();
+	}
+
+	private UseCase makeAddAnswerCountBoundaryUseCase() {
+		return new AddAnswerCountBoundaryUseCase();
 	}
 
 	private UseCase makeAddOptionUseCase() {

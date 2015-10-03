@@ -3,7 +3,7 @@ package formfiller.usecases.addFormComponent;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import formfiller.FormFillerContext;
+import formfiller.Context;
 import formfiller.entities.Question;
 import formfiller.entities.answerFormat.AnswerFormat;
 import formfiller.entities.constrainable.AnswerType;
@@ -33,7 +33,7 @@ public abstract class AddFormComponentUseCase extends UndoableUseCaseExecution {
 		newComponent.format = makeAnswerFormat();
 		newComponent.validator = new AnswerValidator(
 				makeAnswerConstraints(castRequest));
-		FormFillerContext.formComponentGateway.save(newComponent);
+		Context.formComponentGateway.save(newComponent);
 	}
 
 	private FormComponent makeNewFormComponent() {
@@ -64,7 +64,7 @@ public abstract class AddFormComponentUseCase extends UndoableUseCaseExecution {
 
 	public void undo() { 
 		ensureUseCaseStateIsUndoable();
-		FormFillerContext.formComponentGateway.remove(castRequest.questionId);
+		Context.formComponentGateway.remove(castRequest.questionId);
 	}
 	
 }

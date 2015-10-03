@@ -8,7 +8,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
-import formfiller.FormFillerContext;
+import formfiller.Context;
 import formfiller.entities.Answer;
 import formfiller.entities.Question;
 import formfiller.entities.answerFormat.Unstructured;
@@ -64,7 +64,7 @@ public class AskQuestionValidatorTest {
 		public void givenAnswerIsNotRequired(){
 			mockFormComponent = makeMockFormComponent(false, 
 					QuestionMocker.makeMockBirthDateQuestion(), Answer.NONE);
-			FormFillerContext.formComponentGateway.save(mockFormComponent);
+			Context.formComponentGateway.save(mockFormComponent);
 		}
 		
 		@Test
@@ -80,7 +80,7 @@ public class AskQuestionValidatorTest {
 		public void givenAnswerIsRequired(){
 			mockFormComponent = makeMockFormComponent(true, 
 					QuestionMocker.makeMockAgeQuestion(), Answer.NONE);
-			FormFillerContext.formComponentGateway.save(mockFormComponent);
+			Context.formComponentGateway.save(mockFormComponent);
 		}
 
 		@Test

@@ -1,4 +1,4 @@
-package formfiller.usecases.addOption;
+package formfiller.usecases.addFormatConstraint;
 
 import formfiller.entities.answerFormat.OptionVariable;
 import formfiller.entities.formComponent.FormComponent;
@@ -10,13 +10,6 @@ import formfiller.utilities.StringUtilities;
 
 public class AddOptionUseCase extends UndoableUseCaseExecution {
 	AddOptionRequest castRequest;
-
-	public void undo() {
-		ensureUseCaseStateIsUndoable();
-		FormComponent component = FormComponentUtilities.find(castRequest.componentId);
-		OptionVariable format = (OptionVariable) component.format;
-		format.options.remove(castRequest.option);
-	}
 
 	protected void castRequest(Request request) {
 		castRequest = (AddOptionRequest) request;
@@ -36,6 +29,13 @@ public class AddOptionUseCase extends UndoableUseCaseExecution {
 	protected String makeSuccessfulMessage() {
 		String quotedOption = StringUtilities.makeQuotedString(castRequest.option);
 		return "You successfully added the option, " + quotedOption;
+	}
+
+	public void undo() {
+		ensureUseCaseStateIsUndoable();
+		FormComponent component = FormComponentUtilities.find(castRequest.componentId);
+		OptionVariable format = (OptionVariable) component.format;
+		format.options.remove(castRequest.option);
 	}
 
 }

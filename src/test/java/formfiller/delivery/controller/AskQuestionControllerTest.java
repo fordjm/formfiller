@@ -7,7 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import formfiller.FormFillerContext;
+import formfiller.Context;
 import formfiller.delivery.event.ParsedEvent;
 import formfiller.entities.formComponent.FormComponent;
 import formfiller.gateways.FormComponentGateway;
@@ -35,7 +35,7 @@ public class AskQuestionControllerTest {
 	}
 
 	private FormComponentGateway getFormComponentGatewayFromContext() {
-		return FormFillerContext.formComponentGateway;
+		return Context.formComponentGateway;
 	}
 	
 	private FormComponent makeMockNameFormComponent() {
@@ -47,7 +47,7 @@ public class AskQuestionControllerTest {
 	}
 	
 	private FormComponent getCurrentFormComponent() {
-		return FormFillerContext.formComponentState.getCurrent();
+		return Context.formComponentState.getCurrent();
 	}
 	
 	@Before

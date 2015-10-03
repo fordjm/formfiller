@@ -12,7 +12,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
-import formfiller.FormFillerContext;
+import formfiller.Context;
 import formfiller.entities.*;
 import formfiller.entities.answerFormat.*;
 import formfiller.entities.formComponent.*;
@@ -55,7 +55,7 @@ public class AskQuestionTest {
 	}
 	
 	private FormComponent getCurrentFormComponent() {
-		return FormFillerContext.formComponentState.getCurrent();
+		return Context.formComponentState.getCurrent();
 	}
 
 	private void assertThat_ExecutedUseCase_IsMostRecent() {
@@ -63,7 +63,7 @@ public class AskQuestionTest {
 	}
 
 	private UndoableUseCase checkMostRecent() {
-		return FormFillerContext.executedUseCases.getMostRecent();
+		return Context.executedUseCases.getMostRecent();
 	}
 
 	private void assertThat_ExecutedUseCase_IsNotMostRecent() {
@@ -157,7 +157,7 @@ public class AskQuestionTest {
 
 		private void saveFormComponents(FormComponent... formComponents) {
 			for (FormComponent formComponent : formComponents)
-				FormFillerContext.formComponentGateway.save(formComponent);
+				Context.formComponentGateway.save(formComponent);
 		}
 
 		private void executeAndUndoAskQuestionRequest(

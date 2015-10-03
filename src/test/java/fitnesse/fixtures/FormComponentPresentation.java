@@ -5,7 +5,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-import formfiller.FormFillerContext;
+import formfiller.Context;
 import formfiller.appBoundaries.Presenter;
 import formfiller.entities.Answer;
 import formfiller.entities.Question;
@@ -35,12 +35,12 @@ public class FormComponentPresentation {
 	
 	//	New stuff
 	public String presentsThePrompt() {
-		PresentableResponse response = getPresentableResponse(FormFillerContext.questionPresenter);
+		PresentableResponse response = getPresentableResponse(Context.questionPresenter);
 		return response.message;
 	}
 
 	public String presentsTheAnswer() {
-		PresentableResponse response = getPresentableResponse(FormFillerContext.answerPresenter);
+		PresentableResponse response = getPresentableResponse(Context.answerPresenter);
 		return response.message;
 	}
 
@@ -49,7 +49,7 @@ public class FormComponentPresentation {
 	}
 
 	public String presentsTheError() {
-		PresentableResponse response = getPresentableResponse(FormFillerContext.outcomePresenter);
+		PresentableResponse response = getPresentableResponse(Context.outcomePresenter);
 		return response.message;
 	}
 	
@@ -60,7 +60,7 @@ public class FormComponentPresentation {
 		component = (requiresAnswer == true) 
 				? makeRequiredFormComponent(id, questionContent, answerContent) 
 				: makeNonrequiredFormComponent(id, questionContent, answerContent);
-		FormFillerContext.formComponentGateway.save(component);
+		Context.formComponentGateway.save(component);
 	}
 	
 	private FormComponent makeRequiredFormComponent(String id, String questionContent, String answerContent) {
@@ -89,7 +89,7 @@ public class FormComponentPresentation {
 			String answerContent){
 		clearFormComponents();
 		FormComponent component = makeFormComponent(requiresAnswer, answerContent);
-		FormFillerContext.formComponentGateway.save(component);
+		Context.formComponentGateway.save(component);
 	}
 
 	//	TODO:	Fix duplication in GivenAFormComponent
@@ -159,9 +159,9 @@ public class FormComponentPresentation {
 	//	TODO:	Fix duplication in AskQuestionUseCase
 	private Collection<Presenter> getPresenters() {
 		Collection<Presenter> result = new ArrayList<Presenter>();
-		result.add(FormFillerContext.questionPresenter);
-		result.add(FormFillerContext.answerPresenter);
-		result.add(FormFillerContext.outcomePresenter);
+		result.add(Context.questionPresenter);
+		result.add(Context.answerPresenter);
+		result.add(Context.outcomePresenter);
 		return result;
 	}
 
@@ -171,11 +171,11 @@ public class FormComponentPresentation {
 	
 	public void reset() {
 		UndoableUseCase mostRecent = 
-				FormFillerContext.executedUseCases.getMostRecent();
+				Context.executedUseCases.getMostRecent();
 		mostRecent.undo();
 	}
 	
 	public void clearFormComponents() {
-		FormFillerContext.formComponentGateway.removeAll();
+		Context.formComponentGateway.removeAll();
 	}
 }

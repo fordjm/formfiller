@@ -1,6 +1,6 @@
 package fitnesse.fixtures;
 
-import formfiller.FormFillerContext;
+import formfiller.Context;
 import formfiller.entities.formComponent.FormComponent;
 
 public class AddFormComponent {
@@ -39,7 +39,7 @@ public class AddFormComponent {
 	}
 	
 	public void addedComponent() {
-		this.addedComponent = FormFillerContext.formComponentGateway.find(questionId);
+		this.addedComponent = Context.formComponentGateway.find(questionId);
 	}
 	
 	public String addedId() {

@@ -1,5 +1,6 @@
 package formfiller.delivery.router;
 
+import formfiller.delivery.controller.AddAnswerCountBoundaryController;
 import formfiller.delivery.controller.AddOptionController;
 import formfiller.delivery.controller.AddOptionVariableFormComponentController;
 import formfiller.delivery.controller.AddUnstructuredFormComponentController;
@@ -12,8 +13,8 @@ import formfiller.delivery.controller.DeleteFormComponentController;
 public class PlaceholderRouterFactory {	
 	public static Router makeRouter(){
 		Router result = new Router();
-		// TODO:  result.addMethod("AddAns", new AddAnswerController());
-		// TODO:  Find another way to distinguish AddFC, ChangeFormat controllers.
+		// TODO:  Why don't I pass answer format as a parameter?
+		result.addMethod("AddAnsBnd", new AddAnswerCountBoundaryController());
 		result.addMethod("AddFCU", new AddUnstructuredFormComponentController());
 		result.addMethod("AddFCV", new AddOptionVariableFormComponentController());
 		result.addMethod("AddOpt", new AddOptionController());
@@ -24,4 +25,5 @@ public class PlaceholderRouterFactory {
 		result.addMethod("DelFC", new DeleteFormComponentController());
 		return result;
 	}
+	
 }

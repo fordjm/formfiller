@@ -7,17 +7,17 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import formfiller.FormFillerContext;
+import formfiller.Context;
 import formfiller.entities.formComponent.FormComponent;
 import formfiller.entities.formComponent.NullFormComponents;
-import formfiller.request.models.DeleteFormComponentRequest;
-import formfiller.usecases.undoable.UndoableUseCaseExecution;
+import formfiller.request.models.RequestWithComponentId;
 import formfiller.utilities.FormComponentMocker;
 import formfiller.utilities.TestSetup;
+import formfiller.utilities.UndoableUseCaseExecutionCommonTests;
 
 public class DeleteFormComponentTest {
 	private DeleteFormComponentUseCase useCase;
-	private DeleteFormComponentRequest mockRequest;
+	private RequestWithComponentId mockRequest;
 	private String componentId;
 	private FormComponent found;
 
@@ -32,32 +32,22 @@ public class DeleteFormComponentTest {
 	private void addFormComponentToChange() {
 		FormComponent mockComponent = 
 				FormComponentMocker.makeMockFormComponent(componentId);
-		FormFillerContext.formComponentGateway.save(mockComponent);
+		Context.formComponentGateway.save(mockComponent);
 	}
 
-	private DeleteFormComponentRequest makeMockRequest(String requestedId) {
-		DeleteFormComponentRequest result = 
-				Mockito.mock(DeleteFormComponentRequest.class);
+	private RequestWithComponentId makeMockRequest(String requestedId) {
+		RequestWithComponentId result = 
+				Mockito.mock(RequestWithComponentId.class);
 		result.componentId = requestedId;
 		return result;
 	}
 
-	//	Boilerplate duplicate tests		===
 	@Test
-	public void extendsUndoableUseCaseExecution() {		
-		assertThat(useCase, instanceOf(UndoableUseCaseExecution.class));
+	public void commonTestsPass() {
+		boolean result = 
+				UndoableUseCaseExecutionCommonTests.runTestsOnUseCase(useCase);
+		assertThat(result, is(true));
 	}
-	
-	@Test(expected = UndoableUseCaseExecution.UnsuccessfulUseCaseUndo.class)
-	public void undoingBeforeExecutingThrowsException(){
-		useCase.undo();
-	}
-
-	@Test(expected = NullPointerException.class)
-	public void executingNull_DoesNotAddUseCaseToExecutedUseCases() {
-		useCase.execute(null);
-	}
-	//	End boilerplate duplicate tests	===
 
 	@Test(expected = DeleteFormComponentUseCase.AbsentElementDeletion.class)
 	public void deletingAbsentElementThrowsException() {
@@ -72,7 +62,7 @@ public class DeleteFormComponentTest {
 		mockRequest = makeMockRequest(componentId);		
 		useCase.execute(mockRequest);
 		
-		found = FormFillerContext.formComponentGateway.find(componentId);
+		found = Context.formComponentGateway.find(componentId);
 		
 		assertThat(found, is(NullFormComponents.NULL));
 	}
@@ -84,7 +74,7 @@ public class DeleteFormComponentTest {
 		useCase.execute(mockRequest);
 
 		useCase.undo();		
-		found = FormFillerContext.formComponentGateway.find(componentId);
+		found = Context.formComponentGateway.find(componentId);
 
 		assertThat(found, not(NullFormComponents.NULL));
 	}

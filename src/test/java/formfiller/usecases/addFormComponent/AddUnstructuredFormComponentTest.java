@@ -9,7 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import formfiller.FormFillerContext;
+import formfiller.Context;
 import formfiller.entities.Answer;
 import formfiller.entities.Question;
 import formfiller.entities.answerFormat.Unstructured;
@@ -45,7 +45,7 @@ public class AddUnstructuredFormComponentTest {
 	}
 
 	private UndoableUseCase getMostRecentlyExecutedUseCase() {
-		return FormFillerContext.executedUseCases.getMostRecent();
+		return Context.executedUseCases.getMostRecent();
 	}
 
 	@Test
@@ -88,7 +88,7 @@ public class AddUnstructuredFormComponentTest {
 		addUnstructured.execute(request);
 		
 		FormComponent addedComponent = 
-				FormFillerContext.formComponentGateway.find("questionId");
+				Context.formComponentGateway.find("questionId");
 		assertThat(addedComponent.id, is(request.questionId));
 		assertThat(addedComponent.answer, is(Answer.NONE));
 		assertThat(addedComponent.format, is(instanceOf(Unstructured.class)));
@@ -113,7 +113,7 @@ public class AddUnstructuredFormComponentTest {
 		
 		UndoableUseCase mostRecent = getMostRecentlyExecutedUseCase();
 		mostRecent.undo();
-		FormComponent found = FormFillerContext.formComponentGateway.find("questionId");
+		FormComponent found = Context.formComponentGateway.find("questionId");
 		
 		assertEquals(found, NullFormComponents.NULL);
 	}

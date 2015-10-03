@@ -1,6 +1,6 @@
 package formfiller.usecases.changeFormComponent;
 
-import formfiller.FormFillerContext;
+import formfiller.Context;
 import formfiller.entities.formComponent.FormComponent;
 import formfiller.request.models.ChangeIdRequest;
 import formfiller.request.models.Request;
@@ -35,10 +35,10 @@ public class ChangeIdUseCase extends ChangeFormComponentUseCase {
 	}
 
 	private void swapIds(String prevId, String nextId) {
-		FormComponent changed = FormFillerContext.formComponentGateway.remove(prevId);
+		FormComponent changed = Context.formComponentGateway.remove(prevId);
 		changed.question.id = nextId;
 		changed.id = nextId;
-		FormFillerContext.formComponentGateway.save(changed);
+		Context.formComponentGateway.save(changed);
 	}
 
 	protected String makeSuccessfulMessage() {
