@@ -5,9 +5,10 @@ import java.util.Collection;
 import formfiller.entities.Answer;
 
 public abstract class AnswerFormat {
+	//	TODO:	Decide whether these are public or private and be consistent.
 	protected String name = "";
-	int minAnswers;
-	int maxAnswers;
+	public int minAnswers;
+	public int maxAnswers;
 	
 	public AnswerFormat() {
 		minAnswers = 0;

@@ -1,0 +1,21 @@
+!|scenario|when the user adds a _ answer _ to _|num, boundary, componentId            |
+|add      |@num                                |answer|@boundary|boundary|@componentId|
+
+!|scenario|then _ should accept a _ of _ answers|componentId, boundary, num                          |
+|check    |is                                   |@componentId|boundary|@boundary|equal to|@num |true |
+|check    |is                                   |@componentId|boundary|@boundary|equal to|-@num|false|
+
+!| scenario     |answer count boundary addition table     |boundary    |    |value    |    |was added    |    |message    |
+|given a form component with the component ID isHappy, the question content "I am a happy person", and the answer format V|
+|when the user adds a @value answer @boundary to isHappy                                                                  |
+|then isHappy should accept a @boundary of @value answers                                                                 |
+|then the system should present the message, @message                                                                     |
+
+|script|add answer count boundary|
+
+|answer count boundary addition table                                  |
+|boundary|value|was added|message                                      |
+|minimum |1    |true     |You successfully added a minimum of 1 answer |
+|minimum |3    |true     |You successfully added a minimum of 3 answers|
+|maximum |1    |true     |You successfully added a maximum of 1 answer |
+|maximum |3    |true     |You successfully added a maximum of 3 answers|
