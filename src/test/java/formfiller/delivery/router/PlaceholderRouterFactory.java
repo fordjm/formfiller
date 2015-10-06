@@ -13,10 +13,10 @@ import formfiller.delivery.controller.DeleteFormComponentController;
 public class PlaceholderRouterFactory {	
 	public static Router makeRouter(){
 		Router result = new Router();
-		// TODO:  Why don't I pass answer format as a parameter?
+		//	TODO:	Use the same command string for both AddFCs and both ChgFmts.
 		result.addMethod("AddAnsBnd", new AddAnswerCountBoundaryController());
 		result.addMethod("AddFCU", new AddUnstructuredFormComponentController());
-		result.addMethod("AddFCV", new AddOptionVariableFormComponentController());
+		result.addMethod("AddFC", new AddOptionVariableFormComponentController());
 		result.addMethod("AddOpt", new AddOptionController());
 		result.addMethod("AskQues", new AskQuestionController());
 		result.addMethod("ChangeId", new ChangeIdController());

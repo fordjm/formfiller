@@ -38,7 +38,7 @@ public class AddUnstructuredFormComponentTest {
 			String questionId, String questionContent, Type answerType) {
 		AddFormComponentRequest result = 
 				makeMockAddUnstructuredRequest();
-		result.questionId = questionId;
+		result.componentId = questionId;
 		result.questionContent = questionContent;
 		result.answerType = answerType;		
 		return result;
@@ -63,7 +63,7 @@ public class AddUnstructuredFormComponentTest {
 		request = new AddFormComponentRequest();
 		assertThat(request, is(instanceOf(Request.class)));
 		assertThat(request.name, is("Request"));
-		assertThat(request.questionId, is(""));
+		assertThat(request.componentId, is(""));
 		assertThat(request.questionContent, is(""));
 		assertThat(request.minAnswerCount, is(0));
 		assertThat(request.maxAnswerCount, is(1));
@@ -89,12 +89,12 @@ public class AddUnstructuredFormComponentTest {
 		
 		FormComponent addedComponent = 
 				Context.formComponentGateway.find("questionId");
-		assertThat(addedComponent.id, is(request.questionId));
+		assertThat(addedComponent.id, is(request.componentId));
 		assertThat(addedComponent.answer, is(Answer.NONE));
 		assertThat(addedComponent.format, is(instanceOf(Unstructured.class)));
 		
 		Question addedQuestion = addedComponent.question;
-		assertThat(request.questionId, is(addedQuestion.id));
+		assertThat(request.componentId, is(addedQuestion.id));
 		assertThat(request.questionContent, is(addedQuestion.content));
 		
 		

@@ -15,9 +15,9 @@ public abstract class AddFormComponentController extends UndoableUseCaseControll
 
 	protected Arguments makeArguments() {
 		Arguments result = new Arguments();
-		result.add("questionId", questionId);
+		result.add("componentId", questionId);
 		result.add("questionContent", questionContent);
-		result.add("answerFormat", answerFormat);
+		result.add("format", answerFormat);
 		return result;
 	}
 }

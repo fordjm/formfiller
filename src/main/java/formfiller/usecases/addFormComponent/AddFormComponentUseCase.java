@@ -25,7 +25,7 @@ public abstract class AddFormComponentUseCase extends UndoableUseCaseExecution {
 	}
 
 	protected boolean isRequestMalformed() {
-		return StringUtilities.isStringNullOrEmpty(castRequest.questionId);
+		return StringUtilities.isStringNullOrEmpty(castRequest.componentId);
 	}
 
 	protected void execute() {
@@ -38,14 +38,14 @@ public abstract class AddFormComponentUseCase extends UndoableUseCaseExecution {
 
 	private FormComponent makeNewFormComponent() {
 		FormComponent result = new FormComponent();
-		result.id = castRequest.questionId;
+		result.id = castRequest.componentId;
 		result.question = makeNewQuestion();
 		return result;
 	}
 
 	private Question makeNewQuestion() {
 		Question result = new Question();
-		result.id = castRequest.questionId;
+		result.id = castRequest.componentId;
 		result.content = castRequest.questionContent;
 		return result;
 	}
@@ -58,13 +58,13 @@ public abstract class AddFormComponentUseCase extends UndoableUseCaseExecution {
 
 	protected String makeSuccessfulMessage() {
 		String result = "You successfully added the new form component, \"" +
-				castRequest.questionId + ".\"";
+				castRequest.componentId + ".\"";
 		return result;
 	}
 
 	public void undo() { 
 		ensureUseCaseStateIsUndoable();
-		Context.formComponentGateway.remove(castRequest.questionId);
+		Context.formComponentGateway.remove(castRequest.componentId);
 	}
 	
 }

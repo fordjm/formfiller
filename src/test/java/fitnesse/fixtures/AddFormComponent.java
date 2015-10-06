@@ -30,12 +30,16 @@ public class AddFormComponent {
 	
 	protected String makeConsoleRequiredParametersString() {
 		String command = getCommandString(answerFormat);
-		return String.format("%s " + "%s " + "%s",
-				command, questionId, questionContent);
+		return String.format("%s " + "%s " + "%s " + "%s",
+				command, questionId, questionContent, answerFormat);
 	}
 	
+	//	TODO:	Use the same command string.
 	private String getCommandString(String answerFormat) {
-		return "AddFC" + answerFormat;
+		if (answerFormat.equalsIgnoreCase("U"))
+			return "AddFCU";
+		else
+			return "AddFC";
 	}
 	
 	public void addedComponent() {

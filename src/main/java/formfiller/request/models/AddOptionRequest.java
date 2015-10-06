@@ -1,7 +1,5 @@
 package formfiller.request.models;
 
-public class AddOptionRequest extends Request {
-	public String componentId = "";
+public class AddOptionRequest extends RequestWithComponentId {
 	public String option = "";
-
 }

@@ -41,7 +41,7 @@ public class HandleUnfoundUseCaseController implements Controller {
 	
 	protected Request makeHandleUnfoundUseCaseRequest(Arguments arguments){
 		RequestBuilder requestBuilder = new RequestBuilderImpl();		
-		Request result = requestBuilder.build("handleUnfoundUseCase", arguments);
+		Request result = requestBuilder.build("HandleUnfoundUseCase", arguments);
 		return result;
 	}
 
@@ -53,6 +53,6 @@ public class HandleUnfoundUseCaseController implements Controller {
 	
 	protected InputBoundary makeHandleUnfoundUseCaseUseCase(){		
 		UseCaseFactory useCaseFactory = new UseCaseFactoryImpl();
-		return useCaseFactory.make("handleUnfoundUseCase");
+		return useCaseFactory.make("HandleUnfoundUseCase");
 	}
 }

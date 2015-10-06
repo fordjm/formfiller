@@ -1,4 +1,4 @@
-package formfiller.usecases.handleUnfoundController;
+package formfiller.usecases.handleUnfoundUseCase;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
@@ -10,6 +10,7 @@ import org.mockito.Mockito;
 import formfiller.Context;
 import formfiller.request.models.HandleUnfoundUseCaseRequest;
 import formfiller.response.models.PresentableResponse;
+import formfiller.usecases.handleUnfoundController.HandleUnfoundUseCaseUseCase;
 import formfiller.utilities.TestSetup;
 
 public class HandleUnfoundUseCaseTest {

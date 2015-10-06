@@ -49,7 +49,7 @@ public class RequestBuilderImplTest {
 	public void canBuildAddUnstructuredFormComponentRequest() {
 		Map<String, Object> argumentsMap = makeArgumentsMap();
 		Request request = 
-				buildRequest("addUnstructuredFormComponent", 
+				buildRequest("AddUnstructuredFormComponent", 
 						makeArguments(argumentsMap));
 		String name = request.name;
 		AddFormComponentRequest castRequest = 
@@ -58,7 +58,7 @@ public class RequestBuilderImplTest {
 		assertThat(request, 
 				is(instanceOf(AddFormComponentRequest.class)));
 		assertThat(name, is("AddUnstructuredFormComponent"));
-		assertThat(castRequest.questionId, is("questionId"));
+		assertThat(castRequest.componentId, is("componentId"));
 		assertThat(castRequest.questionContent, is("questionContent"));
 		assertThat(castRequest.format, instanceOf(Unstructured.class));
 	}
@@ -68,16 +68,16 @@ public class RequestBuilderImplTest {
 	//			Test other formats, other min/maxAnswers values.
 	private HashMap<String, Object> makeArgumentsMap() {
 		HashMap<String, Object> result = new HashMap<String,Object>();
-		result.put("questionId", "questionId");
+		result.put("componentId", "componentId");
 		result.put("questionContent", "questionContent");
-		result.put("answerFormat", "U");
+		result.put("format", "U");
 		return result;
 	}
 	
 	@Test
 	public void canBuildHandleUnfoundUseCaseRequest() {
 		Request handleUnfoundUseCaseRequest = 
-				builder.build("handleUnfoundUseCase", new Arguments());
+				builder.build("HandleUnfoundUseCase", new Arguments());
 		
 		assertThat(handleUnfoundUseCaseRequest, 
 				is(instanceOf(HandleUnfoundUseCaseRequest.class)));
@@ -88,7 +88,7 @@ public class RequestBuilderImplTest {
 	@Test
 	public void canBuildAskQuestionRequest() {
 		Request askQuestionRequest = 
-				buildRequest("askQuestion", makeArguments("which", QuestionAsked.NEXT));
+				buildRequest("AskQuestion", makeArguments("which", QuestionAsked.NEXT));
 		String name = askQuestionRequest.name;
 		AskQuestionRequest castRequest = 
 				(AskQuestionRequest) askQuestionRequest;
