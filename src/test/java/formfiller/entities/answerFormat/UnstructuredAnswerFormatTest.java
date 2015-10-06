@@ -8,6 +8,7 @@ import java.util.Arrays;
 import org.junit.Test;
 
 import formfiller.entities.Answer;
+import formfiller.entities.format.Unstructured;
 
 public class UnstructuredAnswerFormatTest {
 

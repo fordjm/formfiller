@@ -1,6 +1,6 @@
 package formfiller.usecases.changeFormComponent;
 
-import formfiller.entities.answerFormat.Unstructured;
+import formfiller.entities.format.Unstructured;
 
 public class ChangeUnstructuredUseCase extends ChangeFormatUseCase {	
 	public ChangeUnstructuredUseCase() {

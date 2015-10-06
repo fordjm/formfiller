@@ -8,7 +8,7 @@ import java.util.Arrays;
 import org.junit.Before;
 import org.junit.Test;
 
-import formfiller.entities.answerFormat.OptionVariable;
+import formfiller.entities.format.OptionVariable;
 
 //	TODO:	Separate classes for single and multi option variables?
 //			Pass a cardinality object? {SINGLE, ANY, SPECIFIC, RANGE}

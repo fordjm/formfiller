@@ -10,10 +10,10 @@ import org.mockito.Mockito;
 
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
 import formfiller.Context;
-import formfiller.entities.answerFormat.AnswerFormat;
-import formfiller.entities.answerFormat.OptionVariable;
-import formfiller.entities.answerFormat.Unstructured;
 import formfiller.entities.formComponent.FormComponent;
+import formfiller.entities.format.Format;
+import formfiller.entities.format.OptionVariable;
+import formfiller.entities.format.Unstructured;
 import formfiller.request.models.ChangeFormatRequest;
 import formfiller.usecases.undoable.UndoableUseCaseExecution.MalformedRequest;
 import formfiller.utilities.UndoableUseCaseExecutionCommonTests;
@@ -35,7 +35,7 @@ public class ChangeFormatTest {
 		return result;
 	}
 
-	private void addFormComponentToChange(Class<? extends AnswerFormat> originalFormat) {
+	private void addFormComponentToChange(Class<? extends Format> originalFormat) {
 		original = new FormComponent();
 		original.id = "name";
 		original.format = Mockito.mock(originalFormat);

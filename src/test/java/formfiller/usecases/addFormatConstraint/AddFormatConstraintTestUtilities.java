@@ -1,8 +1,8 @@
 package formfiller.usecases.addFormatConstraint;
 
 import formfiller.Context;
-import formfiller.entities.answerFormat.OptionVariable;
 import formfiller.entities.formComponent.FormComponent;
+import formfiller.entities.format.OptionVariable;
 
 public class AddFormatConstraintTestUtilities {
 	public static void addFormComponentToChange() {

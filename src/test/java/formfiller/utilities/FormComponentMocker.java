@@ -4,8 +4,8 @@ import org.mockito.Mockito;
 
 import formfiller.entities.Answer;
 import formfiller.entities.Question;
-import formfiller.entities.answerFormat.AnswerFormat;
 import formfiller.entities.formComponent.FormComponent;
+import formfiller.entities.format.Format;
 
 public class FormComponentMocker {
 
@@ -16,7 +16,7 @@ public class FormComponentMocker {
 	}
 
 	public static FormComponent makeMockFormComponent(boolean requiresAnswer, 
-			Question question, Answer answer, AnswerFormat format) {
+			Question question, Answer answer, Format format) {
 		FormComponent result = Mockito.mock(FormComponent.class);
 		result.id = question.id;
 		result.requiresAnswer = requiresAnswer;

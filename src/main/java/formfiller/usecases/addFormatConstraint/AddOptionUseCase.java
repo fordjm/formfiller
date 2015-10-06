@@ -1,7 +1,7 @@
 package formfiller.usecases.addFormatConstraint;
 
-import formfiller.entities.answerFormat.OptionVariable;
 import formfiller.entities.formComponent.FormComponent;
+import formfiller.entities.format.OptionVariable;
 import formfiller.request.models.AddOptionRequest;
 import formfiller.request.models.Request;
 import formfiller.usecases.undoable.UndoableUseCaseExecution;

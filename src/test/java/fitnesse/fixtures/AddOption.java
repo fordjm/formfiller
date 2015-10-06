@@ -1,7 +1,7 @@
 package fitnesse.fixtures;
 
-import formfiller.entities.answerFormat.OptionVariable;
 import formfiller.entities.formComponent.FormComponent;
+import formfiller.entities.format.OptionVariable;
 import formfiller.utilities.FormComponentUtilities;
 import formfiller.utilities.StringUtilities;
 

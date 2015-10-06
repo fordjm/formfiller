@@ -1,6 +1,6 @@
 package formfiller.request.builders;
 
-import formfiller.entities.answerFormat.Unstructured;
+import formfiller.entities.format.Unstructured;
 import formfiller.request.models.AddFormComponentRequest;
 
 public class AddUnstructuredFormComponentRequestBuilder extends AddFormComponentRequestBuilder {

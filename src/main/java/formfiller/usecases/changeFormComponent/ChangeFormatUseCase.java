@@ -1,15 +1,15 @@
 package formfiller.usecases.changeFormComponent;
 
-import formfiller.entities.answerFormat.AnswerFormat;
 import formfiller.entities.formComponent.FormComponent;
+import formfiller.entities.format.Format;
 import formfiller.request.models.ChangeFormatRequest;
 import formfiller.request.models.Request;
 import formfiller.utilities.FormComponentUtilities;
 import formfiller.utilities.StringUtilities;
 
 public abstract class ChangeFormatUseCase extends ChangeFormComponentUseCase {
-	protected AnswerFormat oldFormat;
-	protected AnswerFormat newFormat;
+	protected Format oldFormat;
+	protected Format newFormat;
 	protected ChangeFormatRequest castRequest;
 	
 	protected void castRequest(Request request) {

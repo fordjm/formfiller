@@ -1,6 +1,6 @@
 package formfiller.request.builders;
 
-import formfiller.entities.answerFormat.OptionVariable;
+import formfiller.entities.format.OptionVariable;
 import formfiller.request.models.AddFormComponentRequest;
 
 public class AddOptionVariableFormComponentRequestBuilder extends AddFormComponentRequestBuilder {

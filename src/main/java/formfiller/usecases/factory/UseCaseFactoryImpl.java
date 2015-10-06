@@ -1,6 +1,6 @@
 package formfiller.usecases.factory;
 
-import formfiller.appBoundaries.UseCase;
+import formfiller.appBoundaries.InputBoundary;
 import formfiller.usecases.addFormComponent.AddOptionVariableFormComponentUseCase;
 import formfiller.usecases.addFormComponent.AddUnstructuredFormComponentUseCase;
 import formfiller.usecases.addFormatConstraint.AddAnswerCountBoundaryUseCase;
@@ -13,7 +13,7 @@ import formfiller.usecases.deleteFormComponent.DeleteFormComponentUseCase;
 import formfiller.usecases.handleUnfoundController.HandleUnfoundUseCaseUseCase;
 
 public class UseCaseFactoryImpl implements UseCaseFactory {
-	public UseCase make(String useCaseName) {
+	public InputBoundary make(String useCaseName) {
 		if (useCaseName == null) useCaseName = "";
 
 		if (useCaseName.equalsIgnoreCase("AddAnswerCountBoundary"))
@@ -38,43 +38,43 @@ public class UseCaseFactoryImpl implements UseCaseFactory {
 			return makeHandleUnfoundUseCaseUseCase();
 	}
 
-	private UseCase makeAddAnswerCountBoundaryUseCase() {
+	private InputBoundary makeAddAnswerCountBoundaryUseCase() {
 		return new AddAnswerCountBoundaryUseCase();
 	}
 
-	private UseCase makeAddOptionUseCase() {
+	private InputBoundary makeAddOptionUseCase() {
 		return new AddOptionUseCase();
 	}
 	
-	private UseCase makeAddOptionVariableFormComponentUseCase() {
+	private InputBoundary makeAddOptionVariableFormComponentUseCase() {
 		return new AddOptionVariableFormComponentUseCase();
 	}
 
-	private UseCase makeAddUnstructuredFormComponentUseCase() {
+	private InputBoundary makeAddUnstructuredFormComponentUseCase() {
 		return new AddUnstructuredFormComponentUseCase();
 	}
 
-	private UseCase makeAskQuestionUseCase() {
+	private InputBoundary makeAskQuestionUseCase() {
 		return new AskQuestionUseCase();
 	}
 
-	private UseCase makeChangeIdUseCase() {
+	private InputBoundary makeChangeIdUseCase() {
 		return new ChangeIdUseCase();
 	}
 
-	private UseCase makeChangeOptionVariableUseCase() {
+	private InputBoundary makeChangeOptionVariableUseCase() {
 		return new ChangeOptionVariableUseCase();
 	}
 
-	private UseCase makeChangeUnstructuredUseCase() {
+	private InputBoundary makeChangeUnstructuredUseCase() {
 		return new ChangeUnstructuredUseCase();
 	}
 
-	private UseCase makeDeleteFormComponentUseCase() {
+	private InputBoundary makeDeleteFormComponentUseCase() {
 		return new DeleteFormComponentUseCase();
 	}
 
-	private UseCase makeHandleUnfoundUseCaseUseCase() {
+	private InputBoundary makeHandleUnfoundUseCaseUseCase() {
 		return new HandleUnfoundUseCaseUseCase();
 	}
 }

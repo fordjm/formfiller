@@ -14,8 +14,8 @@ import org.junit.runner.RunWith;
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
 import formfiller.Context;
 import formfiller.entities.*;
-import formfiller.entities.answerFormat.*;
 import formfiller.entities.formComponent.*;
+import formfiller.entities.format.*;
 import formfiller.enums.QuestionAsked;
 import formfiller.request.models.AskQuestionRequest;
 import formfiller.usecases.askQuestion.AskQuestionUseCase;
@@ -138,7 +138,7 @@ public class AskQuestionTest {
 		Question mockQuestion;
 
 		private FormComponent makeMockFormComponent(String id, String content, 
-				boolean requiresAnswer, AnswerFormat answerFormat) {
+				boolean requiresAnswer, Format answerFormat) {
 			Question mockQuestion = makeMockQuestion(id, content);
 			FormComponent result = makeMockFormComponent(requiresAnswer, 
 					mockQuestion, answerFormat);
@@ -150,7 +150,7 @@ public class AskQuestionTest {
 		}
 		
 		private FormComponent makeMockFormComponent(boolean requiresAnswer, 
-				Question question, AnswerFormat answerFormat){
+				Question question, Format answerFormat){
 			return FormComponentMocker.makeMockFormComponent(requiresAnswer, 
 					question, Answer.NONE, answerFormat);
 		}

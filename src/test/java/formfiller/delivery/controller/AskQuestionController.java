@@ -1,6 +1,6 @@
 package formfiller.delivery.controller;
 
-import formfiller.appBoundaries.UseCase;
+import formfiller.appBoundaries.InputBoundary;
 import formfiller.delivery.Controller;
 import formfiller.delivery.event.ParsedEvent;
 import formfiller.enums.QuestionAsked;
@@ -19,7 +19,7 @@ public class AskQuestionController implements Controller {
 		which = WhichQuestionParser.parseWhich(questionAsked);
 		arguments = makeArguments();
 		Request request = makeAskQuestionRequest();
-		UseCase useCase = makeAskQuestionUseCase();
+		InputBoundary useCase = makeAskQuestionUseCase();
 		
 		useCase.execute(request);
 	}	
@@ -37,7 +37,7 @@ public class AskQuestionController implements Controller {
 		return arguments;
 	}
 	
-	protected UseCase makeAskQuestionUseCase(){		
+	protected InputBoundary makeAskQuestionUseCase(){		
 		UseCaseFactoryImpl factory = new UseCaseFactoryImpl();
 		return factory.make("askQuestion");
 	}

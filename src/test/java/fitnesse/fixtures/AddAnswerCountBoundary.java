@@ -1,8 +1,8 @@
 package fitnesse.fixtures;
 
 import formfiller.Context;
-import formfiller.entities.answerFormat.AnswerFormat;
 import formfiller.entities.formComponent.FormComponent;
+import formfiller.entities.format.Format;
 import formfiller.utilities.FormComponentUtilities;
 import formfiller.utilities.StringUtilities;
 
@@ -33,7 +33,7 @@ public class AddAnswerCountBoundary {
 		return boundaryValue == count;
 	}
 
-	private int getBoundaryValue(AnswerFormat format, String boundary) {
+	private int getBoundaryValue(Format format, String boundary) {
 		if (Context.stringMatcher.matches(boundary, "minimum"))
 			return format.minAnswers;
 		else if (Context.stringMatcher.matches(boundary, "maximum"))

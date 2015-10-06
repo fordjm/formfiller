@@ -1,8 +1,8 @@
 package formfiller.usecases.addFormatConstraint;
 
 import formfiller.Context;
-import formfiller.entities.answerFormat.AnswerFormat;
 import formfiller.entities.formComponent.FormComponent;
+import formfiller.entities.format.Format;
 import formfiller.request.models.AddAnswerCountBoundaryRequest;
 import formfiller.request.models.Request;
 import formfiller.usecases.undoable.UndoableUseCaseExecution;
@@ -12,7 +12,7 @@ import formfiller.utilities.StringUtilities;
 public class AddAnswerCountBoundaryUseCase extends UndoableUseCaseExecution {
 	private AddAnswerCountBoundaryRequest castRequest;
 	private int oldBoundaryValue;
-	private AnswerFormat componentFormat;
+	private Format componentFormat;
 
 	protected void castRequest(Request request) {
 		castRequest = (AddAnswerCountBoundaryRequest) request;
@@ -32,12 +32,12 @@ public class AddAnswerCountBoundaryUseCase extends UndoableUseCaseExecution {
 		updateBoundaryValue(castRequest.count, castRequest.boundary);
 	}
 
-	private AnswerFormat getComponentFormat() {
+	private Format getComponentFormat() {
 		FormComponent component = FormComponentUtilities.find(castRequest.componentId);
 		return component.format;
 	}
 
-	private int getBoundaryValue(AnswerFormat format) {
+	private int getBoundaryValue(Format format) {
 		String boundary = castRequest.boundary;
 		if (Context.stringMatcher.matches("minimum", boundary))
 				return format.minAnswers;
@@ -71,11 +71,11 @@ public class AddAnswerCountBoundaryUseCase extends UndoableUseCaseExecution {
 					"Could not match boundary string " + boundary);
 	}
 
-	private void updateMinimum(AnswerFormat format, int num) {
+	private void updateMinimum(Format format, int num) {
 		format.minAnswers = num;
 	}
 
-	private void updateMaximum(AnswerFormat format, int num) {
+	private void updateMaximum(Format format, int num) {
 		format.maxAnswers = num;
 	}
 

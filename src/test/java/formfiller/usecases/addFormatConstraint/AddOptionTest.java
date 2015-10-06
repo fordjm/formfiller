@@ -7,8 +7,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import formfiller.entities.answerFormat.OptionVariable;
 import formfiller.entities.formComponent.FormComponent;
+import formfiller.entities.format.OptionVariable;
 import formfiller.request.models.AddOptionRequest;
 import formfiller.usecases.addFormatConstraint.AddOptionUseCase;
 import formfiller.usecases.undoable.UndoableUseCaseExecution;

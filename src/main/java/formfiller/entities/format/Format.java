@@ -1,16 +1,16 @@
-package formfiller.entities.answerFormat;
+package formfiller.entities.format;
 
 import java.util.Collection;
 
 import formfiller.entities.Answer;
 
-public abstract class AnswerFormat {
+public abstract class Format {
 	//	TODO:	Decide whether these are public or private and be consistent.
 	protected String name = "";
 	public int minAnswers;
 	public int maxAnswers;
 	
-	public AnswerFormat() {
+	public Format() {
 		minAnswers = 0;
 		maxAnswers = 1;
 	}

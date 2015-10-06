@@ -1,6 +1,6 @@
 package formfiller.usecases.changeFormComponent;
 
-import formfiller.entities.answerFormat.OptionVariable;
+import formfiller.entities.format.OptionVariable;
 
 public class ChangeOptionVariableUseCase extends ChangeFormatUseCase {	
 	public ChangeOptionVariableUseCase() {

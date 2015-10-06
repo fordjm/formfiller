@@ -1,7 +1,7 @@
 package formfiller.usecases.factory;
 
-import formfiller.appBoundaries.UseCase;
+import formfiller.appBoundaries.InputBoundary;
 
 public interface UseCaseFactory {
-	public UseCase make(String useCaseName);
+	public InputBoundary make(String useCaseName);
 }

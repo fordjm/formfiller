@@ -5,10 +5,10 @@ import java.util.Collection;
 
 import formfiller.Context;
 import formfiller.entities.Question;
-import formfiller.entities.answerFormat.AnswerFormat;
 import formfiller.entities.constrainable.AnswerType;
 import formfiller.entities.constrainable.Constrainable;
 import formfiller.entities.formComponent.FormComponent;
+import formfiller.entities.format.Format;
 import formfiller.request.models.AddFormComponentRequest;
 import formfiller.request.models.Request;
 import formfiller.usecases.addAnswer.AnswerValidator;
@@ -18,7 +18,7 @@ import formfiller.utilities.StringUtilities;
 public abstract class AddFormComponentUseCase extends UndoableUseCaseExecution {
 	private AddFormComponentRequest castRequest;
 	
-	protected abstract AnswerFormat makeAnswerFormat();
+	protected abstract Format makeAnswerFormat();
 	
 	protected void castRequest(Request request) {
 		castRequest = (AddFormComponentRequest) request;

@@ -3,7 +3,7 @@ package formfiller.entities.formComponent;
 import formfiller.entities.Answer;
 import formfiller.entities.NullQuestions;
 import formfiller.entities.Question;
-import formfiller.entities.answerFormat.Unstructured;
+import formfiller.entities.format.Unstructured;
 
 //	TODO:	Make this an enum.
 //			Can this class extend FormComponent but have immutable fields?

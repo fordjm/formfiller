@@ -10,7 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import formfiller.delivery.controller.Arguments;
-import formfiller.entities.answerFormat.Unstructured;
+import formfiller.entities.format.Unstructured;
 import formfiller.enums.QuestionAsked;
 import formfiller.request.builders.RequestBuilderImpl;
 import formfiller.request.models.HandleUnfoundUseCaseRequest;

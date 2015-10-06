@@ -1,6 +1,6 @@
-package formfiller.entities.answerFormat;
+package formfiller.entities.format;
 
-public class Unstructured extends AnswerFormat {
+public class Unstructured extends Format {
 	public Unstructured() {
 		super();
 		name = "Unstructured";
