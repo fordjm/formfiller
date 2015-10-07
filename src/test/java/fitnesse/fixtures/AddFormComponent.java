@@ -5,22 +5,20 @@ import formfiller.entities.formComponent.FormComponent;
 
 public class AddFormComponent {
 	private StringEventManager stringEventManager;
-	private String questionId;
+	private String componentId;
 	private String questionContent;
-	private String answerFormat;
+	private String format;
 	protected FormComponent addedComponent;
 
 	public AddFormComponent() {
 		stringEventManager = new StringEventManager();
 	}
 	
-	//	TODO:	Determining subclass by script actor.
-	//			The format string does nothing.
 	public void givenAQuestionIdAndQuestionContentAndAnswerFormat(String questionId, 
 			String questionContent, String answerFormat){
-		this.questionId = questionId;
+		this.componentId = questionId;
 		this.questionContent = questionContent;
-		this.answerFormat = answerFormat;
+		this.format = answerFormat;
 	}
 
 	public void whenTheUserAddsAFormComponent(){
@@ -29,21 +27,12 @@ public class AddFormComponent {
 	}
 	
 	protected String makeConsoleRequiredParametersString() {
-		String command = getCommandString(answerFormat);
 		return String.format("%s " + "%s " + "%s " + "%s",
-				command, questionId, questionContent, answerFormat);
-	}
-	
-	//	TODO:	Use the same command string.
-	private String getCommandString(String answerFormat) {
-		if (answerFormat.equalsIgnoreCase("U"))
-			return "AddFCU";
-		else
-			return "AddFC";
+				"AddFC", componentId, questionContent, format);
 	}
 	
 	public void addedComponent() {
-		this.addedComponent = Context.formComponentGateway.find(questionId);
+		this.addedComponent = Context.formComponentGateway.find(componentId);
 	}
 	
 	public String addedId() {
@@ -57,4 +46,5 @@ public class AddFormComponent {
 	public String addedFormat() {
 		return addedComponent.format.getName();
 	}
+	
 }

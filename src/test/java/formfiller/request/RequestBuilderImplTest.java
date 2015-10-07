@@ -70,7 +70,7 @@ public class RequestBuilderImplTest {
 		HashMap<String, Object> result = new HashMap<String,Object>();
 		result.put("componentId", "componentId");
 		result.put("questionContent", "questionContent");
-		result.put("format", "U");
+		result.put("format", new Unstructured());
 		return result;
 	}
 	

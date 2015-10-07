@@ -8,17 +8,14 @@ import formfiller.entities.Question;
 import formfiller.entities.constrainable.AnswerType;
 import formfiller.entities.constrainable.Constrainable;
 import formfiller.entities.formComponent.FormComponent;
-import formfiller.entities.format.Format;
 import formfiller.request.models.AddFormComponentRequest;
 import formfiller.request.models.Request;
 import formfiller.usecases.addAnswer.AnswerValidator;
 import formfiller.usecases.undoable.UndoableUseCaseExecution;
 import formfiller.utilities.StringUtilities;
 
-public abstract class AddFormComponentUseCase extends UndoableUseCaseExecution {
+public class AddFormComponentUseCase extends UndoableUseCaseExecution {
 	private AddFormComponentRequest castRequest;
-	
-	protected abstract Format makeAnswerFormat();
 	
 	protected void castRequest(Request request) {
 		castRequest = (AddFormComponentRequest) request;
@@ -30,7 +27,7 @@ public abstract class AddFormComponentUseCase extends UndoableUseCaseExecution {
 
 	protected void execute() {
 		FormComponent newComponent = makeNewFormComponent();
-		newComponent.format = makeAnswerFormat();
+		newComponent.format = castRequest.format;
 		newComponent.validator = new AnswerValidator(
 				makeAnswerConstraints(castRequest));
 		Context.formComponentGateway.save(newComponent);

@@ -2,22 +2,32 @@ package formfiller.delivery.controller;
 
 import java.util.List;
 
-public abstract class AddFormComponentController extends UndoableUseCaseController {
-	private String questionId;
+import formfiller.entities.format.Format;
+import formfiller.utilities.FormatArgumentParser;
+
+public class AddFormComponentController extends UndoableUseCaseController {
+	private String componentId;
 	private String questionContent;
-	private String answerFormat;
+	private String formatString;
+	private Format format;
+	
+	protected String getName() {
+		return "AddFormComponent";
+	}
 
 	protected void assignRequiredParameters(List<String> parameters) {
-		questionId = assignRequiredParameter(parameters, 0);
+		componentId = assignRequiredParameter(parameters, 0);
 		questionContent = assignRequiredParameter(parameters, 1);
-		answerFormat = assignRequiredParameter(parameters, 2);
+		formatString = assignRequiredParameter(parameters, 2);
+		format = FormatArgumentParser.parseFormat(formatString);
 	}
 
 	protected Arguments makeArguments() {
 		Arguments result = new Arguments();
-		result.add("componentId", questionId);
+		result.add("componentId", componentId);
 		result.add("questionContent", questionContent);
-		result.add("format", answerFormat);
+		result.add("format", format);
 		return result;
 	}
+	
 }

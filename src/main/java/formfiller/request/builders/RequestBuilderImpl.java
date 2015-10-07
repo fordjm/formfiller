@@ -3,8 +3,6 @@ package formfiller.request.builders;
 import formfiller.Context;
 import formfiller.delivery.controller.Arguments;
 import formfiller.entities.format.Format;
-import formfiller.entities.format.OptionVariable;
-import formfiller.entities.format.Unstructured;
 import formfiller.enums.QuestionAsked;
 import formfiller.request.models.*;
 
@@ -22,69 +20,69 @@ public class RequestBuilderImpl implements RequestBuilder {
 		this.requestName = requestName;
 		this.args = args;
 		
-		if(requestName.equalsIgnoreCase("HandleUnfoundUseCase"))
+		if(doesRequestNameMatchNamedUseCase("HandleUnfoundUseCase"))
 			buildHandleUnfoundUseCaseRequest();
-		else if(requestName.equalsIgnoreCase("AddAnswerCountBoundary"))
+		else if(doesRequestNameMatchNamedUseCase("AddAnswerCountBoundary"))
 			buildAddAnswerCountBoundaryRequest();
-		else if(requestName.equalsIgnoreCase("AddOption"))
+		else if(doesRequestNameMatchNamedUseCase("AddOption"))
 			buildAddOptionRequest();
-		else if(requestName.equalsIgnoreCase("AddOptionVariableFormComponent"))
+		else if(doesRequestNameMatchNamedUseCase("AddFormComponent"))
 			buildAddFormComponentRequest();
-		else if(requestName.equalsIgnoreCase("AddUnstructuredFormComponent"))
+		else if(doesRequestNameMatchNamedUseCase("AddUnstructuredFormComponent"))
 			buildAddFormComponentRequest();
-		else if(requestName.equalsIgnoreCase("AskQuestion"))
+		else if(doesRequestNameMatchNamedUseCase("AskQuestion"))
 			buildAskQuestionRequest();
-		else if(requestName.equalsIgnoreCase("ChangeId"))
+		else if(doesRequestNameMatchNamedUseCase("ChangeId"))
 			buildChangeIdRequest();
-		else if(requestName.equalsIgnoreCase("ChangeUnstructured"))
-			buildChangeFormatRequest();
-		else if(requestName.equalsIgnoreCase("ChangeOptionVariable"))
-			buildChangeFormatRequest();
-		else if(requestName.equalsIgnoreCase("DeleteFormComponent"))
-			buildDeleteFormComponentRequest();
+		else if(doesRequestNameMatchNamedUseCase("ChangeUnstructured"))
+			buildRequestWithComponentId();
+		else if(doesRequestNameMatchNamedUseCase("ChangeOptionVariable"))
+			buildRequestWithComponentId();
+		else if(doesRequestNameMatchNamedUseCase("DeleteFormComponent"))
+			buildRequestWithComponentId();
 		else
 			return Request.NULL;
+		
 		return product;
 	}
 
+	private boolean doesRequestNameMatchNamedUseCase(String useCase) {
+		return Context.stringMatcher.matches(requestName, useCase);
+	}
+
 	public void buildAnswerCount() {
-		AddAnswerCountBoundaryRequest castRequest = getRequestAsAddAnswerCountBoundaryRequest();
+		AddAnswerCountBoundaryRequest castRequest = 
+				castProductAsAddAnswerCountBoundaryRequest();
 		castRequest.count = (Integer) args.getById("count");
 	}
 
-	private AddAnswerCountBoundaryRequest getRequestAsAddAnswerCountBoundaryRequest() {
+	private AddAnswerCountBoundaryRequest castProductAsAddAnswerCountBoundaryRequest() {
 		return (AddAnswerCountBoundaryRequest) product;
 	}
 
 	public void buildAnswerCountBoundary() {
-		AddAnswerCountBoundaryRequest castRequest = getRequestAsAddAnswerCountBoundaryRequest();
-		castRequest.boundary = getArgumentAsString("boundary");
+		AddAnswerCountBoundaryRequest castRequest = 
+				castProductAsAddAnswerCountBoundaryRequest();
+		castRequest.boundary = castNamedArgumentAsString("boundary");
+	}
+
+	private String castNamedArgumentAsString(String key) {
+		return (String) args.getById(key);
 	}
 
 	public void buildComponentId() {
 		RequestWithComponentId castRequest = (RequestWithComponentId) product;
-		castRequest.componentId = getArgumentAsString("componentId");
+		castRequest.componentId = castNamedArgumentAsString("componentId");
 	}
 
 	public void buildFormat() {
 		AddFormComponentRequest castRequest = (AddFormComponentRequest) product;
-		castRequest.format = parseFormat();		
-	}
-
-	private Format parseFormat() {
-		String formatString = getArgumentAsString("format");
-		if (Context.stringMatcher.matches(formatString, "V"))
-			return new OptionVariable();
-		else if (Context.stringMatcher.matches(formatString, "U"))
-			return new Unstructured();
-		else
-			throw new IllegalArgumentException(
-					"Could not match format string " + formatString);
+		castRequest.format = (Format) args.getById("format");		
 	}
 
 	public void buildMessage() {
 		HandleUnfoundUseCaseRequest castRequest = (HandleUnfoundUseCaseRequest) product;
-		castRequest.message = getArgumentAsString("message");		
+		castRequest.message = castNamedArgumentAsString("message");		
 	}
 
 	public void buildName() {
@@ -93,22 +91,22 @@ public class RequestBuilderImpl implements RequestBuilder {
 
 	public void buildNewId() {
 		ChangeIdRequest castRequest = (ChangeIdRequest) product;
-		castRequest.newId = getArgumentAsString("newId");		
+		castRequest.newId = castNamedArgumentAsString("newId");		
 	}
 
 	public void buildOldId() {
 		ChangeIdRequest castRequest = (ChangeIdRequest) product;
-		castRequest.oldId = getArgumentAsString("oldId");		
+		castRequest.oldId = castNamedArgumentAsString("oldId");		
 	}
 	
 	public void buildOption() {
 		AddOptionRequest castRequest = (AddOptionRequest) product;
-		castRequest.option = getArgumentAsString("option");	
+		castRequest.option = castNamedArgumentAsString("option");	
 	}
 
 	public void buildQuestionContent() {
 		AddFormComponentRequest castRequest = (AddFormComponentRequest) product;
-		castRequest.questionContent = getArgumentAsString("questionContent");
+		castRequest.questionContent = castNamedArgumentAsString("questionContent");
 	}
 	
 	public void buildWhichQuestion() {
@@ -124,19 +122,19 @@ public class RequestBuilderImpl implements RequestBuilder {
 		buildAnswerCount();
 	}
 
-	private void buildAddOptionRequest() {
-		product = new AddOptionRequest();
-		buildName();
-		buildComponentId();
-		buildOption();
-	}
-
 	private void buildAddFormComponentRequest() {
 		product = new AddFormComponentRequest();
 		buildName();
 		buildComponentId();
 		buildQuestionContent();
 		buildFormat();
+	}
+
+	private void buildAddOptionRequest() {
+		product = new AddOptionRequest();
+		buildName();
+		buildComponentId();
+		buildOption();
 	}
 	
 	private void buildAskQuestionRequest() {
@@ -152,18 +150,9 @@ public class RequestBuilderImpl implements RequestBuilder {
 		buildNewId();
 	}
 
-	private void buildChangeFormatRequest() {
-		product = new ChangeFormatRequest();
-		buildName();
-		buildComponentId();
-	}
-
-	private String getArgumentAsString(String key) {
-		return (String) args.getById(key);
-	}
-
-	private void buildDeleteFormComponentRequest() {
+	private void buildRequestWithComponentId() {
 		product = new RequestWithComponentId();
+		buildName();
 		buildComponentId();
 	}
 

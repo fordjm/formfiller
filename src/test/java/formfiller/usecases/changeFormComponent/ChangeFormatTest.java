@@ -14,23 +14,23 @@ import formfiller.entities.formComponent.FormComponent;
 import formfiller.entities.format.Format;
 import formfiller.entities.format.OptionVariable;
 import formfiller.entities.format.Unstructured;
-import formfiller.request.models.ChangeFormatRequest;
+import formfiller.request.models.RequestWithComponentId;
 import formfiller.usecases.undoable.UndoableUseCaseExecution.MalformedRequest;
 import formfiller.utilities.UndoableUseCaseExecutionCommonTests;
 
 @RunWith(HierarchicalContextRunner.class)
 public class ChangeFormatTest {
 	private ChangeFormatUseCase useCase;
-	private ChangeFormatRequest mockRequest;
+	private RequestWithComponentId mockRequest;
 	private FormComponent original;
 
 	//	TODO:	How to fix duplicate tests?
-	private ChangeFormatRequest makeMockEmptyChangeRequest() {
-		return Mockito.mock(ChangeFormatRequest.class);
+	private RequestWithComponentId makeMockEmptyChangeRequest() {
+		return Mockito.mock(RequestWithComponentId.class);
 	}
 
-	private ChangeFormatRequest makeMockWellFormedChangeFormatRequest() {
-		ChangeFormatRequest result = makeMockEmptyChangeRequest();
+	private RequestWithComponentId makeMockWellFormedChangeFormatRequest() {
+		RequestWithComponentId result = makeMockEmptyChangeRequest();
 		result.componentId = "name";
 		return result;
 	}

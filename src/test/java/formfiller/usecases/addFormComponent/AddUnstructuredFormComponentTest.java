@@ -22,12 +22,12 @@ import formfiller.usecases.undoable.UndoableUseCase;
 import formfiller.usecases.undoable.UndoableUseCaseExecution;
 
 public class AddUnstructuredFormComponentTest {
-	private AddUnstructuredFormComponentUseCase addUnstructured;
+	private AddFormComponentUseCase addUnstructured;
 	private AddFormComponentRequest request;
 
 	@Before
 	public void setUp() {
-		addUnstructured = new AddUnstructuredFormComponentUseCase();
+		addUnstructured = new AddFormComponentUseCase();
 	}
 
 	private AddFormComponentRequest makeMockAddUnstructuredRequest() {
@@ -40,7 +40,8 @@ public class AddUnstructuredFormComponentTest {
 				makeMockAddUnstructuredRequest();
 		result.componentId = questionId;
 		result.questionContent = questionContent;
-		result.answerType = answerType;		
+		result.answerType = answerType;	
+		result.format = new Unstructured();
 		return result;
 	}
 
