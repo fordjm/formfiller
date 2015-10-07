@@ -10,7 +10,6 @@ import formfiller.request.models.*;
 //  https://github.com/unclebob/CC_SMC/blob/master/src/smc/parser/SyntaxBuilder.java
 //  Retrieved 2015/10/06
 
-//	TODO:	Refactor duplicate requests.
 public class RequestBuilderImpl implements RequestBuilder {
 	private String requestName;
 	private Arguments args;
@@ -28,16 +27,12 @@ public class RequestBuilderImpl implements RequestBuilder {
 			buildAddOptionRequest();
 		else if(doesRequestNameMatchNamedUseCase("AddFormComponent"))
 			buildAddFormComponentRequest();
-		else if(doesRequestNameMatchNamedUseCase("AddUnstructuredFormComponent"))
-			buildAddFormComponentRequest();
 		else if(doesRequestNameMatchNamedUseCase("AskQuestion"))
 			buildAskQuestionRequest();
 		else if(doesRequestNameMatchNamedUseCase("ChangeId"))
 			buildChangeIdRequest();
-		else if(doesRequestNameMatchNamedUseCase("ChangeUnstructured"))
-			buildRequestWithComponentId();
-		else if(doesRequestNameMatchNamedUseCase("ChangeOptionVariable"))
-			buildRequestWithComponentId();
+		else if(doesRequestNameMatchNamedUseCase("ChangeFormat"))
+			buildRequestWithComponentIdAndFormat();
 		else if(doesRequestNameMatchNamedUseCase("DeleteFormComponent"))
 			buildRequestWithComponentId();
 		else
@@ -76,7 +71,7 @@ public class RequestBuilderImpl implements RequestBuilder {
 	}
 
 	public void buildFormat() {
-		AddFormComponentRequest castRequest = (AddFormComponentRequest) product;
+		RequestWithComponentIdAndFormat castRequest = (RequestWithComponentIdAndFormat) product;
 		castRequest.format = (Format) args.getById("format");		
 	}
 
@@ -154,6 +149,13 @@ public class RequestBuilderImpl implements RequestBuilder {
 		product = new RequestWithComponentId();
 		buildName();
 		buildComponentId();
+	}
+
+	private void buildRequestWithComponentIdAndFormat() {
+		product = new RequestWithComponentIdAndFormat();
+		buildName();
+		buildComponentId();
+		buildFormat();
 	}
 
 	private void buildHandleUnfoundUseCaseRequest() {

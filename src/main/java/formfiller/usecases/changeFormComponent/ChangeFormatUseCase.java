@@ -2,18 +2,18 @@ package formfiller.usecases.changeFormComponent;
 
 import formfiller.entities.formComponent.FormComponent;
 import formfiller.entities.format.Format;
+import formfiller.request.models.RequestWithComponentIdAndFormat;
 import formfiller.request.models.Request;
-import formfiller.request.models.RequestWithComponentId;
 import formfiller.utilities.FormComponentUtilities;
 import formfiller.utilities.StringUtilities;
 
-public abstract class ChangeFormatUseCase extends ChangeFormComponentUseCase {
+public class ChangeFormatUseCase extends ChangeFormComponentUseCase {
 	protected Format oldFormat;
 	protected Format newFormat;
-	protected RequestWithComponentId castRequest;
+	protected RequestWithComponentIdAndFormat castRequest;
 	
 	protected void castRequest(Request request) {
-		castRequest = (RequestWithComponentId) request;
+		castRequest = (RequestWithComponentIdAndFormat) request;
 	}
 
 	protected boolean isRequestMalformed() {
@@ -22,6 +22,7 @@ public abstract class ChangeFormatUseCase extends ChangeFormComponentUseCase {
 
 	protected void assignInstanceVariables() {
 		id = castRequest.componentId;
+		newFormat = castRequest.format;
 	}
 	
 	protected void createUndoInfo(FormComponent component) {

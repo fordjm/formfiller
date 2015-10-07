@@ -13,18 +13,8 @@ public class ChangeFormat {
 	}
 	
 	public void whenTheUserChangesTheFormatTo(String componentId, String format){
-		String command = getCommandString(format);
-		String eventString = StringUtilities.makeSpacedString(command, componentId);
+		String eventString = StringUtilities.makeSpacedString("ChgFmt", componentId, format);
 		stringEventManager.updateHandler(eventString);
-	}
-	
-	private String getCommandString(String format) {
-		if (format.equalsIgnoreCase("Unstructured"))
-			return "ChgFmtU";
-		else if (format.equalsIgnoreCase("OptionVariable"))
-			return "ChgFmtV";
-		throw new IllegalArgumentException(
-				"Cannot change to unknown format " + format);
 	}
 
 	public String componentFormat(String componentId){

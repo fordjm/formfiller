@@ -49,7 +49,7 @@ public class RequestBuilderImplTest {
 	public void canBuildAddUnstructuredFormComponentRequest() {
 		Map<String, Object> argumentsMap = makeArgumentsMap();
 		Request request = 
-				buildRequest("AddUnstructuredFormComponent", 
+				buildRequest("AddFormComponent", 
 						makeArguments(argumentsMap));
 		String name = request.name;
 		AddFormComponentRequest castRequest = 
@@ -57,7 +57,7 @@ public class RequestBuilderImplTest {
 		
 		assertThat(request, 
 				is(instanceOf(AddFormComponentRequest.class)));
-		assertThat(name, is("AddUnstructuredFormComponent"));
+		assertThat(name, is("AddFormComponent"));
 		assertThat(castRequest.componentId, is("componentId"));
 		assertThat(castRequest.questionContent, is("questionContent"));
 		assertThat(castRequest.format, instanceOf(Unstructured.class));

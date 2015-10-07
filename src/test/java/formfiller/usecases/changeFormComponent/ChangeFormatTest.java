@@ -14,24 +14,25 @@ import formfiller.entities.formComponent.FormComponent;
 import formfiller.entities.format.Format;
 import formfiller.entities.format.OptionVariable;
 import formfiller.entities.format.Unstructured;
-import formfiller.request.models.RequestWithComponentId;
+import formfiller.request.models.RequestWithComponentIdAndFormat;
 import formfiller.usecases.undoable.UndoableUseCaseExecution.MalformedRequest;
 import formfiller.utilities.UndoableUseCaseExecutionCommonTests;
 
 @RunWith(HierarchicalContextRunner.class)
 public class ChangeFormatTest {
 	private ChangeFormatUseCase useCase;
-	private RequestWithComponentId mockRequest;
+	private RequestWithComponentIdAndFormat mockRequest;
 	private FormComponent original;
 
 	//	TODO:	How to fix duplicate tests?
-	private RequestWithComponentId makeMockEmptyChangeRequest() {
-		return Mockito.mock(RequestWithComponentId.class);
+	private RequestWithComponentIdAndFormat makeMockEmptyChangeRequest() {
+		return Mockito.mock(RequestWithComponentIdAndFormat.class);
 	}
 
-	private RequestWithComponentId makeMockWellFormedChangeFormatRequest() {
-		RequestWithComponentId result = makeMockEmptyChangeRequest();
+	private RequestWithComponentIdAndFormat makeMockWellFormedChangeFormatRequest(Format format) {
+		RequestWithComponentIdAndFormat result = makeMockEmptyChangeRequest();
 		result.componentId = "name";
+		result.format = format;
 		return result;
 	}
 
@@ -45,7 +46,7 @@ public class ChangeFormatTest {
 	public class ChangeUnstructuredContext {
 		@Before
 		public void setUp() {
-			useCase = new ChangeUnstructuredUseCase();		
+			useCase = new ChangeFormatUseCase();		
 		}
 		
 		@Test
@@ -64,7 +65,7 @@ public class ChangeFormatTest {
 		@Test
 		public void executingWellFormedRequestChangesFormat() {
 			addFormComponentToChange(OptionVariable.class);
-			mockRequest = makeMockWellFormedChangeFormatRequest();
+			mockRequest = makeMockWellFormedChangeFormatRequest(new Unstructured());
 
 			useCase.execute(mockRequest);
 
@@ -74,7 +75,7 @@ public class ChangeFormatTest {
 		@Test
 		public void undoingSuccessfulChangeRevertsFormat() {
 			addFormComponentToChange(OptionVariable.class);
-			mockRequest = makeMockWellFormedChangeFormatRequest();
+			mockRequest = makeMockWellFormedChangeFormatRequest(new Unstructured());
 
 			useCase.execute(mockRequest);
 			useCase.undo();
@@ -87,7 +88,7 @@ public class ChangeFormatTest {
 	public class ChangeOptionVariableContext {
 		@Before
 		public void setUp() {
-			useCase = new ChangeOptionVariableUseCase();		
+			useCase = new ChangeFormatUseCase();		
 		}
 		
 		@Test
@@ -107,7 +108,7 @@ public class ChangeFormatTest {
 		@Test
 		public void executingWellFormedRequestChangesFormat() {
 			addFormComponentToChange(Unstructured.class);
-			mockRequest = makeMockWellFormedChangeFormatRequest();
+			mockRequest = makeMockWellFormedChangeFormatRequest(new OptionVariable());
 
 			useCase.execute(mockRequest);
 
@@ -117,7 +118,7 @@ public class ChangeFormatTest {
 		@Test
 		public void undoingSuccessfulChangeRevertsFormat() {
 			addFormComponentToChange(Unstructured.class);
-			mockRequest = makeMockWellFormedChangeFormatRequest();
+			mockRequest = makeMockWellFormedChangeFormatRequest(new OptionVariable());
 
 			useCase.execute(mockRequest);
 			useCase.undo();
