@@ -7,7 +7,8 @@ import formfiller.entities.Answer;
 import formfiller.entities.constrainable.Constrainable;
 
 public class AnswerValidator {
-	Collection<Constrainable> constraints;
+	//	TODO:	Figure out testing and make private.
+	public Collection<Constrainable> constraints;
 
 	public AnswerValidator() {
 		this.constraints = new ArrayList<Constrainable>();

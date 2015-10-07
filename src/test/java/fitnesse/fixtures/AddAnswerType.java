@@ -3,6 +3,7 @@ package fitnesse.fixtures;
 import formfiller.Context;
 import formfiller.response.models.PresentableResponse;
 
+//	TODO:	Consider String-to-type parser at https://github.com/drapostolos/type-parser
 public class AddAnswerType {
 	public void whenTheUserAddsTheAnswerType(String type){
 		presentBogusMessage("You successfully added the answer type " + type);

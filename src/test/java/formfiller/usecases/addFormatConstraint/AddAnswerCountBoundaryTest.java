@@ -8,6 +8,7 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import formfiller.entities.formComponent.FormComponent;
+import formfiller.entities.format.OptionVariable;
 import formfiller.request.models.AddAnswerCountBoundaryRequest;
 import formfiller.usecases.undoable.UndoableUseCaseExecution;
 import formfiller.utilities.FormComponentUtilities;
@@ -24,7 +25,7 @@ public class AddAnswerCountBoundaryTest {
 	@Before
 	public void setUp() {
 		useCase = new AddAnswerCountBoundaryUseCase();
-		AddFormatConstraintTestUtilities.addFormComponentToChange();
+		UnitTestSetupUtilities.addFormComponentToChange(new OptionVariable());
 	}
 
 	private AddAnswerCountBoundaryRequest makeEmptyMockAddAnswerCountBoundaryRequest() {

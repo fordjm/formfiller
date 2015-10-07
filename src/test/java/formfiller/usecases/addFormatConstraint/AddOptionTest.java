@@ -24,7 +24,7 @@ public class AddOptionTest {
 	@Before
 	public void setUp() {
 		useCase = new AddOptionUseCase();
-		AddFormatConstraintTestUtilities.addFormComponentToChange();
+		UnitTestSetupUtilities.addFormComponentToChange(new OptionVariable());
 	}
 
 	private AddOptionRequest makeEmptyMockAddOptionRequest() {
