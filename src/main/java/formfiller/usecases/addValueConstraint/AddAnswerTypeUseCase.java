@@ -9,7 +9,9 @@ import formfiller.utilities.FormComponentUtilities;
 import formfiller.utilities.StringUtilities;
 
 public class AddAnswerTypeUseCase extends UndoableUseCaseExecution{
-	AddAnswerTypeRequest castRequest;
+	private AddAnswerTypeRequest castRequest;
+	private FormComponent found;
+	private AnswerType constraint;
 
 	protected void castRequest(Request request) {
 		castRequest = (AddAnswerTypeRequest) request;
@@ -20,8 +22,8 @@ public class AddAnswerTypeUseCase extends UndoableUseCaseExecution{
 	}
 
 	protected void execute() {
-		FormComponent found = FormComponentUtilities.find(castRequest.componentId);
-		AnswerType constraint = new AnswerType(castRequest.type);
+		found = FormComponentUtilities.find(castRequest.componentId);
+		constraint = new AnswerType(castRequest.type);
 		found.validator.addConstraint(constraint);
 	}
 
@@ -29,10 +31,11 @@ public class AddAnswerTypeUseCase extends UndoableUseCaseExecution{
 		return "You successfully added the answer type " + castRequest.type;
 	}
 
-	//	TODO:	Implement (needs AnswerValidator.removeConstraint(Constrainable))
+	//	TODO:	Implement AnswerValidator.removeConstraint(Constrainable)
 	public void undo() {
 		ensureUseCaseStateIsUndoable();
-		
+		found = FormComponentUtilities.find(castRequest.componentId);
+		found.validator.constraints.remove(constraint);
 	}
 
 }

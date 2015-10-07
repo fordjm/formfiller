@@ -24,6 +24,9 @@ import formfiller.utilities.UndoableUseCaseExecutionCommonTests;
 public class AddAnswerTypeTest {
 	private AddAnswerTypeUseCase useCase;
 	private AddAnswerTypeRequest mockRequest;
+	private FormComponent found;
+	private boolean requiresType;
+	private AnswerType typeConstraint;
 
 	private AddAnswerTypeRequest makeEmptyMockAddAnswerTypeRequest() {
 		return Mockito.mock(AddAnswerTypeRequest.class);
@@ -64,9 +67,9 @@ public class AddAnswerTypeTest {
 		mockRequest = makeMockAddAnswerTypeRequestWithFieldValues("toChange", int.class);		
 		useCase.execute(mockRequest);
 		
-		FormComponent found = FormComponentUtilities.find("toChange");
-		AnswerType typeConstraint = getTypeConstraint(found.validator.constraints);
-		boolean requiresType = typeConstraint.requiresType(int.class);
+		found = FormComponentUtilities.find("toChange");
+		typeConstraint = getTypeConstraint(found.validator.constraints);
+		requiresType = typeConstraint.requiresType(int.class);
 		boolean isSatisfied = typeConstraint.isSatisfiedBy(EXAMPLE_INT);
 		
 		assertThat(requiresType, is(true));
@@ -79,6 +82,18 @@ public class AddAnswerTypeTest {
 			if (constraint instanceof AnswerType)
 				return (AnswerType) constraint;
 		return null;
+	}
+	
+	@Test
+	public void undoingSuccessfulAdditionRemovesOption() {
+		mockRequest = makeMockAddAnswerTypeRequestWithFieldValues("toChange", int.class);
+		
+		useCase.execute(mockRequest);
+		useCase.undo();
+		found = FormComponentUtilities.find(mockRequest.componentId);
+		typeConstraint = getTypeConstraint(found.validator.constraints);
+		
+		assertThat(typeConstraint, equalTo(null));
 	}
 
 }
