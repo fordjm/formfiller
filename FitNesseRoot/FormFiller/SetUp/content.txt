@@ -1,6 +1,7 @@
 |import                        |
 |fitnesse.fixtures             |
 |formfiller.enums.QuestionAsked|
+|java.lang                     |
 
 |library                    |
 |add form component         |

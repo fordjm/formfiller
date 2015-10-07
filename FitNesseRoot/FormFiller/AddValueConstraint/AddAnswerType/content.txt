@@ -1,0 +1,10 @@
+!| scenario|then the form component with ID|id |should require answers of type|type      |
+|check     |component                      |@id|requires type                 |@type|true|
+
+|script|add answer type|
+
+!| script                                                                                                                       |
+|given a form component with the component ID selectedInteger, the question content "Choose an integer", and the answer format U|
+|when the user adds the answer type                                             |int                                            |
+|then the form component with ID selectedInteger should require answers of type int                                             |
+|then the system should present the message, You successfully added the answer type int                                         |

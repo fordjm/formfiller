@@ -12,10 +12,11 @@ public class AnswerType implements Constrainable {
 		this.type = type;
 	}
 
-	public boolean isSatisfiedBy(Object objectUnderTest) {
-		if (objectUnderTest == null) return false;
+	public boolean isSatisfiedBy(Object context) {
+		if (context == null) return false;
 		
-		Class<? extends Object> objectClass = objectUnderTest.getClass();
+		Class<? extends Object> objectClass = context.getClass();
 		return objectClass.equals(type);
 	}
+	
 }

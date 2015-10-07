@@ -69,13 +69,15 @@ public class FormComponentPresentation {
 		return result;
 	}
 	
-	private FormComponent makeNonrequiredFormComponent(String id, String questionContent, String answerContent) {
+	private FormComponent makeNonrequiredFormComponent(String id, 
+			String questionContent, String answerContent) {
 		FormComponent result = makeFormComponent(id, questionContent, answerContent);
 		result.requiresAnswer = false;
 		return result;
 	}
 
-	private FormComponent makeFormComponent(String id, String questionContent, String answerContent) {
+	private FormComponent makeFormComponent(String id, 
+			String questionContent, String answerContent) {
 		FormComponent result = new FormComponent();
 		result.id = id;
 		result.question = makeQuestion(id, questionContent);
