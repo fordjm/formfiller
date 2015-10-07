@@ -14,34 +14,35 @@ import formfiller.entities.Answer;
 import formfiller.entities.Question;
 import formfiller.entities.formComponent.FormComponent;
 import formfiller.entities.formComponent.NullFormComponents;
+import formfiller.entities.format.Format;
+import formfiller.entities.format.OptionVariable;
 import formfiller.entities.format.Unstructured;
 import formfiller.request.models.AddFormComponentRequest;
-import formfiller.request.models.Request;
 import formfiller.usecases.addAnswer.AnswerValidator;
 import formfiller.usecases.undoable.UndoableUseCase;
 import formfiller.usecases.undoable.UndoableUseCaseExecution;
 
-public class AddUnstructuredFormComponentTest {
-	private AddFormComponentUseCase addUnstructured;
+public class AddFormComponentTest {
+	private AddFormComponentUseCase useCase;
 	private AddFormComponentRequest request;
 
 	@Before
 	public void setUp() {
-		addUnstructured = new AddFormComponentUseCase();
+		useCase = new AddFormComponentUseCase();
 	}
 
-	private AddFormComponentRequest makeMockAddUnstructuredRequest() {
+	private AddFormComponentRequest makeMockEmptyAddFormComponentRequest() {
 		return Mockito.mock(AddFormComponentRequest.class);
 	}
 
-	private AddFormComponentRequest makeMockAddUnstructuredRequest(
-			String questionId, String questionContent, Type answerType) {
+	private AddFormComponentRequest makeMockAddFormComponentRequestWithFieldValues(
+			String componentId, String questionContent, Format format, Type answerType) {
 		AddFormComponentRequest result = 
-				makeMockAddUnstructuredRequest();
-		result.componentId = questionId;
+				makeMockEmptyAddFormComponentRequest();
+		result.componentId = componentId;
 		result.questionContent = questionContent;
+		result.format = format;
 		result.answerType = answerType;	
-		result.format = new Unstructured();
 		return result;
 	}
 
@@ -51,45 +52,33 @@ public class AddUnstructuredFormComponentTest {
 
 	@Test
 	public void implementsUndoableUseCase() {		
-		assertThat(addUnstructured, is(instanceOf(UndoableUseCase.class)));
+		assertThat(useCase, is(instanceOf(UndoableUseCase.class)));
 	}
 	
 	@Test(expected = UndoableUseCaseExecution.UnsuccessfulUseCaseUndo.class)
 	public void undoingBeforeExecutingThrowsException(){
-		addUnstructured.undo();
-	}
-	
-	@Test
-	public void testDefaultAddFormComponentRequest(){
-		request = new AddFormComponentRequest();
-		assertThat(request, is(instanceOf(Request.class)));
-		assertThat(request.name, is("Request"));
-		assertThat(request.componentId, is(""));
-		assertThat(request.questionContent, is(""));
-		assertThat(request.minAnswerCount, is(0));
-		assertThat(request.maxAnswerCount, is(1));
-		assertEquals(Object.class, request.answerType);
+		useCase.undo();
 	}
 
 	@Test(expected = NullPointerException.class)
 	public void executingNull_DoesNotAddUseCaseToExecutedUseCases() {
-		addUnstructured.execute(null);
+		useCase.execute(null);
 	}
 	
 	@Test(expected = AddFormComponentUseCase.MalformedRequest.class)
 	public void testExecutingMalformedRequest() {
-		request = makeMockAddUnstructuredRequest();		
-		addUnstructured.execute(request);
+		request = makeMockEmptyAddFormComponentRequest();		
+		useCase.execute(request);
 	}
 
 	@Test
 	public void testExecutingWellFormedRequest() {
-		request = makeMockAddUnstructuredRequest("questionId", 
-						"questionContent", String.class);		
-		addUnstructured.execute(request);
+		request = makeMockAddFormComponentRequestWithFieldValues("componentId", 
+						"questionContent", new Unstructured(), String.class);		
+		useCase.execute(request);
 		
 		FormComponent addedComponent = 
-				Context.formComponentGateway.find("questionId");
+				Context.formComponentGateway.find("componentId");
 		assertThat(addedComponent.id, is(request.componentId));
 		assertThat(addedComponent.answer, is(Answer.NONE));
 		assertThat(addedComponent.format, is(instanceOf(Unstructured.class)));
@@ -103,18 +92,16 @@ public class AddUnstructuredFormComponentTest {
 		assertNotNull(addedValidator);
 		
 		UndoableUseCase mostRecent = getMostRecentlyExecutedUseCase();
-		assertEquals(mostRecent, addUnstructured);		
+		assertEquals(mostRecent, useCase);		
 	}
 
 	@Test
 	public void undoingSuccessfulFormComponentAdditionRemovesFormComponent() {
-		request = makeMockAddUnstructuredRequest("questionId", 
-						"questionContent", String.class);		
-		addUnstructured.execute(request);	
-		
-		UndoableUseCase mostRecent = getMostRecentlyExecutedUseCase();
-		mostRecent.undo();
-		FormComponent found = Context.formComponentGateway.find("questionId");
+		request = makeMockAddFormComponentRequestWithFieldValues("componentId", 
+						"questionContent", new OptionVariable(), String.class);		
+		useCase.execute(request);	
+		useCase.undo();
+		FormComponent found = Context.formComponentGateway.find("componentId");
 		
 		assertEquals(found, NullFormComponents.NULL);
 	}

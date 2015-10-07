@@ -1,6 +1,6 @@
 package formfiller.usecases.factory;
 
-import formfiller.appBoundaries.InputBoundary;
+import formfiller.appBoundaries.UseCase;
 import formfiller.usecases.addFormComponent.AddFormComponentUseCase;
 import formfiller.usecases.addFormatConstraint.AddAnswerCountBoundaryUseCase;
 import formfiller.usecases.addFormatConstraint.AddOptionUseCase;
@@ -11,7 +11,7 @@ import formfiller.usecases.deleteFormComponent.DeleteFormComponentUseCase;
 import formfiller.usecases.handleUnfoundController.HandleUnfoundUseCaseUseCase;
 
 public class UseCaseFactoryImpl implements UseCaseFactory {
-	public InputBoundary make(String useCaseName) {
+	public UseCase make(String useCaseName) {
 		if (useCaseName == null) useCaseName = "";
 
 		if (useCaseName.equalsIgnoreCase("AddAnswerCountBoundary"))
@@ -32,35 +32,35 @@ public class UseCaseFactoryImpl implements UseCaseFactory {
 			return makeHandleUnfoundUseCaseUseCase();
 	}
 
-	private InputBoundary makeAddAnswerCountBoundaryUseCase() {
+	private UseCase makeAddAnswerCountBoundaryUseCase() {
 		return new AddAnswerCountBoundaryUseCase();
 	}
 
-	private InputBoundary makeAddOptionUseCase() {
+	private UseCase makeAddOptionUseCase() {
 		return new AddOptionUseCase();
 	}
 	
-	private InputBoundary makeAddFormComponentUseCase() {
+	private UseCase makeAddFormComponentUseCase() {
 		return new AddFormComponentUseCase();
 	}
 
-	private InputBoundary makeAskQuestionUseCase() {
+	private UseCase makeAskQuestionUseCase() {
 		return new AskQuestionUseCase();
 	}
 
-	private InputBoundary makeChangeIdUseCase() {
+	private UseCase makeChangeIdUseCase() {
 		return new ChangeIdUseCase();
 	}
 
-	private InputBoundary makeChangeFormatUseCase() {
+	private UseCase makeChangeFormatUseCase() {
 		return new ChangeFormatUseCase();
 	}
 
-	private InputBoundary makeDeleteFormComponentUseCase() {
+	private UseCase makeDeleteFormComponentUseCase() {
 		return new DeleteFormComponentUseCase();
 	}
 
-	private InputBoundary makeHandleUnfoundUseCaseUseCase() {
+	private UseCase makeHandleUnfoundUseCaseUseCase() {
 		return new HandleUnfoundUseCaseUseCase();
 	}
 }

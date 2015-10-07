@@ -7,9 +7,9 @@ import formfiller.usecases.deleteFormComponent.DeleteFormComponentUseCase;
 import formfiller.usecases.undoable.UndoableUseCase;
 import formfiller.usecases.undoable.UndoableUseCaseExecution;
 import formfiller.Context;
-import formfiller.appBoundaries.InputBoundary;
+import formfiller.appBoundaries.UseCase;
 
-public class LocalUseCase implements InputBoundary {
+public class LocalUseCase implements UseCase {
 	private UndoableUseCase useCase;
 	private Outcome outcome;
 	private String message;

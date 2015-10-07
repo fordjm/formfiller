@@ -1,13 +1,13 @@
 package formfiller.usecases.addAnswer;
 
 import formfiller.Context;
-import formfiller.appBoundaries.InputBoundary;
+import formfiller.appBoundaries.UseCase;
 import formfiller.entities.Answer;
 import formfiller.entities.formComponent.FormComponent;
 import formfiller.request.models.AddAnswerRequest;
 import formfiller.request.models.Request;
 
-public class AddAnswerUseCase implements InputBoundary {
+public class AddAnswerUseCase implements UseCase {
 
 	public void execute(Request request) {
 		AddAnswerRequest addAnswerRequest = (AddAnswerRequest) request;

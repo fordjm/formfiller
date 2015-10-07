@@ -6,7 +6,7 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import formfiller.appBoundaries.InputBoundary;
+import formfiller.appBoundaries.UseCase;
 import formfiller.usecases.addFormComponent.AddFormComponentUseCase;
 import formfiller.usecases.askQuestion.AskQuestionUseCase;
 import formfiller.usecases.factory.UseCaseFactoryImpl;
@@ -14,7 +14,7 @@ import formfiller.usecases.handleUnfoundController.HandleUnfoundUseCaseUseCase;
 
 public class UseCaseFactoryImplTest {
 	private UseCaseFactoryImpl factory;
-	private InputBoundary useCase;
+	private UseCase useCase;
 	
 	@Before
 	public void setUp() {

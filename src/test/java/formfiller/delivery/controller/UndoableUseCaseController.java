@@ -48,4 +48,5 @@ public abstract class UndoableUseCaseController implements Controller {
 		UndoableUseCase castUseCase = (UndoableUseCase) factory.make(name);
 		return castUseCase;
 	}
+	
 }

@@ -1,6 +1,6 @@
 package formfiller.delivery.controller;
 
-import formfiller.appBoundaries.InputBoundary;
+import formfiller.appBoundaries.UseCase;
 import formfiller.delivery.Controller;
 import formfiller.delivery.event.ParsedEvent;
 import formfiller.request.builders.RequestBuilder;
@@ -17,7 +17,7 @@ public class HandleUnfoundUseCaseController implements Controller {
 		String message = makeUnfoundUseCaseMessage(parsedEvent.method);
 		Arguments arguments = makeArguments(message);
 		Request request = makeHandleUnfoundUseCaseRequest(arguments);
-		InputBoundary useCase = makeHandleUnfoundUseCaseUseCase();
+		UseCase useCase = makeHandleUnfoundUseCaseUseCase();
 		
 		useCase.execute(request);
 	}
@@ -51,7 +51,7 @@ public class HandleUnfoundUseCaseController implements Controller {
 		return arguments;
 	}
 	
-	protected InputBoundary makeHandleUnfoundUseCaseUseCase(){		
+	protected UseCase makeHandleUnfoundUseCaseUseCase(){		
 		UseCaseFactory useCaseFactory = new UseCaseFactoryImpl();
 		return useCaseFactory.make("HandleUnfoundUseCase");
 	}

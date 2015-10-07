@@ -10,7 +10,7 @@ import org.mockito.Mockito;
 
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
 import formfiller.Context;
-import formfiller.appBoundaries.InputBoundary;
+import formfiller.appBoundaries.UseCase;
 import formfiller.entities.Answer;
 import formfiller.entities.Question;
 import formfiller.entities.formComponent.FormComponent;
@@ -69,7 +69,7 @@ public class AddAnswerTest {
 	
 	@Test
 	public void isAUseCase() {		
-		assertThat(addAnswer, is(instanceOf(InputBoundary.class)));
+		assertThat(addAnswer, is(instanceOf(UseCase.class)));
 	}
 	
 	@Test

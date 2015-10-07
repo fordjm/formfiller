@@ -10,8 +10,8 @@ import formfiller.request.models.Request;
 public interface RequestBuilder {	
 	public Request build(String requestName, Arguments args);
 
-	public void buildAnswerCountBoundary();
 	public void buildAnswerCount();
+	public void buildAnswerCountBoundary();
 	public void buildComponentId();
 	public void buildFormat();
 	public void buildMessage();

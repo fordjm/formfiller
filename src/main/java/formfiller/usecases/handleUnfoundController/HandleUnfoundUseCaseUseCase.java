@@ -1,12 +1,12 @@
 package formfiller.usecases.handleUnfoundController;
 
 import formfiller.Context;
-import formfiller.appBoundaries.InputBoundary;
+import formfiller.appBoundaries.UseCase;
 import formfiller.enums.Outcome;
 import formfiller.request.models.*;
 import formfiller.response.models.PresentableResponse;
 
-public class HandleUnfoundUseCaseUseCase implements InputBoundary {	
+public class HandleUnfoundUseCaseUseCase implements UseCase {	
 
 	public void execute(Request request) {
 		if (request == null) request = new HandleUnfoundUseCaseRequest();
