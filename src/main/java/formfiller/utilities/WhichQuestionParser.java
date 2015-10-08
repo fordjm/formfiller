@@ -1,9 +1,9 @@
 package formfiller.utilities;
 
+import formfiller.Context;
 import formfiller.enums.QuestionAsked;
 
-public class WhichQuestionParser {
-	
+public class WhichQuestionParser {	
 	public static QuestionAsked parseWhich(String input){
 		for (QuestionAsked which : QuestionAsked.values())
 			if (inputMatches(input, which)) 
@@ -12,6 +12,7 @@ public class WhichQuestionParser {
 	}
 
 	private static boolean inputMatches(String input, QuestionAsked whichQuestion) {
-		return input.equalsIgnoreCase(whichQuestion.toString());
+		return Context.stringMatcher.matches(input, whichQuestion.toString());
 	}
+	
 }

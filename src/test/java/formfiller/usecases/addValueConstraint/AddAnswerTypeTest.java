@@ -25,7 +25,6 @@ public class AddAnswerTypeTest {
 	private AddAnswerTypeUseCase useCase;
 	private AddAnswerTypeRequest mockRequest;
 	private FormComponent found;
-	private boolean requiresType;
 	private AnswerType typeConstraint;
 
 	private AddAnswerTypeRequest makeEmptyMockAddAnswerTypeRequest() {
@@ -33,11 +32,28 @@ public class AddAnswerTypeTest {
 	}
 
 	private AddAnswerTypeRequest makeMockAddAnswerTypeRequestWithFieldValues(
-			String componentId, Type type) {
+			Type type) {
 		AddAnswerTypeRequest result = makeEmptyMockAddAnswerTypeRequest();
-		result.componentId = componentId;
+		result.componentId = "toChange";
 		result.type = type;
 		return result;
+	}
+
+	//	TODO:	Find a better way (look at java.lang.Class documentation)
+	//			Consider wrapping collection boundary or adding Untyped (null) answer type.
+	private AnswerType getTypeConstraint(Collection<Constrainable> constraints) {
+		for (Constrainable constraint : constraints)
+			if (constraint instanceof AnswerType)
+				return (AnswerType) constraint;
+		return null;
+	}
+
+	private boolean componentRequiresAnswerType(Type type) {
+		return typeConstraint.requiresType(type);
+	}
+
+	private boolean answerContentSatisfiesConstraint(Object content) {
+		return typeConstraint.isSatisfiedBy(content);
 	}
 	
 	@Before
@@ -62,31 +78,34 @@ public class AddAnswerTypeTest {
 
 	@Test
 	public void addingAnswerTypeInt_RequiresIntAnswer() {
-		final int EXAMPLE_INT = 13;
-		
-		mockRequest = makeMockAddAnswerTypeRequestWithFieldValues("toChange", int.class);		
+		final int EXAMPLE_INT = 13;		
+		mockRequest = makeMockAddAnswerTypeRequestWithFieldValues(int.class);		
 		useCase.execute(mockRequest);
 		
 		found = FormComponentUtilities.find("toChange");
 		typeConstraint = getTypeConstraint(found.validator.constraints);
-		requiresType = typeConstraint.requiresType(int.class);
-		boolean isSatisfied = typeConstraint.isSatisfiedBy(EXAMPLE_INT);
 		
-		assertThat(requiresType, is(true));
-		assertThat(isSatisfied, is(true));
+		assertThat(componentRequiresAnswerType(int.class), is(true));
+		assertThat(answerContentSatisfiesConstraint(EXAMPLE_INT), is(true));
+		assertThat(answerContentSatisfiesConstraint(13.0), is(false));
+		assertThat(answerContentSatisfiesConstraint("thirteen"), is(false));
 	}
 
-	//	TODO:	Find a better way (look at java.lang.Class documentation)
-	private AnswerType getTypeConstraint(Collection<Constrainable> constraints) {
-		for (Constrainable constraint : constraints)
-			if (constraint instanceof AnswerType)
-				return (AnswerType) constraint;
-		return null;
+	@Test
+	public void addingAnswerTypeString_RequiresStringAnswer() {
+		mockRequest = makeMockAddAnswerTypeRequestWithFieldValues(String.class);		
+		useCase.execute(mockRequest);
+		
+		found = FormComponentUtilities.find("toChange");
+		typeConstraint = getTypeConstraint(found.validator.constraints);
+		
+		assertThat(componentRequiresAnswerType(String.class), is(true));
+		assertThat(answerContentSatisfiesConstraint("myString"), is(true));
 	}
 	
 	@Test
-	public void undoingSuccessfulAdditionRemovesOption() {
-		mockRequest = makeMockAddAnswerTypeRequestWithFieldValues("toChange", int.class);
+	public void undoingSuccessfulAdditionRemovesTypeRequirement() {
+		mockRequest = makeMockAddAnswerTypeRequestWithFieldValues(int.class);
 		
 		useCase.execute(mockRequest);
 		useCase.undo();

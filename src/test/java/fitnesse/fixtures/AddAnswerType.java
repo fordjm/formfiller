@@ -6,6 +6,7 @@ import formfiller.response.models.PresentableResponse;
 //	TODO:	Consider String-to-type parser at https://github.com/drapostolos/type-parser
 public class AddAnswerType {
 	public void whenTheUserAddsTheAnswerType(String type){
+		//	TODO:	Determine what type it is.
 		presentBogusMessage("You successfully added the answer type " + type);
 	}
 	
