@@ -1,7 +1,5 @@
 language: java
-
 jdk:
   - oraclejdk7
-  
-os:
-  - windows
+install:
+  - mvn package
