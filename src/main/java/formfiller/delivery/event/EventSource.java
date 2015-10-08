@@ -1,4 +1,4 @@
-package formfiller.delivery;
+package formfiller.delivery.event;
 
 import java.util.Observable;
 

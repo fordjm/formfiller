@@ -10,7 +10,7 @@ import formfiller.entities.Question;
 import formfiller.entities.formComponent.FormComponent;
 import formfiller.enums.Outcome;
 import formfiller.enums.QuestionAsked;
-import formfiller.gateways.InMemoryTransporter;
+import formfiller.gateways.impl.InMemoryTransporter;
 import formfiller.request.models.*;
 import formfiller.response.models.*;
 import formfiller.usecases.undoable.UndoableUseCase;

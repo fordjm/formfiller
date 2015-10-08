@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.mockito.Mockito;
 
-import formfiller.delivery.event.ParsedEvent;
+import formfiller.delivery.event.impl.ParsedEvent;
 
 public class ParsedEventMocker {
 

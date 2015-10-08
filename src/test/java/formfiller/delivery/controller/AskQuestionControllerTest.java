@@ -8,10 +8,10 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import formfiller.Context;
-import formfiller.delivery.event.ParsedEvent;
+import formfiller.delivery.event.impl.ParsedEvent;
 import formfiller.entities.formComponent.FormComponent;
 import formfiller.gateways.FormComponentGateway;
-import formfiller.gateways.InMemoryFormComponentGateway;
+import formfiller.gateways.impl.InMemoryFormComponentGateway;
 import formfiller.utilities.*;
 
 public class AskQuestionControllerTest {

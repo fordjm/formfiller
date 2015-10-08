@@ -2,7 +2,7 @@ package formfiller.delivery.controller;
 
 import formfiller.appBoundaries.UseCase;
 import formfiller.delivery.Controller;
-import formfiller.delivery.event.ParsedEvent;
+import formfiller.delivery.event.impl.ParsedEvent;
 import formfiller.request.builders.RequestBuilder;
 import formfiller.request.builders.RequestBuilderImpl;
 import formfiller.request.models.Request;

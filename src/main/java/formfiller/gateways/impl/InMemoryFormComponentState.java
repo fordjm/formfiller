@@ -1,9 +1,10 @@
-package formfiller.gateways;
+package formfiller.gateways.impl;
 
 import formfiller.Context;
 import formfiller.entities.formComponent.FormComponent;
 import formfiller.entities.formComponent.NullFormComponents;
 import formfiller.enums.QuestionAsked;
+import formfiller.gateways.FormComponentState;
 
 public class InMemoryFormComponentState implements FormComponentState {		
 	public int currentIndex = 0;

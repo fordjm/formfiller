@@ -1,9 +1,9 @@
-package formfiller.delivery.event;
+package formfiller.delivery.event.impl;
 
 import java.util.Observable;
 import java.util.Observer;
 
-import formfiller.delivery.EventParser;
+import formfiller.delivery.event.EventParser;
 import formfiller.delivery.router.Router;
 
 public class EventHandler implements Observer {

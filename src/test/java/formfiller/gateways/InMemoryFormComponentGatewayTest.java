@@ -8,6 +8,7 @@ import org.junit.Test;
 
 import formfiller.entities.formComponent.FormComponent;
 import formfiller.entities.formComponent.NullFormComponents;
+import formfiller.gateways.impl.InMemoryFormComponentGateway;
 import formfiller.utilities.FormComponentMocker;
 
 //	TODO:	Unit tests for remove()

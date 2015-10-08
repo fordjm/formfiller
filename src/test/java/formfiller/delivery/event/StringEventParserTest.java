@@ -8,7 +8,8 @@ import java.util.Collection;
 import org.junit.Before;
 import org.junit.Test;
 
-import formfiller.delivery.EventParser;
+import formfiller.delivery.event.impl.ParsedEvent;
+import formfiller.delivery.event.impl.StringEventParser;
 
 // Adapted from:
 // https://github.com/cleancoders/CleanCodeCaseStudy/blob/master/test/cleancoderscom/http/RequestParserTest.java

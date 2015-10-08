@@ -1,10 +1,10 @@
-package formfiller.delivery.event;
+package formfiller.delivery.event.impl;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import formfiller.delivery.EventParser;
+import formfiller.delivery.event.EventParser;
 
 //Adapted from:
 //https://github.com/cleancoders/CleanCodeCaseStudy/blob/master/src/cleancoderscom/http/RequestParser.java

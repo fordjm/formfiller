@@ -15,6 +15,7 @@ import formfiller.entities.formComponent.FormComponent;
 import formfiller.entities.format.Format;
 import formfiller.entities.format.Unstructured;
 import formfiller.enums.QuestionAsked;
+import formfiller.gateways.impl.InMemoryTransporter;
 import formfiller.utilities.FormComponentMocker;
 import formfiller.utilities.QuestionMocker;
 import formfiller.utilities.TestSetup;

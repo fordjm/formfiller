@@ -7,7 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import formfiller.Context;
-import formfiller.delivery.event.ParsedEvent;
+import formfiller.delivery.event.impl.ParsedEvent;
 import formfiller.enums.Outcome;
 import formfiller.response.models.PresentableResponse;
 import formfiller.utilities.*;

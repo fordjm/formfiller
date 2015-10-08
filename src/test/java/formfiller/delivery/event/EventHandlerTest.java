@@ -8,7 +8,7 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import formfiller.Context;
-import formfiller.delivery.EventSource;
+import formfiller.delivery.event.impl.EventHandler;
 import formfiller.delivery.router.PlaceholderRouterFactory;
 import formfiller.delivery.router.Router;
 import formfiller.entities.formComponent.FormComponent;

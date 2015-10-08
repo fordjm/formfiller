@@ -10,9 +10,9 @@ import formfiller.delivery.viewModel.PresentableResponseViewModel;
 import formfiller.entities.Answer;
 import formfiller.entities.Question;
 import formfiller.entities.formComponent.FormComponent;
-import formfiller.gateways.InMemoryFormComponentState;
+import formfiller.gateways.impl.InMemoryFormComponentGateway;
+import formfiller.gateways.impl.InMemoryFormComponentState;
 import formfiller.utilities.stringMatcher.CaseIgnoringStringMatcher;
-import formfiller.gateways.InMemoryFormComponentGateway;
 
 // TODO:  Credit CleanCoders JCS TestSetup
 public class TestSetup {

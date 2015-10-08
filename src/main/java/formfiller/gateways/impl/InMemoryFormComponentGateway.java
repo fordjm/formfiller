@@ -1,4 +1,4 @@
-package formfiller.gateways;
+package formfiller.gateways.impl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -7,6 +7,7 @@ import java.util.Map;
 
 import formfiller.entities.formComponent.FormComponent;
 import formfiller.entities.formComponent.NullFormComponents;
+import formfiller.gateways.FormComponentGateway;
 
 public class InMemoryFormComponentGateway implements FormComponentGateway {	
 	private Map<String, FormComponent> formComponents = new HashMap<String, FormComponent>();

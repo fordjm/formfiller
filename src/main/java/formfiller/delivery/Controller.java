@@ -1,6 +1,6 @@
 package formfiller.delivery;
 
-import formfiller.delivery.event.ParsedEvent;
+import formfiller.delivery.event.impl.ParsedEvent;
 
 // Adapted from:
 // https://github.com/cleancoders/CleanCodeCaseStudy/blob/master/src/cleancoderscom/http/Controller.java

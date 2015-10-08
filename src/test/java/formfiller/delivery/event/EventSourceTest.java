@@ -8,8 +8,6 @@ import java.util.Observer;
 
 import org.junit.Test;
 
-import formfiller.delivery.EventSource;
-
 public class EventSourceTest implements Observer {
 	String event;
 

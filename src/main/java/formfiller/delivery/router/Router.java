@@ -5,7 +5,7 @@ import java.util.Map;
 
 import formfiller.delivery.Controller;
 import formfiller.delivery.controller.HandleUnfoundUseCaseController;
-import formfiller.delivery.event.ParsedEvent;
+import formfiller.delivery.event.impl.ParsedEvent;
 
 //Adapted from:
 //https://github.com/cleancoders/CleanCodeCaseStudy/blob/master/src/cleancoderscom/http/Router.java

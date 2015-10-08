@@ -9,7 +9,7 @@ import de.bechte.junit.runners.context.HierarchicalContextRunner;
 import formfiller.delivery.Controller;
 import formfiller.delivery.controller.AddFormComponentController;
 import formfiller.delivery.controller.AskQuestionController;
-import formfiller.delivery.event.ParsedEvent;
+import formfiller.delivery.event.impl.ParsedEvent;
 import formfiller.utilities.*;
 //Adapted from:
 //https://github.com/cleancoders/CleanCodeCaseStudy/blob/master/test/cleancoderscom/http/RouterTest.java

@@ -12,7 +12,7 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import formfiller.delivery.Controller;
-import formfiller.delivery.event.ParsedEvent;
+import formfiller.delivery.event.impl.ParsedEvent;
 
 public class DeleteFormComponentControllerTest {
 	private DeleteFormComponentController controller;

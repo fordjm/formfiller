@@ -1,8 +1,8 @@
-package formfiller.delivery.event;
+package formfiller.delivery.event.impl;
 
 import java.util.Scanner;
 
-import formfiller.delivery.EventSource;
+import formfiller.delivery.event.EventSource;
 
 public class ConsoleEventSource extends EventSource {
 	private static final Scanner stdIn = new Scanner(System.in);

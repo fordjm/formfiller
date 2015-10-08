@@ -1,7 +1,9 @@
-package formfiller.gateways;
+package formfiller.gateways.impl;
 
 import formfiller.Context;
 import formfiller.enums.QuestionAsked;
+import formfiller.gateways.FormComponentState;
+import formfiller.gateways.Transporter;
 
 public class InMemoryTransporter implements Transporter {
 	

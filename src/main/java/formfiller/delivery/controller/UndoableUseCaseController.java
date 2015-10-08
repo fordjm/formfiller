@@ -3,7 +3,7 @@ package formfiller.delivery.controller;
 import java.util.List;
 
 import formfiller.delivery.Controller;
-import formfiller.delivery.event.ParsedEvent;
+import formfiller.delivery.event.impl.ParsedEvent;
 import formfiller.request.builders.RequestBuilderImpl;
 import formfiller.request.models.Request;
 import formfiller.usecases.LocalUseCase;
