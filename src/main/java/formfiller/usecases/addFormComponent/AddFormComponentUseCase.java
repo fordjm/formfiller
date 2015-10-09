@@ -28,7 +28,7 @@ public class AddFormComponentUseCase extends UndoableUseCaseExecution {
 	protected void execute() {
 		FormComponent newComponent = makeNewFormComponent();
 		newComponent.format = castRequest.format;
-		newComponent.validator = new AnswerValidator(makeAnswerConstraints());
+		newComponent.validator = new AnswerValidator();
 		Context.formComponentGateway.save(newComponent);
 	}
 
@@ -43,12 +43,6 @@ public class AddFormComponentUseCase extends UndoableUseCaseExecution {
 		Question result = new Question();
 		result.id = castRequest.componentId;
 		result.content = castRequest.questionContent;
-		return result;
-	}
-
-	private Collection<Constrainable> makeAnswerConstraints() {
-		Collection<Constrainable> result = new ArrayList<Constrainable>();
-		result.add(new AnswerType(castRequest.answerType));
 		return result;
 	}
 

@@ -41,6 +41,7 @@ public class AddAnswerTypeTest {
 
 	//	TODO:	Find a better way (look at java.lang.Class documentation)
 	//			Consider wrapping collection boundary or adding Untyped (null) answer type.
+	//			Fix duplication in fixtures.AddAnswerType (extract class?)
 	private AnswerType getTypeConstraint(Collection<Constrainable> constraints) {
 		for (Constrainable constraint : constraints)
 			if (constraint instanceof AnswerType)

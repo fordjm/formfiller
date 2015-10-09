@@ -17,10 +17,10 @@ import formfiller.utilities.AnswerMocker;
 
 public class AnswerValidatorTest {
 	private AnswerValidator answerValidator;
-	private Answer answer;
+	private Answer mockAnswer;
 
 	private void setAnswerField(Answer mockAnswer) {
-		answer = mockAnswer;
+		this.mockAnswer = mockAnswer;
 	}
 	
 	private Answer makeMockAnswer(String id, Object content){
@@ -62,10 +62,10 @@ public class AnswerValidatorTest {
 	}
 	
 	@Test
-	public void validAnswerWithNoConstraintsIsValid() {
+	public void anyAnswerWithNoConstraintsIsValid() {
 		setAnswerField(makeMockAnswer("questionId", "Banana"));
 		
-		assertThat(answerValidator.isValid(answer), is(true));
+		assertThat(answerValidator.isValid(mockAnswer), is(true));
 	}
 	
 	@Test
@@ -73,7 +73,7 @@ public class AnswerValidatorTest {
 		setAnswerField(makeMockAnswer("questionId", 10));
 		addConstraints(makeUnsatisfiedConstraint(10));
 		
-		assertThat(answerValidator.isValid(answer), is(false));
+		assertThat(answerValidator.isValid(mockAnswer), is(false));
 	}
 	
 	@Test
@@ -81,7 +81,7 @@ public class AnswerValidatorTest {
 		setAnswerField(makeMockAnswer("questionId", 3));
 		addConstraints(makeSatisfiedConstraint(3));
 		
-		assertThat(answerValidator.isValid(answer), is(true));
+		assertThat(answerValidator.isValid(mockAnswer), is(true));
 	}
 	
 	@Test
@@ -89,7 +89,7 @@ public class AnswerValidatorTest {
 		setAnswerField(makeMockAnswer("questionId", 3));
 		addConstraints(makeUnsatisfiedConstraint(10), makeSatisfiedConstraint(3));
 		
-		assertThat(answerValidator.isValid(answer), is(false));
+		assertThat(answerValidator.isValid(mockAnswer), is(false));
 	}
 	
 	//	Added 2015-09-21

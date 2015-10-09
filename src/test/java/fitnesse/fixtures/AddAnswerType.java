@@ -1,23 +1,62 @@
 package fitnesse.fixtures;
 
-import formfiller.Context;
-import formfiller.response.models.PresentableResponse;
+import java.lang.reflect.Type;
+import java.util.Collection;
 
-//	TODO:	Consider String-to-type parser at https://github.com/drapostolos/type-parser
+import formfiller.Context;
+import formfiller.entities.constrainable.AnswerType;
+import formfiller.entities.constrainable.Constrainable;
+import formfiller.entities.formComponent.FormComponent;
+import formfiller.response.models.PresentableResponse;
+import formfiller.utilities.FormComponentUtilities;
+import formfiller.utilities.StringToTypeConverter;
+
+//	TODO:	Determine whether drapostolos' type-parser helps here.
+//			Fix AnswerValidator and its unit tests.
 public class AddAnswerType {
-	public void whenTheUserAddsTheAnswerType(String type){
-		//	TODO:	Determine what type it is.
-		presentBogusMessage("You successfully added the answer type " + type);
+	private StringToTypeConverter converter;
+	private String componentId;
+	private String typeString;
+	
+	public AddAnswerType() {
+		converter = new StringToTypeConverter();
+	}
+
+	public void whenTheUserAddsTheAnswerTypeToComponent(String type, String componentId){
+		typeString = type;
+		this.componentId = componentId;
+		executeTemporaryBehavior();
 	}
 	
-	private void presentBogusMessage(String message) {
+	private void executeTemporaryBehavior() {
+		Type toAdd = converter.convert(typeString);
+		AnswerType constraint = new AnswerType(toAdd);
+		FormComponent found = FormComponentUtilities.find(componentId);
+		found.validator.constraints.add(constraint);
+		presentMessage("You successfully added the answer type " + typeString);
+	}
+
+	private void presentMessage(String message) {
 		PresentableResponse response = new PresentableResponse();
 		response.message = message;
 		Context.outcomePresenter.present(response);
 	}
 
 	public boolean componentRequiresType(String componentId, String type){
-		return true;
+		FormComponent found = FormComponentUtilities.find(componentId);
+		AnswerType typeConstraint = getTypeConstraint(found.validator.constraints);
+		Type toCheck = converter.convert(type);
+		//	TODO:	Must have a null object since we're dereferencing.
+		return typeConstraint.requiresType(toCheck);
+	}
+	
+	//	TODO:	Improve and fix duplication in AddAnswerTypeTest (extract class?)
+	//			Limit constraints to exactly one AnswerType.
+	private AnswerType getTypeConstraint(Collection<Constrainable> constraints) {
+		for (Constrainable constraint : constraints)
+			if (constraint instanceof AnswerType)
+				return (AnswerType) constraint;
+		return null;
 	}
 	
 }
