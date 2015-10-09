@@ -4,14 +4,12 @@ import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
 
 import java.lang.reflect.Type;
-import java.util.Collection;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import formfiller.entities.constrainable.AnswerType;
-import formfiller.entities.constrainable.Constrainable;
+import formfiller.entities.Answer;
 import formfiller.entities.formComponent.FormComponent;
 import formfiller.entities.format.Unstructured;
 import formfiller.request.models.AddAnswerTypeRequest;
@@ -25,7 +23,6 @@ public class AddAnswerTypeTest {
 	private AddAnswerTypeUseCase useCase;
 	private AddAnswerTypeRequest mockRequest;
 	private FormComponent found;
-	private AnswerType typeConstraint;
 
 	private AddAnswerTypeRequest makeEmptyMockAddAnswerTypeRequest() {
 		return Mockito.mock(AddAnswerTypeRequest.class);
@@ -39,22 +36,8 @@ public class AddAnswerTypeTest {
 		return result;
 	}
 
-	//	TODO:	Find a better way (look at java.lang.Class documentation)
-	//			Consider wrapping collection boundary or adding Untyped (null) answer type.
-	//			Fix duplication in fixtures.AddAnswerType (extract class?)
-	private AnswerType getTypeConstraint(Collection<Constrainable> constraints) {
-		for (Constrainable constraint : constraints)
-			if (constraint instanceof AnswerType)
-				return (AnswerType) constraint;
-		return null;
-	}
-
 	private boolean componentRequiresAnswerType(Type type) {
-		return typeConstraint.requiresType(type);
-	}
-
-	private boolean answerContentSatisfiesConstraint(Object content) {
-		return typeConstraint.isSatisfiedBy(content);
+		return found.validator.requiresType(type);
 	}
 	
 	@Before
@@ -84,12 +67,17 @@ public class AddAnswerTypeTest {
 		useCase.execute(mockRequest);
 		
 		found = FormComponentUtilities.find("toChange");
-		typeConstraint = getTypeConstraint(found.validator.constraints);
 		
-		assertThat(componentRequiresAnswerType(int.class), is(true));
-		assertThat(answerContentSatisfiesConstraint(EXAMPLE_INT), is(true));
-		assertThat(answerContentSatisfiesConstraint(13.0), is(false));
-		assertThat(answerContentSatisfiesConstraint("thirteen"), is(false));
+		assertThat(found.validator.isValid(makeMockAnswer(EXAMPLE_INT)), is(true));
+		assertThat(found.validator.isValid(makeMockAnswer(13.0)), is(false));
+		assertThat(found.validator.isValid(makeMockAnswer("thirteen")), is(false));
+	}
+
+	private Answer makeMockAnswer(Object content) {
+		Answer result = Mockito.mock(Answer.class);
+		result.questionId = "toChange";
+		result.content = content;
+		return result;
 	}
 
 	@Test
@@ -98,10 +86,9 @@ public class AddAnswerTypeTest {
 		useCase.execute(mockRequest);
 		
 		found = FormComponentUtilities.find("toChange");
-		typeConstraint = getTypeConstraint(found.validator.constraints);
 		
 		assertThat(componentRequiresAnswerType(String.class), is(true));
-		assertThat(answerContentSatisfiesConstraint("myString"), is(true));
+		assertThat(found.validator.isValid(makeMockAnswer("myString")), is(true));
 	}
 	
 	@Test
@@ -111,9 +98,8 @@ public class AddAnswerTypeTest {
 		useCase.execute(mockRequest);
 		useCase.undo();
 		found = FormComponentUtilities.find(mockRequest.componentId);
-		typeConstraint = getTypeConstraint(found.validator.constraints);
 		
-		assertThat(typeConstraint, equalTo(null));
+		assertThat(componentRequiresAnswerType(String.class), is(false));
 	}
 
 }

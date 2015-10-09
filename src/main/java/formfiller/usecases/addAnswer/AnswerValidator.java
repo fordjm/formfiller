@@ -1,48 +1,43 @@
 package formfiller.usecases.addAnswer;
 
-import java.util.ArrayList;
-import java.util.Collection;
+import java.lang.reflect.Type;
 
 import formfiller.entities.Answer;
+import formfiller.entities.constrainable.AnswerType;
 import formfiller.entities.constrainable.Constrainable;
+import formfiller.utilities.StringUtilities;
 
 public class AnswerValidator {
-	//	TODO:	Figure out testing and make private.
-	public Collection<Constrainable> constraints;
+	private Constraints constraints;
 
 	public AnswerValidator() {
-		this.constraints = new ArrayList<Constrainable>();
-	}
-
-	public AnswerValidator(Collection<Constrainable> constraints) {
-		this.constraints = constraints;
+		this.constraints = new Constraints();
 	}
 
 	public boolean isValid(Answer answer) {
 		if (answer == null) return false;
 		
-		return hasValidFieldValues(answer) && satisfiesConstraints(answer.content);
+		return hasValidFieldValues(answer) && 
+				constraints.areSatisfiedBy(answer.content);
 	}
 
+	//	TODO:	Fix answer content condition and move to Answer object.
 	private boolean hasValidFieldValues(Answer answer) {
-		return answer.questionId != "" && answer.content != "";
-	}
-
-	private boolean satisfiesConstraints(Object object) {
-		if (hasNoConstraints()) return true;
-		
-		for (Constrainable constraint : constraints){
-			if (!constraint.isSatisfiedBy(object))
-				return false;
-		}
-		return true;
-	}
-
-	private boolean hasNoConstraints() {
-		return constraints.size() == 0;
+		return !StringUtilities.isStringNullOrEmpty(answer.questionId) && 
+				answer.content != "";
 	}
 
 	public void addConstraint(Constrainable constraint) {
 		constraints.add(constraint);
+	}
+
+	public void removeConstraint(String key) {
+		constraints.remove(key);
+	}
+	
+	//	TODO:	Find better test and remove this.
+	public boolean requiresType(Type type){
+		AnswerType typeConstraint = (AnswerType) constraints.get("AnswerType");
+		return typeConstraint != null && typeConstraint.requiresType(type);
 	}
 }

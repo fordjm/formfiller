@@ -3,9 +3,6 @@ package formfiller.usecases.addAnswer;
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
 
-import java.util.ArrayList;
-import java.util.Collection;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -13,32 +10,40 @@ import org.mockito.Mockito;
 import formfiller.entities.Answer;
 import formfiller.entities.constrainable.AnswerType;
 import formfiller.entities.constrainable.Constrainable;
-import formfiller.utilities.AnswerMocker;
+import formfiller.entities.constrainable.ValueMatches;
+import formfiller.entities.constrainable.ValueOverBoundary;
+import formfiller.entities.constrainable.ValueUnderBoundary;
 
 public class AnswerValidatorTest {
 	private AnswerValidator answerValidator;
 	private Answer mockAnswer;
 
-	private void setAnswerField(Answer mockAnswer) {
-		this.mockAnswer = mockAnswer;
+	private Answer makeEmptyMockAnswer(){
+		return Mockito.mock(Answer.class);
 	}
 	
-	private Answer makeMockAnswer(String id, Object content){
-		return AnswerMocker.makeMockAnswer(id, content);
+	private Answer makeMockAnswer(Object content){
+		Answer result = makeEmptyMockAnswer();
+		result.questionId = "questionId";
+		result.content = content;
+		return result;
 	}
 
-	private Constrainable makeUnsatisfiedConstraint(Object object) {
-		return makeMockConstraint(false, object);
-	}
-
-	private Constrainable makeSatisfiedConstraint(Object object) {
-		return makeMockConstraint(true, object);
+	private Constrainable makeUnsatisfiedConstraint(
+			Class<? extends Constrainable> clazz, Object object) {
+		return makeMockConstraint(clazz, false, object);
 	}
 	
-	private Constrainable makeMockConstraint(boolean isSatisfied, Object object){
-		Constrainable result = Mockito.mock(Constrainable.class);
+	private Constrainable makeMockConstraint(
+			Class<? extends Constrainable> clazz, boolean isSatisfied, Object object) {
+		Constrainable result = Mockito.mock(clazz);
 		Mockito.when(result.isSatisfiedBy(object)).thenReturn(isSatisfied);
 		return result;
+	}
+
+	private Constrainable makeSatisfiedConstraint(
+			Class<? extends Constrainable> clazz, Object object) {
+		return makeMockConstraint(clazz, true, object);
 	}
 
 	private void addConstraints(Constrainable... mockConstraints) {
@@ -51,69 +56,61 @@ public class AnswerValidatorTest {
 		answerValidator = new AnswerValidator();
 	}
 
+	//	TODO:	Belongs in ConstraintsTest class.
+	@Test
+	public void canAddOnlyOneAnswerType() {
+		AnswerType type1 = new AnswerType(int.class);
+		AnswerType type2 = new AnswerType(double.class);
+		Answer intAnswer = makeMockAnswer(10);
+		Answer doubleAnswer = makeMockAnswer(10.0);
+		
+		answerValidator.addConstraint(type1);
+		answerValidator.addConstraint(type2);
+
+		assertThat(answerValidator.isValid(intAnswer), is(false));
+		assertThat(answerValidator.isValid(doubleAnswer), is(true));
+	}
+
 	@Test
 	public void nullAnswerIsInvalid() {
 		assertThat(answerValidator.isValid(null), is(false));
 	}
 	
 	@Test
-	public void newAnswerIsInvalid() {
-		assertThat(answerValidator.isValid(makeMockAnswer("", "")), is(false));
+	public void emptyAnswerIsInvalid() {
+		assertThat(answerValidator.isValid(makeEmptyMockAnswer()), is(false));
 	}
 	
 	@Test
-	public void anyAnswerWithNoConstraintsIsValid() {
-		setAnswerField(makeMockAnswer("questionId", "Banana"));
+	public void nonEmptyAnswerWithNoConstraintsIsValid() {
+		this.mockAnswer = makeMockAnswer("Banana");
 		
 		assertThat(answerValidator.isValid(mockAnswer), is(true));
 	}
 	
 	@Test
 	public void answerThatViolatesAllConstraintsIsInvalid() {
-		setAnswerField(makeMockAnswer("questionId", 10));
-		addConstraints(makeUnsatisfiedConstraint(10));
+		this.mockAnswer = makeMockAnswer(10);
+		addConstraints(makeUnsatisfiedConstraint(ValueUnderBoundary.class, 10));
 		
 		assertThat(answerValidator.isValid(mockAnswer), is(false));
 	}
 	
 	@Test
 	public void validAnswerThatSatisfiesAllConstraintsIsValid() {
-		setAnswerField(makeMockAnswer("questionId", 3));
-		addConstraints(makeSatisfiedConstraint(3));
+		this.mockAnswer = makeMockAnswer(3);
+		addConstraints(makeSatisfiedConstraint(ValueMatches.class, 3));
 		
 		assertThat(answerValidator.isValid(mockAnswer), is(true));
 	}
 	
 	@Test
 	public void validAnswerThatViolatesOneConstraintIsInvalid() {
-		setAnswerField(makeMockAnswer("questionId", 3));
-		addConstraints(makeUnsatisfiedConstraint(10), makeSatisfiedConstraint(3));
+		this.mockAnswer = makeMockAnswer(3);
+		addConstraints(makeUnsatisfiedConstraint(ValueOverBoundary.class, 10), 
+				makeSatisfiedConstraint(ValueUnderBoundary.class, 3));
 		
 		assertThat(answerValidator.isValid(mockAnswer), is(false));
 	}
 	
-	//	Added 2015-09-21
-	
-	@Test
-	public void testAnswerValidator() {
-		Collection<Constrainable> constraints = new ArrayList<Constrainable>();
-		constraints.add(new AnswerType(String.class));
-		AnswerValidator validator = new AnswerValidator(constraints);
-		Answer validAnswer = makeValidAnswer();
-		
-		assertThat(validator.isValid(new Answer()), is(false));
-		assertThat(validator.isValid(validAnswer), is(true));
-	}
-	
-	private Answer makeValidAnswer() {
-		Answer result = makeAnswer("answerContent");
-		return result;
-	}
-
-	private Answer makeAnswer(Object questionContent) {
-		Answer result = new Answer();
-		result.questionId = "questionId";
-		result.content = questionContent;
-		return result;
-	}
 }

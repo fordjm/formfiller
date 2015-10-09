@@ -15,7 +15,7 @@ import formfiller.enums.ContentConstraint;
 @RunWith(HierarchicalContextRunner.class)
 public class AnswerTypeTest {
 	private final int EXAMPLE_INTEGER = 15;
-	private Class type;
+	private Type type;
 	private AnswerType answerType;
 	
 	public class StringTypeContext {

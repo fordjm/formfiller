@@ -35,7 +35,7 @@ public class AddAnswerTypeUseCase extends UndoableUseCaseExecution{
 	public void undo() {
 		ensureUseCaseStateIsUndoable();
 		found = FormComponentUtilities.find(castRequest.componentId);
-		found.validator.constraints.remove(constraint);
+		found.validator.removeConstraint("AnswerType");
 	}
 
 }
