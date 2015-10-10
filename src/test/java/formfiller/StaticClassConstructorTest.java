@@ -9,11 +9,21 @@ import formfiller.delivery.router.PlaceholderRouterFactory;
 import formfiller.entities.formComponent.NullFormComponents;
 import formfiller.usecases.askQuestion.AskQuestionValidator;
 import formfiller.usecases.askQuestion.PresenterSelector;
+import formfiller.utilities.FormComponentUtilities;
 import formfiller.utilities.FormatArgumentParser;
+import formfiller.utilities.ParseTester;
+import formfiller.utilities.StringUtilities;
 import formfiller.utilities.WhichQuestionParser;
 
 public class StaticClassConstructorTest {
 	private Object objectUnderTest;
+
+	@Test
+	public void testAskQuestionValidatorConstructor() {
+		objectUnderTest = new AskQuestionValidator();
+		
+		assertThat(objectUnderTest, instanceOf(AskQuestionValidator.class));
+	}
 
 	@Test
 	public void testContextConstructor() {
@@ -23,10 +33,17 @@ public class StaticClassConstructorTest {
 	}
 
 	@Test
-	public void testPlaceholderRouterFactoryConstructor() {
-		objectUnderTest = new PlaceholderRouterFactory();
+	public void testFormatArgumentParserConstructor() {
+		objectUnderTest = new FormatArgumentParser();
 		
-		assertThat(objectUnderTest, instanceOf(PlaceholderRouterFactory.class));
+		assertThat(objectUnderTest, instanceOf(FormatArgumentParser.class));
+	}
+
+	@Test
+	public void testFormComponentUtilitiesConstructor() {
+		objectUnderTest = new FormComponentUtilities();
+		
+		assertThat(objectUnderTest, instanceOf(FormComponentUtilities.class));
 	}
 
 	@Test
@@ -37,10 +54,17 @@ public class StaticClassConstructorTest {
 	}
 
 	@Test
-	public void testAskQuestionValidatorConstructor() {
-		objectUnderTest = new AskQuestionValidator();
+	public void testParseTesterConstructor() {
+		objectUnderTest = new ParseTester();
 		
-		assertThat(objectUnderTest, instanceOf(AskQuestionValidator.class));
+		assertThat(objectUnderTest, instanceOf(ParseTester.class));
+	}
+
+	@Test
+	public void testPlaceholderRouterFactoryConstructor() {
+		objectUnderTest = new PlaceholderRouterFactory();
+		
+		assertThat(objectUnderTest, instanceOf(PlaceholderRouterFactory.class));
 	}
 
 	@Test
@@ -51,17 +75,17 @@ public class StaticClassConstructorTest {
 	}
 
 	@Test
+	public void testStringUtilitiesConstructor() {
+		objectUnderTest = new StringUtilities();
+		
+		assertThat(objectUnderTest, instanceOf(StringUtilities.class));
+	}
+
+	@Test
 	public void testWhichQuestionParserConstructor() {
 		objectUnderTest = new WhichQuestionParser();
 		
 		assertThat(objectUnderTest, instanceOf(WhichQuestionParser.class));
-	}
-
-	@Test
-	public void testFormatArgumentParserConstructor() {
-		objectUnderTest = new FormatArgumentParser();
-		
-		assertThat(objectUnderTest, instanceOf(FormatArgumentParser.class));
 	}
 
 }

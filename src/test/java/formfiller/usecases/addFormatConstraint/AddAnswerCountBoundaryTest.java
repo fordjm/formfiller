@@ -33,9 +33,10 @@ public class AddAnswerCountBoundaryTest {
 	}
 
 	//	TODO:	Make null form components immutable.
-	private AddAnswerCountBoundaryRequest makeMockAddAnswerCountBoundaryRequestWithFieldValues(
+	private AddAnswerCountBoundaryRequest makeMockAddAnswerCountBoundaryRequest(
 			String componentId, String boundary) {
-		AddAnswerCountBoundaryRequest result = makeEmptyMockAddAnswerCountBoundaryRequest();
+		AddAnswerCountBoundaryRequest result = 
+				makeEmptyMockAddAnswerCountBoundaryRequest();
 		result.componentId = componentId;
 		result.boundary = boundary;
 		result.count = boundaryValue;
@@ -57,14 +58,14 @@ public class AddAnswerCountBoundaryTest {
 
 	@Test(expected = UndoableUseCaseExecution.MalformedRequest.class)
 	public void executingRequestWithoutComponentIdThrowsException() {
-		mockRequest = makeMockAddAnswerCountBoundaryRequestWithFieldValues(
+		mockRequest = makeMockAddAnswerCountBoundaryRequest(
 				"", "minimum");		
 		useCase.execute(mockRequest);
 	}
 
 	@Test(expected = UndoableUseCaseExecution.MalformedRequest.class)
 	public void executingRequestWithoutBoundaryThrowsException() {
-		mockRequest = makeMockAddAnswerCountBoundaryRequestWithFieldValues(
+		mockRequest = makeMockAddAnswerCountBoundaryRequest(
 				"toChange", "");		
 		useCase.execute(mockRequest);
 	}
@@ -72,7 +73,7 @@ public class AddAnswerCountBoundaryTest {
 	@Test
 	public void executingWellFormedRequestAddsAnswerCountMinimum() {
 		boundaryValue = 1;
-		mockRequest = makeMockAddAnswerCountBoundaryRequestWithFieldValues(
+		mockRequest = makeMockAddAnswerCountBoundaryRequest(
 				"toChange", "minimum");
 		
 		useCase.execute(mockRequest);
@@ -84,7 +85,7 @@ public class AddAnswerCountBoundaryTest {
 	@Test
 	public void executingWellFormedRequestAddsAnswerCountMaximum() {
 		boundaryValue = 2;
-		mockRequest = makeMockAddAnswerCountBoundaryRequestWithFieldValues(
+		mockRequest = makeMockAddAnswerCountBoundaryRequest(
 				"toChange", "maximum");
 		
 		useCase.execute(mockRequest);
@@ -97,7 +98,7 @@ public class AddAnswerCountBoundaryTest {
 	@Test(expected = AddAnswerCountBoundaryUseCase.MaximumLessThanMinimum.class)
 	public void addingMaximumLessThanMinimumThrowsException() {
 		boundaryValue = 3;
-		mockRequest = makeMockAddAnswerCountBoundaryRequestWithFieldValues(
+		mockRequest = makeMockAddAnswerCountBoundaryRequest(
 				"toChange", "minimum");		
 		useCase.execute(mockRequest);
 	}
@@ -105,7 +106,7 @@ public class AddAnswerCountBoundaryTest {
 	@Test
 	public void undoingSuccessfulAdditionRevertsBoundary() {
 		boundaryValue = 2;
-		mockRequest = makeMockAddAnswerCountBoundaryRequestWithFieldValues(
+		mockRequest = makeMockAddAnswerCountBoundaryRequest(
 				"toChange", "maximum");
 		
 		useCase.execute(mockRequest);

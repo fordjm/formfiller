@@ -40,7 +40,7 @@ public class QuestionTest {
 	
 	@Test(expected = NullObjectFieldValueSet.class) 
 	public void settingContentThrowsException() {
-		question.setId("content");
+		question.setContent("content");
 	}
 	
 	public class StartQuestionContext {
@@ -111,11 +111,19 @@ public class QuestionTest {
 		public void setUp() {
 			question = new QuestionImpl();
 			question.setId("id");
-			question.setContent("content");
+		}
+		
+		@Test
+		public void testQuestionWithIdOnly() {
+			assertThat(question.getId(), is("id"));
+			assertThat(question.getContent(), is(""));
+			assertThat(question.isValid(), is(false));
 		}
 		
 		@Test
 		public void testQuestionWithFieldValues() {
+			question.setContent("content");
+			
 			assertThat(question.getId(), is("id"));
 			assertThat(question.getContent(), is("content"));
 			assertThat(question.isValid(), is(true));
