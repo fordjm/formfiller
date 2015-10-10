@@ -152,7 +152,7 @@ public class AskQuestionTest {
 		private FormComponent makeMockFormComponent(boolean requiresAnswer, 
 				Question question, Format answerFormat){
 			return FormComponentMocker.makeMockFormComponent(requiresAnswer, 
-					question, Answer.NONE, answerFormat);
+					question, AnswerImpl.NONE, answerFormat);
 		}
 
 		private void saveFormComponents(FormComponent... formComponents) {

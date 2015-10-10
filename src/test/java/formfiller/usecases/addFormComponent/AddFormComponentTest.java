@@ -10,7 +10,7 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import formfiller.Context;
-import formfiller.entities.Answer;
+import formfiller.entities.AnswerImpl;
 import formfiller.entities.Question;
 import formfiller.entities.formComponent.FormComponent;
 import formfiller.entities.formComponent.NullFormComponents;
@@ -80,7 +80,7 @@ public class AddFormComponentTest {
 		FormComponent addedComponent = 
 				Context.formComponentGateway.find("componentId");
 		assertThat(addedComponent.id, is(request.componentId));
-		assertThat(addedComponent.answer, is(Answer.NONE));
+		assertThat(addedComponent.answer, is(AnswerImpl.NONE));
 		assertThat(addedComponent.format, is(instanceOf(Unstructured.class)));
 		
 		Question addedQuestion = addedComponent.question;

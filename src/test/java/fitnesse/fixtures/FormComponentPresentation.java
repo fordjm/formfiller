@@ -8,6 +8,7 @@ import java.util.Map;
 import formfiller.Context;
 import formfiller.appBoundaries.Presenter;
 import formfiller.entities.Answer;
+import formfiller.entities.AnswerImpl;
 import formfiller.entities.Question;
 import formfiller.entities.formComponent.FormComponent;
 import formfiller.enums.QuestionAsked;
@@ -112,11 +113,11 @@ public class FormComponentPresentation {
 		}
 		//	TODO:	Update FitNesse tests to use String answer ID.
 		private Answer makeAnswer(String answerContent) {
-			if (answerContent.length() == 0) return Answer.NONE;
+			if (answerContent.length() == 0) return AnswerImpl.NONE;
 			
-			Answer result = new Answer();		
-			result.questionId = "questionId";
-			result.content = answerContent;
+			AnswerImpl result = new AnswerImpl();		
+			result.setId("questionId");
+			result.setContent(answerContent);
 			return result;
 		}
 

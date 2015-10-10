@@ -7,7 +7,7 @@ import java.util.Arrays;
 
 import org.junit.Test;
 
-import formfiller.entities.Answer;
+import formfiller.entities.AnswerImpl;
 import formfiller.entities.format.Unstructured;
 
 public class UnstructuredAnswerFormatTest {
@@ -33,17 +33,18 @@ public class UnstructuredAnswerFormatTest {
 		assertThat(format.matchesCardinality(makeLegalMultipleAnswer()), is(true));
 	}
 
-	private Answer makeLegalSingleAnswer() {
-		Answer result = new Answer();
-		result.questionId = "questionId";
-		result.content = "answerContent";
+	private AnswerImpl makeLegalSingleAnswer() {
+		AnswerImpl result = new AnswerImpl();
+		result.setId("questionId");
+		result.setContent("answerContent");
 		return result;
 	}
 	
-	private Answer makeLegalMultipleAnswer() {
-		Answer result = new Answer();
-		result.questionId = "questionId";
-		result.content = Arrays.asList("answerContent0", "answerContent1", "answerContent2");
+	private AnswerImpl makeLegalMultipleAnswer() {
+		AnswerImpl result = new AnswerImpl();
+		result.setId("questionId");
+		result.setContent(Arrays.asList(
+				"answerContent0", "answerContent1", "answerContent2"));
 		return result;
 	}
 }

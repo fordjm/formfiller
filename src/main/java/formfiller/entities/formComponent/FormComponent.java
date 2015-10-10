@@ -1,6 +1,7 @@
 package formfiller.entities.formComponent;
 
 import formfiller.entities.Answer;
+import formfiller.entities.AnswerImpl;
 import formfiller.entities.Question;
 import formfiller.entities.format.Format;
 import formfiller.entities.format.Unstructured;
@@ -10,7 +11,7 @@ public class FormComponent {
 	public String id = "";
 	public boolean requiresAnswer = false;
 	public Question question = new Question();
-	public Answer answer = Answer.NONE;
+	public Answer answer = AnswerImpl.NONE;
 	public Format format = new Unstructured();
 	public AnswerValidator validator = new AnswerValidator();
 }

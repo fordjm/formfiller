@@ -8,6 +8,7 @@ import formfiller.delivery.presenter.ResponsePresenter;
 import formfiller.delivery.ui.consoleUi.ConsoleView;
 import formfiller.delivery.viewModel.PresentableResponseViewModel;
 import formfiller.entities.Answer;
+import formfiller.entities.AnswerImpl;
 import formfiller.entities.Question;
 import formfiller.entities.formComponent.FormComponent;
 import formfiller.gateways.impl.InMemoryFormComponentGateway;
@@ -60,7 +61,7 @@ public class TestSetup {
 	
 	private static FormComponent makeFormComponent(boolean requiresAnswer, 
 			Question question){		
-		return makeFormComponent(requiresAnswer, question, Answer.NONE);
+		return makeFormComponent(requiresAnswer, question, AnswerImpl.NONE);
 	}
 	
 	private static FormComponent makeFormComponent(boolean requiresAnswer, 
@@ -79,8 +80,8 @@ public class TestSetup {
 	}
 	
 	private static Answer makeAnswer(String content){
-		Answer result = new Answer();
-		result.content = content;
+		AnswerImpl result = new AnswerImpl();
+		result.setContent(content);
 		return result;
 	}
 }

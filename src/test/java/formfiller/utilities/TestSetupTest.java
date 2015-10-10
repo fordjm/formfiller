@@ -41,7 +41,7 @@ public class TestSetupTest {
 	}
 
 	private void assertThat_FormComponent_HasExpectedAnswerContent(FormComponent formComponent) {
-		assertThat(formComponent.answer.content.toString(), is(answerContent));
+		assertThat(formComponent.answer.getContent().toString(), is(answerContent));
 	}
 
 	private void assertThat_FormComponent_HasExpectedAnswerRequirement(FormComponent formComponent) {

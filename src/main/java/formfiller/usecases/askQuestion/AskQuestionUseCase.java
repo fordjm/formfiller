@@ -109,8 +109,8 @@ public class AskQuestionUseCase implements UndoableUseCase {
 
 	private PresentableAnswer makePresentableAnswer(Answer requestedAnswer) {
 		PresentableAnswer result = new PresentableAnswer();
-		result.id = requestedAnswer.questionId;
-		result.message = requestedAnswer.content.toString();
+		result.id = requestedAnswer.getId();
+		result.message = requestedAnswer.getContent().toString();
 		return result;
 	}
 

@@ -2,7 +2,7 @@ package formfiller.usecases.addAnswer;
 
 import formfiller.Context;
 import formfiller.appBoundaries.UseCase;
-import formfiller.entities.Answer;
+import formfiller.entities.AnswerImpl;
 import formfiller.entities.formComponent.FormComponent;
 import formfiller.request.models.AddAnswerRequest;
 import formfiller.request.models.Request;
@@ -16,16 +16,16 @@ public class AddAnswerUseCase implements UseCase {
 		//	If the answer content satisfies the answer constraints
 		if (content == "") return;
 		//		Then add the answer at the Gateway and tell the user.
-		Answer answer = makeAnswer(content);
+		AnswerImpl answer = makeAnswer(content);
 		
 		FormComponent foundComponent = Context.formComponentGateway.find(questionId);
 		foundComponent.answer = answer;	// TODO:	Should this work?
 		//	TODO:	Otherwise, inform the user why the answer could not be added.
 	}
 	
-	private Answer makeAnswer(Object content){
-		Answer result = new Answer();
-		result.content = content;
+	private AnswerImpl makeAnswer(Object content){
+		AnswerImpl result = new AnswerImpl();
+		result.setContent(content);
 		return result;
 	}
 }

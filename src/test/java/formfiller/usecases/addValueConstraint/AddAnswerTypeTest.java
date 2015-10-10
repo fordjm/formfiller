@@ -9,12 +9,12 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import formfiller.entities.Answer;
 import formfiller.entities.formComponent.FormComponent;
 import formfiller.entities.format.Unstructured;
 import formfiller.request.models.AddAnswerTypeRequest;
 import formfiller.usecases.addFormatConstraint.UnitTestSetupUtilities;
 import formfiller.usecases.undoable.UndoableUseCaseExecution;
+import formfiller.utilities.AnswerMocker;
 import formfiller.utilities.FormComponentUtilities;
 import formfiller.utilities.TestSetup;
 import formfiller.utilities.UndoableUseCaseExecutionCommonTests;
@@ -68,16 +68,9 @@ public class AddAnswerTypeTest {
 		
 		found = FormComponentUtilities.find("toChange");
 		
-		assertThat(found.validator.isValid(makeMockAnswer(EXAMPLE_INT)), is(true));
-		assertThat(found.validator.isValid(makeMockAnswer(13.0)), is(false));
-		assertThat(found.validator.isValid(makeMockAnswer("thirteen")), is(false));
-	}
-
-	private Answer makeMockAnswer(Object content) {
-		Answer result = Mockito.mock(Answer.class);
-		result.questionId = "toChange";
-		result.content = content;
-		return result;
+		assertThat(found.validator.isValid(AnswerMocker.makeMockAnswer(EXAMPLE_INT)), is(true));
+		assertThat(found.validator.isValid(AnswerMocker.makeMockAnswer(13.0)), is(false));
+		assertThat(found.validator.isValid(AnswerMocker.makeMockAnswer("thirteen")), is(false));
 	}
 
 	@Test
@@ -88,7 +81,7 @@ public class AddAnswerTypeTest {
 		found = FormComponentUtilities.find("toChange");
 		
 		assertThat(componentRequiresAnswerType(String.class), is(true));
-		assertThat(found.validator.isValid(makeMockAnswer("myString")), is(true));
+		assertThat(found.validator.isValid(AnswerMocker.makeMockAnswer("myString")), is(true));
 	}
 	
 	@Test

@@ -12,6 +12,7 @@ import de.bechte.junit.runners.context.HierarchicalContextRunner;
 import formfiller.Context;
 import formfiller.appBoundaries.UseCase;
 import formfiller.entities.Answer;
+import formfiller.entities.AnswerImpl;
 import formfiller.entities.Question;
 import formfiller.entities.formComponent.FormComponent;
 import formfiller.request.models.AddAnswerRequest;
@@ -38,7 +39,7 @@ public class AddAnswerTest {
 	}
 	
 	private Object returnAnswerContent(Answer foundAnswer) {
-		return foundAnswer.content;
+		return foundAnswer.getContent();
 	}
 	
 	private void addMockFormComponentsToGateway(){
@@ -51,7 +52,7 @@ public class AddAnswerTest {
 		FormComponent result = Mockito.mock(FormComponent.class);
 		result.id = mockQuestion.id;
 		result.question = mockQuestion;
-		result.answer = Answer.NONE;
+		result.answer = AnswerImpl.NONE;
 		return result;
 	}
 
@@ -80,7 +81,7 @@ public class AddAnswerTest {
 		foundAnswer = findAnswerByName("name");
 		
 		// Presenter result should be,  "No answer was received.  Please try again."
-		assertThat(foundAnswer, is(Answer.NONE));
+		assertThat(foundAnswer, is(AnswerImpl.NONE));
 	}
 	
 	@Test

@@ -32,7 +32,7 @@ public abstract class Format {
 	}
 
 	private boolean isNotALegalSingleAnswer(Answer toMatch) {
-		return toMatch == null || answerContentIsACollection(toMatch.content);
+		return toMatch == null || answerContentIsACollection(toMatch.getContent());
 	}
 
 	private boolean answerContentIsACollection(Object content) {
@@ -42,13 +42,13 @@ public abstract class Format {
 	private boolean multipleAnswerMatchesCardinality(Answer toMatch) {
 		if (isNotALegalMultipleAnswer(toMatch)) return false;
 		
-		Collection<Object> castContent = (Collection<Object>) toMatch.content;
+		Collection<Object> castContent = (Collection<Object>) toMatch.getContent();
 		return castContent.size() >= minAnswers && 
 				castContent.size() <= maxAnswers;
 	}
 
 	private boolean isNotALegalMultipleAnswer(Answer toMatch) {
-		return toMatch == null || !answerContentIsACollection(toMatch.content);
+		return toMatch == null || !answerContentIsACollection(toMatch.getContent());
 	}
 	
 	//	TODO:	Must treat single and multiple answers differently.

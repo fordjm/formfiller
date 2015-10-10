@@ -1,6 +1,6 @@
 package formfiller.entities.formComponent;
 
-import formfiller.entities.Answer;
+import formfiller.entities.AnswerImpl;
 import formfiller.entities.NullQuestions;
 import formfiller.entities.Question;
 import formfiller.entities.format.Unstructured;
@@ -17,7 +17,7 @@ public class NullFormComponents {
 		FormComponent result = new FormComponent();
 		result.id = nullQuestion.id;
 		result.question = nullQuestion;
-		result.answer = Answer.NONE;
+		result.answer = AnswerImpl.NONE;
 		result.format = new Unstructured();
 		return result;
 	}

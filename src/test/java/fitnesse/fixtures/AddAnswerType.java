@@ -4,9 +4,9 @@ import java.lang.reflect.Type;
 
 import formfiller.Context;
 import formfiller.entities.constrainable.AnswerType;
+import formfiller.entities.constrainable.Constraints;
 import formfiller.entities.formComponent.FormComponent;
 import formfiller.response.models.PresentableResponse;
-import formfiller.usecases.addAnswer.Constraints;
 import formfiller.utilities.FormComponentUtilities;
 import formfiller.utilities.StringToTypeConverter;
 

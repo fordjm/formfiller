@@ -1,9 +1,7 @@
-package formfiller.usecases.addAnswer;
+package formfiller.entities.constrainable;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import formfiller.entities.constrainable.Constrainable;
 
 public class Constraints {
 	private Map<String, Constrainable> itsConstraints;

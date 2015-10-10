@@ -1,7 +1,7 @@
 package formfiller.usecases.askQuestion;
 
 import formfiller.Context;
-import formfiller.entities.Answer;
+import formfiller.entities.AnswerImpl;
 import formfiller.entities.formComponent.FormComponent;
 import formfiller.enums.QuestionAsked;
 
@@ -23,7 +23,7 @@ public class AskQuestionValidator {
 	
 	private static boolean isAnswerRequiredButAbsent(FormComponent component){
 		boolean result = component.requiresAnswer && 
-				component.answer == Answer.NONE;
+				component.answer == AnswerImpl.NONE;
 		return result;
 	}
 	

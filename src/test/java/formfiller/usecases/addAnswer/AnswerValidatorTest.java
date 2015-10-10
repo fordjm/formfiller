@@ -7,35 +7,28 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import formfiller.entities.Answer;
-import formfiller.entities.constrainable.AnswerType;
+import formfiller.entities.AnswerImpl;
 import formfiller.entities.constrainable.Constrainable;
 import formfiller.entities.constrainable.ValueMatches;
 import formfiller.entities.constrainable.ValueOverBoundary;
 import formfiller.entities.constrainable.ValueUnderBoundary;
+import formfiller.utilities.AnswerMocker;
 
 public class AnswerValidatorTest {
+	private static final int LOWER_INT = 3;
+	private static final int HIGHER_INT = 10;
 	private AnswerValidator answerValidator;
-	private Answer mockAnswer;
-
-	private Answer makeEmptyMockAnswer(){
-		return Mockito.mock(Answer.class);
-	}
-	
-	private Answer makeMockAnswer(Object content){
-		Answer result = makeEmptyMockAnswer();
-		result.questionId = "questionId";
-		result.content = content;
-		return result;
-	}
+	private AnswerImpl mockAnswer;
+	private Constrainable mockUnsatisfied;
+	private Constrainable mockSatisfied;
 
 	private Constrainable makeUnsatisfiedConstraint(
 			Class<? extends Constrainable> clazz, Object object) {
 		return makeMockConstraint(clazz, false, object);
 	}
 	
-	private Constrainable makeMockConstraint(
-			Class<? extends Constrainable> clazz, boolean isSatisfied, Object object) {
+	private Constrainable makeMockConstraint(Class<? extends Constrainable> clazz, 
+			boolean isSatisfied, Object object) {
 		Constrainable result = Mockito.mock(clazz);
 		Mockito.when(result.isSatisfiedBy(object)).thenReturn(isSatisfied);
 		return result;
@@ -56,21 +49,6 @@ public class AnswerValidatorTest {
 		answerValidator = new AnswerValidator();
 	}
 
-	//	TODO:	Belongs in ConstraintsTest class.
-	@Test
-	public void canAddOnlyOneAnswerType() {
-		AnswerType type1 = new AnswerType(int.class);
-		AnswerType type2 = new AnswerType(double.class);
-		Answer intAnswer = makeMockAnswer(10);
-		Answer doubleAnswer = makeMockAnswer(10.0);
-		
-		answerValidator.addConstraint(type1);
-		answerValidator.addConstraint(type2);
-
-		assertThat(answerValidator.isValid(intAnswer), is(false));
-		assertThat(answerValidator.isValid(doubleAnswer), is(true));
-	}
-
 	@Test
 	public void nullAnswerIsInvalid() {
 		assertThat(answerValidator.isValid(null), is(false));
@@ -78,37 +56,48 @@ public class AnswerValidatorTest {
 	
 	@Test
 	public void emptyAnswerIsInvalid() {
-		assertThat(answerValidator.isValid(makeEmptyMockAnswer()), is(false));
+		mockAnswer = AnswerMocker.makeMockEmptyAnswer();
+		
+		assertThat(answerValidator.isValid(mockAnswer), is(false));
 	}
 	
 	@Test
-	public void nonEmptyAnswerWithNoConstraintsIsValid() {
-		this.mockAnswer = makeMockAnswer("Banana");
+	public void givenNoConstraints_NonEmptyAnswerIsValid() {
+		mockAnswer = AnswerMocker.makeMockAnswer("notEmpty");
 		
 		assertThat(answerValidator.isValid(mockAnswer), is(true));
 	}
 	
 	@Test
 	public void answerThatViolatesAllConstraintsIsInvalid() {
-		this.mockAnswer = makeMockAnswer(10);
-		addConstraints(makeUnsatisfiedConstraint(ValueUnderBoundary.class, 10));
+		mockAnswer = AnswerMocker.makeMockAnswer(HIGHER_INT);
+		mockUnsatisfied = makeUnsatisfiedConstraint(ValueUnderBoundary.class, 
+				HIGHER_INT);
+		
+		addConstraints(mockUnsatisfied);
 		
 		assertThat(answerValidator.isValid(mockAnswer), is(false));
 	}
 	
 	@Test
 	public void validAnswerThatSatisfiesAllConstraintsIsValid() {
-		this.mockAnswer = makeMockAnswer(3);
-		addConstraints(makeSatisfiedConstraint(ValueMatches.class, 3));
+		mockAnswer = AnswerMocker.makeMockAnswer(LOWER_INT);
+		mockSatisfied = makeSatisfiedConstraint(ValueMatches.class, LOWER_INT);
+		
+		addConstraints(mockSatisfied);
 		
 		assertThat(answerValidator.isValid(mockAnswer), is(true));
 	}
 	
 	@Test
 	public void validAnswerThatViolatesOneConstraintIsInvalid() {
-		this.mockAnswer = makeMockAnswer(3);
-		addConstraints(makeUnsatisfiedConstraint(ValueOverBoundary.class, 10), 
-				makeSatisfiedConstraint(ValueUnderBoundary.class, 3));
+		mockAnswer = AnswerMocker.makeMockAnswer(LOWER_INT);
+		mockUnsatisfied = makeUnsatisfiedConstraint(ValueOverBoundary.class, 
+				HIGHER_INT);
+		mockSatisfied = makeSatisfiedConstraint(ValueUnderBoundary.class, 
+				LOWER_INT);
+		
+		addConstraints(mockUnsatisfied, mockSatisfied);
 		
 		assertThat(answerValidator.isValid(mockAnswer), is(false));
 	}
