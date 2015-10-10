@@ -10,7 +10,7 @@ import org.junit.runner.RunWith;
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
 import formfiller.Context;
 import formfiller.entities.AnswerImpl;
-import formfiller.entities.Question;
+import formfiller.entities.QuestionImpl;
 import formfiller.entities.formComponent.FormComponent;
 import formfiller.entities.format.Format;
 import formfiller.entities.format.Unstructured;
@@ -92,7 +92,7 @@ public class InMemoryTransporterTest {
 			return makeMockFormComponent(QuestionMocker.makeMockNameQuestion());
 		}
 		
-		private FormComponent makeMockFormComponent(Question question){
+		private FormComponent makeMockFormComponent(QuestionImpl question){
 			return FormComponentMocker.makeMockFormComponent(false, 
 					question, AnswerImpl.NONE, new Unstructured());
 		}

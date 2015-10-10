@@ -9,7 +9,7 @@ import formfiller.Context;
 import formfiller.appBoundaries.Presenter;
 import formfiller.entities.Answer;
 import formfiller.entities.AnswerImpl;
-import formfiller.entities.Question;
+import formfiller.entities.QuestionImpl;
 import formfiller.entities.formComponent.FormComponent;
 import formfiller.enums.QuestionAsked;
 import formfiller.response.models.PresentableAnswer;
@@ -105,10 +105,10 @@ public class FormComponentPresentation {
 			return component;
 		}
 		
-		private Question makeQuestion(String id, String questionContent){
-			Question result = new Question();
-			result.id = id;
-			result.content = questionContent;		
+		private QuestionImpl makeQuestion(String id, String questionContent){
+			QuestionImpl result = new QuestionImpl();
+			result.setId(id);
+			result.setContent(questionContent);		
 			return result;
 		}
 		//	TODO:	Update FitNesse tests to use String answer ID.

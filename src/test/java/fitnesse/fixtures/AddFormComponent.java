@@ -40,7 +40,7 @@ public class AddFormComponent {
 	}
 	
 	public String addedContent() {
-		return addedComponent.question.content;
+		return addedComponent.question.getContent();
 	}
 	
 	public String addedFormat() {

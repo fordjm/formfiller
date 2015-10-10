@@ -1,13 +1,14 @@
 package formfiller.entities;
 
-public class Question {
-	public String id = "";
-	public String content = "";
+public interface Question {
 
-	public Question(String id, String content) {
-		this.id = id;
-		this.content = content;
-	}	
-	
-	public Question() {	}
+	String getId();
+
+	String getContent();
+
+	boolean isValid();
+
+	void setId(String id);
+
+	void setContent(String content);
 }

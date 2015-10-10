@@ -84,8 +84,8 @@ public class AddFormComponentTest {
 		assertThat(addedComponent.format, is(instanceOf(Unstructured.class)));
 		
 		Question addedQuestion = addedComponent.question;
-		assertThat(request.componentId, is(addedQuestion.id));
-		assertThat(request.questionContent, is(addedQuestion.content));
+		assertThat(request.componentId, is(addedQuestion.getId()));
+		assertThat(request.questionContent, is(addedQuestion.getContent()));
 		
 		
 		AnswerValidator addedValidator = addedComponent.validator;

@@ -37,7 +37,7 @@ public class TestSetupTest {
 	}
 
 	private void assertThat_FormComponent_HasExpectedQuestionContent(FormComponent formComponent) {
-		assertThat(formComponent.question.content, is(questionContent));
+		assertThat(formComponent.question.getContent(), is(questionContent));
 	}
 
 	private void assertThat_FormComponent_HasExpectedAnswerContent(FormComponent formComponent) {

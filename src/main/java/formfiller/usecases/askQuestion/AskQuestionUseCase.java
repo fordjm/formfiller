@@ -7,6 +7,7 @@ import formfiller.Context;
 import formfiller.appBoundaries.Presenter;
 import formfiller.entities.Answer;
 import formfiller.entities.Question;
+import formfiller.entities.QuestionImpl;
 import formfiller.entities.formComponent.FormComponent;
 import formfiller.enums.Outcome;
 import formfiller.enums.QuestionAsked;
@@ -102,8 +103,8 @@ public class AskQuestionUseCase implements UndoableUseCase {
 
 	private PresentableQuestion makePresentableQuestion(Question requestedQuestion) {
 		PresentableQuestion result = new PresentableQuestion();
-		result.id = requestedQuestion.id;
-		result.message = requestedQuestion.content;
+		result.id = requestedQuestion.getId();
+		result.message = requestedQuestion.getContent();
 		return result;
 	}
 

@@ -11,7 +11,7 @@ import de.bechte.junit.runners.context.HierarchicalContextRunner;
 import formfiller.Context;
 import formfiller.entities.Answer;
 import formfiller.entities.AnswerImpl;
-import formfiller.entities.Question;
+import formfiller.entities.QuestionImpl;
 import formfiller.entities.formComponent.FormComponent;
 import formfiller.entities.format.Unstructured;
 import formfiller.enums.QuestionAsked;
@@ -26,7 +26,7 @@ public class AskQuestionValidatorTest {
 	private FormComponent mockFormComponent;
 
 	private FormComponent makeMockFormComponent(boolean requiresAnswer, 
-			Question mockQuestion, Answer mockAnswer) {
+			QuestionImpl mockQuestion, Answer mockAnswer) {
 		return FormComponentMocker.makeMockFormComponent(
 				requiresAnswer, mockQuestion, mockAnswer, new Unstructured());
 	}

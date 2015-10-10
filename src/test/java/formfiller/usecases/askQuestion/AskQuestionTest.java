@@ -135,22 +135,22 @@ public class AskQuestionTest {
 	public class GivenTwoFormComponents {
 		FormComponent mockNameFormComponent;
 		FormComponent mockAgeFormComponent;
-		Question mockQuestion;
+		QuestionImpl mockQuestion;
 
 		private FormComponent makeMockFormComponent(String id, String content, 
 				boolean requiresAnswer, Format answerFormat) {
-			Question mockQuestion = makeMockQuestion(id, content);
+			QuestionImpl mockQuestion = makeMockQuestion(id, content);
 			FormComponent result = makeMockFormComponent(requiresAnswer, 
 					mockQuestion, answerFormat);
 			return result;
 		}
 
-		private Question makeMockQuestion(String id, String content) {
+		private QuestionImpl makeMockQuestion(String id, String content) {
 			return QuestionMocker.makeMockQuestion(id, content);
 		}
 		
 		private FormComponent makeMockFormComponent(boolean requiresAnswer, 
-				Question question, Format answerFormat){
+				QuestionImpl question, Format answerFormat){
 			return FormComponentMocker.makeMockFormComponent(requiresAnswer, 
 					question, AnswerImpl.NONE, answerFormat);
 		}

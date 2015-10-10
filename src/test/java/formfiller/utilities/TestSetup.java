@@ -9,7 +9,7 @@ import formfiller.delivery.ui.consoleUi.ConsoleView;
 import formfiller.delivery.viewModel.PresentableResponseViewModel;
 import formfiller.entities.Answer;
 import formfiller.entities.AnswerImpl;
-import formfiller.entities.Question;
+import formfiller.entities.QuestionImpl;
 import formfiller.entities.formComponent.FormComponent;
 import formfiller.gateways.impl.InMemoryFormComponentGateway;
 import formfiller.gateways.impl.InMemoryFormComponentState;
@@ -60,22 +60,22 @@ public class TestSetup {
 	}
 	
 	private static FormComponent makeFormComponent(boolean requiresAnswer, 
-			Question question){		
+			QuestionImpl question){		
 		return makeFormComponent(requiresAnswer, question, AnswerImpl.NONE);
 	}
 	
 	private static FormComponent makeFormComponent(boolean requiresAnswer, 
-			Question question, Answer answer){
+			QuestionImpl question, Answer answer){
 		FormComponent result = new FormComponent();
 		result.requiresAnswer = requiresAnswer;
-		result.id = question.id;
+		result.id = question.getId();
 		result.question = question;
 		result.answer = answer;		
 		return result;
 	}
 	
-	private static Question makeQuestion(String id, String content){
-		Question result = new Question(id, content);
+	private static QuestionImpl makeQuestion(String id, String content){
+		QuestionImpl result = new QuestionImpl(id, content);
 		return result;
 	}
 	

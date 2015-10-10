@@ -13,7 +13,7 @@ import formfiller.Context;
 import formfiller.appBoundaries.UseCase;
 import formfiller.entities.Answer;
 import formfiller.entities.AnswerImpl;
-import formfiller.entities.Question;
+import formfiller.entities.QuestionImpl;
 import formfiller.entities.formComponent.FormComponent;
 import formfiller.request.models.AddAnswerRequest;
 import formfiller.usecases.addAnswer.AddAnswerUseCase;
@@ -48,9 +48,9 @@ public class AddAnswerTest {
 		saveFormComponents(nameComponent, ageComponent);
 	}
 	
-	private FormComponent makeMockFormComponent(Question mockQuestion){
+	private FormComponent makeMockFormComponent(QuestionImpl mockQuestion){
 		FormComponent result = Mockito.mock(FormComponent.class);
-		result.id = mockQuestion.id;
+		result.id = mockQuestion.getId();
 		result.question = mockQuestion;
 		result.answer = AnswerImpl.NONE;
 		return result;

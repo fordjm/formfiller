@@ -30,12 +30,12 @@ public class AnswerTest {
 		assertThat(answer, is(AnswerImpl.NONE));
 	}
 	
-	@Test(expected = AnswerImpl.NullFieldValueSet.class)
+	@Test(expected = AnswerImpl.NullObjectFieldValueSet.class)
 	public void settingIdThrowsException() {
 		answer.setId("id");
 	}
 	
-	@Test(expected = AnswerImpl.NullFieldValueSet.class)
+	@Test(expected = AnswerImpl.NullObjectFieldValueSet.class)
 	public void settingContentThrowsException() {
 		answer.setContent("content");
 	}

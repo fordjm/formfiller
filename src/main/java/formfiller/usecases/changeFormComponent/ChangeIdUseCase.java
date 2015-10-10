@@ -36,7 +36,7 @@ public class ChangeIdUseCase extends ChangeFormComponentUseCase {
 
 	private void swapIds(String prevId, String nextId) {
 		FormComponent changed = Context.formComponentGateway.remove(prevId);
-		changed.question.id = nextId;
+		changed.question.setId(nextId);
 		changed.id = nextId;
 		Context.formComponentGateway.save(changed);
 	}

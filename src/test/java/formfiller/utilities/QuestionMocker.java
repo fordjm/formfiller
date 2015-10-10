@@ -2,26 +2,28 @@ package formfiller.utilities;
 
 import static org.mockito.Mockito.mock;
 
-import formfiller.entities.Question;
+import org.mockito.Mockito;
+
+import formfiller.entities.QuestionImpl;
 
 public class QuestionMocker {
 	
-	public static Question makeMockNameQuestion() {
+	public static QuestionImpl makeMockNameQuestion() {
 		return makeMockQuestion("name", "What is your name?");
 	}
 	
-	public static Question makeMockAgeQuestion() {
+	public static QuestionImpl makeMockAgeQuestion() {
 		return makeMockQuestion("age", "What is your age?");
 	}
 	
-	public static Question makeMockBirthDateQuestion() {
+	public static QuestionImpl makeMockBirthDateQuestion() {
 		return makeMockQuestion("birthDate", "What is your birth date?");
 	}
 	
-	public static Question makeMockQuestion(String id, String content){
-		Question result = mock(Question.class);
-		result.id = id;
-		result.content = content;
+	public static QuestionImpl makeMockQuestion(String id, String content){
+		QuestionImpl result = mock(QuestionImpl.class);
+		Mockito.when(result.getId()).thenReturn(id);
+		Mockito.when(result.getContent()).thenReturn(content);
 		return result;
 	}
 }

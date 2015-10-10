@@ -21,11 +21,11 @@ public class AnswerImpl implements Answer {
 		}
 
 		public void setId(String id) {
-			throw new NullFieldValueSet();
+			throw new NullObjectFieldValueSet();
 		}
 
 		public void setContent(Object content) {
-			throw new NullFieldValueSet();
+			throw new NullObjectFieldValueSet();
 		}
 	}
 	
@@ -55,10 +55,6 @@ public class AnswerImpl implements Answer {
 		this.content = content;		
 	}
 	
-	public class NullFieldValueSet extends RuntimeException {
-
-		/**
-		 * 
-		 */
+	public class NullObjectFieldValueSet extends RuntimeException {
 		private static final long serialVersionUID = 1L; }
 }
