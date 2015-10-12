@@ -13,7 +13,7 @@ public class FormatArgumentParser {
 			return new OptionVariable();
 		else
 			throw new IllegalArgumentException(
-					"Could not match format string " + formatString);
+					"Could not match format string " + formatString + ".");
 	}
 	
 }

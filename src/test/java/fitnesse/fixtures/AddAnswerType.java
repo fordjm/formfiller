@@ -14,8 +14,6 @@ import formfiller.utilities.TypeRequirementTester;
 //			Fix AnswerValidator and its unit tests.
 public class AddAnswerType {
 	private StringToTypeConverter converter;
-	private String componentId;
-	private String typeString;
 	
 	public AddAnswerType() {
 		converter = new StringToTypeConverter();
@@ -23,17 +21,16 @@ public class AddAnswerType {
 
 	public void whenTheUserAddsTheAnswerTypeToComponent(String type, 
 			String componentId){
-		typeString = type;
-		this.componentId = componentId;
-		executeUseCaseBehavior();
+		executeUseCaseBehavior(type, componentId);
 	}
 	
-	private void executeUseCaseBehavior() {
-		Type toAdd = converter.convert(typeString);
+	private void executeUseCaseBehavior(String type, 
+			String componentId) {
+		Type toAdd = converter.convert(type);
 		AnswerType constraint = new AnswerType(toAdd);
 		FormComponent found = FormComponentUtilities.find(componentId);
 		found.validator.addConstraint(constraint);
-		presentMessage("You successfully added the answer type " + typeString);
+		presentMessage("You successfully added the answer type " + type);
 	}
 
 	private void presentMessage(String message) {

@@ -54,9 +54,9 @@ public class StringEventParser implements EventParser {
 		for (String word : input.split("\\s+")){
 			if (quotedString == "" && !word.contains(QUOTATION_MARK))
 				strings.add(word);
-			else if (quotedString == "" && word.indexOf(QUOTATION_MARK) == 0)
+			else if (word.lastIndexOf(QUOTATION_MARK) == 0)
 				quotedString = word + " ";
-			else if (quotedString != "" && word.indexOf(QUOTATION_MARK) == word.length()-1){
+			else if (word.lastIndexOf(QUOTATION_MARK) == word.length()-1){
 				quotedString += word;
 				strings.add(quotedString);
 				quotedString = "";

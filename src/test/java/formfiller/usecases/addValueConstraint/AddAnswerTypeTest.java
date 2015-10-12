@@ -24,7 +24,7 @@ public class AddAnswerTypeTest {
 	private AddAnswerTypeUseCase useCase;
 	private AddAnswerTypeRequest mockRequest;
 	private FormComponent found;
-	TypeRequirementTester tester;
+	private TypeRequirementTester tester;
 
 	private AddAnswerTypeRequest makeEmptyMockAddAnswerTypeRequest() {
 		return Mockito.mock(AddAnswerTypeRequest.class);

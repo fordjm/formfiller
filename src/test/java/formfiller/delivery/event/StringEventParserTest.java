@@ -16,12 +16,14 @@ import formfiller.delivery.event.impl.StringEventParser;
 // Retrieved 2015-08-14
 
 public class StringEventParserTest {
-	EventParser parser;
-	ParsedEvent parsedEvent;
+	private EventParser parser;
+	private ParsedEvent parsedEvent;
+	private String questionContent;
 
 	@Before
 	public void setUp(){
 		parser = new StringEventParser();
+		questionContent = "";
 	}
 
 	private void parseEventString(String input) {
@@ -70,12 +72,33 @@ public class StringEventParserTest {
 	
 	//	TODO:	How to handle entered content without quotes?
 	@Test
-	public void canParseAddFormComponentCommand() {		
-		parseEventString("addFormComponent name \"What is your name?\" U");
+	public void canParseAddFormComponentCommand() {	
+		questionContent = "\"What is your name?\"";
+		parseEventString("addFormComponent name " + questionContent + " U");
 		
 		assertThat_TheEventMethod_IsTheGivenString("addFormComponent");
 		assertThat_TheGivenStrings_CompriseTheEventParameters("name", 
-				"\"What is your name?\"", "U");
+				questionContent, "U");
+	}
+
+	@Test
+	public void canParseQuotedSingleWordContent() {	
+		questionContent = "\"Name\"";
+		parseEventString("addFormComponent name " + questionContent + " U");
+		
+		assertThat_TheEventMethod_IsTheGivenString("addFormComponent");
+		assertThat_TheGivenStrings_CompriseTheEventParameters("name", 
+				questionContent, "U");
+	}
+
+	@Test
+	public void canParseCommaSeparatedContent() {	
+		questionContent = "\"Please list your name, age, and birth date.\"";
+		parseEventString("addFormComponent name " + questionContent + " U");
+		
+		assertThat_TheEventMethod_IsTheGivenString("addFormComponent");
+		assertThat_TheGivenStrings_CompriseTheEventParameters("name", 
+				questionContent, "U");
 	}
 	
 	@Test
