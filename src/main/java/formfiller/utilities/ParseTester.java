@@ -12,7 +12,7 @@ public class ParseTester {
 		}		
 	}
 
-	//	TODO:	Make this extensible to new types like GeoPoint and alternate parsing methods.
+	//	TODO:	Make this extensible to new types like Android's GeoPoint.
 	private static void parseOrThrowException(Type type, Object object) {
 		if (type.equals(byte.class)) ((Byte) object).byteValue();
 		else if (type.equals(boolean.class)) ((Boolean) object).booleanValue();

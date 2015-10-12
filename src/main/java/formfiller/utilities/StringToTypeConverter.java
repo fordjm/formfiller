@@ -23,8 +23,8 @@ public class StringToTypeConverter {
 		result.put("int", int.class);
 		result.put("long", long.class);
 		result.put("short", short.class);
-		result.put("number", Number.class);
-		result.put("string", String.class);
+		result.put("Number", Number.class);
+		result.put("String", String.class);
 		return result;
 	}
 	

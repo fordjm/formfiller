@@ -1,9 +1,6 @@
 package formfiller.usecases.addAnswer;
 
-import java.lang.reflect.Type;
-
-import formfiller.entities.AnswerImpl;
-import formfiller.entities.constrainable.AnswerType;
+import formfiller.entities.Answer;
 import formfiller.entities.constrainable.Constrainable;
 import formfiller.entities.constrainable.Constraints;
 
@@ -14,7 +11,7 @@ public class AnswerValidator {
 		this.constraints = new Constraints();
 	}
 
-	public boolean isValid(AnswerImpl answer) {
+	public boolean accepts(Answer answer) {
 		if (answer == null) return false;
 		
 		return answer.isValid() && 
@@ -27,11 +24,5 @@ public class AnswerValidator {
 
 	public void removeConstraint(String key) {
 		constraints.remove(key);
-	}
-	
-	//	TODO:	Find better test and remove this.
-	public boolean requiresType(Type type){
-		AnswerType typeConstraint = (AnswerType) constraints.get("AnswerType");
-		return typeConstraint != null && typeConstraint.requiresType(type);
 	}
 }

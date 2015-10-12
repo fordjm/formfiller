@@ -76,17 +76,18 @@ public class StringToTypeConverterTest {
 		assertThatConverterReturnsType(short.class);
 	}
 
-	//	TODO:	Determine how to handle capitalization inconsistency.
+	//	TODO:	Handle capitalization inconsistency with language-specific 
+	//			type plugins (primitives, Java, C#, Android, etc?)
 	@Test
 	public void canConvertNumber() {
-		converted = converter.convert("number");
+		converted = converter.convert("Number");
 		
 		assertThatConverterReturnsType(Number.class);
 	}
 	
 	@Test
 	public void canConvertString() {
-		converted = converter.convert("string");
+		converted = converter.convert("String");
 		
 		assertThatConverterReturnsType(String.class);
 	}

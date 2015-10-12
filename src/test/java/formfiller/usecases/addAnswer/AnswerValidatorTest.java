@@ -51,21 +51,21 @@ public class AnswerValidatorTest {
 
 	@Test
 	public void nullAnswerIsInvalid() {
-		assertThat(answerValidator.isValid(null), is(false));
+		assertThat(answerValidator.accepts(null), is(false));
 	}
 	
 	@Test
 	public void emptyAnswerIsInvalid() {
 		mockAnswer = AnswerMocker.makeMockEmptyAnswer();
 		
-		assertThat(answerValidator.isValid(mockAnswer), is(false));
+		assertThat(answerValidator.accepts(mockAnswer), is(false));
 	}
 	
 	@Test
 	public void givenNoConstraints_NonEmptyAnswerIsValid() {
 		mockAnswer = AnswerMocker.makeMockAnswer("notEmpty");
 		
-		assertThat(answerValidator.isValid(mockAnswer), is(true));
+		assertThat(answerValidator.accepts(mockAnswer), is(true));
 	}
 	
 	@Test
@@ -76,7 +76,7 @@ public class AnswerValidatorTest {
 		
 		addConstraints(mockUnsatisfied);
 		
-		assertThat(answerValidator.isValid(mockAnswer), is(false));
+		assertThat(answerValidator.accepts(mockAnswer), is(false));
 	}
 	
 	@Test
@@ -86,7 +86,7 @@ public class AnswerValidatorTest {
 		
 		addConstraints(mockSatisfied);
 		
-		assertThat(answerValidator.isValid(mockAnswer), is(true));
+		assertThat(answerValidator.accepts(mockAnswer), is(true));
 	}
 	
 	@Test
@@ -99,7 +99,7 @@ public class AnswerValidatorTest {
 		
 		addConstraints(mockUnsatisfied, mockSatisfied);
 		
-		assertThat(answerValidator.isValid(mockAnswer), is(false));
+		assertThat(answerValidator.accepts(mockAnswer), is(false));
 	}
 	
 }

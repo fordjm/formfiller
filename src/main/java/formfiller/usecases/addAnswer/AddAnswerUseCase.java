@@ -19,7 +19,7 @@ public class AddAnswerUseCase implements UseCase {
 		AnswerImpl answer = makeAnswer(content);
 		
 		FormComponent foundComponent = Context.formComponentGateway.find(questionId);
-		foundComponent.answer = answer;	// TODO:	Should this work?
+		foundComponent.answer = answer;	// TODO:	Fix for multiple answers.
 		//	TODO:	Otherwise, inform the user why the answer could not be added.
 	}
 	

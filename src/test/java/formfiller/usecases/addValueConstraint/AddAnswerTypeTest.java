@@ -17,12 +17,14 @@ import formfiller.usecases.undoable.UndoableUseCaseExecution;
 import formfiller.utilities.AnswerMocker;
 import formfiller.utilities.FormComponentUtilities;
 import formfiller.utilities.TestSetup;
+import formfiller.utilities.TypeRequirementTester;
 import formfiller.utilities.UndoableUseCaseExecutionCommonTests;
 
 public class AddAnswerTypeTest {
 	private AddAnswerTypeUseCase useCase;
 	private AddAnswerTypeRequest mockRequest;
 	private FormComponent found;
+	TypeRequirementTester tester;
 
 	private AddAnswerTypeRequest makeEmptyMockAddAnswerTypeRequest() {
 		return Mockito.mock(AddAnswerTypeRequest.class);
@@ -37,12 +39,13 @@ public class AddAnswerTypeTest {
 	}
 
 	private boolean componentRequiresAnswerType(Type type) {
-		return found.validator.requiresType(type);
+		return tester.requiresType(found.validator, type);
 	}
 	
 	@Before
 	public void setUp() {
 		TestSetup.setupContext();
+		tester = new TypeRequirementTester();
 		useCase = new AddAnswerTypeUseCase();
 		UnitTestSetupUtilities.addFormComponentToChange(new Unstructured());
 	}
@@ -68,9 +71,9 @@ public class AddAnswerTypeTest {
 		
 		found = FormComponentUtilities.find("toChange");
 		
-		assertThat(found.validator.isValid(AnswerMocker.makeMockAnswer(EXAMPLE_INT)), is(true));
-		assertThat(found.validator.isValid(AnswerMocker.makeMockAnswer(13.0)), is(false));
-		assertThat(found.validator.isValid(AnswerMocker.makeMockAnswer("thirteen")), is(false));
+		assertThat(found.validator.accepts(AnswerMocker.makeMockAnswer(EXAMPLE_INT)), is(true));
+		assertThat(found.validator.accepts(AnswerMocker.makeMockAnswer(13.0)), is(false));
+		assertThat(found.validator.accepts(AnswerMocker.makeMockAnswer("thirteen")), is(false));
 	}
 
 	@Test
@@ -81,7 +84,7 @@ public class AddAnswerTypeTest {
 		found = FormComponentUtilities.find("toChange");
 		
 		assertThat(componentRequiresAnswerType(String.class), is(true));
-		assertThat(found.validator.isValid(AnswerMocker.makeMockAnswer("myString")), is(true));
+		assertThat(found.validator.accepts(AnswerMocker.makeMockAnswer("myString")), is(true));
 	}
 	
 	@Test
