@@ -7,9 +7,13 @@ import formfiller.entities.Answer;
 import formfiller.usecases.addAnswer.AnswerValidator;
 
 public class TypeRequirementTester {
+	private final SampleAnswers samples;
 	private AnswerValidator validator;
 	private String typeString;
-	private SampleAnswers samples;
+	
+	public TypeRequirementTester() {
+		samples = new SampleAnswers();
+	}
 	
 	public boolean requiresType(AnswerValidator validator, Type type) {
 		this.validator = validator;
@@ -24,7 +28,6 @@ public class TypeRequirementTester {
 	}
 	
 	private boolean onlyAcceptsCorrectType() {
-		samples = new SampleAnswers();
 		Answer accepted = samples.get(typeString);
 		boolean acceptsCorrectly = validator.accepts(accepted);
 		boolean rejectsCorrectly = rejectsAllExcept(accepted);

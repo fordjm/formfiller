@@ -15,14 +15,18 @@ public class AnswerType implements Constrainable {
 	}
 
 	public boolean isSatisfiedBy(Object content) {
-		if (content == null) return false;
-		
-		Class<?> contentClass = content.getClass();
+		if (content == null) return false;			
+		return isContentOfClass(content);
+	}
+
+	private boolean isContentOfClass(Object content) {
+		Class<?> contentClass = content.getClass();	
 		return contentClass.equals(type) || 
+				contentClass.getSuperclass().equals(type) ||
 				ParseTester.canParseToType(type, content);
 	}
 
-	public boolean requiresType(Type type){
+	public Object requiresType(Type type) {
 		return this.type.equals(type);
 	}
 	

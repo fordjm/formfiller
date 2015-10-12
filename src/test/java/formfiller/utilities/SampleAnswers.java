@@ -1,5 +1,6 @@
 package formfiller.utilities;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -9,14 +10,12 @@ import formfiller.entities.Answer;
 import formfiller.entities.AnswerImpl;
 
 public class SampleAnswers {
-	private final double SAMPLE_DOUBLE;
-	private final int SAMPLE_INT;
 	private final Map<String, Answer> ALL;
+	private final Collection<Answer> NON_NUMBER_SAMPLES;
 	
 	public SampleAnswers() {
-		SAMPLE_DOUBLE = 13.5;
-		SAMPLE_INT = 13;
 		ALL = makeAllSamples();
+		NON_NUMBER_SAMPLES = makeNonNumberSamples();
 	}
 
 	private Map<String, Answer> makeAllSamples() {
@@ -25,10 +24,25 @@ public class SampleAnswers {
 		return result;
 	}
 	
+	//	TODO:	How to handle Number?
 	private void addAllSamples(Map<String, Answer> samplesMap){
-		samplesMap.put("double", makeAnswer("double", SAMPLE_DOUBLE));
-		samplesMap.put("int", makeAnswer("int", SAMPLE_INT));
+		Number sampleNumber = BigDecimal.ONE;
+		samplesMap.put("boolean", makeAnswer("boolean", true));
+		samplesMap.put("byte", makeAnswer("byte", Byte.MIN_VALUE));
+		samplesMap.put("double", makeAnswer("double", Double.MIN_VALUE));
+		samplesMap.put("float", makeAnswer("float", Float.MIN_VALUE));
+		samplesMap.put("int", makeAnswer("int", Integer.MIN_VALUE));
+		samplesMap.put("long", makeAnswer("long", Long.MIN_VALUE));
+		samplesMap.put("short", makeAnswer("short", Short.MIN_VALUE));
+		samplesMap.put("Number", makeAnswer("Number", sampleNumber));
 		samplesMap.put("String", makeAnswer("String", "sampleString"));
+	}
+
+	private Collection<Answer> makeNonNumberSamples() {
+		Collection<Answer> result = new ArrayList<Answer>();
+		result.add(get("boolean"));
+		result.add(get("String"));
+		return result;
 	}
 	
 	private Answer makeAnswer(String id, Object content) {
@@ -44,6 +58,12 @@ public class SampleAnswers {
 
 	public Collection<Answer> getAllExcept(Object accepted) {
 		Collection<Answer> result = new ArrayList<Answer>(ALL.values());
+		return removeAcceptedValues(accepted, result);
+	}
+
+	private Collection<Answer> removeAcceptedValues(Object accepted, Collection<Answer> result) {
+		if (accepted == get("Number")) return NON_NUMBER_SAMPLES;
+		
 		result.remove(accepted);
 		return result;
 	}

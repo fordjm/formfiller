@@ -17,6 +17,7 @@
 
 |script|add answer count boundary|
 
+#NOTE:  wasAdded is never used.
 |answer count boundary addition table                                  |
 |boundary|value|was added|message                                      |
 |minimum |1    |true     |You successfully added a minimum of 1 answer |

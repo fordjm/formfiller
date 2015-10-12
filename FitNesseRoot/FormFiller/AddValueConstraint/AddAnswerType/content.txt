@@ -1,10 +1,23 @@
 !| scenario|then the form component with ID|id |should require answers of type|type      |
 |check     |component                      |@id|requires type                 |@type|true|
 
+!| scenario                         |required type addition table |component id                  ||question content||answer format||type|
+|given a form component with the component ID @componentId, the question content "@questionContent", and the answer format @answerFormat|
+|when the user adds the answer type |@type                        |to component                  |@componentId                          |
+|then the form component with ID    |@componentId                 |should require answers of type|@type                                 |
+|then the system should present the message, You successfully added the answer type @type                                               |
+
 |script|add answer type|
 
-!| script                                                                                                      |
-|given a form component with the component ID selected, the question content "content", and the answer format U|
-|when the user adds the answer type             |int             |to component            |selected            |
-|then the form component with ID selected should require answers of type int                                   |
-|then the system should present the message, You successfully added the answer type int                        |
+#TODO:	Call required type addition table from within required type table
+!| required type addition table                     |
+|component id|question content|answer format|type   |
+|selected    |"content"       |U            |boolean|
+|selected    |"content"       |U            |byte   |
+|selected    |"content"       |U            |double |
+|selected    |"content"       |U            |float  |
+|selected    |"content"       |U            |int    |
+|selected    |"content"       |U            |long   |
+|selected    |"content"       |U            |short  |
+|selected    |"content"       |U            |Number |
+|selected    |"content"       |U            |String |
