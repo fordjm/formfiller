@@ -10,7 +10,6 @@ import formfiller.delivery.event.EventParser;
 //https://github.com/cleancoders/CleanCodeCaseStudy/blob/master/src/cleancoderscom/http/RequestParser.java
 //Retrieved 2015-08-14
 
-//	TODO:	Determine where in the class/package name the "Verbatim" modifier belongs.
 public class StringEventParser implements EventParser {
 	private final String QUOTATION_MARK = "\"";
 	
@@ -38,7 +37,6 @@ public class StringEventParser implements EventParser {
 		return result;
 	}
 
-	//	TODO:	Could just insist these elements not be separated by " "
 	private void joinCommaSeparatedElements(List<String> input) {
 		for (int i=0; i<input.size(); ++i){
 			String temp = input.get(i);

@@ -1,7 +1,7 @@
 package formfiller.entities.constrainable;
 
 //	TODO:	Change to ValueOnBoundary?
-public class ValueMatches implements Constrainable {
+public class ValueEquals implements Constrainable {
 	Object valueToMatch;
 
 	public boolean isSatisfiedBy(Object objectUnderTest) {

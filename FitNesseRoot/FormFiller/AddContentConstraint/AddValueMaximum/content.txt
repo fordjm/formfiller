@@ -1,0 +1,21 @@
+!| scenario|then the component|componentId |should accept value|value      |
+|check     |component         |@componentId|accepts value      |@value|true|
+
+!| scenario|then the component|componentId |should not accept value|value       |
+|check     |component         |@componentId|accepts value          |@value|false|
+
+!| scenario            |value maximum addition table|type                   |        |maximum     ||accepts||rejects|
+|given a form component with the component ID selected, the question content "content", and the answer format U     |
+|when the user adds the|@type                       |value maximum          |@maximum|to component|selected         |
+|then the component    |selected                    |should accept value    |@accepts                               |
+|then the component    |selected                    |should not accept value|@rejects                               |
+
+|script|add value constraint|
+
+!| value maximum addition table            |
+|type  |maximum    |accepts    |rejects    |
+|char  |D          |A          |F          |
+|double|10.5       |10.4       |10.6       |
+|int   |10         |10         |11         |
+|Date  |21-Oct-2015|01-Oct-2015|31-Oct-2015|
+#|Date  |Oct-21-2015|May-07-2015|Dec-28-2015|

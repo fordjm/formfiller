@@ -48,13 +48,18 @@ public class AnswerTypeTest {
 		@Test
 		public void stringObject_SatisfiesConstraint(){
 			assertThat(answerType.isSatisfiedBy("myString"), is(true));
+		}	
+		
+		@Test
+		public void constraintRequiresCorrectType(){
+			assertThat(answerType.requiresType(String.class), is(true));
 		}
 	}	
 	
 	public class IntegerTypeContext {
 		@Before
 		public void setUp(){
-			type = Integer.class;
+			type = int.class;
 			answerType = new AnswerType(type);
 		}	
 		
@@ -81,6 +86,11 @@ public class AnswerTypeTest {
 		@Test
 		public void stringObject_DoesNotSatisfyConstraint(){
 			assertThat(answerType.isSatisfiedBy("myString"), is(false));
+		}	
+		
+		@Test
+		public void constraintRequiresCorrectType(){
+			assertThat(answerType.requiresType(int.class), is(true));
 		}
 	}	
 }

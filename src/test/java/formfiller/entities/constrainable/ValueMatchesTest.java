@@ -8,18 +8,18 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
-import formfiller.entities.constrainable.ValueMatches;
+import formfiller.entities.constrainable.ValueEquals;
 
 @RunWith(HierarchicalContextRunner.class)
 public class ValueMatchesTest {
-	private ValueMatches valueMatches;
+	private ValueEquals valueMatches;
 	
 	@Before
 	public void setUp() {
-		valueMatches = new ValueMatches();
+		valueMatches = new ValueEquals();
 	}
 	
-	@Test(expected = ValueMatches.NullValueSet.class)
+	@Test(expected = ValueEquals.NullValueSet.class)
 	public void settingValueToMatch_Null_ThrowsException() {
 		valueMatches.setValue(null);
 	}

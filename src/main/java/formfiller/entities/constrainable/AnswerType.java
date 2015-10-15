@@ -26,7 +26,7 @@ public class AnswerType implements Constrainable {
 				ParseTester.canParseToType(type, content);
 	}
 
-	public Object requiresType(Type type) {
+	public boolean requiresType(Type type) {
 		return this.type.equals(type);
 	}
 	

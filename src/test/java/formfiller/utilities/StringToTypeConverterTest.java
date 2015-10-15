@@ -2,16 +2,14 @@ package formfiller.utilities;
 
 import static org.junit.Assert.*;
 
-import java.lang.reflect.Type;
-
 import org.junit.Before;
 import org.junit.Test;
 
 public class StringToTypeConverterTest {
 	private StringToTypeConverter converter;
-	private Type converted;
+	private Class<?> converted;
 
-	private void assertThatConverterReturnsType(Type type) {
+	private void assertThatConverterReturnsType(Class<?> type) {
 		assertEquals(type, converted);
 	}
 

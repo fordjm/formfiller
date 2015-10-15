@@ -26,7 +26,7 @@ public class AddAnswerType {
 	
 	private void executeUseCaseBehavior(String type, 
 			String componentId) {
-		Type toAdd = converter.convert(type);
+		Class<?> toAdd = converter.convert(type);
 		AnswerType constraint = new AnswerType(toAdd);
 		FormComponent found = FormComponentUtilities.find(componentId);
 		found.validator.addConstraint(constraint);

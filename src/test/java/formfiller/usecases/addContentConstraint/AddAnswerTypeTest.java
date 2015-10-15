@@ -1,4 +1,4 @@
-package formfiller.usecases.addValueConstraint;
+package formfiller.usecases.addContentConstraint;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
@@ -12,6 +12,7 @@ import org.mockito.Mockito;
 import formfiller.entities.formComponent.FormComponent;
 import formfiller.entities.format.Unstructured;
 import formfiller.request.models.AddAnswerTypeRequest;
+import formfiller.usecases.addContentConstraint.AddAnswerTypeUseCase;
 import formfiller.usecases.addFormatConstraint.UnitTestSetupUtilities;
 import formfiller.usecases.undoable.UndoableUseCaseExecution;
 import formfiller.utilities.AnswerMocker;

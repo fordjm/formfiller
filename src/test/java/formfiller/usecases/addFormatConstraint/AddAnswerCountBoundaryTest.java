@@ -70,6 +70,21 @@ public class AddAnswerCountBoundaryTest {
 		useCase.execute(mockRequest);
 	}
 
+	@Test(expected = UndoableUseCaseExecution.MalformedRequest.class)
+	public void illegalMinimumValueThrowsException() {
+		boundaryValue = -1;
+		mockRequest = makeMockAddAnswerCountBoundaryRequest(
+				"toChange", "minimum");		
+		useCase.execute(mockRequest);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void unrecognizedBoundaryThrowsException() {
+		mockRequest = makeMockAddAnswerCountBoundaryRequest(
+				"toChange", "boundary");		
+		useCase.execute(mockRequest);
+	}
+
 	@Test
 	public void executingWellFormedRequestAddsAnswerCountMinimum() {
 		boundaryValue = 1;

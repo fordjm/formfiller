@@ -3,6 +3,9 @@ package formfiller.entities.constrainable;
 public abstract class ValueBoundary implements Constrainable {
 	private Object boundaryValue;
 	
+	//	TODO:	Why not take a Comparable here?
+	//			A:  Because Comparable requires generic type that propagates 
+	//				upward and isComparable checks type before cast.
 	public ValueBoundary(Object boundaryValue) {
 		this.boundaryValue = boundaryValue;
 	}
@@ -16,8 +19,8 @@ public abstract class ValueBoundary implements Constrainable {
 	}
 
 	private boolean isLegalValue(Object candidate){
-		Comparable<Object> castValue = (Comparable<Object>) candidate;
-		int comparisonResult = castValue.compareTo(boundaryValue);
+		Comparable<Object> illegalCast = (Comparable<Object>) boundaryValue;
+		int comparisonResult = illegalCast.compareTo(candidate);
 		return isLegalComparisonResult(comparisonResult);
 	}
 

@@ -64,11 +64,8 @@ public class AddAnswerCountBoundaryUseCase extends UndoableUseCaseExecution {
 	private void updateBoundaryValue(int count, String boundary) {
 		if (Context.stringMatcher.matches(boundary, "minimum"))
 			updateMinimum(componentFormat, count);
-		else if (Context.stringMatcher.matches(boundary, "maximum"))
-			updateMaximum(componentFormat, count);
 		else 
-			throw new IllegalArgumentException(
-					"Could not match boundary string " + boundary);
+			updateMaximum(componentFormat, count);
 	}
 
 	private void updateMinimum(Format format, int num) {
@@ -98,8 +95,6 @@ public class AddAnswerCountBoundaryUseCase extends UndoableUseCaseExecution {
 	public void undo() {
 		ensureUseCaseStateIsUndoable();
 		componentFormat = getComponentFormat();
-		if (hasIllegalAnswerCount(componentFormat.minAnswers, componentFormat.maxAnswers))
-			throw new MaximumLessThanMinimum();
 		updateBoundaryValue(oldBoundaryValue, castRequest.boundary);
 	}
 

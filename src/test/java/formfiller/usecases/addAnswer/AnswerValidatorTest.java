@@ -9,9 +9,9 @@ import org.mockito.Mockito;
 
 import formfiller.entities.AnswerImpl;
 import formfiller.entities.constrainable.Constrainable;
-import formfiller.entities.constrainable.ValueMatches;
-import formfiller.entities.constrainable.ValueOverBoundary;
-import formfiller.entities.constrainable.ValueUnderBoundary;
+import formfiller.entities.constrainable.ValueEquals;
+import formfiller.entities.constrainable.ValueMinimum;
+import formfiller.entities.constrainable.ValueMaximum;
 import formfiller.utilities.AnswerMocker;
 
 public class AnswerValidatorTest {
@@ -71,7 +71,7 @@ public class AnswerValidatorTest {
 	@Test
 	public void answerThatViolatesAllConstraintsIsInvalid() {
 		mockAnswer = AnswerMocker.makeMockAnswer(HIGHER_INT);
-		mockUnsatisfied = makeUnsatisfiedConstraint(ValueUnderBoundary.class, 
+		mockUnsatisfied = makeUnsatisfiedConstraint(ValueMaximum.class, 
 				HIGHER_INT);
 		
 		addConstraints(mockUnsatisfied);
@@ -82,7 +82,7 @@ public class AnswerValidatorTest {
 	@Test
 	public void validAnswerThatSatisfiesAllConstraintsIsValid() {
 		mockAnswer = AnswerMocker.makeMockAnswer(LOWER_INT);
-		mockSatisfied = makeSatisfiedConstraint(ValueMatches.class, LOWER_INT);
+		mockSatisfied = makeSatisfiedConstraint(ValueEquals.class, LOWER_INT);
 		
 		addConstraints(mockSatisfied);
 		
@@ -92,9 +92,9 @@ public class AnswerValidatorTest {
 	@Test
 	public void validAnswerThatViolatesOneConstraintIsInvalid() {
 		mockAnswer = AnswerMocker.makeMockAnswer(LOWER_INT);
-		mockUnsatisfied = makeUnsatisfiedConstraint(ValueOverBoundary.class, 
+		mockUnsatisfied = makeUnsatisfiedConstraint(ValueMinimum.class, 
 				HIGHER_INT);
-		mockSatisfied = makeSatisfiedConstraint(ValueUnderBoundary.class, 
+		mockSatisfied = makeSatisfiedConstraint(ValueMaximum.class, 
 				LOWER_INT);
 		
 		addConstraints(mockUnsatisfied, mockSatisfied);

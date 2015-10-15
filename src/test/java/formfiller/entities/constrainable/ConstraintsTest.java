@@ -21,6 +21,11 @@ public class ConstraintsTest {
 		Mockito.when(result.isSatisfiedBy(content)).thenReturn(true);
 		return result;
 	}
+
+	private String getMockClassSimpleName(Constrainable mockConstraint) {
+		Class<? extends Constrainable> clazz = mockConstraint.getClass();
+		return clazz.getSimpleName();
+	}
 	
 	@Before
 	public void setUp() {
@@ -30,10 +35,13 @@ public class ConstraintsTest {
 	@Test
 	public void testConstraints() {
 		String content = "content";
-		constraints.add(makeMockAnswerType(String.class, content));
+		Constrainable mockConstraint = makeMockAnswerType(String.class, content);
+		String className = getMockClassSimpleName(mockConstraint);
+		constraints.add(mockConstraint);
 		
 		assertThat(constraints.areSatisfiedBy(""), is(false));
 		assertThat(constraints.areSatisfiedBy(content), is(true));
+		assertThat(constraints.get(className), instanceOf(AnswerType.class));
 	}
 
 	@Test

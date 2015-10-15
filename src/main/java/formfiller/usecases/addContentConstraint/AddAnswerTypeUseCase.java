@@ -1,4 +1,4 @@
-package formfiller.usecases.addValueConstraint;
+package formfiller.usecases.addContentConstraint;
 
 import formfiller.entities.constrainable.AnswerType;
 import formfiller.entities.formComponent.FormComponent;
