@@ -19,6 +19,8 @@ public abstract class Format {
 		return name;
 	}
 	
+	//	TODO:	canAcceptAnswer(Answer) = matchesCardinality() && matchesFormat()
+	
 	public boolean matchesCardinality(Answer toMatch) {
 		return singleAnswerMatchesCardinality(toMatch) || 
 				multipleAnswerMatchesCardinality(toMatch);
@@ -47,6 +49,7 @@ public abstract class Format {
 				castContent.size() <= maxAnswers;
 	}
 
+	//	TODO:	Fix this.  MultiOptionVariable can accept 0 or 1 answers.
 	private boolean isNotALegalMultipleAnswer(Answer toMatch) {
 		return toMatch == null || !answerContentIsACollection(toMatch.getContent());
 	}

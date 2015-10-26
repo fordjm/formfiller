@@ -13,7 +13,7 @@ import formfiller.entities.QuestionImpl;
 import formfiller.entities.formComponent.FormComponent;
 import formfiller.gateways.impl.InMemoryFormComponentGateway;
 import formfiller.gateways.impl.InMemoryFormComponentState;
-import formfiller.utilities.stringMatcher.CaseIgnoringStringMatcher;
+import formfiller.utilities.valueMatcher.CaseIgnoringStringMatcher;
 
 // TODO:  Credit CleanCoders JCS TestSetup
 public class TestSetup {

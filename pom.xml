@@ -22,10 +22,10 @@
   		<version>20150814</version>
   	</dependency>
   	<dependency>
-		<groupId>com.github.drapostolos</groupId>
-		<artifactId>type-parser</artifactId>
-		<version>0.5.0</version>
-	</dependency>  	
+		<groupId>org.apache.commons</groupId>
+		<artifactId>commons-lang3</artifactId>
+		<version>3.4</version>
+	</dependency> 	
   </dependencies>
   <build>
 	<plugins>

@@ -8,19 +8,19 @@
 |check    |is                                   |@componentId|boundary|@boundary|equal to|@num |true |
 |check    |is                                   |@componentId|boundary|@boundary|equal to|-@num|false|
 
-!| scenario     |answer count boundary addition table     |boundary     |    |value    |    |was added    |    |message    |
-|given a form component with the component ID multiOption, the question content "question content", and the answer format V|
-|given that the form component multiOption accepts 5 answers maximum                                                       |
-|when the user adds a @value answer @boundary to multiOption                                                               |
-|then multiOption should accept a @boundary of @value answers                                                              |
-|then the system should present the message, @message                                                                      |
+!| scenario      |answer count boundary addition table      |format      |     |boundary     |     |value     |     |message     |
+|given a form component with the component ID componentId, the question content "question content", and the answer format @format|
+|given that the form component componentId accepts 5 answers maximum                                                             |
+|when the user adds a @value answer @boundary to componentId                                                                     |
+|then componentId should accept a @boundary of @value answers                                                                    |
+|then the system should present the message, @message                                                                            |
 
 |script|add answer count boundary|
 
 #NOTE:  wasAdded is never used.
-|answer count boundary addition table                                  |
-|boundary|value|was added|message                                      |
-|minimum |1    |true     |You successfully added a minimum of 1 answer |
-|minimum |3    |true     |You successfully added a minimum of 3 answers|
-|maximum |1    |true     |You successfully added a maximum of 1 answer |
-|maximum |3    |true     |You successfully added a maximum of 3 answers|
+|answer count boundary addition table                               |
+|format|boundary|value|message                                      |
+|M     |minimum |1    |You successfully added a minimum of 1 answer |
+|M     |minimum |3    |You successfully added a minimum of 3 answers|
+|M     |maximum |1    |You successfully added a maximum of 1 answer |
+|M     |maximum |3    |You successfully added a maximum of 3 answers|

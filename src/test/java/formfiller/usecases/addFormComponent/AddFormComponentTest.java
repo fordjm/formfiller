@@ -15,7 +15,7 @@ import formfiller.entities.Question;
 import formfiller.entities.formComponent.FormComponent;
 import formfiller.entities.formComponent.NullFormComponents;
 import formfiller.entities.format.Format;
-import formfiller.entities.format.OptionVariable;
+import formfiller.entities.format.SingleOptionVariable;
 import formfiller.entities.format.Unstructured;
 import formfiller.request.models.AddFormComponentRequest;
 import formfiller.usecases.addAnswer.AnswerValidator;
@@ -98,7 +98,7 @@ public class AddFormComponentTest {
 	@Test
 	public void undoingSuccessfulFormComponentAdditionRemovesFormComponent() {
 		request = makeMockAddFormComponentRequestWithFieldValues("componentId", 
-						"questionContent", new OptionVariable(), String.class);		
+						"questionContent", new SingleOptionVariable(), String.class);		
 		useCase.execute(request);	
 		useCase.undo();
 		FormComponent found = Context.formComponentGateway.find("componentId");

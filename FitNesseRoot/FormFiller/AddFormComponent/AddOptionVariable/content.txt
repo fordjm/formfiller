@@ -1,6 +1,6 @@
 |script|add form component|
 
-!| form component addition table                                                                                                                   |
-|question id|question content    |answer format|message                                               |added id|added content       |added format  |
-|name       |"What is your name?"|V            |You successfully added the new form component, "name."|name    |"What is your name?"|OptionVariable|
-|age        |"What is your age?" |V            |You successfully added the new form component, "age." |age     |"What is your age?" |OptionVariable|
+!| form component addition table                                                                                                                                                   |
+|question id|question content                 |answer format|message                                               |added id|added content                    |added format        |
+|sign       |"What is your astrological sign?"|S            |You successfully added the new form component, "sign."|sign    |"What is your astrological sign?"|SingleOptionVariable|
+|pets       |"Which pets do you own?"         |M            |You successfully added the new form component, "pets."|pets    |"Which pets do you own?"         |MultiOptionVariable |

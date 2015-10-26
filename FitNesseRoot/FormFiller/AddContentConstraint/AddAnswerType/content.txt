@@ -18,5 +18,6 @@
 |int                     |
 |long                    |
 |short                   |
+|Date                    |
 |Number                  |
 |String                  |

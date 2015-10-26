@@ -11,9 +11,7 @@ import org.mockito.Mockito;
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
 import formfiller.Context;
 import formfiller.entities.formComponent.FormComponent;
-import formfiller.entities.format.Format;
-import formfiller.entities.format.OptionVariable;
-import formfiller.entities.format.Unstructured;
+import formfiller.entities.format.*;
 import formfiller.request.models.RequestWithComponentIdAndFormat;
 import formfiller.usecases.undoable.UndoableUseCaseExecution.MalformedRequest;
 import formfiller.utilities.UndoableUseCaseExecutionCommonTests;
@@ -108,7 +106,7 @@ public class ChangeFormatTest {
 		@Test
 		public void executingWellFormedRequestChangesFormat() {
 			addFormComponentToChange(Unstructured.class);
-			mockRequest = makeMockWellFormedChangeFormatRequest(new OptionVariable());
+			mockRequest = makeMockWellFormedChangeFormatRequest(new SingleOptionVariable());
 
 			useCase.execute(mockRequest);
 
@@ -118,7 +116,7 @@ public class ChangeFormatTest {
 		@Test
 		public void undoingSuccessfulChangeRevertsFormat() {
 			addFormComponentToChange(Unstructured.class);
-			mockRequest = makeMockWellFormedChangeFormatRequest(new OptionVariable());
+			mockRequest = makeMockWellFormedChangeFormatRequest(new SingleOptionVariable());
 
 			useCase.execute(mockRequest);
 			useCase.undo();

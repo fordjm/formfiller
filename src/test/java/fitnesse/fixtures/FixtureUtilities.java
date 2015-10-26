@@ -12,9 +12,10 @@ public class FixtureUtilities {
 		return response.message;
 	}
 	
-	public static boolean foundComponent(String id){
+	public static boolean foundComponentId(String id){
 		FormComponent foundComponent = 
 				Context.formComponentGateway.find(id);
 		return !FormComponentUtilities.isComponentNull(foundComponent);
 	}
+	
 }

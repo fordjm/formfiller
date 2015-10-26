@@ -1,4 +1,5 @@
 #	TODO week of 9/20:  Write acceptance tests and funcationality for answer format and allowable answers features
+#	TODO 10/26:  Rewrite this cluster bomb.
 
 |given when then and                                                                                                                                                                                                                                                              |
 |given scenario                                                                                                                            |when scenario                             |then scenario                              |and scenario                                   |

@@ -4,7 +4,7 @@ import java.util.List;
 
 import formfiller.delivery.Controller;
 import formfiller.delivery.event.impl.ParsedEvent;
-import formfiller.request.builders.RequestBuilderImpl;
+import formfiller.request.builder.RequestBuilderImpl;
 import formfiller.request.models.Request;
 import formfiller.usecases.LocalUseCase;
 import formfiller.usecases.factory.UseCaseFactory;

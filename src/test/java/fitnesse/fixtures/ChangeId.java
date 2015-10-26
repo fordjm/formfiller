@@ -13,4 +13,5 @@ public class ChangeId {
 		String spacedIds = StringUtilities.makeSpacedString(oldId, newId);
 		stringEventManager.updateHandler("ChangeId " + spacedIds);
 	}
+	
 }

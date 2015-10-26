@@ -9,7 +9,6 @@ import org.mockito.Mockito;
 
 import formfiller.entities.AnswerImpl;
 import formfiller.entities.constrainable.Constrainable;
-import formfiller.entities.constrainable.ValueEquals;
 import formfiller.entities.constrainable.ValueMinimum;
 import formfiller.entities.constrainable.ValueMaximum;
 import formfiller.utilities.AnswerMocker;
@@ -81,8 +80,8 @@ public class AnswerValidatorTest {
 	
 	@Test
 	public void validAnswerThatSatisfiesAllConstraintsIsValid() {
-		mockAnswer = AnswerMocker.makeMockAnswer(LOWER_INT);
-		mockSatisfied = makeSatisfiedConstraint(ValueEquals.class, LOWER_INT);
+		mockAnswer = AnswerMocker.makeMockAnswer(HIGHER_INT);
+		mockSatisfied = makeSatisfiedConstraint(ValueMinimum.class, HIGHER_INT);
 		
 		addConstraints(mockSatisfied);
 		

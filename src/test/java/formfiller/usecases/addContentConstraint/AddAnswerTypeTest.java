@@ -40,7 +40,7 @@ public class AddAnswerTypeTest {
 	}
 
 	private boolean componentRequiresAnswerType(Type type) {
-		return tester.requiresType(found.validator, type);
+		return tester.isTypeRequired(found.validator, type);
 	}
 	
 	@Before

@@ -2,7 +2,9 @@ package formfiller.utilities;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,9 +26,10 @@ public class SampleAnswers {
 		return result;
 	}
 	
-	//	TODO:	How to handle Number?
+	//	TODO:	How to correctly handle Number?
 	private void addAllSamples(Map<String, Answer> samplesMap){
 		Number sampleNumber = BigDecimal.ONE;
+		Date sampleDate = getCurrentDate();
 		samplesMap.put("boolean", makeAnswer("boolean", true));
 		samplesMap.put("byte", makeAnswer("byte", Byte.MIN_VALUE));
 		samplesMap.put("double", makeAnswer("double", Double.MIN_VALUE));
@@ -34,13 +37,20 @@ public class SampleAnswers {
 		samplesMap.put("int", makeAnswer("int", Integer.MIN_VALUE));
 		samplesMap.put("long", makeAnswer("long", Long.MIN_VALUE));
 		samplesMap.put("short", makeAnswer("short", Short.MIN_VALUE));
+		samplesMap.put("Date", makeAnswer("Date", sampleDate));
 		samplesMap.put("Number", makeAnswer("Number", sampleNumber));
 		samplesMap.put("String", makeAnswer("String", "sampleString"));
+	}
+
+	private Date getCurrentDate() {
+		Calendar cal = Calendar.getInstance();
+		return cal.getTime();
 	}
 
 	private Collection<Answer> makeNonNumberSamples() {
 		Collection<Answer> result = new ArrayList<Answer>();
 		result.add(get("boolean"));
+		result.add(get("Date"));
 		result.add(get("String"));
 		return result;
 	}

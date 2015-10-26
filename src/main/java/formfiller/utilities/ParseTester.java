@@ -3,6 +3,8 @@ package formfiller.utilities;
 import java.lang.reflect.Type;
 
 public class ParseTester {  
+	//	TODO:	Generalize this.  This is awful.
+	//			Pass boundary obj with Map<Class,Method>? (parsing method)
 	public static boolean canParseToType(Type type, Object object) {
 		try{
 			parseOrThrowException(type, object);
@@ -12,7 +14,7 @@ public class ParseTester {
 		}		
 	}
 
-	//	TODO:	Make this extensible to new types like Android's GeoPoint.
+	//	TODO:	Deal in objects, not primitives.
 	private static void parseOrThrowException(Type type, Object object) {
 		if (type.equals(byte.class)) ((Byte) object).byteValue();
 		else if (type.equals(boolean.class)) ((Boolean) object).booleanValue();
@@ -22,7 +24,8 @@ public class ParseTester {
 		else if (type.equals(int.class)) ((Integer) object).intValue();
 		else if (type.equals(long.class)) ((Long) object).longValue();
 		else if (type.equals(short.class)) ((Short) object).shortValue();
-		else throw new IllegalArgumentException("Cannot parse objects to type " + type);
+		else throw new IllegalArgumentException(
+				"Cannot parse objects to type " + type);
 	}
 	
 }

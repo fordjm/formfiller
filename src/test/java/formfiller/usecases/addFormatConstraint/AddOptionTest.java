@@ -8,7 +8,7 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import formfiller.entities.formComponent.FormComponent;
-import formfiller.entities.format.OptionVariable;
+import formfiller.entities.format.*;
 import formfiller.request.models.AddOptionRequest;
 import formfiller.usecases.addFormatConstraint.AddOptionUseCase;
 import formfiller.usecases.undoable.UndoableUseCaseExecution;
@@ -24,7 +24,7 @@ public class AddOptionTest {
 	@Before
 	public void setUp() {
 		useCase = new AddOptionUseCase();
-		UnitTestSetupUtilities.addFormComponentToChange(new OptionVariable());
+		UnitTestSetupUtilities.addFormComponentToChange(new SingleOptionVariable());
 	}
 
 	private AddOptionRequest makeEmptyMockAddOptionRequest() {

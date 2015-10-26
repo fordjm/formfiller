@@ -3,7 +3,7 @@ package formfiller;
 import formfiller.appBoundaries.Presenter;
 import formfiller.gateways.FormComponentGateway;
 import formfiller.gateways.FormComponentState;
-import formfiller.utilities.stringMatcher.StringMatcher;
+import formfiller.utilities.valueMatcher.StringMatcher;
 
 // As presented in the Clean Coders Java Case Study codecast
 // https://cleancoders.com/episode/case-study-episode-1/show

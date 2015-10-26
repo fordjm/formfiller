@@ -2,10 +2,12 @@ package formfiller.utilities;
 
 import static org.junit.Assert.*;
 
+import java.util.Date;
+
 import org.junit.Before;
 import org.junit.Test;
 
-public class StringToTypeConverterTest {
+public class PreDefinedStringToTypeConverterTest {
 	private StringToTypeConverter converter;
 	private Class<?> converted;
 
@@ -15,7 +17,7 @@ public class StringToTypeConverterTest {
 
 	@Before
 	public void setUp() {
-		converter = new StringToTypeConverter();
+		converter = new PreDefinedStringToTypeConverter();
 	}
 
 	@Test
@@ -76,6 +78,14 @@ public class StringToTypeConverterTest {
 
 	//	TODO:	Handle capitalization inconsistency with language-specific 
 	//			type plugins (primitives, Java, C#, Android, etc?)
+
+	@Test
+	public void canConvertDate() {
+		converted = converter.convert("Date");
+		
+		assertThatConverterReturnsType(Date.class);
+	}
+	
 	@Test
 	public void canConvertNumber() {
 		converted = converter.convert("Number");

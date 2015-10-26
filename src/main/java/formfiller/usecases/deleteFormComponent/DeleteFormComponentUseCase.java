@@ -23,7 +23,7 @@ public class DeleteFormComponentUseCase extends UndoableUseCaseExecution {
 		deleted = Context.formComponentGateway.remove(
 				castRequest.componentId);
 		if (deleted == null) throw new AbsentElementDeletion(
-					"No component existed with id " + castRequest.componentId);					
+					"No component existed with id \"" + castRequest.componentId + "\"");					
 	}
 
 	protected String makeSuccessfulMessage() {

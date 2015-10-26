@@ -1,13 +1,14 @@
-!| scenario                              |form component deletion table|componentId||deletedId||message||found component|
-|given a form component with the component ID @componentId, the question content content, and the answer format U       |
-|when the user deletes the form component|@deletedId                                                                    |
-|then the system should present the message, @message                                                                   |
-|then the system should find the component with id @componentId @foundComponent                                         |
+!| scenario                              |form component deletion table|componentId||deletedId||message||found component id|
+|given a form component with the component ID @componentId, the question content content, and the answer format U          |
+|when the user deletes the form component|@deletedId                                                                       |
+|then the system should present the message, @message                                                                      |
+|then the system should find the component with id @componentId @foundComponentId                                          |
 
 |script|delete form component|
 
-!| form component deletion table                                                           |
-|component id|deletedId|message                                            |found component|
-|name        |unknown  |No component existed with id unknown               |true           |
-|name        |name     |You successfully deleted the form component, "name"|false          |
-|age         |age      |You successfully deleted the form component, "age" |false          |
+#	TODO:  Make more readable.  Found component with componentId, not deletedId.
+!| form component deletion table                                                              |
+|component id|deletedId|message                                            |found component id|
+|name        |unknown  |No component existed with id "unknown"             |true              |
+|name        |name     |You successfully deleted the form component, "name"|false             |
+|age         |age      |You successfully deleted the form component, "age" |false             |

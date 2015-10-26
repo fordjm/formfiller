@@ -14,8 +14,12 @@
 
 !| value maximum addition table            |
 |type  |maximum    |accepts    |rejects    |
+|byte  |-64        |-96        |-32        |
 |char  |D          |A          |F          |
 |double|10.5       |10.4       |10.6       |
+|float |10.5       |10.4       |10.6       |
 |int   |10         |10         |11         |
-|Date  |21-Oct-2015|01-Oct-2015|31-Oct-2015|
-#|Date  |Oct-21-2015|May-07-2015|Dec-28-2015|
+|long  |111011     |111010     |111100     |
+|short |100        |010        |111        |
+|Date  |21-Oct-2015|01-Sep-2015|31-Jan-2016|
+|String|max        |joe        |moe        |

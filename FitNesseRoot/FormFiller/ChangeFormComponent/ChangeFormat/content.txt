@@ -4,7 +4,7 @@
 |script|add form component|
 
 !| script                                                                                                                                 |
-|given a form component with the component ID colors, the question content "What is your favorite primary color?", and the answer format V|
+|given a form component with the component ID colors, the question content "What is your favorite primary color?", and the answer format S|
 |when the user changes the                        |colors                       |format to                       |U                       |
 |then the system should present the message, You successfully changed the format to Unstructured                                          |
 |then the form component with ID colors should have the format Unstructured                                                               |
@@ -13,6 +13,6 @@
 
 !| script                                                                                                                                 |
 |given a form component with the component ID colors, the question content "What is your favorite primary color?", and the answer format U|
-|when the user changes the                        |colors                       |format to                       |V                       |
-|then the system should present the message, You successfully changed the format to OptionVariable                                        |
-|then the form component with ID colors should have the format OptionVariable                                                             |
+|when the user changes the                        |colors                       |format to                       |S                       |
+|then the system should present the message, You successfully changed the format to SingleOptionVariable                                  |
+|then the form component with ID colors should have the format SingleOptionVariable                                                       |

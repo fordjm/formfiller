@@ -8,13 +8,13 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import formfiller.entities.formComponent.FormComponent;
-import formfiller.entities.format.OptionVariable;
+import formfiller.entities.format.MultiOptionVariable;
 import formfiller.request.models.AddAnswerCountBoundaryRequest;
 import formfiller.usecases.undoable.UndoableUseCaseExecution;
 import formfiller.utilities.FormComponentUtilities;
 import formfiller.utilities.UndoableUseCaseExecutionCommonTests;
 
-//	TODO:	Don't allow setting boundary on Unstructured in this use case.
+//	TODO:	Don't allow setting boundary on Unstructured or SOV in this use case.
 //			(Allow setting minimum = 1 through AddRequiredAnswerUseCase.)
 public class AddAnswerCountBoundaryTest {
 	private AddAnswerCountBoundaryUseCase useCase;
@@ -25,7 +25,7 @@ public class AddAnswerCountBoundaryTest {
 	@Before
 	public void setUp() {
 		useCase = new AddAnswerCountBoundaryUseCase();
-		UnitTestSetupUtilities.addFormComponentToChange(new OptionVariable());
+		UnitTestSetupUtilities.addFormComponentToChange(new MultiOptionVariable());
 	}
 
 	private AddAnswerCountBoundaryRequest makeEmptyMockAddAnswerCountBoundaryRequest() {

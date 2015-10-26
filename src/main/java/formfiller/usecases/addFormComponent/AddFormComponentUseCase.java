@@ -1,6 +1,7 @@
 package formfiller.usecases.addFormComponent;
 
 import formfiller.Context;
+import formfiller.entities.Question;
 import formfiller.entities.QuestionImpl;
 import formfiller.entities.formComponent.FormComponent;
 import formfiller.request.models.AddFormComponentRequest;
@@ -34,7 +35,7 @@ public class AddFormComponentUseCase extends UndoableUseCaseExecution {
 		return result;
 	}
 
-	private QuestionImpl makeNewQuestion() {
+	private Question makeNewQuestion() {
 		QuestionImpl result = new QuestionImpl();
 		result.setId(castRequest.componentId);
 		result.setContent(castRequest.questionContent);

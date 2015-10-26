@@ -20,7 +20,7 @@ import formfiller.entities.constrainable.ValueMaximum;
 public class ValueBoundaryTest {
 	private ValueBoundary valueBoundary;
 	
-	public class ValueUnderBoundaryContext {		
+	public class ValueMaximumContext {		
 		private Date candidate;
 
 		@Before
@@ -64,7 +64,7 @@ public class ValueBoundaryTest {
 		
 	}
 	
-	public class ValueOverBoundaryContext {		
+	public class ValueMinimumContext {		
 		@Before
 		public void setUp() {
 			valueBoundary = new ValueMinimum("min");

@@ -3,15 +3,14 @@ package formfiller.entities.format;
 import java.util.ArrayList;
 import java.util.List;
 
-//	TODO:	Make abstract.  Add subclasses Single- and MultiOptionVariable
-public class OptionVariable extends Format {
+public abstract class OptionVariable extends Format {
 	//	TODO:	Make this variable private.
 	//			Consider changing to a List<String>
-	public List<Object> options = new ArrayList<Object>();
+	public List<Object> options;
 	
 	public OptionVariable() {
 		super();
-		name = "OptionVariable";
+		options = new ArrayList<Object>();
 	}
 
 	public boolean matchesFormat(Object content) {

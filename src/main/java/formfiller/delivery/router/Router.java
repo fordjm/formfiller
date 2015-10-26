@@ -14,9 +14,11 @@ import formfiller.delivery.event.impl.ParsedEvent;
 public class Router {
 	public static final Controller handleUnfoundUseCaseController = 
 			new HandleUnfoundUseCaseController();
-	private Map<String, Controller> routes = new HashMap<String, Controller>();
+	private Map<String, Controller> routes;
 	
-	public Router() { }
+	public Router() {
+		routes = new HashMap<String, Controller>();
+	}
 
 	public void addMethod(String request, Controller controller) {
 		routes.put(request, controller);

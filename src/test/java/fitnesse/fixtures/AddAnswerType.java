@@ -8,15 +8,15 @@ import formfiller.entities.formComponent.FormComponent;
 import formfiller.response.models.PresentableResponse;
 import formfiller.utilities.FormComponentUtilities;
 import formfiller.utilities.StringToTypeConverter;
+import formfiller.utilities.PreDefinedStringToTypeConverter;
 import formfiller.utilities.TypeRequirementTester;
 
-//	TODO:	Determine whether drapostolos' type-parser helps here.
-//			Fix AnswerValidator and its unit tests.
+//	TODO:	Fix AnswerValidator and its unit tests.
 public class AddAnswerType {
 	private StringToTypeConverter converter;
 	
 	public AddAnswerType() {
-		converter = new StringToTypeConverter();
+		converter = new PreDefinedStringToTypeConverter();
 	}
 
 	public void whenTheUserAddsTheAnswerTypeToComponent(String type, 
@@ -41,8 +41,8 @@ public class AddAnswerType {
 
 	public boolean componentRequiresType(String componentId, String type){
 		FormComponent found = FormComponentUtilities.find(componentId);
-		Type toCheck = new StringToTypeConverter().convert(type);
-		return new TypeRequirementTester().requiresType(found.validator, toCheck);
+		Type toCheck = new PreDefinedStringToTypeConverter().convert(type);
+		return new TypeRequirementTester().isTypeRequired(found.validator, toCheck);
 	}
 	
 }

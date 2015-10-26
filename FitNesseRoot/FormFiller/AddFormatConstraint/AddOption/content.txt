@@ -7,7 +7,7 @@
 |script|add option|
 
 !|script                                                                                                                  |
-|given a form component with the component ID isHappy, the question content "I am a happy person", and the answer format V|
+|given a form component with the component ID isHappy, the question content "I am a happy person", and the answer format S|
 |when the user adds the option agree to the component with ID isHappy                                                     |
 |then the component with id isHappy should have the option agree                                                          |
 |then the system should present the message, You successfully added the option, "agree"                                   |

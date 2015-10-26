@@ -1,4 +1,4 @@
-package formfiller.request.builders;
+package formfiller.request.builder;
 
 import formfiller.Context;
 import formfiller.delivery.controller.Arguments;

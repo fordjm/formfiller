@@ -166,8 +166,8 @@ public class AskQuestionTest {
 			undoAskQuestionUseCase();
 		}	
 
-		private OptionVariable makeOptionVariableFormat() {
-			OptionVariable result = new OptionVariable();
+		private OptionVariable makeSingleOptionVariableFormat() {
+			OptionVariable result = new SingleOptionVariable();
 			result.options = makeLegalAgeOptions();
 			return result;
 		}
@@ -183,7 +183,7 @@ public class AskQuestionTest {
 			mockNameFormComponent = makeMockFormComponent("name", 
 					"What is your name?", false, new Unstructured());
 			mockAgeFormComponent = makeMockFormComponent("age", 
-					"What is your age?", true, makeOptionVariableFormat());
+					"What is your age?", true, makeSingleOptionVariableFormat());
 			saveFormComponents(mockNameFormComponent, mockAgeFormComponent);
 		}
 		

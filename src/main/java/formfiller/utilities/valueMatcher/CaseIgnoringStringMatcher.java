@@ -1,4 +1,4 @@
-package formfiller.utilities.stringMatcher;
+package formfiller.utilities.valueMatcher;
 
 //	TODO:	Add JaccardDistanceStringMatcher (notMatching ==  score < threshold)
 public class CaseIgnoringStringMatcher extends StringMatcher {

@@ -15,7 +15,7 @@ public class TypeRequirementTester {
 		samples = new SampleAnswers();
 	}
 	
-	public boolean requiresType(AnswerValidator validator, Type type) {
+	public boolean isTypeRequired(AnswerValidator validator, Type type) {
 		this.validator = validator;
 		this.typeString = shortenTypeName(type);
 		return onlyAcceptsCorrectType();

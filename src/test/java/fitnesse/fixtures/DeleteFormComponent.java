@@ -10,4 +10,5 @@ public class DeleteFormComponent {
 	public void whenTheUserDeletesTheFormComponent(String componentId){
 		stringEventManager.updateHandler("DelFC " + componentId);
 	}
+	
 }
