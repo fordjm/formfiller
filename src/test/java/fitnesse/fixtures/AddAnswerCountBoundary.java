@@ -7,6 +7,8 @@ import formfiller.utilities.FormComponentUtilities;
 import formfiller.utilities.StringUtilities;
 
 public class AddAnswerCountBoundary {	
+	private final int DEFAULT_MINIMUM = 0;
+	private final int DEFAULT_MAXIMUM = 1;
 	private StringEventManager stringEventManager;
 
 	public AddAnswerCountBoundary() {
@@ -14,11 +16,21 @@ public class AddAnswerCountBoundary {
 	}
 
 	//	TODO:	Change to ...HasExistingBoundary()
-	public void givenThatTheComponentWithIdHasExistingMaximum(String componentId, 
+	//			Refactor to fix duplication.
+	public void givenThatTheComponentWithIdHasExistingMinimum(String componentId, 
 			int count){
+		if (count == DEFAULT_MINIMUM) return;
 		FormComponent found = Context.formComponentGateway.find(componentId);
 		if (!FormComponentUtilities.isComponentNull(found))
-			found.format.maxAnswers = count;
+			found.format.setMinAnswers(count);
+	}
+	
+	public void givenThatTheComponentWithIdHasExistingMaximum(String componentId, 
+			int count){
+		if (count == DEFAULT_MAXIMUM) return;
+		FormComponent found = Context.formComponentGateway.find(componentId);
+		if (!FormComponentUtilities.isComponentNull(found))
+			found.format.setMaxAnswers(count);
 	}
 	
 	public void addAnswerBoundary(int count, String boundary, String componentId){
@@ -36,9 +48,9 @@ public class AddAnswerCountBoundary {
 
 	private int getBoundaryValue(Format format, String boundary) {
 		if (Context.stringMatcher.matches(boundary, "minimum"))
-			return format.minAnswers;
+			return format.getMinAnswers();
 		else if (Context.stringMatcher.matches(boundary, "maximum"))
-			return format.maxAnswers;
+			return format.getMaxAnswers();
 		else
 			throw new IllegalArgumentException(
 					"Could not match boundary string " + boundary);

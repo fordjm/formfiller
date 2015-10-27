@@ -26,39 +26,29 @@ public class AddAnswerCountBoundaryUseCase extends UndoableUseCaseExecution {
 
 	protected void execute() {
 		componentFormat = getComponentFormat();
-		if (hasIllegalAnswerCount(componentFormat.minAnswers, componentFormat.maxAnswers))
-			throw new MaximumLessThanMinimum();
 		oldBoundaryValue = getBoundaryValue(componentFormat);
-		updateBoundaryValue(castRequest.count, castRequest.boundary);
+		try {
+			updateBoundaryValue(castRequest.count, castRequest.boundary);
+		} catch (RuntimeException r) {
+			throw r;
+		}
 	}
 
+	//	TODO:	Format must be MOV.
 	private Format getComponentFormat() {
-		FormComponent component = FormComponentUtilities.find(castRequest.componentId);
+		FormComponent component = 
+				FormComponentUtilities.find(castRequest.componentId);
 		return component.format;
 	}
 
 	private int getBoundaryValue(Format format) {
 		String boundary = castRequest.boundary;
 		if (Context.stringMatcher.matches("minimum", boundary))
-				return format.minAnswers;
+				return format.getMinAnswers();
 		else if (Context.stringMatcher.matches("maximum", boundary))
-				return format.maxAnswers;
+				return format.getMaxAnswers();
 		else throw new IllegalArgumentException(
 					"Could not match boundary string " + boundary);
-	}
-
-	private boolean hasIllegalAnswerCount(int minAnswers, int maxAnswers) {
-		return hasIllegalMinimum(maxAnswers) || hasIllegalMaximum(minAnswers);
-	}
-
-	private boolean hasIllegalMinimum(int maxAnswers) {
-		return castRequest.boundary.equalsIgnoreCase("minimum") &&
-				castRequest.count > maxAnswers;
-	}
-
-	private boolean hasIllegalMaximum(int minAnswers) {
-		return castRequest.boundary.equalsIgnoreCase("maximum") &&
-				minAnswers > castRequest.count;
 	}
 
 	private void updateBoundaryValue(int count, String boundary) {
@@ -69,11 +59,11 @@ public class AddAnswerCountBoundaryUseCase extends UndoableUseCaseExecution {
 	}
 
 	private void updateMinimum(Format format, int num) {
-		format.minAnswers = num;
+		format.setMinAnswers(num);
 	}
 
 	private void updateMaximum(Format format, int num) {
-		format.maxAnswers = num;
+		format.setMaxAnswers(num);
 	}
 
 	protected String makeSuccessfulMessage() {
@@ -87,9 +77,9 @@ public class AddAnswerCountBoundaryUseCase extends UndoableUseCaseExecution {
 		int count = castRequest.count;
 		String result = count + " answer";
 		if (count == 1)
-			return result;
+			return result + ".";
 		else
-			return result + "s";
+			return result + "s.";
 	}
 
 	public void undo() {
@@ -97,13 +87,5 @@ public class AddAnswerCountBoundaryUseCase extends UndoableUseCaseExecution {
 		componentFormat = getComponentFormat();
 		updateBoundaryValue(oldBoundaryValue, castRequest.boundary);
 	}
-
-	public class MaximumLessThanMinimum extends RuntimeException {
-
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = 1L;
-		
-	}
+	
 }

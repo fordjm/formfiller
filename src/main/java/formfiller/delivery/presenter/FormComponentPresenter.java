@@ -24,4 +24,5 @@ public class FormComponentPresenter extends ResponsePresenter {
 		Context.questionPresenter.present(component.question);
 		Context.answerPresenter.present(component.answer);
 	}
+	
 }

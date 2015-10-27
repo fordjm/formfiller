@@ -5,17 +5,20 @@ import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 
+import de.bechte.junit.runners.context.HierarchicalContextRunner;
 import formfiller.entities.formComponent.FormComponent;
+import formfiller.entities.format.Format.MaximumLessThanMinimum;
 import formfiller.entities.format.MultiOptionVariable;
 import formfiller.request.models.AddAnswerCountBoundaryRequest;
 import formfiller.usecases.undoable.UndoableUseCaseExecution;
 import formfiller.utilities.FormComponentUtilities;
 import formfiller.utilities.UndoableUseCaseExecutionCommonTests;
 
-//	TODO:	Don't allow setting boundary on Unstructured or SOV in this use case.
-//			(Allow setting minimum = 1 through AddRequiredAnswerUseCase.)
+//	TODO:	Add a context for each format.
+@RunWith(HierarchicalContextRunner.class)
 public class AddAnswerCountBoundaryTest {
 	private AddAnswerCountBoundaryUseCase useCase;
 	private AddAnswerCountBoundaryRequest mockRequest;
@@ -25,7 +28,8 @@ public class AddAnswerCountBoundaryTest {
 	@Before
 	public void setUp() {
 		useCase = new AddAnswerCountBoundaryUseCase();
-		UnitTestSetupUtilities.addFormComponentToChange(new MultiOptionVariable());
+		UnitTestSetupUtilities.addFormComponentToChange(
+				new MultiOptionVariable());
 	}
 
 	private AddAnswerCountBoundaryRequest makeEmptyMockAddAnswerCountBoundaryRequest() {
@@ -94,7 +98,7 @@ public class AddAnswerCountBoundaryTest {
 		useCase.execute(mockRequest);
 		foundComponent = FormComponentUtilities.find(mockRequest.componentId);
 		
-		assertThat(foundComponent.format.minAnswers, is(boundaryValue));
+		assertThat(foundComponent.format.getMinAnswers(), is(boundaryValue));
 	}
 
 	@Test
@@ -106,11 +110,10 @@ public class AddAnswerCountBoundaryTest {
 		useCase.execute(mockRequest);
 		foundComponent = FormComponentUtilities.find(mockRequest.componentId);
 		
-		assertThat(foundComponent.format.maxAnswers, is(boundaryValue));
+		assertThat(foundComponent.format.getMaxAnswers(), is(boundaryValue));
 	}
 
-	//	TODO:	Determine whether AnswerFormat class should contain exception.
-	@Test(expected = AddAnswerCountBoundaryUseCase.MaximumLessThanMinimum.class)
+	@Test(expected = MaximumLessThanMinimum.class)
 	public void addingMaximumLessThanMinimumThrowsException() {
 		boundaryValue = 3;
 		mockRequest = makeMockAddAnswerCountBoundaryRequest(
@@ -120,7 +123,7 @@ public class AddAnswerCountBoundaryTest {
 	
 	@Test
 	public void undoingSuccessfulAdditionRevertsBoundary() {
-		boundaryValue = 2;
+		boundaryValue = 3;
 		mockRequest = makeMockAddAnswerCountBoundaryRequest(
 				"toChange", "maximum");
 		
@@ -128,7 +131,7 @@ public class AddAnswerCountBoundaryTest {
 		useCase.undo();
 		foundComponent = FormComponentUtilities.find(mockRequest.componentId);
 		
-		assertThat(foundComponent.format.maxAnswers, is(1));
+		assertThat(foundComponent.format.getMaxAnswers(), is(2));
 	}
 	
 }

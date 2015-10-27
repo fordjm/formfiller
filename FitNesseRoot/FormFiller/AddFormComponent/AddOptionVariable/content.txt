@@ -1,6 +1,0 @@
-|script|add form component|
-
-!| form component addition table                                                                                                                                                   |
-|question id|question content                 |answer format|message                                               |added id|added content                    |added format        |
-|sign       |"What is your astrological sign?"|S            |You successfully added the new form component, "sign."|sign    |"What is your astrological sign?"|SingleOptionVariable|
-|pets       |"Which pets do you own?"         |M            |You successfully added the new form component, "pets."|pets    |"Which pets do you own?"         |MultiOptionVariable |

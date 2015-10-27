@@ -1,26 +1,35 @@
-!|scenario                       |given that the form component|component id        |accepts|count|answers|boundary|
-|given that the component with id|@componentId                 |has existing maximum|@count                        |
-
+#	TODO:	Refactor:  Clean up duplication, Remove blanks from scenarios.
+#	TODO:	This should really be ChangeAnswerCountBoundary.
 !|scenario|when the user adds a _ answer _ to _|num, boundary, componentId            |
 |add      |@num                                |answer|@boundary|boundary|@componentId|
 
-!|scenario|then _ should accept a _ of _ answers|componentId, boundary, num                          |
-|check    |is                                   |@componentId|boundary|@boundary|equal to|@num |true |
-|check    |is                                   |@componentId|boundary|@boundary|equal to|-@num|false|
+!|scenario|then _ should accept a _ of _ answers _|componentId, boundary, num, truthValue                   |
+|check    |is                                     |@componentId|boundary|@boundary|equal to|@num|@truthValue|
 
-!| scenario      |answer count boundary addition table      |format      |     |boundary     |     |value     |     |message     |
-|given a form component with the component ID componentId, the question content "question content", and the answer format @format|
-|given that the form component componentId accepts 5 answers maximum                                                             |
-|when the user adds a @value answer @boundary to componentId                                                                     |
-|then componentId should accept a @boundary of @value answers                                                                    |
-|then the system should present the message, @message                                                                            |
+!| scenario                      |answer count boundary addition table|format              ||existing min||existing max||boundary||value||is accepted||message|
+|given a form component with the component ID componentId, the question content "question content", and the answer format @format                             |
+|given that the component with id|componentId                         |has existing maximum|@existingMax                                                      |
+|given that the component with id|componentId                         |has existing minimum|@existingMin                                                      |
+|when the user adds a @value answer @boundary to componentId                                                                                                  |
+|then componentId should accept a @boundary of @value answers @isAccepted                                                                                     |
+|then the system should present the message, @message                                                                                                         |
 
 |script|add answer count boundary|
 
-#NOTE:  wasAdded is never used.
-|answer count boundary addition table                               |
-|format|boundary|value|message                                      |
-|M     |minimum |1    |You successfully added a minimum of 1 answer |
-|M     |minimum |3    |You successfully added a minimum of 3 answers|
-|M     |maximum |1    |You successfully added a maximum of 1 answer |
-|M     |maximum |3    |You successfully added a maximum of 3 answers|
+|answer count boundary addition table                                                                                                 |
+|format|existing min|existing max|boundary|value|is accepted|message                                                                  |
+|U     |0           |1           |minimum |1    |true       |You successfully added a minimum of 1 answer.                            |
+|U     |0           |1           |minimum |2    |false      |2 is not a legal minimum for format unstructured.                        |
+|U     |1           |1           |minimum |0    |true       |You successfully added a minimum of 0 answers.                           |
+|U     |1           |1           |maximum |2    |false      |Setting maximum is not a legal operation for format unstructured.        |
+|S     |0           |1           |minimum |1    |true       |You successfully added a minimum of 1 answer.                            |
+|S     |0           |1           |minimum |2    |false      |2 is not a legal minimum for format singleoptionvariable.                |
+|S     |1           |1           |minimum |0    |true       |You successfully added a minimum of 0 answers.                           |
+|S     |1           |1           |maximum |2    |false      |Setting maximum is not a legal operation for format singleoptionvariable.|
+|M     |0           |2           |minimum |1    |true       |You successfully added a minimum of 1 answer.                            |
+|M     |1           |1           |minimum |0    |true       |You successfully added a minimum of 0 answers.                           |
+|M     |1           |2           |minimum |3    |false      |Minimum 3 is greater than maximum 2.                                     |
+|M     |0           |2           |maximum |0    |false      |0 is not a legal maximum for format multioptionvariable.                 |
+|M     |0           |5           |maximum |1    |false      |1 is not a legal maximum for format multioptionvariable.                 |
+|M     |3           |5           |maximum |2    |false      |Minimum 3 is greater than maximum 2.                                     |
+|M     |2           |5           |maximum |4    |true       |You successfully added a maximum of 4 answers.                           |

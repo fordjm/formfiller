@@ -5,9 +5,7 @@ import formfiller.entities.Question;
 import formfiller.entities.QuestionImpl;
 import formfiller.entities.format.Unstructured;
 
-//	TODO:	Make this an enum.
-//			Can this class extend FormComponent but have immutable fields?
-//			(Probably not.  Could make fields private and implement empty setter fct.)
+//	TODO:	Make these similar to NullQuestion and NullAnswer.
 public class NullFormComponents {
 	public static final FormComponent START = makeNullFormComponent(QuestionImpl.START);
 	public static final FormComponent END = makeNullFormComponent(QuestionImpl.END);
