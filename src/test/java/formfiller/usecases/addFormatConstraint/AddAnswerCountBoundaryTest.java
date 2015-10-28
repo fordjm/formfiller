@@ -10,8 +10,8 @@ import org.mockito.Mockito;
 
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
 import formfiller.entities.formComponent.FormComponent;
+import formfiller.entities.format.*;
 import formfiller.entities.format.Format.MaximumLessThanMinimum;
-import formfiller.entities.format.MultiOptionVariable;
 import formfiller.request.models.AddAnswerCountBoundaryRequest;
 import formfiller.usecases.undoable.UndoableUseCaseExecution;
 import formfiller.utilities.FormComponentUtilities;
@@ -73,65 +73,139 @@ public class AddAnswerCountBoundaryTest {
 				"toChange", "");		
 		useCase.execute(mockRequest);
 	}
+	
+	//	TODO:	Run Unstructured thru same suite of tests.
+	//			(Changing to Unstructured in setUp() passes.)
+	public class SingleOptionVariableFormatContext {
+		@Before
+		public void setUp() {
+			UnitTestSetupUtilities.addFormComponentToChange(
+					new SingleOptionVariable());
+		}
 
-	@Test(expected = UndoableUseCaseExecution.MalformedRequest.class)
-	public void illegalMinimumValueThrowsException() {
-		boundaryValue = -1;
-		mockRequest = makeMockAddAnswerCountBoundaryRequest(
-				"toChange", "minimum");		
-		useCase.execute(mockRequest);
-	}
+		@Test(expected = IllegalArgumentException.class)
+		public void illegalMinimumValueThrowsException() {
+			boundaryValue = -1;
+			mockRequest = makeMockAddAnswerCountBoundaryRequest(
+					"toChange", "minimum");		
+			useCase.execute(mockRequest);
+		}
 
-	@Test(expected = IllegalArgumentException.class)
-	public void unrecognizedBoundaryThrowsException() {
-		mockRequest = makeMockAddAnswerCountBoundaryRequest(
-				"toChange", "boundary");		
-		useCase.execute(mockRequest);
-	}
+		@Test(expected = IllegalArgumentException.class)
+		public void unrecognizedBoundaryThrowsException() {
+			mockRequest = makeMockAddAnswerCountBoundaryRequest(
+					"toChange", "boundary");		
+			useCase.execute(mockRequest);
+		}
 
-	@Test
-	public void executingWellFormedRequestAddsAnswerCountMinimum() {
-		boundaryValue = 1;
-		mockRequest = makeMockAddAnswerCountBoundaryRequest(
-				"toChange", "minimum");
+		@Test
+		public void executingWellFormedRequestAddsAnswerCountMinimum() {
+			boundaryValue = 1;
+			mockRequest = makeMockAddAnswerCountBoundaryRequest(
+					"toChange", "minimum");
+			
+			useCase.execute(mockRequest);
+			foundComponent = FormComponentUtilities.find(mockRequest.componentId);
+			
+			assertThat(foundComponent.format.getMinAnswers(), is(boundaryValue));
+		}
+
+		@Test(expected = IllegalStateException.class)
+		public void addingMaximumThrowsException() {
+			boundaryValue = 2;
+			mockRequest = makeMockAddAnswerCountBoundaryRequest(
+					"toChange", "maximum");			
+			useCase.execute(mockRequest);
+		}
+
+		@Test(expected = MaximumLessThanMinimum.class)
+		public void addingMinimumGreaterThanMaximumThrowsException() {
+			boundaryValue = 3;
+			mockRequest = makeMockAddAnswerCountBoundaryRequest(
+					"toChange", "minimum");		
+			useCase.execute(mockRequest);
+		}
 		
-		useCase.execute(mockRequest);
-		foundComponent = FormComponentUtilities.find(mockRequest.componentId);
-		
-		assertThat(foundComponent.format.getMinAnswers(), is(boundaryValue));
-	}
-
-	@Test
-	public void executingWellFormedRequestAddsAnswerCountMaximum() {
-		boundaryValue = 2;
-		mockRequest = makeMockAddAnswerCountBoundaryRequest(
-				"toChange", "maximum");
-		
-		useCase.execute(mockRequest);
-		foundComponent = FormComponentUtilities.find(mockRequest.componentId);
-		
-		assertThat(foundComponent.format.getMaxAnswers(), is(boundaryValue));
-	}
-
-	@Test(expected = MaximumLessThanMinimum.class)
-	public void addingMaximumLessThanMinimumThrowsException() {
-		boundaryValue = 3;
-		mockRequest = makeMockAddAnswerCountBoundaryRequest(
-				"toChange", "minimum");		
-		useCase.execute(mockRequest);
+		@Test
+		public void undoingSuccessfulAdditionRevertsBoundary() {
+			boundaryValue = 1;
+			mockRequest = makeMockAddAnswerCountBoundaryRequest(
+					"toChange", "minimum");
+			
+			useCase.execute(mockRequest);
+			useCase.undo();
+			foundComponent = FormComponentUtilities.find(mockRequest.componentId);
+			
+			assertThat(foundComponent.format.getMinAnswers(), is(0));
+		}
 	}
 	
-	@Test
-	public void undoingSuccessfulAdditionRevertsBoundary() {
-		boundaryValue = 3;
-		mockRequest = makeMockAddAnswerCountBoundaryRequest(
-				"toChange", "maximum");
+	public class MultiOptionVariableFormatContext {
+		@Before
+		public void setUp() {
+			UnitTestSetupUtilities.addFormComponentToChange(
+					new MultiOptionVariable());
+		}
+
+		@Test(expected = IllegalArgumentException.class)
+		public void illegalMinimumValueThrowsException() {
+			boundaryValue = -1;
+			mockRequest = makeMockAddAnswerCountBoundaryRequest(
+					"toChange", "minimum");		
+			useCase.execute(mockRequest);
+		}
+
+		@Test(expected = IllegalArgumentException.class)
+		public void unrecognizedBoundaryThrowsException() {
+			mockRequest = makeMockAddAnswerCountBoundaryRequest(
+					"toChange", "boundary");		
+			useCase.execute(mockRequest);
+		}
+
+		@Test
+		public void executingWellFormedRequestAddsAnswerCountMinimum() {
+			boundaryValue = 1;
+			mockRequest = makeMockAddAnswerCountBoundaryRequest(
+					"toChange", "minimum");
+			
+			useCase.execute(mockRequest);
+			foundComponent = FormComponentUtilities.find(mockRequest.componentId);
+			
+			assertThat(foundComponent.format.getMinAnswers(), is(boundaryValue));
+		}
+
+		@Test
+		public void executingWellFormedRequestAddsAnswerCountMaximum() {
+			boundaryValue = 2;
+			mockRequest = makeMockAddAnswerCountBoundaryRequest(
+					"toChange", "maximum");
+			
+			useCase.execute(mockRequest);
+			foundComponent = FormComponentUtilities.find(mockRequest.componentId);
+			
+			assertThat(foundComponent.format.getMaxAnswers(), is(boundaryValue));
+		}
+
+		@Test(expected = MaximumLessThanMinimum.class)
+		public void addingMaximumLessThanMinimumThrowsException() {
+			boundaryValue = 3;
+			mockRequest = makeMockAddAnswerCountBoundaryRequest(
+					"toChange", "minimum");		
+			useCase.execute(mockRequest);
+		}
 		
-		useCase.execute(mockRequest);
-		useCase.undo();
-		foundComponent = FormComponentUtilities.find(mockRequest.componentId);
-		
-		assertThat(foundComponent.format.getMaxAnswers(), is(2));
-	}
+		@Test
+		public void undoingSuccessfulAdditionRevertsBoundary() {
+			boundaryValue = 3;
+			mockRequest = makeMockAddAnswerCountBoundaryRequest(
+					"toChange", "maximum");
+			
+			useCase.execute(mockRequest);
+			useCase.undo();
+			foundComponent = FormComponentUtilities.find(mockRequest.componentId);
+			
+			assertThat(foundComponent.format.getMaxAnswers(), is(2));
+		}
+	}	
 	
 }

@@ -9,6 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import formfiller.entities.AnswerImpl;
+import formfiller.entities.format.Format.MaximumLessThanMinimum;
 import formfiller.entities.format.Unstructured;
 
 //	TODO:	Unstructured format takes at most one answer.
@@ -29,7 +30,7 @@ public class UnstructuredAnswerFormatTest {
 		assertThat(format.matchesCardinality(makeLegalMultipleAnswer()), is(false));
 	}
 	
-	@Test(expected = IllegalArgumentException.class)
+	@Test(expected = MaximumLessThanMinimum.class)
 	public void settingMinGreaterThanOneThrowsException() {
 		format.setMinAnswers(2);
 	}
@@ -46,6 +47,7 @@ public class UnstructuredAnswerFormatTest {
 		return result;
 	}
 	
+	//	TODO:	Should have no legal multiple answers?
 	private AnswerImpl makeLegalMultipleAnswer() {
 		AnswerImpl result = new AnswerImpl();
 		result.setId("questionId");

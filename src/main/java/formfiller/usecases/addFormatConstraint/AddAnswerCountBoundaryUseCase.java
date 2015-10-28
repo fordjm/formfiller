@@ -20,8 +20,7 @@ public class AddAnswerCountBoundaryUseCase extends UndoableUseCaseExecution {
 
 	protected boolean isRequestMalformed() {
 		return StringUtilities.isStringNullOrEmpty(castRequest.componentId) ||
-				StringUtilities.isStringNullOrEmpty(castRequest.boundary) || 
-				castRequest.count < 0;
+				StringUtilities.isStringNullOrEmpty(castRequest.boundary);
 	}
 
 	protected void execute() {

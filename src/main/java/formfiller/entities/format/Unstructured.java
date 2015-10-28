@@ -1,5 +1,7 @@
 package formfiller.entities.format;
 
+import formfiller.entities.Answer;
+
 public class Unstructured extends Format {
 	public Unstructured() {
 		super();
@@ -11,11 +13,13 @@ public class Unstructured extends Format {
 	public boolean matchesFormat(Object content) {
 		return content != null;
 	}
-
-	public void setMinAnswers(int minAnswers) {
-		if (minAnswers > 1) throw new IllegalArgumentException(
-				makeIllegalAnswerCountMessage(minAnswers, "minimum"));
-		this.minAnswers = minAnswers;
+	
+	//	TODO:	Fix duplication in SingleOptionVariable.
+	public boolean matchesCardinality(Answer toMatch) {
+		if (isNotALegalSingleAnswer(toMatch)) 
+			return false;
+		
+		return maxAnswers > 0 && minAnswers < 2;
 	}
 
 	public void setMaxAnswers(int maxAnswers) {

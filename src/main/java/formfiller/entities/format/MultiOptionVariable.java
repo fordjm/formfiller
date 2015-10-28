@@ -1,19 +1,15 @@
 package formfiller.entities.format;
 
+import java.util.Collection;
+
+import formfiller.entities.Answer;
+
 public class MultiOptionVariable extends OptionVariable {	
 	public MultiOptionVariable() {
 		super();
 		minAnswers = 0;
 		maxAnswers = 2;
 		name = "MultiOptionVariable";
-	}
-
-	public void setMinAnswers(int minAnswers) {
-		if (minAnswers < 0) throw new IllegalArgumentException();
-		else if (minAnswers > maxAnswers) throw new MaximumLessThanMinimum(
-					makeMaximumLessThanMinimumMessage(minAnswers, maxAnswers));
-		else
-			this.minAnswers = minAnswers;
 	}
 
 	public void setMaxAnswers(int maxAnswers) {
@@ -23,6 +19,19 @@ public class MultiOptionVariable extends OptionVariable {
 					makeMaximumLessThanMinimumMessage(minAnswers, maxAnswers));
 		else
 			this.maxAnswers = maxAnswers;
+	}
+	
+	public boolean matchesCardinality(Answer toMatch) {
+		if (isNotALegalMultipleAnswer(toMatch)) return false;
+		
+		Collection<Object> castContent = (Collection<Object>) toMatch.getContent();
+		return castContent.size() >= minAnswers && 
+				castContent.size() <= maxAnswers;
+	}
+
+	//	TODO:	Fix this.  MultiOptionVariable can accept 0 or 1 answers.
+	private boolean isNotALegalMultipleAnswer(Answer toMatch) {
+		return toMatch == null || !isAnswerContentACollection(toMatch.getContent());
 	}
 
 }
