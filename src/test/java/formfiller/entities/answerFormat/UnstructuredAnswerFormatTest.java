@@ -12,7 +12,7 @@ import formfiller.entities.AnswerImpl;
 import formfiller.entities.format.Format.MaximumLessThanMinimum;
 import formfiller.entities.format.Unstructured;
 
-//	TODO:	Unstructured format takes at most one answer.
+//	TODO:	Determine whether Unstructured format takes at most one answer.
 public class UnstructuredAnswerFormatTest {
 
 	private Unstructured format;

@@ -15,7 +15,7 @@ public abstract class UndoableUseCaseController implements Controller {
 	private String name = "";
 
 	public void handle(ParsedEvent parsedEvent) {
-		name = getName();
+		name = getName();	// gets the controller's name
 		assignRequiredParameters(parsedEvent.parameters);
 		Arguments arguments = makeArguments();
 		Request request = makeRequest(arguments);
@@ -40,11 +40,13 @@ public abstract class UndoableUseCaseController implements Controller {
 	
 	protected Request makeRequest(Arguments arguments) {
 		RequestBuilderImpl builder = new RequestBuilderImpl();
+		// uses controller name to build request
 		return builder.build(name, arguments);
 	}
 
 	protected UndoableUseCase makeUseCase() {
 		UseCaseFactory factory = new UseCaseFactoryImpl();
+		// uses controller name to make use case
 		UndoableUseCase castUseCase = (UndoableUseCase) factory.make(name);
 		return castUseCase;
 	}
