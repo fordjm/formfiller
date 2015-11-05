@@ -1,0 +1,16 @@
+|scenario                        |answer addition table      |num answers |            |among options ||should add|
+|given a form component with the component ID id, the question content "question content", and the answer format S|
+|given component                 |id                         |has         |@numAnswers |answers                   |
+|given component has max answers |1                                                                               |
+|given component has options     |@amongOptions                                                                   |
+|when the user adds the answer   |new answer                                                                      |
+|check                           |does component have answer |new answer  |@shouldAdd                             |
+
+|script|add answer|
+
+|answer addition table               |
+|num answers|among options|should add|
+|0          |false        |false     |
+|0          |true         |true      |
+|1          |false        |false     |
+|1          |true         |false     |

@@ -1,17 +1,11 @@
-#TODO:	"should have" belongs in scenario, hasAnswer(String answerContent) belongs in fixture.
-#"should have answer with content"
-#determine whether quotes belong in answer content phrases.
-|scenario|then component|id |should have answer|answerContent      |
-|check   |does component|@id|have answer       |@answerContent|true|
+#TODO:	"should have answer with content" (or does have...)
 
-|scenario|then component|id |should not have answer|answerContent       |
-|check   |does component|@id|have answer           |@answerContent|false|
-
-|scenario                     |answer addition table|id |           |question content||answer format||num answers||should add|
-|given a form component with the component ID @id, the question content @questionContent, and the answer format @answerFormat|
-|given component              |@id                  |has|@numAnswers|answers                                                 |
-|when the user adds the answer|new answer                                                                                    |
-|check                        |does component       |@id|have answer|new answer      |@shouldAdd                             |
+|scenario                       |answer addition table     |id        |           |question content||answer format||num answers||should add|
+|given a form component with the component ID @id, the question content @questionContent, and the answer format @answerFormat              |
+|given component                |@id                       |has       |@numAnswers|answers                                                 |
+|given component has max answers|1                                                                                                         |
+|when the user adds the answer  |new answer                                                                                                |
+|check                          |does component have answer|new answer|@shouldAdd                                                          |
 
 
 |script|add answer|
@@ -20,4 +14,3 @@
 |id|question content|answer format|num answers|should add|
 |id|content         |U            |0          |true      |
 |id|content         |U            |1          |false     |
-# And it should present some message.
