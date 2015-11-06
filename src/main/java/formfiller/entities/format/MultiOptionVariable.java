@@ -29,7 +29,8 @@ public class MultiOptionVariable extends OptionVariable {
 				castContent.size() <= maxAnswers;
 	}
 
-	//	TODO:	Fix this.  MultiOptionVariable can accept 0 or 1 answers.
+	//	TODO:	Update this to check CompositeAnswer objects 
+	//			(if it makes sense at all)
 	private boolean isNotALegalMultipleAnswer(Answer toMatch) {
 		return toMatch == null || !isAnswerContentACollection(toMatch.getContent());
 	}

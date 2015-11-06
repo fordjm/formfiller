@@ -25,6 +25,7 @@ public class AddAnswer {
 		Format format = component.format;
 		boolean hasRoom = answerContentList.size() < maxAnswers;
 		//	TODO:	Find better test than instanceof
+		//			Or don't, since this is temporary.
 		if (format instanceof Unstructured)
 			return hasRoom;
 		else

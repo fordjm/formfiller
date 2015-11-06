@@ -33,13 +33,9 @@ public class AddAnswerTest {
 		return result;
 	}
 	
-	private Answer findAnswerByName(String name) {
+	private Answer findAnswerByComponentName(String name) {
 		FormComponent component = Context.formComponentGateway.find(name);
 		return component.answer;
-	}
-	
-	private Object returnAnswerContent(Answer foundAnswer) {
-		return foundAnswer.getContent();
 	}
 	
 	private void addMockFormComponentsToGateway(){
@@ -78,7 +74,7 @@ public class AddAnswerTest {
 		addAnswerRequest = makeAddAnswerRequest("name", "");
 		
 		addAnswer.execute(addAnswerRequest);
-		foundAnswer = findAnswerByName("name");
+		foundAnswer = findAnswerByComponentName("name");
 		
 		// Presenter result should be,  "No answer was received.  Please try again."
 		assertThat(foundAnswer, is(AnswerImpl.NONE));
@@ -89,8 +85,8 @@ public class AddAnswerTest {
 		addAnswerRequest = makeAddAnswerRequest("name", "myName");
 		
 		addAnswer.execute(addAnswerRequest);
-		foundAnswer = findAnswerByName("name");
-		Object content = returnAnswerContent(foundAnswer);
+		foundAnswer = findAnswerByComponentName("name");
+		Object content = foundAnswer.getContent();
 		
 		// Presenter result should be,  "Added answer, 'myName.'"
 		assertEquals("myName", content);
@@ -102,8 +98,8 @@ public class AddAnswerTest {
 		addAnswerRequest = makeAddAnswerRequest("age", RETIREMENT_AGE);
 		
 		addAnswer.execute(addAnswerRequest);
-		foundAnswer = findAnswerByName("age");
-		Object content = returnAnswerContent(foundAnswer);
+		foundAnswer = findAnswerByComponentName("age");
+		Object content = foundAnswer.getContent();
 		
 		// Presenter result should be,  "Added answer, '65.'"
 		assertEquals(RETIREMENT_AGE, content);
