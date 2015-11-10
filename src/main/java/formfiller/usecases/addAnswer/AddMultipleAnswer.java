@@ -16,14 +16,22 @@ public class AddMultipleAnswer implements AnswerAdditionStrategy {
 		if (component.answer == AnswerImpl.NONE)
 			setComponentAnswerToNewComposite(component);
 		
-		//	if component has room for answer...
-		((CompositeAnswer) component.answer).add(answer);
-		
+		if (componentHasRoom(component))
+			((CompositeAnswer) component.answer).add(answer);
+		else
+			throw new IllegalStateException(
+					"The component cannot add more answers.");
 	}
 
 	private void setComponentAnswerToNewComposite(FormComponent component) {
 		CompositeAnswer composite = new CompositeAnswer(component.id);
 		component.answer = composite;
+	}
+
+	private boolean componentHasRoom(FormComponent component) {
+		int maxAnswers = component.format.getMaxAnswers();
+		CompositeAnswer castAnswer = (CompositeAnswer) component.answer;
+		return castAnswer.size() < maxAnswers;
 	}
 
 }

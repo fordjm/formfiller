@@ -3,9 +3,6 @@ package formfiller.entities;
 import java.util.ArrayList;
 import java.util.List;
 
-import formfiller.Context;
-import formfiller.entities.formComponent.FormComponent;
-
 public class CompositeAnswer implements Answer {
 	private String id;
 	private List<Answer> itsAnswers;
@@ -20,44 +17,51 @@ public class CompositeAnswer implements Answer {
 	}
 
 	public Object getContent() {
-		//	TODO:	Determine how this works.
-		//			Return a List<Object> containing the content?
-		return null;
+		List<Object> result = new ArrayList<Object>();
+		for (Answer answer : itsAnswers)
+			result.add(answer.getContent());
+		return result;
 	}
 
 	public boolean isValid() {
-		//	TODO Continue?
 		for (Answer answer : itsAnswers)
-			if (!answer.isValid())
+			if (!answer.getId().equals(this.id) || !answer.isValid())
 				return false;
 		return itsAnswers.size() > 0;
 	}
 
 	public void setId(String id) {
-		//	TODO Throw exception?
+		this.id = id;
+		for (Answer answer : itsAnswers)
+			answer.setId(id);
 	}
 
 	public void setContent(Object content) {
-		//	TODO Throw exception?
+		if (!(size() == 1))
+			throw new IllegalStateException(
+					"You must specify an answer index to set content.");
+		
+		itsAnswers.get(0).setContent(content);
 	}
 
+	//	TODO:	Throw exception if invalid or answer id doesn't match.
 	public void add(Answer answer) {
-		if (componentHasRoom())
-			itsAnswers.add(answer);
-	}
-
-	private boolean componentHasRoom() {
-		FormComponent component = getContainingComponent();
-		int maxAnswers = component.format.getMaxAnswers();
-		return itsAnswers.size() < maxAnswers;
-	}
-
-	private FormComponent getContainingComponent() {
-		FormComponent result = Context.formComponentGateway.find(id);
-		return result;
+		itsAnswers.add(answer);
 	}
 
 	public Boolean contains(Answer answer) {
 		return itsAnswers.contains(answer);
 	}
+	
+	public int size() {
+		return itsAnswers.size();
+	}
+
+	public void remove(Answer answer) {
+		if (!contains(answer))
+			throw new IllegalStateException("Cannot remove uncontained answer.");
+		
+		itsAnswers.remove(answer);
+	}
+	
 }

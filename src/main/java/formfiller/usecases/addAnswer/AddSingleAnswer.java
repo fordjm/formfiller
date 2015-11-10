@@ -14,8 +14,9 @@ public class AddSingleAnswer implements AnswerAdditionStrategy {
 	private void addAnswer(Answer answer, FormComponent component) {
 		if (component.answer == AnswerImpl.NONE)
 			component.answer = answer;
-		
-		//else throw exception?
+		else
+			throw new IllegalStateException(
+					"The component cannot add more answers.");
 	}
 
 }
