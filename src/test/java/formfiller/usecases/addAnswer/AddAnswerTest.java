@@ -17,6 +17,7 @@ import formfiller.entities.QuestionImpl;
 import formfiller.entities.formComponent.FormComponent;
 import formfiller.request.models.AddAnswerRequest;
 import formfiller.usecases.addAnswer.AddAnswerUseCase;
+import formfiller.usecases.undoable.UndoableUseCaseExecution.MalformedRequest;
 import formfiller.utilities.QuestionMocker;
 import formfiller.utilities.TestSetup;
 
@@ -28,7 +29,7 @@ public class AddAnswerTest {
 
 	private AddAnswerRequest makeAddAnswerRequest(String questionId, Object content) {
 		AddAnswerRequest result = new AddAnswerRequest();
-		result.questionId = questionId;
+		result.componentId = questionId;
 		result.content = content;
 		return result;
 	}
@@ -69,7 +70,7 @@ public class AddAnswerTest {
 		assertThat(addAnswer, is(instanceOf(UseCase.class)));
 	}
 	
-	@Test
+	@Test(expected = MalformedRequest.class)
 	public void cannotAddEmptyStringAnswer() {
 		addAnswerRequest = makeAddAnswerRequest("name", "");
 		

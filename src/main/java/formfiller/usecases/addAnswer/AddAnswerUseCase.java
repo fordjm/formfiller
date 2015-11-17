@@ -6,12 +6,16 @@ import formfiller.entities.AnswerImpl;
 import formfiller.entities.formComponent.FormComponent;
 import formfiller.request.models.AddAnswerRequest;
 import formfiller.request.models.Request;
+import formfiller.usecases.undoable.UndoableUseCaseExecution;
+import formfiller.utilities.FormComponentUtilities;
+import formfiller.utilities.StringUtilities;
 
-public class AddAnswerUseCase implements UseCase {
+public class AddAnswerUseCase extends UndoableUseCaseExecution {
+	AddAnswerRequest castRequest;
 
-	public void execute(Request request) {
+	/*public void execute(Request request) {
 		AddAnswerRequest addAnswerRequest = (AddAnswerRequest) request;
-		String questionId = addAnswerRequest.questionId;
+		String questionId = addAnswerRequest.componentId;
 		Object content = addAnswerRequest.content;
 		//	If the answer content satisfies the answer constraints
 		if (content == "") return;
@@ -20,13 +24,42 @@ public class AddAnswerUseCase implements UseCase {
 		
 		FormComponent foundComponent = 
 				Context.formComponentGateway.find(questionId);
-		foundComponent.answer = answer;	// TODO:	Fix for multiple answers.
+		// TODO:	Get component's AnswerAdditionStrategy from Format/Cardinality.  
+		//			Then call add.
+		foundComponent.answer = answer;
+		// TODO:	Present response.
+		
 		//	TODO:	Otherwise, inform the user why the answer could not be added.
-	}
+	}*/
 	
 	private AnswerImpl makeAnswer(Object content){
 		AnswerImpl result = new AnswerImpl();
 		result.setContent(content);
 		return result;
 	}
+
+	public void undo() {
+		// TODO Implement (After determining RemoveAnswer strategy.)		
+	}
+
+	protected void castRequest(Request request) {
+		castRequest = (AddAnswerRequest) request;
+	}
+
+	protected boolean isRequestMalformed() {
+		return StringUtilities.isStringNullOrEmpty(castRequest.componentId) || 
+				castRequest.content == null ||
+				castRequest.content == "";
+	}
+
+	protected void execute() {
+		FormComponent component = FormComponentUtilities.find(castRequest.componentId);
+		AnswerImpl answer = makeAnswer(castRequest.content);
+		component.answer = answer;
+	}
+
+	protected String makeSuccessfulMessage() {
+		return "You added answer, " + castRequest.content;
+	}
+	
 }

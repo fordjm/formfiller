@@ -1,7 +1,6 @@
 package formfiller.request.models;
 
-public class AddAnswerRequest extends Request {
+public class AddAnswerRequest extends RequestWithComponentId {
 	public String name = "AddAnswerRequest";
-	public String questionId;
 	public Object content;
 }

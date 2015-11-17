@@ -14,6 +14,7 @@ import formfiller.entities.format.Unstructured;
 import formfiller.enums.QuestionAsked;
 import formfiller.request.models.HandleUnfoundUseCaseRequest;
 import formfiller.request.builder.RequestBuilderImpl;
+import formfiller.request.models.AddAnswerRequest;
 import formfiller.request.models.AddFormComponentRequest;
 import formfiller.request.models.AskQuestionRequest;
 import formfiller.request.models.Request;
@@ -83,6 +84,20 @@ public class RequestBuilderImplTest {
 				is(instanceOf(HandleUnfoundUseCaseRequest.class)));
 		assertThat(handleUnfoundUseCaseRequest.name, 
 				is("HandleUnfoundUseCase"));
+	}
+	
+	@Test
+	public void canBuildAddAnswerRequest() {
+		Request addAnswerRequest = 
+				buildRequest("AddAnswer", makeArguments("content", "content"));
+		String name = addAnswerRequest.name;
+		AddAnswerRequest castRequest = 
+				(AddAnswerRequest) addAnswerRequest;
+		
+		assertThat(addAnswerRequest, 
+				is(instanceOf(AddAnswerRequest.class)));
+		assertThat(name, is("AddAnswer"));
+		assertEquals("content", castRequest.content);
 	}
 	
 	@Test

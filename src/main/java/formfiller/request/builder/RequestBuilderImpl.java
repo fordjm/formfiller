@@ -21,6 +21,8 @@ public class RequestBuilderImpl implements RequestBuilder {
 		
 		if(doesRequestNameMatchNamedUseCase("HandleUnfoundUseCase"))
 			buildHandleUnfoundUseCaseRequest();
+		else if(doesRequestNameMatchNamedUseCase("AddAnswer"))
+			buildAddAnswerRequest();
 		else if(doesRequestNameMatchNamedUseCase("AddAnswerCountBoundary"))
 			buildAddAnswerCountBoundaryRequest();
 		else if(doesRequestNameMatchNamedUseCase("AddOption"))
@@ -39,6 +41,18 @@ public class RequestBuilderImpl implements RequestBuilder {
 			return Request.NULL;
 		
 		return product;
+	}
+
+	private void buildAddAnswerRequest() {
+		product = new AddAnswerRequest();
+		buildName();
+		buildComponentId();
+		buildAnswerContent();
+	}
+
+	public void buildAnswerContent() {
+		AddAnswerRequest castRequest = (AddAnswerRequest) product;
+		castRequest.content = castNamedArgumentAsString("content");
 	}
 
 	private boolean doesRequestNameMatchNamedUseCase(String useCase) {

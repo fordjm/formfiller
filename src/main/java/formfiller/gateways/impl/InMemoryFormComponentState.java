@@ -24,6 +24,7 @@ public class InMemoryFormComponentState implements FormComponentState {
 		return currentIndex < 0;
 	}
 	
+	//	NOTE:	Pre- and post-incrementer are not thread-safe.
 	public void update(QuestionAsked direction){
 		if (direction == QuestionAsked.NEXT)
 			++currentIndex;

@@ -19,7 +19,10 @@ public class ConsoleViewTest extends Observable {
 	public void setUp() {
 		consoleView = new ConsoleView();
 	}
+	
+	//	TODO:	What does generateView(VM) do?
 
+	//	TODO:	Get rid of Observer.
 	@Test
 	public void isAnObserver() {
 		assertThat(consoleView, is(instanceOf(Observer.class)));

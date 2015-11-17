@@ -72,4 +72,7 @@ public class PresentableResponseViewModelTest implements Observer {
 		assertThat(observerWasUpdated, is(true));
 		assertThat(message, is("message"));
 	}
+	
+	//	TODO:	Remove all Observer tests.
+	
 }
