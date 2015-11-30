@@ -1,8 +1,0 @@
-| asking the question presents the message |
-| questionAsked | message |
-| current | Q: You have reached the end of this form. |
-
-!| script |
-| given no form components |
-| asking the previous question presents the start message |
-| asking the next question presents the end message |

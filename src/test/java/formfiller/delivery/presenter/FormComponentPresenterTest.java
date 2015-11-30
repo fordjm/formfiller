@@ -9,7 +9,8 @@ import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
-import formfiller.delivery.viewModel.PresentableResponseViewModel;
+import formfiller.delivery.ViewModel;
+import formfiller.delivery.viewModel.FormComponentViewModel;
 import formfiller.response.models.PresentableAnswer;
 import formfiller.response.models.PresentableFormComponent;
 import formfiller.response.models.PresentableQuestion;
@@ -29,39 +30,41 @@ public class FormComponentPresenterTest {
 
 	@Before
 	public void setUp(){
-		presenter = new FormComponentPresenter(new PresentableResponseViewModel());
+		presenter = new FormComponentPresenter();
 	}
 	
+	//	TODO:	What should presenting null do?
 	@Test
 	public void canHandleNull(){
 		presenter.present(null);
 		
-		PresentableResponse currentResponse = presenter.getPresentableResponse();
-		PresentableFormComponent castResponse = 
-				(PresentableFormComponent) currentResponse;
+		ViewModel currentViewModel = presenter.getViewModel();
+		FormComponentViewModel castViewModel = 
+				(FormComponentViewModel) currentViewModel;
 		
-		assertThat(currentResponse, is(instanceOf(PresentableFormComponent.class)));
-		assertThat(castResponse.question.message, is(""));
-		assertThat(castResponse.answer.message, is(""));
+		assertThat(currentViewModel, is(instanceOf(FormComponentViewModel.class)));
+		assertThat(castViewModel.questionMessage, is(""));
+		assertThat(castViewModel.answerMessage, is(""));
 	}
 	
-	public class GivenAPresentableResponse {
-		
+	public class GivenAPresentableResponse {		
 		@Before
 		public void givenAPresentableFormComponent(){
 			presentableFormComponent = makeMockPresentableFormComponent();
 		}
 		
+		//	TODO:	Test that present(PresentableFormComponent) creates ViewModel with correct field values.
+		//			This requires giving the ResponseModel some field values.
 		@Test
 		public void gettingPresentableResponse_ReturnsGivenPresentableFormComponent(){
 			presenter.present(presentableFormComponent);
 			
-			PresentableResponse presentableResponse = 
-					presenter.getPresentableResponse();
+			ViewModel presentableResponse = 
+					presenter.getViewModel();
 			
-			assertThat(presentableResponse, is(presentableFormComponent));
 			assertThat(presentableResponse, 
-					is(instanceOf(PresentableFormComponent.class)));
+					is(instanceOf(FormComponentViewModel.class)));
 		}
+		
 	}
 }

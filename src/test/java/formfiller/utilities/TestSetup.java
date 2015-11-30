@@ -2,13 +2,12 @@ package formfiller.utilities;
 
 import formfiller.ExecutedUseCases;
 import formfiller.Context;
-import formfiller.delivery.View;
 import formfiller.delivery.presenter.FormComponentPresenter;
-import formfiller.delivery.presenter.ResponsePresenter;
-import formfiller.delivery.ui.consoleUi.ConsoleView;
-import formfiller.delivery.viewModel.PresentableResponseViewModel;
+import formfiller.delivery.presenter.NotificationPresenter;
+import formfiller.delivery.viewModel.NotificationViewModel;
 import formfiller.entities.Answer;
 import formfiller.entities.AnswerImpl;
+import formfiller.entities.Question;
 import formfiller.entities.QuestionImpl;
 import formfiller.entities.formComponent.FormComponent;
 import formfiller.gateways.impl.InMemoryFormComponentGateway;
@@ -19,30 +18,27 @@ import formfiller.utilities.valueMatcher.CaseIgnoringStringMatcher;
 public class TestSetup {
 	
 	public static void setupContext(){
-		View consoleView = new ConsoleView();
-		
 		Context.stringMatcher = new CaseIgnoringStringMatcher();
 		Context.formComponentState = new InMemoryFormComponentState();
 		Context.formComponentGateway = new InMemoryFormComponentGateway();
 		Context.executedUseCases = new ExecutedUseCases();
-		Context.answerPresenter = makeResponsePresenter(consoleView);
-		Context.outcomePresenter = makeResponsePresenter(consoleView);
-		Context.formComponentPresenter = makeFormComponentPresenter(consoleView);
-		Context.questionPresenter = makeResponsePresenter(consoleView);
+		Context.answerPresenter = makeResponsePresenter();
+		Context.outcomePresenter = makeResponsePresenter();
+		Context.formComponentPresenter = makeFormComponentPresenter();
+		Context.questionPresenter = makeResponsePresenter();
 	}
 
-	private static ResponsePresenter makeResponsePresenter(View view) {
-		return new ResponsePresenter(makePresentableResponseViewModel(view));
+	private static NotificationPresenter makeResponsePresenter() {
+		return new NotificationPresenter();
 	}
 
-	private static PresentableResponseViewModel makePresentableResponseViewModel(View view) {
-		PresentableResponseViewModel result = new PresentableResponseViewModel();
-		result.addObserver(view);
+	private static NotificationViewModel makePresentableResponseViewModel() {
+		NotificationViewModel result = new NotificationViewModel();
 		return result;
 	}
 
-	private static FormComponentPresenter makeFormComponentPresenter(View view) {
-		return new FormComponentPresenter(makePresentableResponseViewModel(view));
+	private static FormComponentPresenter makeFormComponentPresenter() {
+		return new FormComponentPresenter();
 	}
 	
 	public static void setupSampleFormComponents(){
@@ -60,12 +56,12 @@ public class TestSetup {
 	}
 	
 	private static FormComponent makeFormComponent(boolean requiresAnswer, 
-			QuestionImpl question){		
+			Question question){		
 		return makeFormComponent(requiresAnswer, question, AnswerImpl.NONE);
 	}
 	
 	private static FormComponent makeFormComponent(boolean requiresAnswer, 
-			QuestionImpl question, Answer answer){
+			Question question, Answer answer){
 		FormComponent result = new FormComponent();
 		result.requiresAnswer = requiresAnswer;
 		result.id = question.getId();
@@ -74,13 +70,13 @@ public class TestSetup {
 		return result;
 	}
 	
-	private static QuestionImpl makeQuestion(String id, String content){
-		QuestionImpl result = new QuestionImpl(id, content);
+	private static Question makeQuestion(String id, String content){
+		Question result = new QuestionImpl(id, content);
 		return result;
 	}
 	
 	private static Answer makeAnswer(String content){
-		AnswerImpl result = new AnswerImpl();
+		Answer result = new AnswerImpl();
 		result.setContent(content);
 		return result;
 	}

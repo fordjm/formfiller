@@ -1,30 +1,37 @@
 package formfiller.delivery.presenter;
 
-import java.util.Observable;
-
 import formfiller.appBoundaries.Presenter;
 import formfiller.delivery.ViewModel;
+import formfiller.delivery.viewModel.NotificationViewModel;
 import formfiller.response.models.PresentableResponse;
 
-public class ResponsePresenter extends Observable implements Presenter {	
+public class NotificationPresenter implements Presenter {	
 	private ViewModel viewModel;
 	private PresentableResponse presentableResponse;
 	
-	public ResponsePresenter(ViewModel viewModel){
-		this.viewModel = viewModel;
+	public NotificationPresenter(){
 		clearPresentableResponse();
 	}
 
-	public PresentableResponse getPresentableResponse() {
-		return presentableResponse;
+	//	TODO:	Change to getViewModel()
+	public ViewModel getViewModel() {
+		return viewModel;
 	}
 	
 	public void present(PresentableResponse presentableResponse) {
+		viewModel = createViewModel(presentableResponse);
+		
 		this.presentableResponse = presentableResponse;
-		viewModel.outputPresentableResponse(presentableResponse);
 	}
 	
+	private ViewModel createViewModel(PresentableResponse presentableResponse) {
+		NotificationViewModel result = new NotificationViewModel();
+		result.message = presentableResponse.message;
+		return result;
+	}
+
 	public void clearPresentableResponse() {
 		presentableResponse = new PresentableResponse();
 	}
+	
 }

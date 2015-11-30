@@ -1,8 +1,6 @@
 package formfiller.delivery;
 
-import java.util.Observer;
-
-public interface View extends Observer {
+public interface View {
 	//	TODO:	Take a VM instead of a String.
 	public void generateView(String message);
 }

@@ -1,0 +1,5 @@
+|scenario|then the system should present the end prompt              |
+|check   |presents the message|You have reached the end of this form.|
+
+|scenario|then the system should present the start prompt              |
+|check   |presents the message|You have reached the start of this form.|

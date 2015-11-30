@@ -23,7 +23,7 @@ public class AskQuestionUseCase implements UndoableUseCase {
 	public void execute(Request request) {		
 		if (request == null) return;
 
-		clearAllPresenters();
+		clearAllPresenters();	//	TODO:	Remove
 		AskQuestionRequest askQuestionRequest = (AskQuestionRequest) request;
 		whichQuestion = askQuestionRequest.which;
 
@@ -31,7 +31,7 @@ public class AskQuestionUseCase implements UndoableUseCase {
 			setOutcome(Outcome.POSITIVE);
 			executeAskQuestion(whichQuestion);
 		} else {
-			// TODO:  Present failure in same presenter as success.  Maybe.
+			// TODO:  Present failure in same presenter as success.  AskQuestionPresenter.
 			setOutcome(Outcome.NEGATIVE);
 		}			
 
@@ -45,7 +45,7 @@ public class AskQuestionUseCase implements UndoableUseCase {
 			presenter.clearPresentableResponse();
 	}
 
-	//	TODO:	Fix duplication in FormComponentPresentation
+	//	TODO:	Remove.  One presenter.
 	private Collection<Presenter> getPresenters() {
 		Collection<Presenter> result = new ArrayList<Presenter>();
 		result.add(Context.questionPresenter);
@@ -58,6 +58,8 @@ public class AskQuestionUseCase implements UndoableUseCase {
 		this.outcome = outcome;
 	}
 
+	//	TODO:	Remove.  Create AskQuestionResponseModel.
+	//			This class should not handle errors.
 	private PresentableResponse makeResponse() {
 		return (outcome == Outcome.POSITIVE) 
 				? makePresentableFormComponent() : makePresentableResponse();
@@ -78,12 +80,11 @@ public class AskQuestionUseCase implements UndoableUseCase {
 		presenter.present(presentableResponse);
 	}	
 
-	//	TODO:	AskQuestion should know nothing about PresentableResponses.
-	//			Make a factory.	
+	//	TODO:	Make AskQuestionResponseModel.
 	private PresentableResponse makePresentableResponse() {
 		PresentableResponse result = new PresentableResponse();
 		result.message = getAnswerRequiredMessage();
-		result.outcome = Outcome.NEGATIVE;
+		result.outcome = outcome;
 		return result;
 	}
 
@@ -92,8 +93,8 @@ public class AskQuestionUseCase implements UndoableUseCase {
 		PresentableFormComponent result = new PresentableFormComponent();
 		result.question = makePresentableQuestion(current.question);
 		result.answer = makePresentableAnswer(current.answer);
-		result.outcome = Outcome.POSITIVE;
-		result.message = result.question.message;	//	TODO:  Different FC message?
+		result.outcome = outcome;
+		result.message = result.question.message;
 		return result;
 	}
 

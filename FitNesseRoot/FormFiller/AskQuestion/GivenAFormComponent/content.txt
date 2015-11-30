@@ -1,0 +1,52 @@
+|scenario|then the system should present|message |
+|check   |presents the message          |@message|
+
+|scenario|and it should present the answer|message |
+|check   |presents the answer             |@message|
+
+#NOTE:	reset call is a hack.
+#TODO:	Split into HasAnswer and HasNoAnswer tables?
+
+!|script                                                                                     |
+|given a form component with question|Question|and answer|Answer|and requirement status|false|
+|reset                                                                                       |
+|when the subject requests the       |current |question                                      |
+|then the system should present Question                                                     |
+|and it should present the answer Answer                                                     |
+
+!|script                                                                                     |
+|given a form component with question|Question|and answer|Answer|and requirement status|false|
+|reset                                                                                       |
+|when the subject requests the       |previous|question                                      |
+|then the system should present the start prompt                                             |
+
+!|script                                                                                     |
+|given a form component with question|Question|and answer|Answer|and requirement status|false|
+|reset                                                                                       |
+|when the subject requests the       |next    |question                                      |
+|then the system should present the end prompt                                               |
+
+!|script                                                                                    |
+|given a form component with question|Question|and answer|Answer|and requirement status|true|
+|reset                                                                                      |
+|when the subject requests the       |current |question                                     |
+|then the system should present Question                                                    |
+|and it should present the answer Answer                                                    |
+
+!|script                                                                                    |
+|given a form component with question|Question|and answer|Answer|and requirement status|true|
+|reset                                                                                      |
+|when the subject requests the       |previous|question                                     |
+|then the system should present the start prompt                                            |
+
+!|script                                                                                    |
+|given a form component with question|Question|and answer|Answer|and requirement status|true|
+|reset                                                                                      |
+|when the subject requests the       |next    |question                                     |
+|then the system should present the end prompt                                              |
+
+!|script                                                                                                                        |
+|given a form component with question|Question          |and answer        |        |and requirement status        |true        |
+|reset                                                                                                                          |
+|when the subject requests the       |next              |question                                                               |
+|check                               |presents the error|Sorry, you cannot move ahead.  The current question requires an answer.|

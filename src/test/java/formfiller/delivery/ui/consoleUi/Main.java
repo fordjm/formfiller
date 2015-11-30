@@ -3,7 +3,7 @@ package formfiller.delivery.ui.consoleUi;
 import formfiller.delivery.event.EventSource;
 import formfiller.delivery.event.impl.ConsoleEventSource;
 import formfiller.delivery.event.impl.EventHandler;
-import formfiller.delivery.router.PlaceholderRouterFactory;
+import formfiller.delivery.router.PlaceholderTextRouterFactory;
 import formfiller.delivery.router.Router;
 import formfiller.utilities.TestSetup;
 
@@ -24,7 +24,7 @@ public class Main {
 	}
 	
 	private static void setupClassVariables() {
-		Router router = PlaceholderRouterFactory.makeRouter();
+		Router router = PlaceholderTextRouterFactory.makeRouter();
 		eventHandler = new EventHandler(router);
 		eventSource = new ConsoleEventSource();
 		eventSource.addObserver(eventHandler);

@@ -1,11 +1,12 @@
 package formfiller.appBoundaries;
 
+import formfiller.delivery.ViewModel;
 import formfiller.response.models.PresentableResponse;
 
 public interface Presenter {		
 	void clearPresentableResponse();
 	
-	PresentableResponse getPresentableResponse();
+	ViewModel getViewModel();
 	
 	void present(PresentableResponse presentableResponse);	
 }

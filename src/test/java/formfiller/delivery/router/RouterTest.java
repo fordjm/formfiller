@@ -27,7 +27,7 @@ public class RouterTest {
 	
 	@Before
 	public void setUp() {
-		router = PlaceholderRouterFactory.makeRouter();
+		router = PlaceholderTextRouterFactory.makeRouter();
 	}
 	
 	@Test

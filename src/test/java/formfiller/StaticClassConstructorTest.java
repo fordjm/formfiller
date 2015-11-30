@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import formfiller.delivery.router.PlaceholderRouterFactory;
+import formfiller.delivery.router.PlaceholderTextRouterFactory;
 import formfiller.entities.formComponent.NullFormComponents;
 import formfiller.usecases.askQuestion.AskQuestionValidator;
 import formfiller.usecases.askQuestion.PresenterSelector;
@@ -62,9 +62,9 @@ public class StaticClassConstructorTest {
 
 	@Test
 	public void testPlaceholderRouterFactoryConstructor() {
-		objectUnderTest = new PlaceholderRouterFactory();
+		objectUnderTest = new PlaceholderTextRouterFactory();
 		
-		assertThat(objectUnderTest, instanceOf(PlaceholderRouterFactory.class));
+		assertThat(objectUnderTest, instanceOf(PlaceholderTextRouterFactory.class));
 	}
 
 	@Test

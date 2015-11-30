@@ -9,7 +9,7 @@ import formfiller.delivery.controller.ChangeFormatController;
 import formfiller.delivery.controller.ChangeIdController;
 import formfiller.delivery.controller.DeleteFormComponentController;
 
-public class PlaceholderRouterFactory {	
+public class PlaceholderTextRouterFactory {	
 	public static Router makeRouter(){
 		Router result = new Router();
 		result.addMethod("AddAns", new AddAnswerController());

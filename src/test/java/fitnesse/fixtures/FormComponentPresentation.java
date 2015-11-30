@@ -7,6 +7,9 @@ import java.util.Map;
 
 import formfiller.Context;
 import formfiller.appBoundaries.Presenter;
+import formfiller.delivery.ViewModel;
+import formfiller.delivery.viewModel.FormComponentViewModel;
+import formfiller.delivery.viewModel.NotificationViewModel;
 import formfiller.entities.Answer;
 import formfiller.entities.AnswerImpl;
 import formfiller.entities.QuestionImpl;
@@ -26,6 +29,50 @@ public class FormComponentPresentation {
 		fixtureEventHandler = new StringEventManager();
 	}
 	
+	//	Start version 3
+	public void whenTheSubjectRequestsTheQuestion(QuestionAsked requested) {
+		fixtureEventHandler.updateHandler("AskQues " + requested.toString());
+	}
+	
+	public String presentsTheMessage() {
+		//	TODO:	Fix.
+		return presentsThePrompt();
+	}
+	
+	public void givenAFormComponentWithQuestionAndAnswerAndRequirementStatus(String question, String answerContent, 
+			boolean requiresAnswer){
+		clearFormComponents();
+		FormComponent component = makeFormComponent(question, answerContent, requiresAnswer);
+		Context.formComponentGateway.save(component);
+	}	
+	
+	public void clearFormComponents() {
+		Context.formComponentGateway.removeAll();
+	}
+
+	private FormComponent makeFormComponent(String question, String answerContent, boolean requiresAnswer) {
+			FormComponent component = new FormComponent();
+			component.id = "question";
+			component.question = makeQuestion(component.id, question);
+			component.answer = makeAnswer(answerContent);
+			component.requiresAnswer = requiresAnswer;
+			return component;
+	}
+
+	public String presentsTheAnswer() {
+		FormComponentViewModel castViewModel = 
+				getCastFormComponentViewModel(getViewModel(Context.formComponentPresenter));
+		return castViewModel.answerMessage;
+	}
+	
+	//	TODO:	Doesn't reset if multiple questions are asked.
+	public void reset() {
+		UndoableUseCase mostRecent = 
+				Context.executedUseCases.getMostRecent();
+		mostRecent.undo();
+	}
+	//	End version 3
+	
 	private Map<Class<?>, String> makePrefixes() {
 		Map<Class<?>, String> result = new HashMap<Class<?>, String>();
 		result.put(PresentableQuestion.class, "Q: ");
@@ -34,15 +81,15 @@ public class FormComponentPresentation {
 		return result;
 	}
 	
-	//	New stuff
+	//	V2 stuff
 	public String presentsThePrompt() {
-		PresentableResponse response = getPresentableResponse(Context.questionPresenter);
-		return response.message;
+		FormComponentViewModel castViewModel = 
+				getCastFormComponentViewModel(getViewModel(Context.formComponentPresenter));
+		return castViewModel.questionMessage;
 	}
 
-	public String presentsTheAnswer() {
-		PresentableResponse response = getPresentableResponse(Context.answerPresenter);
-		return response.message;
+	private FormComponentViewModel getCastFormComponentViewModel(ViewModel response) {
+		return (FormComponentViewModel) response;
 	}
 
 	public String presentsTheFormat() {
@@ -50,8 +97,9 @@ public class FormComponentPresentation {
 	}
 
 	public String presentsTheError() {
-		PresentableResponse response = getPresentableResponse(Context.outcomePresenter);
-		return response.message;
+		ViewModel response = getViewModel(Context.outcomePresenter);
+		NotificationViewModel castResponse = (NotificationViewModel) response;
+		return castResponse.message;
 	}
 	
 	public void givenOneFormComponentWithTooManyParameters(String id, 
@@ -115,8 +163,8 @@ public class FormComponentPresentation {
 		private Answer makeAnswer(String answerContent) {
 			if (answerContent.length() == 0) return AnswerImpl.NONE;
 			
-			AnswerImpl result = new AnswerImpl();		
-			result.setId("questionId");
+			Answer result = new AnswerImpl();		
+			result.setId("question");
 			result.setContent(answerContent);
 			return result;
 		}
@@ -124,61 +172,9 @@ public class FormComponentPresentation {
 	public void askingTheQuestion(QuestionAsked which) {
 		fixtureEventHandler.updateHandler("AskQues " + which.toString());
 	}
-	
-	public String presentsTheMessage() {
-		return assembleMessageFromCurrentPresenterMessages();
-	}
-	
-	private String assembleMessageFromCurrentPresenterMessages() {
-		String result = "";		
-		for (PresentableResponse response : getPresentableResponses()){
-			result += makeAddedMessageString(response);
-		}		
-		return trimLastComma(result);
-	}
 
-	private String makeAddedMessageString(PresentableResponse response) {
-		if (response.message.length() == 0) return "";
-		
-		String prefix = prefixes.get(response.getClass());
-		return prefix + response.message + ", ";
-	}
-
-	private String trimLastComma(String result) {
-		if (result.length() == 0) return result;
-		
-		int lastCommaIndex = result.lastIndexOf(',');
-		return result.substring(0, lastCommaIndex);
+	private ViewModel getViewModel(Presenter presenter) {
+		return presenter.getViewModel();
 	}
 	
-	private Collection<PresentableResponse> getPresentableResponses(){
-		Collection<PresentableResponse> result = new ArrayList<PresentableResponse>();
-		for (Presenter presenter : getPresenters()){
-			result.add(getPresentableResponse(presenter));
-		}
-		return result;
-	}
-
-	//	TODO:	Fix duplication in AskQuestionUseCase
-	private Collection<Presenter> getPresenters() {
-		Collection<Presenter> result = new ArrayList<Presenter>();
-		result.add(Context.questionPresenter);
-		result.add(Context.answerPresenter);
-		result.add(Context.outcomePresenter);
-		return result;
-	}
-
-	private PresentableResponse getPresentableResponse(Presenter presenter) {
-		return presenter.getPresentableResponse();
-	}
-	
-	public void reset() {
-		UndoableUseCase mostRecent = 
-				Context.executedUseCases.getMostRecent();
-		mostRecent.undo();
-	}
-	
-	public void clearFormComponents() {
-		Context.formComponentGateway.removeAll();
-	}
 }

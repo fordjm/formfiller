@@ -11,7 +11,7 @@ import formfiller.gateways.FormComponentGateway;
 
 public class InMemoryFormComponentGateway implements FormComponentGateway {	
 	private Map<String, FormComponent> formComponents = new HashMap<String, FormComponent>();
-	private List<String> orderedElements = new ArrayList<String>();
+	private List<String> orderedElements = new ArrayList<String>();	//	TODO:	Remove.  Consider FCSequence class.
 	
 	public FormComponent findByIndex(int index){
 		if (!isLegalIndex(index))

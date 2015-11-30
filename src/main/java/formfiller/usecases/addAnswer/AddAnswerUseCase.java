@@ -2,6 +2,7 @@ package formfiller.usecases.addAnswer;
 
 import formfiller.Context;
 import formfiller.appBoundaries.UseCase;
+import formfiller.entities.Answer;
 import formfiller.entities.AnswerImpl;
 import formfiller.entities.formComponent.FormComponent;
 import formfiller.request.models.AddAnswerRequest;
@@ -13,6 +14,7 @@ import formfiller.utilities.StringUtilities;
 public class AddAnswerUseCase extends UndoableUseCaseExecution {
 	AddAnswerRequest castRequest;
 
+	//	TODO:	Delete all this?
 	/*public void execute(Request request) {
 		AddAnswerRequest addAnswerRequest = (AddAnswerRequest) request;
 		String questionId = addAnswerRequest.componentId;
@@ -32,8 +34,8 @@ public class AddAnswerUseCase extends UndoableUseCaseExecution {
 		//	TODO:	Otherwise, inform the user why the answer could not be added.
 	}*/
 	
-	private AnswerImpl makeAnswer(Object content){
-		AnswerImpl result = new AnswerImpl();
+	private Answer makeAnswer(Object content){
+		Answer result = new AnswerImpl();
 		result.setContent(content);
 		return result;
 	}
@@ -54,7 +56,7 @@ public class AddAnswerUseCase extends UndoableUseCaseExecution {
 
 	protected void execute() {
 		FormComponent component = FormComponentUtilities.find(castRequest.componentId);
-		AnswerImpl answer = makeAnswer(castRequest.content);
+		Answer answer = makeAnswer(castRequest.content);
 		component.answer = answer;
 	}
 

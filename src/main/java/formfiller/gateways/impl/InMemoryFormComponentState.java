@@ -7,9 +7,12 @@ import formfiller.enums.QuestionAsked;
 import formfiller.gateways.FormComponentState;
 
 public class InMemoryFormComponentState implements FormComponentState {		
-	public int currentIndex = 0;
+	public int currentIndex = 0;	//	This is the problem.
+	//	public String lastId?  (what if lastId's component is removed?)
 	
 	public FormComponent getCurrent(){
+		//	TODO:	Get ID from FCPresenter and retrieve from Gateway?  (No, no reliance on Presenter access.)
+		
 		InMemoryFormComponentGateway castGateway = 
 				(InMemoryFormComponentGateway) Context.formComponentGateway;
 		return castGateway.findByIndex(currentIndex);

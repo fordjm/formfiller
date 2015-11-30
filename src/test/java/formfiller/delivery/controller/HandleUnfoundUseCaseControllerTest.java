@@ -7,7 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import formfiller.Context;
+import formfiller.delivery.ViewModel;
 import formfiller.delivery.event.impl.ParsedEvent;
+import formfiller.delivery.viewModel.NotificationViewModel;
 import formfiller.enums.Outcome;
 import formfiller.response.models.PresentableResponse;
 import formfiller.utilities.*;
@@ -16,10 +18,11 @@ public class HandleUnfoundUseCaseControllerTest {
 	private HandleUnfoundUseCaseController controller;
 	private ParsedEvent parsedEvent;
 	
-	private PresentableResponse getPresentableUnfoundUseCaseResponse(){
-		PresentableResponse result = 
-				Context.outcomePresenter.getPresentableResponse();
-		return result;
+	private NotificationViewModel getUnfoundUseCaseViewModel(){
+		ViewModel result = 
+				Context.outcomePresenter.getViewModel();
+		NotificationViewModel castResult = (NotificationViewModel) result;
+		return castResult;
 	}
 	
 	@Before
@@ -39,9 +42,7 @@ public class HandleUnfoundUseCaseControllerTest {
 		
 		controller.handle(parsedEvent);
 		
-		assertThat(getPresentableUnfoundUseCaseResponse().outcome, 
-				is(Outcome.NEGATIVE));
-		assertThat(getPresentableUnfoundUseCaseResponse().message, 
+		assertThat(getUnfoundUseCaseViewModel().message, 
 				is("Request was not found."));
 	}
 	
@@ -51,9 +52,7 @@ public class HandleUnfoundUseCaseControllerTest {
 		
 		controller.handle(parsedEvent);
 		
-		assertThat(getPresentableUnfoundUseCaseResponse().outcome, 
-				is(Outcome.NEGATIVE));
-		assertThat(getPresentableUnfoundUseCaseResponse().message, 
+		assertThat(getUnfoundUseCaseViewModel().message, 
 				is("Request unknown none was not found."));
 	}
 }

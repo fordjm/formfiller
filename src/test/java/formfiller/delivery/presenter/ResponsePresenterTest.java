@@ -6,14 +6,13 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import formfiller.delivery.viewModel.PresentableResponseViewModel;
-import formfiller.enums.Outcome;
+import formfiller.delivery.viewModel.NotificationViewModel;
 import formfiller.response.models.PresentableResponse;
 
 import static org.hamcrest.CoreMatchers.*;
 
 public class ResponsePresenterTest {
-	ResponsePresenter responsePresenter;
+	NotificationPresenter presenter;
 	
 	private PresentableResponse makePresentableResponse(){
 		PresentableResponse result = Mockito.mock(PresentableResponse.class);
@@ -23,28 +22,23 @@ public class ResponsePresenterTest {
 
 	@Before
 	public void setUp() {
-		responsePresenter = new ResponsePresenter(new PresentableResponseViewModel());
+		presenter = new NotificationPresenter();
 	}
 	
 	@Test
-	public void atStart_PresenterHasNoPresentableResponse(){
-		PresentableResponse currentResponse = 
-				responsePresenter.getPresentableResponse();
+	public void atStart_PresenterHasNoViewModel(){		
+		NotificationViewModel castViewModel = (NotificationViewModel) presenter.getViewModel();
 		
-		assertThat(currentResponse, is(instanceOf(PresentableResponse.class)));
-		assertThat(currentResponse.message, is(""));
-		assertThat(currentResponse.outcome, is(Outcome.NEUTRAL));
+		assertNull(castViewModel);
 	}
 	
 	@Test
 	public void canPresentResponse() {
 		PresentableResponse presentableResponse = makePresentableResponse();
 		
-		responsePresenter.present(presentableResponse);
-		PresentableResponse presentedResponse = 
-				responsePresenter.getPresentableResponse();
+		presenter.present(presentableResponse);	
+		NotificationViewModel castViewModel = (NotificationViewModel) presenter.getViewModel();
 		
-		assertThat(presentedResponse, is(presentableResponse));
-		assertThat(presentedResponse.message, is("Request was not found."));
+		assertThat(castViewModel.message, is("Request was not found."));
 	}
 }
