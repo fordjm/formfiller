@@ -1,32 +1,39 @@
 package formfiller.delivery.ui.consoleUi;
 
-import formfiller.delivery.event.EventSource;
-import formfiller.delivery.event.impl.ConsoleEventSource;
+import java.util.Scanner;
+
+import formfiller.EventSinks;
 import formfiller.delivery.event.impl.EventHandler;
 import formfiller.delivery.router.PlaceholderTextRouterFactory;
 import formfiller.delivery.router.Router;
 import formfiller.utilities.TestSetup;
 
 public class Main {
+	private static final Scanner stdIn = new Scanner(System.in);
 	private static EventHandler eventHandler;
-	private static EventSource eventSource;
 	
 	public static void main(String[] args){
 		TestSetup.setupSampleFormComponents();
+		EventSinks.add(new ConsoleEventSink());
 		setupClassVariables();
 		
 		handleStartEvent();
-		eventSource.captureEvents();
-	}
-	
-	private static void handleStartEvent() {
-		eventHandler.update(eventSource, "AskQues current");
+		captureEvents();
 	}
 	
 	private static void setupClassVariables() {
 		Router router = PlaceholderTextRouterFactory.makeRouter();
 		eventHandler = new EventHandler(router);
-		eventSource = new ConsoleEventSource();
-		eventSource.addObserver(eventHandler);
 	}
+	
+	private static void handleStartEvent() {
+		eventHandler.handleEvent("AskQues current");
+	}
+	
+	private static void captureEvents(){
+		while (true){
+			eventHandler.handleEvent(stdIn.nextLine());
+		}
+	}
+	
 }

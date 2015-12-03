@@ -2,10 +2,9 @@ package formfiller.delivery.ui.consoleUi;
 
 import java.util.Observable;
 
-import formfiller.delivery.View;
 import formfiller.response.models.PresentableResponse;
 
-public class ConsoleView implements View {
+public class ConsoleView {
 	public boolean outputRan;
 
 	public void generateView(String message){

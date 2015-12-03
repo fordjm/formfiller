@@ -1,10 +1,5 @@
 package fitnesse.fixtures;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-
 import formfiller.Context;
 import formfiller.appBoundaries.Presenter;
 import formfiller.delivery.ViewModel;
@@ -15,23 +10,19 @@ import formfiller.entities.AnswerImpl;
 import formfiller.entities.QuestionImpl;
 import formfiller.entities.formComponent.FormComponent;
 import formfiller.enums.QuestionAsked;
-import formfiller.response.models.PresentableAnswer;
-import formfiller.response.models.PresentableQuestion;
-import formfiller.response.models.PresentableResponse;
 import formfiller.usecases.undoable.UndoableUseCase;
 
 //	TODO:	Clean this.
 public class FormComponentPresentation {
-	private StringEventManager fixtureEventHandler;
-	private Map<Class<?>, String> prefixes = makePrefixes();
+	private StringEventManager fixtureEventManager;
 
 	public FormComponentPresentation() {
-		fixtureEventHandler = new StringEventManager();
+		fixtureEventManager = new StringEventManager();
 	}
 	
 	//	Start version 3
 	public void whenTheSubjectRequestsTheQuestion(QuestionAsked requested) {
-		fixtureEventHandler.updateHandler("AskQues " + requested.toString());
+		fixtureEventManager.updateHandler("AskQues " + requested.toString());
 	}
 	
 	public String presentsTheMessage() {
@@ -72,14 +63,6 @@ public class FormComponentPresentation {
 		mostRecent.undo();
 	}
 	//	End version 3
-	
-	private Map<Class<?>, String> makePrefixes() {
-		Map<Class<?>, String> result = new HashMap<Class<?>, String>();
-		result.put(PresentableQuestion.class, "Q: ");
-		result.put(PresentableAnswer.class, "A: ");
-		result.put(PresentableResponse.class, "E: ");
-		return result;
-	}
 	
 	//	V2 stuff
 	public String presentsThePrompt() {
@@ -170,7 +153,7 @@ public class FormComponentPresentation {
 		}
 
 	public void askingTheQuestion(QuestionAsked which) {
-		fixtureEventHandler.updateHandler("AskQues " + which.toString());
+		fixtureEventManager.updateHandler("AskQues " + which.toString());
 	}
 
 	private ViewModel getViewModel(Presenter presenter) {

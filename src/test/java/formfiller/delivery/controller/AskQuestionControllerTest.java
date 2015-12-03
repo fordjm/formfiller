@@ -10,6 +10,7 @@ import org.mockito.Mockito;
 import formfiller.Context;
 import formfiller.delivery.event.impl.ParsedEvent;
 import formfiller.entities.formComponent.FormComponent;
+import formfiller.entities.format.Unstructured;
 import formfiller.gateways.FormComponentGateway;
 import formfiller.gateways.impl.InMemoryFormComponentGateway;
 import formfiller.utilities.*;
@@ -42,6 +43,7 @@ public class AskQuestionControllerTest {
 	private FormComponent makeMockNameFormComponent() {
 		FormComponent result = Mockito.mock(FormComponent.class);
 		result.id = "name";
+		result.format = Mockito.mock(Unstructured.class);
 		result.question = QuestionMocker.makeMockNameQuestion();
 		result.answer = AnswerMocker.makeMockAnswer("name", "myName");
 		return result;

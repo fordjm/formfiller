@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import formfiller.Context;
+import formfiller.EventSinks;
 import formfiller.appBoundaries.Presenter;
 import formfiller.entities.Answer;
 import formfiller.entities.Question;
-import formfiller.entities.QuestionImpl;
 import formfiller.entities.formComponent.FormComponent;
 import formfiller.enums.Outcome;
 import formfiller.enums.QuestionAsked;
@@ -35,8 +35,15 @@ public class AskQuestionUseCase implements UndoableUseCase {
 			setOutcome(Outcome.NEGATIVE);
 		}			
 
+		AskQuestionResponseModel responseModel = makeResponseModel();
+		AskQuestionPresenter presenter = new AskQuestionPresenter();
+		presenter.present(responseModel);
+		EventSinks.receive(presenter.getViewModel());
+		
+		//	TODO:	Delete
 		PresentableResponse response = makeResponse();		
 		presentResponse(response);
+		//			End delete
 		Context.executedUseCases.add(this);
 	}
 
@@ -64,7 +71,19 @@ public class AskQuestionUseCase implements UndoableUseCase {
 		return (outcome == Outcome.POSITIVE) 
 				? makePresentableFormComponent() : makePresentableResponse();
 	}
+	
+	private AskQuestionResponseModel makeResponseModel() {
+		AskQuestionResponseModel result = new AskQuestionResponseModel();
+		FormComponent current = getCurrentFormComponent();
+		result.id = current.id;
+		result.format = current.format.getName();
+		result.message = current.question.getContent();
+		result.answerContent = current.answer.getContent();
+		return result;
+	}
 
+	//	TODO:	Throw exception caught by LocalAskQuestionUseCase
+	//			That use case can use NotificationPresenter
 	private String getAnswerRequiredMessage(){
 		return "Sorry, you cannot move ahead.  "
 				+ "The current question requires an answer.";
