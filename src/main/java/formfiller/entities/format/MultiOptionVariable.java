@@ -29,8 +29,6 @@ public class MultiOptionVariable extends OptionVariable {
 				castContent.size() <= maxAnswers;
 	}
 
-	//	TODO:	Update this to check CompositeAnswer objects 
-	//			(if it makes sense at all)
 	private boolean isNotALegalMultipleAnswer(Answer toMatch) {
 		return toMatch == null || !isAnswerContentACollection(toMatch.getContent());
 	}

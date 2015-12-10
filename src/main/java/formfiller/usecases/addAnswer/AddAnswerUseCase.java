@@ -33,12 +33,6 @@ public class AddAnswerUseCase extends UndoableUseCaseExecution {
 		
 		//	TODO:	Otherwise, inform the user why the answer could not be added.
 	}*/
-	
-	private Answer makeAnswer(Object content){
-		Answer result = new AnswerImpl();
-		result.setContent(content);
-		return result;
-	}
 
 	public void undo() {
 		// TODO Implement (After determining RemoveAnswer strategy.)		
@@ -62,6 +56,12 @@ public class AddAnswerUseCase extends UndoableUseCaseExecution {
 
 	protected String makeSuccessfulMessage() {
 		return "You added answer, " + castRequest.content;
+	}
+	
+	private Answer makeAnswer(Object content){
+		Answer result = new AnswerImpl();
+		result.setContent(content);
+		return result;
 	}
 	
 }

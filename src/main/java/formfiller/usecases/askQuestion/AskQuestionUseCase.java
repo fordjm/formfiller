@@ -78,7 +78,7 @@ public class AskQuestionUseCase implements UndoableUseCase {
 		result.id = current.id;
 		result.format = current.format.getName();
 		result.message = current.question.getContent();
-		result.answerContent = current.answer.getContent();
+		result.answerContent = current.answer.getContent();	// TODO:	Fix this for multiple answers.
 		return result;
 	}
 
