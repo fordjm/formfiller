@@ -1,6 +1,6 @@
 package formfiller.delivery.ui.consoleUi;
 
-import formfiller.EventSink;
+import formfiller.delivery.event.eventSink.EventSink;
 import formfiller.usecases.askQuestion.AskQuestionViewModel;
 
 public class ConsoleEventSink implements EventSink {

@@ -1,10 +1,10 @@
 package fitnesse.fixtures;
 
 public class DeleteFormComponent {
-	private StringEventManager stringEventManager;
+	private ConsoleEventManager stringEventManager;
 
 	public DeleteFormComponent() {
-		stringEventManager = new StringEventManager();
+		stringEventManager = new ConsoleEventManager();
 	}
 	
 	public void whenTheUserDeletesTheFormComponent(String componentId){

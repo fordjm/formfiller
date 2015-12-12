@@ -6,10 +6,10 @@ import formfiller.entities.formComponent.NullFormComponents;
 import formfiller.utilities.StringUtilities;
 
 public class ChangeFormat {
-	private StringEventManager stringEventManager;
+	private ConsoleEventManager stringEventManager;
 	
 	public ChangeFormat() {
-		stringEventManager = new StringEventManager();
+		stringEventManager = new ConsoleEventManager();
 	}
 	
 	public void whenTheUserChangesTheFormatTo(String componentId, String format){

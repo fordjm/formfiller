@@ -4,14 +4,14 @@ import formfiller.Context;
 import formfiller.entities.formComponent.FormComponent;
 
 public class AddFormComponent {
-	private StringEventManager stringEventManager;
+	private ConsoleEventManager stringEventManager;
 	private String componentId;
 	private String questionContent;
 	private String format;
 	protected FormComponent addedComponent;
 
 	public AddFormComponent() {
-		stringEventManager = new StringEventManager();
+		stringEventManager = new ConsoleEventManager();
 	}
 	
 	public void givenAQuestionIdAndQuestionContentAndAnswerFormat(String questionId, 

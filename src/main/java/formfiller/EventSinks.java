@@ -3,6 +3,7 @@ package formfiller;
 import java.util.ArrayList;
 import java.util.List;
 
+import formfiller.delivery.event.eventSink.EventSink;
 import formfiller.usecases.askQuestion.AskQuestionViewModel;
 
 public class EventSinks {

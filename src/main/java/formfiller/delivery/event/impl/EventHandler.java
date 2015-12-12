@@ -1,14 +1,16 @@
 package formfiller.delivery.event.impl;
 
+import formfiller.delivery.event.CharacterBasedEventParsingStrategy;
 import formfiller.delivery.event.EventParser;
 import formfiller.delivery.router.Router;
 
 public class EventHandler {
-	EventParser eventParser = new StringEventParser();
+	EventParser eventParser;
 	Router router;
 
 	public EventHandler(Router router) {
 		this.router = router;
+		this.eventParser = new FormEventParser(new CharacterBasedEventParsingStrategy());
 	}
 	
 	public void handleEvent(String event){

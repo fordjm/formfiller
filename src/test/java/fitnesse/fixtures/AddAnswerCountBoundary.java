@@ -9,10 +9,10 @@ import formfiller.utilities.StringUtilities;
 public class AddAnswerCountBoundary {	
 	private final int DEFAULT_MINIMUM = 0;
 	private final int DEFAULT_MAXIMUM = 1;
-	private StringEventManager stringEventManager;
+	private ConsoleEventManager stringEventManager;
 
 	public AddAnswerCountBoundary() {
-		stringEventManager = new StringEventManager();
+		stringEventManager = new ConsoleEventManager();
 	}
 
 	//	TODO:	Change to ...HasExistingBoundary()

@@ -3,10 +3,10 @@ package fitnesse.fixtures;
 import formfiller.utilities.StringUtilities;
 
 public class ChangeId {
-	private StringEventManager stringEventManager;
+	private ConsoleEventManager stringEventManager;
 	
 	public ChangeId() {
-		stringEventManager = new StringEventManager();
+		stringEventManager = new ConsoleEventManager();
 	}
 	
 	public void whenTheUserChangesTheIdFromOldToNew(String oldId, String newId){

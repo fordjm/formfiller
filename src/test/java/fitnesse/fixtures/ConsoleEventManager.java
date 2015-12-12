@@ -4,12 +4,12 @@ import formfiller.delivery.event.impl.EventHandler;
 import formfiller.delivery.router.PlaceholderTextRouterFactory;
 import formfiller.delivery.router.Router;
 
-public class StringEventManager {
+public class ConsoleEventManager {
 	private Router router;
 	private EventHandler handler;
 
 	//	TODO:  Find a name without "manager" in it.
-	public StringEventManager() {
+	public ConsoleEventManager() {
 		router = PlaceholderTextRouterFactory.makeRouter();
 		handler = new EventHandler(router);
 	}

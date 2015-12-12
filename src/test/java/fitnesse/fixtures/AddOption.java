@@ -6,10 +6,10 @@ import formfiller.utilities.FormComponentUtilities;
 import formfiller.utilities.StringUtilities;
 
 public class AddOption {
-	private StringEventManager stringEventManager;
+	private ConsoleEventManager stringEventManager;
 
 	public AddOption() {
-		stringEventManager = new StringEventManager();
+		stringEventManager = new ConsoleEventManager();
 	}
 	
 	public void addOption(String componentId, String option){

@@ -1,5 +1,9 @@
 package formfiller.utilities;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class StringUtilities {
 	private static final String QUOTATION_MARK = "\"";
 	
@@ -18,6 +22,16 @@ public class StringUtilities {
 
 	public static boolean isStringNullOrEmpty(String input) {
 		return input == null || input.equals("");
+	}
+
+	public static List<String> splitStringOnWhitespace(String input) {
+		if (input == null) return new ArrayList<String>();
+		
+		return Arrays.asList(input.split("\\s+"));
+		
+		/*List<String> result = new ArrayList<String>();
+		result.addAll(Arrays.asList(input.split("\\s+")));
+		return result;*/
 	}
 	
 }

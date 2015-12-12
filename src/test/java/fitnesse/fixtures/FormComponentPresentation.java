@@ -14,10 +14,10 @@ import formfiller.usecases.undoable.UndoableUseCase;
 
 //	TODO:	Clean this.
 public class FormComponentPresentation {
-	private StringEventManager fixtureEventManager;
+	private ConsoleEventManager fixtureEventManager;
 
 	public FormComponentPresentation() {
-		fixtureEventManager = new StringEventManager();
+		fixtureEventManager = new ConsoleEventManager();
 	}
 	
 	//	Start version 3
