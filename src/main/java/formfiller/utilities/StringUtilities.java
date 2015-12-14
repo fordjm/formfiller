@@ -28,10 +28,6 @@ public class StringUtilities {
 		if (input == null) return new ArrayList<String>();
 		
 		return Arrays.asList(input.split("\\s+"));
-		
-		/*List<String> result = new ArrayList<String>();
-		result.addAll(Arrays.asList(input.split("\\s+")));
-		return result;*/
 	}
 	
 }
