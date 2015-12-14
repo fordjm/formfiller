@@ -1,11 +1,12 @@
 package formfiller;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import formfiller.delivery.event.EventSource;
+import formfiller.delivery.event.eventSource.EventSource;
 
 public class EventSources {
-	private static List<EventSource> itsSources;
+	private static List<EventSource> itsSources = new ArrayList<EventSource>();
 
 	public static void add(EventSource source) {
 		itsSources.add(source);

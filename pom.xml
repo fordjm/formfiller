@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>edu.uwm.cs995.fordjm</groupId>
   <artifactId>formfiller</artifactId>
-  <version>0.0.3</version>
+  <version>0.0.5</version>
   <name>FormFiller</name>
   <dependencies>
   	<dependency>

@@ -1,4 +1,4 @@
-package formfiller.delivery.event;
+package formfiller.delivery.event.eventSource;
 
 public interface EventSource {
 	public abstract void disable();
