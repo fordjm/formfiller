@@ -1,67 +1,74 @@
 package formfiller.usecases.addAnswer;
 
 import formfiller.Context;
-import formfiller.appBoundaries.UseCase;
+import formfiller.EventSinks;
 import formfiller.entities.Answer;
 import formfiller.entities.AnswerImpl;
 import formfiller.entities.formComponent.FormComponent;
 import formfiller.request.models.AddAnswerRequest;
 import formfiller.request.models.Request;
-import formfiller.usecases.undoable.UndoableUseCaseExecution;
-import formfiller.utilities.FormComponentUtilities;
+import formfiller.usecases.undoable.UndoableUseCase;
 import formfiller.utilities.StringUtilities;
 
-public class AddAnswerUseCase extends UndoableUseCaseExecution {
-	AddAnswerRequest castRequest;
+//	TODO:	Check request for null or empty strings.  Throw exception if found.
+public class AddAnswerUseCase implements UndoableUseCase {
+	private AddAnswerRequest castRequest;
+	private FormComponent foundComponent;
 
-	//	TODO:	Delete all this?
-	/*public void execute(Request request) {
-		AddAnswerRequest addAnswerRequest = (AddAnswerRequest) request;
-		String questionId = addAnswerRequest.componentId;
-		Object content = addAnswerRequest.content;
-		//	If the answer content satisfies the answer constraints
-		if (content == "") return;
-		//		Then add the answer at the Gateway and tell the user.
-		AnswerImpl answer = makeAnswer(content);
-		
-		FormComponent foundComponent = 
-				Context.formComponentGateway.find(questionId);
-		// TODO:	Get component's AnswerAdditionStrategy from Format/Cardinality.  
-		//			Then call add.
-		foundComponent.answer = answer;
-		// TODO:	Present response.
-		
-		//	TODO:	Otherwise, inform the user why the answer could not be added.
-	}*/
-
-	public void undo() {
-		// TODO Implement (After determining RemoveAnswer strategy.)		
+	public void execute(Request request) {
+		castRequest(request);
+		foundComponent = getFormComponent();
+		updateFormComponent();
+		AddAnswerResponseModel responseModel = makeResponseModel();
+		AddAnswerPresenter presenter = new AddAnswerPresenter();
+		presenter.present(responseModel);
+		EventSinks.receive(presenter.getViewModel());
 	}
 
 	protected void castRequest(Request request) {
 		castRequest = (AddAnswerRequest) request;
 	}
 
-	protected boolean isRequestMalformed() {
-		return StringUtilities.isStringNullOrEmpty(castRequest.componentId) || 
-				castRequest.content == null ||
-				castRequest.content == "";
+	private FormComponent getFormComponent() {
+		return Context.formComponentGateway.find(castRequest.componentId);
 	}
 
-	protected void execute() {
-		FormComponent component = FormComponentUtilities.find(castRequest.componentId);
-		Answer answer = makeAnswer(castRequest.content);
-		component.answer = answer;
+	private void updateFormComponent() {
+		Answer answer = makeAnswer();
+		if (!foundComponent.validator.accepts(answer))
+			throw new IllegalArgumentException(makeAnswerRejectedMessage());
+		// TODO:	Get component's AnswerAdditionStrategy from Format/Cardinality, then call add.
+		foundComponent.answer = answer;
+	}
+
+	private Answer makeAnswer(){
+		Answer result = new AnswerImpl();
+		result.setId(castRequest.componentId);
+		result.setContent(castRequest.content);
+		return result;
+	}
+	
+	private String makeAnswerRejectedMessage() {
+		//	TODO:	More expressive message or multiple exceptions.
+		return "The question " + castRequest.componentId + "does not accept the answer " + 
+				castRequest.content.toString();
+	}
+
+	private AddAnswerResponseModel makeResponseModel() {
+		AddAnswerResponseModel result = new AddAnswerResponseModel();
+		result.id = castRequest.componentId;
+		result.format = foundComponent.format.getName();
+		result.message = makeSuccessfulMessage();
+		result.content = castRequest.content;
+		return result;
+	}
+
+	public void undo() {
+		// TODO Implement (After determining RemoveAnswer strategy.)		
 	}
 
 	protected String makeSuccessfulMessage() {
-		return "You added answer, " + castRequest.content;
-	}
-	
-	private Answer makeAnswer(Object content){
-		Answer result = new AnswerImpl();
-		result.setContent(content);
-		return result;
+		return "You added the answer, " + castRequest.content;
 	}
 	
 }
