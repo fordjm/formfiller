@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import formfiller.utilities.LingPipeJaccardDistanceCalculator;
+import formfiller.utilities.LingPipeJaccardProximityCalculator;
 import formfiller.utilities.SortedMapCreator;
 
 public class JaccardDistanceEventParsingStrategy implements EventParsingStrategy {
@@ -31,7 +31,7 @@ public class JaccardDistanceEventParsingStrategy implements EventParsingStrategy
 
 	private Map<String, Double> createUnsortedMap(String input) {
 		Map<String, Double> result = new HashMap<String, Double>();
-		LingPipeJaccardDistanceCalculator calculator = new LingPipeJaccardDistanceCalculator();
+		LingPipeJaccardProximityCalculator calculator = new LingPipeJaccardProximityCalculator();
 		for (String useCase : useCases)
 			result.put(useCase, calculator.calculate(useCase, input));
 		return result;

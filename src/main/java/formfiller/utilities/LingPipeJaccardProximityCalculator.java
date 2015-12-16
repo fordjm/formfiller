@@ -3,10 +3,10 @@ package formfiller.utilities;
 import com.aliasi.spell.JaccardDistance;
 import com.aliasi.tokenizer.IndoEuropeanTokenizerFactory;
 
-public class LingPipeJaccardDistanceCalculator {
+public class LingPipeJaccardProximityCalculator {
 	private JaccardDistance jaccardDistance;
 	
-	public LingPipeJaccardDistanceCalculator(){
+	public LingPipeJaccardProximityCalculator(){
 		jaccardDistance = new JaccardDistance(IndoEuropeanTokenizerFactory.INSTANCE);
 	}
 	
