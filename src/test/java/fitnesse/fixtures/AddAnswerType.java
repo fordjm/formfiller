@@ -5,7 +5,7 @@ import java.lang.reflect.Type;
 import formfiller.Context;
 import formfiller.entities.constrainable.AnswerType;
 import formfiller.entities.formComponent.FormComponent;
-import formfiller.response.models.PresentableResponse;
+import formfiller.response.models.NotificationResponseModel;
 import formfiller.utilities.FormComponentUtilities;
 import formfiller.utilities.StringToTypeConverter;
 import formfiller.utilities.PreDefinedStringToTypeConverter;
@@ -34,7 +34,7 @@ public class AddAnswerType {
 	}
 
 	private void presentMessage(String message) {
-		PresentableResponse response = new PresentableResponse();
+		NotificationResponseModel response = new NotificationResponseModel();
 		response.message = message;
 		Context.outcomePresenter.present(response);
 	}

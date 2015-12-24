@@ -7,6 +7,7 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import formfiller.delivery.viewModel.NotificationViewModel;
+import formfiller.response.models.NotificationResponseModel;
 import formfiller.response.models.PresentableResponse;
 
 import static org.hamcrest.CoreMatchers.*;
@@ -14,8 +15,8 @@ import static org.hamcrest.CoreMatchers.*;
 public class ResponsePresenterTest {
 	NotificationPresenter presenter;
 	
-	private PresentableResponse makePresentableResponse(){
-		PresentableResponse result = Mockito.mock(PresentableResponse.class);
+	private NotificationResponseModel makeResponseModel(){
+		NotificationResponseModel result = Mockito.mock(NotificationResponseModel.class);
 		result.message = "Request was not found.";
 		return result;
 	}
@@ -34,9 +35,9 @@ public class ResponsePresenterTest {
 	
 	@Test
 	public void canPresentResponse() {
-		PresentableResponse presentableResponse = makePresentableResponse();
+		NotificationResponseModel response = makeResponseModel();
 		
-		presenter.present(presentableResponse);	
+		presenter.present(response);	
 		NotificationViewModel castViewModel = (NotificationViewModel) presenter.getViewModel();
 		
 		assertThat(castViewModel.message, is("Request was not found."));

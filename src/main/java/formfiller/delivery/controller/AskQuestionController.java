@@ -7,6 +7,8 @@ import formfiller.enums.QuestionAsked;
 import formfiller.request.builder.RequestBuilder;
 import formfiller.request.builder.RequestBuilderImpl;
 import formfiller.request.models.Request;
+import formfiller.usecases.askQuestion.AskQuestionUseCase;
+import formfiller.usecases.askQuestion.LocalAskQuestionUseCase;
 import formfiller.usecases.factory.UseCaseFactoryImpl;
 import formfiller.utilities.*;
 
@@ -20,8 +22,9 @@ public class AskQuestionController implements Controller {
 		arguments = makeArguments();
 		Request request = makeAskQuestionRequest();
 		UseCase useCase = makeAskQuestionUseCase();
+		LocalAskQuestionUseCase local = new LocalAskQuestionUseCase((AskQuestionUseCase) useCase);
 		
-		useCase.execute(request);
+		local.execute(request);
 	}	
 	
 	protected Request makeAskQuestionRequest(){

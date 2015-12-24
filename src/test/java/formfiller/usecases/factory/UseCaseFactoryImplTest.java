@@ -10,7 +10,7 @@ import formfiller.appBoundaries.UseCase;
 import formfiller.usecases.addFormComponent.AddFormComponentUseCase;
 import formfiller.usecases.askQuestion.AskQuestionUseCase;
 import formfiller.usecases.factory.UseCaseFactoryImpl;
-import formfiller.usecases.handleUnfoundController.HandleUnfoundUseCaseUseCase;
+import formfiller.usecases.handleUnfoundUseCase.HandleUnfoundUseCaseUseCase;
 
 public class UseCaseFactoryImplTest {
 	private UseCaseFactoryImpl factory;

@@ -11,12 +11,14 @@ import formfiller.utilities.SortedMapCreator;
 
 public class JaccardDistanceEventParsingStrategy implements EventParsingStrategy {
 	private List<String> useCases;
+	private String input;
 	
 	public JaccardDistanceEventParsingStrategy() {
 		useCases = Arrays.asList("ask question", "add answer");
 	}
 
 	public String parseMethod(String input) {
+		this.input = input;
 		if (input == null || input.length() == 0) return "";
 		return findClosestMatch(input);
 	}
@@ -37,8 +39,9 @@ public class JaccardDistanceEventParsingStrategy implements EventParsingStrategy
 		return result;
 	}
 
+	//	TODO:	Return input if below min threshold
 	private String screenIfBelowMinThreshold(String closest, double score) {
-		return (score >= 0.5) ? closest : "unknown";
+		return (score >= 0.5) ? closest : input;
 	}
 
 	public List<String> parseParameters(String input) {

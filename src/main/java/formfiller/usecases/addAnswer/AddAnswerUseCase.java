@@ -8,7 +8,6 @@ import formfiller.entities.formComponent.FormComponent;
 import formfiller.request.models.AddAnswerRequest;
 import formfiller.request.models.Request;
 import formfiller.usecases.undoable.UndoableUseCase;
-import formfiller.utilities.StringUtilities;
 
 //	TODO:	Check request for null or empty strings.  Throw exception if found.
 public class AddAnswerUseCase implements UndoableUseCase {

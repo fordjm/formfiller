@@ -1,6 +1,5 @@
 package formfiller.delivery.presenter;
 
-import formfiller.Context;
 import formfiller.appBoundaries.Presenter;
 import formfiller.delivery.ViewModel;
 import formfiller.delivery.viewModel.FormComponentViewModel;
@@ -9,8 +8,7 @@ import formfiller.response.models.PresentableResponse;
 
 public class FormComponentPresenter implements Presenter {	
 	private ViewModel viewModel;
-	private PresentableResponse presentableResponse;
-	PresentableFormComponent component;
+	private PresentableFormComponent component;
 
 	public ViewModel getViewModel() {
 		return viewModel;
@@ -24,8 +22,8 @@ public class FormComponentPresenter implements Presenter {
 		viewModel = makeViewableFormComponent(component);
 		
 		//	TODO:	Remove
-		Context.questionPresenter.present(component.question);
-		Context.answerPresenter.present(component.answer);
+		//Context.questionPresenter.present(component.question);
+		//Context.answerPresenter.present(component.answer);
 	}
 
 	//	TODO:	Continue

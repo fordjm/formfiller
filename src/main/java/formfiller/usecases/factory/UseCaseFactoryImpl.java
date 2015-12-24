@@ -9,7 +9,7 @@ import formfiller.usecases.askQuestion.AskQuestionUseCase;
 import formfiller.usecases.changeFormComponent.ChangeFormatUseCase;
 import formfiller.usecases.changeFormComponent.ChangeIdUseCase;
 import formfiller.usecases.deleteFormComponent.DeleteFormComponentUseCase;
-import formfiller.usecases.handleUnfoundController.HandleUnfoundUseCaseUseCase;
+import formfiller.usecases.handleUnfoundUseCase.HandleUnfoundUseCaseUseCase;
 
 public class UseCaseFactoryImpl implements UseCaseFactory {
 	public UseCase make(String useCaseName) {

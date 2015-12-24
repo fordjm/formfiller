@@ -3,7 +3,6 @@ package fitnesse.fixtures;
 import formfiller.Context;
 import formfiller.appBoundaries.Presenter;
 import formfiller.delivery.ViewModel;
-import formfiller.delivery.viewModel.FormComponentViewModel;
 import formfiller.delivery.viewModel.NotificationViewModel;
 import formfiller.entities.Answer;
 import formfiller.entities.AnswerImpl;
@@ -51,9 +50,9 @@ public class FormComponentPresentation {
 	}
 
 	public String presentsTheAnswer() {
-		FormComponentViewModel castViewModel = 
-				getCastFormComponentViewModel(getViewModel(Context.formComponentPresenter));
-		return castViewModel.answerMessage;
+		FormComponent formComponent = Context.formComponentState.getCurrent();
+		Object answerContent = formComponent.answer.getContent();
+		return answerContent.toString();
 	}
 	
 	//	TODO:	Doesn't reset if multiple questions are asked.
@@ -66,13 +65,8 @@ public class FormComponentPresentation {
 	
 	//	V2 stuff
 	public String presentsThePrompt() {
-		FormComponentViewModel castViewModel = 
-				getCastFormComponentViewModel(getViewModel(Context.formComponentPresenter));
-		return castViewModel.questionMessage;
-	}
-
-	private FormComponentViewModel getCastFormComponentViewModel(ViewModel response) {
-		return (FormComponentViewModel) response;
+		FormComponent formComponent = Context.formComponentState.getCurrent();
+		return formComponent.question.getContent();
 	}
 
 	public String presentsTheFormat() {
@@ -80,9 +74,8 @@ public class FormComponentPresentation {
 	}
 
 	public String presentsTheError() {
-		ViewModel response = getViewModel(Context.outcomePresenter);
-		NotificationViewModel castResponse = (NotificationViewModel) response;
-		return castResponse.message;
+		NotificationViewModel response = Context.outcomePresenter.getViewModel();
+		return response.message;
 	}
 	
 	public void givenOneFormComponentWithTooManyParameters(String id, 

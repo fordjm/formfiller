@@ -10,7 +10,7 @@ import org.mockito.Mockito;
 import formfiller.Context;
 import formfiller.delivery.viewModel.NotificationViewModel;
 import formfiller.request.models.HandleUnfoundUseCaseRequest;
-import formfiller.usecases.handleUnfoundController.HandleUnfoundUseCaseUseCase;
+import formfiller.usecases.handleUnfoundUseCase.HandleUnfoundUseCaseUseCase;
 import formfiller.utilities.TestSetup;
 
 public class HandleUnfoundUseCaseTest {

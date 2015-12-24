@@ -1,15 +1,13 @@
 package formfiller.usecases;
 
-import formfiller.enums.Outcome;
 import formfiller.request.models.Request;
-import formfiller.response.models.PresentableResponse;
+import formfiller.response.models.NotificationResponseModel;
 import formfiller.usecases.undoable.UndoableUseCase;
 import formfiller.Context;
 import formfiller.appBoundaries.UseCase;
 
 public class LocalUseCase implements UseCase {
 	private UndoableUseCase useCase;
-	private Outcome outcome;
 	private String message;
 
 	public LocalUseCase(UndoableUseCase useCase) {
@@ -30,24 +28,23 @@ public class LocalUseCase implements UseCase {
 	}
 
 	private void handleFailedUseCase(String message) {
-		outcome = Outcome.NEGATIVE;
 		this.message = message;
 		presentFailedResponse();
 	}
 
 	private void presentFailedResponse() {
-		PresentableResponse response = makeResponse();		
+		NotificationResponseModel response = makeResponse();		
 		presentResponse(response);
 	}
 
-	private PresentableResponse makeResponse() {
-		PresentableResponse result = new PresentableResponse();
+	private NotificationResponseModel makeResponse() {
+		NotificationResponseModel result = new NotificationResponseModel();
 		result.message = message;
-		result.outcome = outcome;
 		return result;
 	}
 	
-	private void presentResponse(PresentableResponse presentableResponse) {
-		Context.outcomePresenter.present(presentableResponse);
+	private void presentResponse(NotificationResponseModel response) {
+		Context.outcomePresenter.present(response);
 	}
+	
 }

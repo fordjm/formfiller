@@ -19,6 +19,7 @@ import formfiller.entities.format.*;
 import formfiller.enums.QuestionAsked;
 import formfiller.request.models.AskQuestionRequest;
 import formfiller.usecases.askQuestion.AskQuestionUseCase;
+import formfiller.usecases.askQuestion.AskQuestionUseCase.RequiredAnswer;
 import formfiller.usecases.undoable.UndoableUseCase;
 import formfiller.utilities.*;
 
@@ -283,23 +284,15 @@ public class AskQuestionTest {
 				assertThat_CurrentAndExpectedComponents_AreTheSame();
 			}
 			
-			@Test
-			public void movingForward_DoesNotChangeComponent(){
+			@Test(expected = RequiredAnswer.class)
+			public void skippingRequiredQuestion_ThrowsException(){
 				setupAskQuestionTest(QuestionAsked.NEXT, getCurrentFormComponent());
 				
 				executeAskQuestionRequest(mockRequest);
 				
 				assertThat_CurrentAndExpectedComponents_AreTheSame();
-			}			
+			}		
 			
-			@Test
-			public void undoAfterFailedExecution_DoesNotChangeCurrentFormComponent() {
-				setupAskQuestionTest(QuestionAsked.NEXT, getCurrentFormComponent());
-
-				executeAndUndoAskQuestionRequest(mockRequest);
-				
-				assertThat_CurrentAndExpectedComponents_AreTheSame();
-			}	
 		}		
 	}
 }

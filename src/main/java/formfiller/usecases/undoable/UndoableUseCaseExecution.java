@@ -3,7 +3,7 @@ package formfiller.usecases.undoable;
 import formfiller.Context;
 import formfiller.enums.Outcome;
 import formfiller.request.models.Request;
-import formfiller.response.models.PresentableResponse;
+import formfiller.response.models.NotificationResponseModel;
 
 public abstract class UndoableUseCaseExecution implements UndoableUseCase {
 	protected Outcome outcome = Outcome.NEUTRAL;
@@ -14,7 +14,7 @@ public abstract class UndoableUseCaseExecution implements UndoableUseCase {
 		checkForMalformedRequest();
 		execute();		
 		handleSuccessfulUseCase();
-		PresentableResponse response = makeResponse();		
+		NotificationResponseModel response = makeResponse();		
 		presentResponse(response);
 	}
 
@@ -40,14 +40,13 @@ public abstract class UndoableUseCaseExecution implements UndoableUseCase {
 
 	protected abstract String makeSuccessfulMessage();
 	
-	protected PresentableResponse makeResponse() {
-		PresentableResponse result = new PresentableResponse();
+	protected NotificationResponseModel makeResponse() {
+		NotificationResponseModel result = new NotificationResponseModel();
 		result.message = message;
-		result.outcome = outcome;
 		return result;
 	}
 	
-	protected void presentResponse(PresentableResponse presentableResponse) {
+	protected void presentResponse(NotificationResponseModel presentableResponse) {
 		Context.outcomePresenter.present(presentableResponse);
 	}
 	

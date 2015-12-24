@@ -4,7 +4,6 @@ import formfiller.ExecutedUseCases;
 import formfiller.Context;
 import formfiller.delivery.presenter.FormComponentPresenter;
 import formfiller.delivery.presenter.NotificationPresenter;
-import formfiller.delivery.viewModel.NotificationViewModel;
 import formfiller.entities.Answer;
 import formfiller.entities.AnswerImpl;
 import formfiller.entities.Question;
@@ -30,11 +29,6 @@ public class TestSetup {
 
 	private static NotificationPresenter makeResponsePresenter() {
 		return new NotificationPresenter();
-	}
-
-	private static NotificationViewModel makePresentableResponseViewModel() {
-		NotificationViewModel result = new NotificationViewModel();
-		return result;
 	}
 
 	private static FormComponentPresenter makeFormComponentPresenter() {

@@ -1,6 +1,7 @@
 package formfiller;
 
-import formfiller.appBoundaries.Presenter;
+import formfiller.delivery.presenter.FormComponentPresenter;
+import formfiller.delivery.presenter.NotificationPresenter;
 import formfiller.gateways.FormComponentGateway;
 import formfiller.gateways.FormComponentState;
 import formfiller.utilities.valueMatcher.StringMatcher;
@@ -13,9 +14,9 @@ public class Context {
 	public static FormComponentState formComponentState;
 	public static FormComponentGateway formComponentGateway;
 	public static ExecutedUseCases executedUseCases;
-	public static Presenter answerPresenter;
-	public static Presenter outcomePresenter;
-	public static Presenter formComponentPresenter;
-	public static Presenter questionPresenter;
+	public static NotificationPresenter answerPresenter;
+	public static NotificationPresenter outcomePresenter;
+	public static FormComponentPresenter formComponentPresenter;
+	public static NotificationPresenter questionPresenter;
 	public static StringMatcher stringMatcher;
 }

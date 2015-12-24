@@ -1,37 +1,23 @@
 package formfiller.delivery.presenter;
 
-import formfiller.appBoundaries.Presenter;
-import formfiller.delivery.ViewModel;
 import formfiller.delivery.viewModel.NotificationViewModel;
-import formfiller.response.models.PresentableResponse;
+import formfiller.response.models.NotificationResponseModel;
 
-public class NotificationPresenter implements Presenter {	
-	private ViewModel viewModel;
-	private PresentableResponse presentableResponse;
-	
-	public NotificationPresenter(){
-		clearPresentableResponse();
-	}
+public class NotificationPresenter {	
+	private NotificationViewModel viewModel;
 
-	//	TODO:	Change to getViewModel()
-	public ViewModel getViewModel() {
+	public NotificationViewModel getViewModel() {
 		return viewModel;
 	}
 	
-	public void present(PresentableResponse presentableResponse) {
-		viewModel = createViewModel(presentableResponse);
-		
-		this.presentableResponse = presentableResponse;
+	public void present(NotificationResponseModel response) {
+		viewModel = createViewModel(response);
 	}
 	
-	private ViewModel createViewModel(PresentableResponse presentableResponse) {
+	private NotificationViewModel createViewModel(NotificationResponseModel response) {
 		NotificationViewModel result = new NotificationViewModel();
-		result.message = presentableResponse.message;
+		result.message = response.message;
 		return result;
-	}
-
-	public void clearPresentableResponse() {
-		presentableResponse = new PresentableResponse();
 	}
 	
 }
