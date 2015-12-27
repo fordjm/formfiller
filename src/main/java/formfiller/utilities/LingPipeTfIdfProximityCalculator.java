@@ -18,7 +18,7 @@ public class LingPipeTfIdfProximityCalculator {
 	}
 	
 	public double calculate(String query, String document) {
-		handleDocuments(document);
+		handleDocuments(query, document);
 		return tfIdf.proximity(query, document);
 	}
 	

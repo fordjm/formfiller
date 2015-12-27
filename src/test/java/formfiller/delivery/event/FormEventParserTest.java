@@ -129,7 +129,7 @@ public class FormEventParserTest {
 	public class JaccardDistanceParsingStrategyContext {
 		@Before
 		public void setUp(){
-			parser = new FormEventParser(new JaccardDistanceEventParsingStrategy());
+			parser = new FormEventParser(new TfIdfSimilarityEventParsingStrategy());
 			questionContent = "";
 		}		
 		
@@ -174,6 +174,14 @@ public class FormEventParserTest {
 		}
 		
 		@Test
+		public void canParseLongerAddAnswerCommand() {
+			parseEventString("add answer July 4th, 1776");
+			
+			assertThat_TheEventMethod_IsTheGivenString("add answer");
+			assertThat_TheGivenStrings_CompriseTheEventParameters("July 4th, 1776");
+		}
+		
+		@Test
 		public void canParseUnorderedAskQuestionCommand() {
 			parseEventString("ask previous question");
 			
@@ -184,7 +192,7 @@ public class FormEventParserTest {
 		@Test
 		public void cannotParseMoreThanOneParameter() {
 			assertThat(true, is(true));
-		}		
+		}
 	}
 	
 	

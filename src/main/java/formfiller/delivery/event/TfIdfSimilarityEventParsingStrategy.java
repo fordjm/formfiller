@@ -7,13 +7,15 @@ import java.util.List;
 import java.util.Map;
 
 import formfiller.utilities.LingPipeJaccardProximityCalculator;
+import formfiller.utilities.LingPipeTfIdfProximityCalculator;
+import formfiller.utilities.LuceneTfIdfSimilarityCalculator;
 import formfiller.utilities.SortedMapCreator;
 
-public class JaccardDistanceEventParsingStrategy implements EventParsingStrategy {
+public class TfIdfSimilarityEventParsingStrategy implements EventParsingStrategy {
 	private List<String> useCases;
 	private String input;
 	
-	public JaccardDistanceEventParsingStrategy() {
+	public TfIdfSimilarityEventParsingStrategy() {
 		useCases = Arrays.asList("ask question", "add answer");
 	}
 
@@ -33,9 +35,11 @@ public class JaccardDistanceEventParsingStrategy implements EventParsingStrategy
 
 	private Map<String, Double> createUnsortedMap(String input) {
 		Map<String, Double> result = new HashMap<String, Double>();
-		LingPipeJaccardProximityCalculator calculator = new LingPipeJaccardProximityCalculator();
+		LuceneTfIdfSimilarityCalculator calculator0 = new LuceneTfIdfSimilarityCalculator();
+		
+		LingPipeTfIdfProximityCalculator calculator = new LingPipeTfIdfProximityCalculator();
 		for (String useCase : useCases)
-			result.put(useCase, calculator.calculate(useCase, input));
+			result.put(useCase, calculator0.calculate(useCase, input));
 		return result;
 	}
 

@@ -30,7 +30,22 @@
 		<groupId>org.apache.commons</groupId>
 		<artifactId>commons-lang3</artifactId>
 		<version>3.4</version>
-	</dependency> 	
+	</dependency>
+  	<dependency>
+		<groupId>org.apache.commons</groupId>
+		<artifactId>commons-math3</artifactId>
+		<version>3.4</version>
+	</dependency>
+  	<dependency>
+  		<groupId>org.apache.lucene</groupId>
+  		<artifactId>lucene-core</artifactId>
+  		<version>5.4.0</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.apache.lucene</groupId>
+  		<artifactId>lucene-analyzers-common</artifactId>
+  		<version>5.4.0</version>
+  	</dependency>
   </dependencies>
   <build>
 	<plugins>
