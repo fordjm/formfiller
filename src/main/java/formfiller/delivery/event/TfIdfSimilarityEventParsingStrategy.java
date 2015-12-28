@@ -6,8 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import formfiller.utilities.LingPipeJaccardProximityCalculator;
-import formfiller.utilities.LingPipeTfIdfProximityCalculator;
 import formfiller.utilities.LuceneTfIdfSimilarityCalculator;
 import formfiller.utilities.SortedMapCreator;
 
@@ -35,11 +33,9 @@ public class TfIdfSimilarityEventParsingStrategy implements EventParsingStrategy
 
 	private Map<String, Double> createUnsortedMap(String input) {
 		Map<String, Double> result = new HashMap<String, Double>();
-		LuceneTfIdfSimilarityCalculator calculator0 = new LuceneTfIdfSimilarityCalculator();
-		
-		LingPipeTfIdfProximityCalculator calculator = new LingPipeTfIdfProximityCalculator();
+		LuceneTfIdfSimilarityCalculator calculator = new LuceneTfIdfSimilarityCalculator();
 		for (String useCase : useCases)
-			result.put(useCase, calculator0.calculate(useCase, input));
+			result.put(useCase, calculator.calculate(useCase, input));
 		return result;
 	}
 

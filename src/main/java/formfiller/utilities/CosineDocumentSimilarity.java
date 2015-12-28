@@ -7,12 +7,13 @@ import org.apache.commons.math3.linear.*;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.core.SimpleAnalyzer;
 import org.apache.lucene.document.*;
-import org.apache.lucene.document.Field.Store;
 import org.apache.lucene.index.*;
 import org.apache.lucene.store.*;
 import org.apache.lucene.util.*;
 
-//	TODO:	Credit stackoverflow author
+//	From:		http://stackoverflow.com/questions/1844194/get-cosine-similarity-between-two-documents-in-lucene
+//	By:			Mark Butler
+//	Retrieved:	12/26/2015
 public class CosineDocumentSimilarity {
 
     public static final String CONTENT = "Content";
@@ -33,8 +34,9 @@ public class CosineDocumentSimilarity {
 
     Directory createIndex(String s1, String s2) throws IOException {
         Directory directory = new RAMDirectory();
-        Analyzer analyzer = new SimpleAnalyzer();
-        IndexWriterConfig iwc = new IndexWriterConfig(analyzer);
+        Analyzer analyzer = new SimpleAnalyzer(Version.LUCENE_CURRENT);
+        IndexWriterConfig iwc = new IndexWriterConfig(Version.LUCENE_CURRENT,
+                analyzer);
         IndexWriter writer = new IndexWriter(directory, iwc);
         addDocument(writer, s1);
         addDocument(writer, s2);
@@ -46,8 +48,7 @@ public class CosineDocumentSimilarity {
     public static final FieldType TYPE_STORED = new FieldType();
 
     static {
-    	TYPE_STORED.setIndexOptions(IndexOptions.DOCS_AND_FREQS_AND_POSITIONS_AND_OFFSETS);
-        //TYPE_STORED.setIndexed(true);
+        TYPE_STORED.setIndexed(true);
         TYPE_STORED.setTokenized(true);
         TYPE_STORED.setStored(true);
         TYPE_STORED.setStoreTermVectors(true);
@@ -75,7 +76,7 @@ public class CosineDocumentSimilarity {
             throws IOException {
         Terms vector = reader.getTermVector(docId, CONTENT);
         TermsEnum termsEnum = null;
-        termsEnum = vector.iterator();
+        termsEnum = vector.iterator(termsEnum);
         Map<String, Integer> frequencies = new HashMap<String, Integer>();
         BytesRef text = null;
         while ((text = termsEnum.next()) != null) {

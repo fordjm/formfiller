@@ -126,7 +126,7 @@ public class FormEventParserTest {
 		}
 	}
 	
-	public class JaccardDistanceParsingStrategyContext {
+	public class TfIdfSimilarityParsingStrategyContext {
 		@Before
 		public void setUp(){
 			parser = new FormEventParser(new TfIdfSimilarityEventParsingStrategy());

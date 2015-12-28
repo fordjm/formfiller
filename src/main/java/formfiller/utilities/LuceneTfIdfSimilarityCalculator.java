@@ -9,6 +9,9 @@ public class LuceneTfIdfSimilarityCalculator {
 		} catch (IOException e) {
 			e.printStackTrace();
 			return Double.MIN_VALUE;	//	TODO:	Handle differently
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+			return Double.MIN_VALUE;	//	TODO:	Handle differently
 		}
 	}
 }
