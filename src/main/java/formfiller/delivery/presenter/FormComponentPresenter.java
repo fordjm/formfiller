@@ -6,6 +6,11 @@ import formfiller.delivery.viewModel.FormComponentViewModel;
 import formfiller.response.models.PresentableFormComponent;
 import formfiller.response.models.PresentableResponse;
 
+/**
+ * FormComponentPresenter makes viewable the response models generated 
+ * by use cases which manipulate Form Components.
+ * @deprecated
+ */
 public class FormComponentPresenter implements Presenter {	
 	private ViewModel viewModel;
 	private PresentableFormComponent component;
@@ -20,10 +25,6 @@ public class FormComponentPresenter implements Presenter {
 		
 		component = (PresentableFormComponent) componentResponse;
 		viewModel = makeViewableFormComponent(component);
-		
-		//	TODO:	Remove
-		//Context.questionPresenter.present(component.question);
-		//Context.answerPresenter.present(component.answer);
 	}
 
 	//	TODO:	Continue

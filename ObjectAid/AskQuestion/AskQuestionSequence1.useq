@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence-diagram version="1.1.9" icons="true">  
+  <object id="1" language="java" name="formfiller.usecases.askQuestion.AskQuestionUseCase" project="formfiller" 
+    file="/formfiller/src/main/java/formfiller/usecases/askQuestion/AskQuestionUseCase.java" binary="false" 
+    label="askQuestionUseCase" type="class" autoSize="true">    
+    <position height="-1" width="-1" x="19" y="0"/>    
+    <execution id="2">      
+      <position height="1503" width="0" x="0" y="82"/>    
+    </execution>    
+    <execution id="4">      
+      <position height="1440" width="0" x="0" y="124"/>    
+    </execution>    
+    <execution id="8">      
+      <position height="21" width="0" x="0" y="510"/>    
+    </execution>    
+    <execution id="10">      
+      <position height="21" width="0" x="0" y="562"/>    
+    </execution>    
+    <execution id="12">      
+      <position height="459" width="0" x="0" y="614"/>    
+    </execution>    
+    <execution id="14">      
+      <position height="408" width="0" x="0" y="1104"/>    
+    </execution>    
+    <execution id="22">      
+      <position height="21" width="0" x="0" y="1156"/>    
+    </execution>  
+  </object>  
+  <object id="31" language="java" name="formfiller.usecases.askQuestion.AskQuestionPresenter" project="formfiller" 
+    file="/formfiller/src/main/java/formfiller/usecases/askQuestion/AskQuestionPresenter.java" binary="false" 
+    label="presenter" type="class" autoSize="true">    
+    <position height="0" width="0" x="0" y="0"/>    
+    <execution id="24">      
+      <position height="21" width="0" x="0" y="1187"/>    
+    </execution>    
+    <execution id="26">      
+      <position height="136" width="0" x="0" y="1229"/>    
+    </execution>    
+    <execution id="30">      
+      <position height="21" width="0" x="0" y="1470"/>    
+    </execution>    
+    <execution id="33">      
+      <position height="73" width="0" x="0" y="1271"/>    
+    </execution>  
+  </object>  
+  <object id="36" language="java" name="formfiller.usecases.askQuestion.AskQuestionViewModel" project="formfiller" 
+    file="/formfiller/src/main/java/formfiller/usecases/askQuestion/AskQuestionViewModel.java" binary="false" 
+    label="viewModel" type="class" autoSize="true">    
+    <position height="0" width="0" x="0" y="0"/>    
+    <execution id="35">      
+      <position height="21" width="0" x="0" y="1302"/>    
+    </execution>  
+  </object>  
+  <object id="37" language="java" name="formfiller.EventSinks" project="formfiller" 
+    file="/formfiller/src/main/java/formfiller/EventSinks.java" binary="false" label="&lt;static&gt;" type="class" 
+    autoSize="true">    
+    <position height="0" width="0" x="0" y="0"/>    
+    <execution id="28">      
+      <position height="63" width="0" x="0" y="1386"/>    
+    </execution>  
+  </object>  
+  <object id="40" language="java" name="formfiller.delivery.event.eventSink.EventSink" project="formfiller" 
+    file="/formfiller/src/main/java/formfiller/delivery/event/eventSink/EventSink.java" binary="false" label="sink" 
+    type="interface" autoSize="true">    
+    <position height="0" width="0" x="0" y="0"/>    
+    <execution id="39">      
+      <position height="21" width="0" x="0" y="1407"/>    
+    </execution>  
+  </object>  
+  <object id="41" language="java" name="formfiller.gateways.impl.InMemoryTransporter" project="formfiller" 
+    file="/formfiller/src/main/java/formfiller/gateways/impl/InMemoryTransporter.java" binary="false" 
+    label="&lt;static&gt;" type="class" autoSize="true">    
+    <position height="0" width="0" x="0" y="0"/>    
+    <execution id="18">      
+      <position height="21" width="0" x="0" y="645"/>    
+    </execution>    
+    <execution id="20">      
+      <position height="365" width="0" x="0" y="687"/>    
+    </execution>    
+    <execution id="43">      
+      <position height="219" width="0" x="0" y="729"/>    
+    </execution>    
+    <execution id="45">      
+      <position height="21" width="0" x="0" y="979"/>    
+    </execution>    
+    <execution id="49">      
+      <position height="21" width="0" x="0" y="781"/>    
+    </execution>    
+    <execution id="53">      
+      <position height="21" width="0" x="0" y="875"/>    
+    </execution>  
+  </object>  
+  <object id="56" language="java" name="formfiller.gateways.FormComponentState" project="formfiller" 
+    file="/formfiller/src/main/java/formfiller/gateways/FormComponentState.java" binary="false" type="interface" 
+    autoSize="true">    
+    <position height="0" width="0" x="0" y="0"/>    
+    <execution id="51">      
+      <position height="21" width="0" x="0" y="812"/>    
+    </execution>  
+  </object>  
+  <object id="57" language="java" name="formfiller.gateways.FormComponentState" project="formfiller" 
+    file="/formfiller/src/main/java/formfiller/gateways/FormComponentState.java" binary="false" type="interface" 
+    autoSize="true">    
+    <position height="0" width="0" x="0" y="0"/>    
+    <execution id="55">      
+      <position height="21" width="0" x="0" y="906"/>    
+    </execution>  
+  </object>  
+  <object id="58" language="java" name="formfiller.gateways.FormComponentState" project="formfiller" 
+    file="/formfiller/src/main/java/formfiller/gateways/FormComponentState.java" binary="false" type="interface" 
+    autoSize="true">    
+    <position height="0" width="0" x="0" y="0"/>    
+    <execution id="47">      
+      <position height="21" width="0" x="0" y="1010"/>    
+    </execution>  
+  </object>  
+  <object id="59" language="java" name="formfiller.usecases.askQuestion.AskQuestionValidator" project="formfiller" 
+    file="/formfiller/src/main/java/formfiller/usecases/askQuestion/AskQuestionValidator.java" binary="false" 
+    label="&lt;static&gt;" type="class" autoSize="true">    
+    <position height="0" width="0" x="0" y="0"/>    
+    <execution id="6">      
+      <position height="313" width="0" x="0" y="155"/>    
+    </execution>    
+    <execution id="61">      
+      <position height="73" width="0" x="0" y="197"/>    
+    </execution>    
+    <execution id="63">      
+      <position height="146" width="0" x="0" y="301"/>    
+    </execution>    
+    <execution id="67">      
+      <position height="21" width="0" x="0" y="353"/>    
+    </execution>    
+    <execution id="69">      
+      <position height="21" width="0" x="0" y="405"/>    
+    </execution>  
+  </object>  
+  <object id="70" language="java" name="formfiller.gateways.FormComponentState" project="formfiller" 
+    file="/formfiller/src/main/java/formfiller/gateways/FormComponentState.java" binary="false" type="interface" 
+    autoSize="true">    
+    <position height="0" width="0" x="0" y="0"/>    
+    <execution id="65">      
+      <position height="21" width="0" x="0" y="228"/>    
+    </execution>  
+  </object>  
+  <object id="71" language="java" name="formfiller.ExecutedUseCases" project="formfiller" 
+    file="/formfiller/src/main/java/formfiller/ExecutedUseCases.java" binary="false" type="class" autoSize="true">    
+    <position height="0" width="0" x="0" y="0"/>    
+    <execution id="16">      
+      <position height="21" width="0" x="0" y="1522"/>    
+    </execution>  
+  </object>  
+  <message id="3" operation="execute(formfiller.request.models.Request):void" asynchronous="false">    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="4"/>  
+  </message>  
+  <message id="5" operation="isValidQuestion(formfiller.enums.QuestionAsked):boolean" asynchronous="false">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="6"/>  
+  </message>  
+  <message id="7" operation="temporarilyPopulateOutcomePresenterForFitNesseFixture():void" asynchronous="false">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="8"/>  
+  </message>  
+  <message id="9" operation="setOutcome(formfiller.enums.Outcome):void" asynchronous="false">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="10"/>  
+  </message>  
+  <message id="11" operation="executeAskQuestion(formfiller.enums.QuestionAsked):void" asynchronous="false">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="12"/>  
+  </message>  
+  <message id="13" operation="presentAskQuestionResponse():void" asynchronous="false">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="14"/>  
+  </message>  
+  <message id="15" operation="add(formfiller.usecases.undoable.UndoableUseCase):void" asynchronous="false">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="16"/>  
+  </message>  
+  <message id="17" operation="InMemoryTransporter()" asynchronous="false">    
+    <end type="SOURCE" refId="12"/>    
+    <end type="TARGET" refId="18"/>  
+  </message>  
+  <message id="19" operation="moveToElement(formfiller.enums.QuestionAsked):void" asynchronous="false">    
+    <end type="SOURCE" refId="12"/>    
+    <end type="TARGET" refId="20"/>  
+  </message>  
+  <message id="21" operation="makeResponseModel():formfiller.usecases.askQuestion.AskQuestionResponseModel" 
+    asynchronous="false">    
+    <end type="SOURCE" refId="14"/>    
+    <end type="TARGET" refId="22"/>  
+  </message>  
+  <message id="23" operation="AskQuestionPresenter()" asynchronous="false">    
+    <end type="SOURCE" refId="14"/>    
+    <end type="TARGET" refId="24"/>  
+  </message>  
+  <message id="25" operation="present(formfiller.usecases.askQuestion.AskQuestionResponseModel):void" 
+    asynchronous="false">    
+    <end type="SOURCE" refId="14"/>    
+    <end type="TARGET" refId="26"/>  
+  </message>  
+  <message id="27" operation="receive(formfiller.usecases.askQuestion.AskQuestionViewModel):void" asynchronous="false">    
+    <end type="SOURCE" refId="14"/>    
+    <end type="TARGET" refId="28"/>  
+  </message>  
+  <message id="29" operation="getViewModel():formfiller.usecases.askQuestion.AskQuestionViewModel" asynchronous="false">    
+    <end type="SOURCE" refId="14"/>    
+    <end type="TARGET" refId="30"/>  
+  </message>  
+  <message id="32" operation="makeViewable(formfiller.usecases.askQuestion.AskQuestionResponseModel):void" 
+    asynchronous="false">    
+    <end type="SOURCE" refId="26"/>    
+    <end type="TARGET" refId="33"/>  
+  </message>  
+  <message id="34" operation="AskQuestionViewModel()" asynchronous="false">    
+    <end type="SOURCE" refId="33"/>    
+    <end type="TARGET" refId="35"/>  
+  </message>  
+  <message id="38" operation="receive(formfiller.usecases.askQuestion.AskQuestionViewModel):void" asynchronous="false">    
+    <end type="SOURCE" refId="28"/>    
+    <end type="TARGET" refId="39"/>  
+  </message>  
+  <message id="42" operation="moveChangesPosition(formfiller.enums.QuestionAsked):boolean" asynchronous="false">    
+    <end type="SOURCE" refId="20"/>    
+    <end type="TARGET" refId="43"/>  
+  </message>  
+  <message id="44" operation="getCurrentState():formfiller.gateways.FormComponentState" asynchronous="false">    
+    <end type="SOURCE" refId="20"/>    
+    <end type="TARGET" refId="45"/>  
+  </message>  
+  <message id="46" operation="update(formfiller.enums.QuestionAsked):void" asynchronous="false">    
+    <end type="SOURCE" refId="20"/>    
+    <end type="TARGET" refId="47"/>  
+  </message>  
+  <message id="48" operation="getCurrentState():formfiller.gateways.FormComponentState" asynchronous="false">    
+    <end type="SOURCE" refId="43"/>    
+    <end type="TARGET" refId="49"/>  
+  </message>  
+  <message id="50" operation="isAtStart():boolean" asynchronous="false">    
+    <end type="SOURCE" refId="43"/>    
+    <end type="TARGET" refId="51"/>  
+  </message>  
+  <message id="52" operation="getCurrentState():formfiller.gateways.FormComponentState" asynchronous="false">    
+    <end type="SOURCE" refId="43"/>    
+    <end type="TARGET" refId="53"/>  
+  </message>  
+  <message id="54" operation="isAtEnd():boolean" asynchronous="false">    
+    <end type="SOURCE" refId="43"/>    
+    <end type="TARGET" refId="55"/>  
+  </message>  
+  <message id="60" operation="getCurrentFormComponent():formfiller.entities.formComponent.FormComponent" 
+    asynchronous="false">    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="61"/>  
+  </message>  
+  <message id="62" 
+    operation="isInvalidMove(formfiller.enums.QuestionAsked,formfiller.entities.formComponent.FormComponent):boolean" 
+    asynchronous="false">    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="63"/>  
+  </message>  
+  <message id="64" operation="getCurrent():formfiller.entities.formComponent.FormComponent" asynchronous="false">    
+    <end type="SOURCE" refId="61"/>    
+    <end type="TARGET" refId="65"/>  
+  </message>  
+  <message id="66" operation="isMovingForward(formfiller.enums.QuestionAsked):boolean" asynchronous="false">    
+    <end type="SOURCE" refId="63"/>    
+    <end type="TARGET" refId="67"/>  
+  </message>  
+  <message id="68" operation="isAnswerRequiredButAbsent(formfiller.entities.formComponent.FormComponent):boolean" 
+    asynchronous="false">    
+    <end type="SOURCE" refId="63"/>    
+    <end type="TARGET" refId="69"/>  
+  </message>
+</sequence-diagram>

@@ -1,5 +1,8 @@
 package formfiller.entities;
 
+/**
+ * The interface for Question objects.
+ */
 public interface Question {
 
 	String getId();

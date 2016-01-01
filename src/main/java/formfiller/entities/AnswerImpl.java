@@ -2,6 +2,9 @@ package formfiller.entities;
 
 import formfiller.utilities.StringUtilities;
 
+/**
+ * The Answer object implementation.
+ */
 public class AnswerImpl implements Answer {
 	public static final Answer NONE = new AnswerImpl().new NullAnswer();	
 	private String questionId = "";

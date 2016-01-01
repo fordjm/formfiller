@@ -5,7 +5,11 @@ import java.util.Stack;
 
 import formfiller.usecases.undoable.NullUndoableUseCase;
 import formfiller.usecases.undoable.UndoableUseCase;
-
+/**
+ * The ExecutedUseCases class stores a collection of UndoableUseCase objects.
+ * Upon receiving the Undo request, the system pops the last UndoableUseCase 
+ * off the stack and calls its undo method.
+ */
 public class ExecutedUseCases {
 	private Stack<UndoableUseCase> executedUseCases;
 	

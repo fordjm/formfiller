@@ -4,6 +4,10 @@ import formfiller.delivery.event.CharacterBasedEventParsingStrategy;
 import formfiller.delivery.event.EventParser;
 import formfiller.delivery.router.Router;
 
+/**
+ * EventHandler parses UI input with an event parser and passes the 
+ * resulting object to the router.
+ */
 public class EventHandler {
 	EventParser eventParser;
 	Router router;

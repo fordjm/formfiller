@@ -9,6 +9,11 @@ import java.util.Map;
 import formfiller.utilities.LuceneTfIdfSimilarityCalculator;
 import formfiller.utilities.SortedMapCreator;
 
+/**
+ * TfIdfSimilarityEventParsingStrategy is used to parse events from non-text-based 
+ * user interfaces.  The strategy is in early development.  It can handle only 
+ * the ask question and add answer use cases along with one parameter.
+ */
 public class TfIdfSimilarityEventParsingStrategy implements EventParsingStrategy {
 	private List<String> useCases;
 	private String input;
@@ -39,7 +44,6 @@ public class TfIdfSimilarityEventParsingStrategy implements EventParsingStrategy
 		return result;
 	}
 
-	//	TODO:	Return input if below min threshold
 	private String screenIfBelowMinThreshold(String closest, double score) {
 		return (score >= 0.5) ? closest : input;
 	}

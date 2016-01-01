@@ -12,6 +12,12 @@ import formfiller.usecases.askQuestion.LocalAskQuestionUseCase;
 import formfiller.usecases.factory.UseCaseFactoryImpl;
 import formfiller.utilities.*;
 
+/**
+ * AskQuestionController handles Ask Question events from the UI.
+ * It creates an new Arguments object from the parsed event, gets a 
+ * new request from the request builder, gets a new use case from the 
+ * use case factory, and executes the use case.
+ */
 public class AskQuestionController implements Controller {
 	private QuestionAsked which;
 	private Arguments arguments;

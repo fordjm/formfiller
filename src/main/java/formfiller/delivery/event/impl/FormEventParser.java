@@ -6,6 +6,10 @@ import formfiller.delivery.event.EventParser;
 import formfiller.delivery.event.EventParsingStrategy;
 import formfiller.utilities.StringUtilities;
 
+/**
+ * FormEventParser uses a passed EventParsingStrategy to convert input strings 
+ * to parsed event objects.
+ */
 public class FormEventParser implements EventParser {
 	private EventParsingStrategy strategy;
 	

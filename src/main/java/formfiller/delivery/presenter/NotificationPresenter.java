@@ -3,6 +3,10 @@ package formfiller.delivery.presenter;
 import formfiller.delivery.viewModel.NotificationViewModel;
 import formfiller.response.models.NotificationResponseModel;
 
+/**
+ * NotificationPresenter presents Response Models for objects which lack 
+ * their own views (i.e. error messages.)
+ */
 public class NotificationPresenter {	
 	private NotificationViewModel viewModel;
 

@@ -9,6 +9,12 @@ import formfiller.request.models.Request;
 import formfiller.usecases.factory.UseCaseFactory;
 import formfiller.usecases.factory.UseCaseFactoryImpl;
 
+/**
+ * HandleUnfoundUseCaseController handles unknown events from the UI.
+ * It creates an new Arguments object from the parsed event, gets a 
+ * new request from the request builder, gets a new Use Case from the 
+ * use case factory, and executes the use case.
+ */
 public class HandleUnfoundUseCaseController implements Controller {
 
 	public void handle(ParsedEvent parsedEvent) {

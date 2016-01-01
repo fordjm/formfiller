@@ -3,6 +3,10 @@ package formfiller.entities;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * CompositeAnswer uses the Composite pattern for uniformly-handling single 
+ * or multiple answers. 
+ */
 public class CompositeAnswer implements Answer {
 	private String id;
 	private List<Answer> itsAnswers;

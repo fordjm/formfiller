@@ -2,6 +2,11 @@ package formfiller.delivery.controller;
 
 import java.util.List;
 
+/**
+ * ChangeIdController implements the abstract getName(), 
+ * assignRequiredParameters(), and makeArguments() methods of the 
+ * UndoableUseCaseController superclass.
+ */
 public class ChangeIdController extends UndoableUseCaseController {
 	private String oldId = "";
 	private String newId = "";

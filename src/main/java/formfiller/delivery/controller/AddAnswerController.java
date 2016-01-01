@@ -12,6 +12,12 @@ import formfiller.request.models.Request;
 import formfiller.usecases.factory.UseCaseFactoryImpl;
 import formfiller.utilities.StringUtilities;
 
+/**
+ * AddAnswerController handles Add Answer events from the UI.
+ * It creates an new Arguments object from the parsed event, gets a 
+ * new request from the request builder, gets a new use case from the 
+ * use case factory, and executes the use case.
+ */
 public class AddAnswerController extends UndoableUseCaseController {
 	private String content;
 	private Arguments arguments;

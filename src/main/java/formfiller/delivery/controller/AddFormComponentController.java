@@ -5,6 +5,11 @@ import java.util.List;
 import formfiller.entities.format.Format;
 import formfiller.utilities.FormatArgumentParser;
 
+/**
+ * AddFormComponentController implements the abstract getName(), 
+ * assignRequiredParameters(), and makeArguments() methods of the 
+ * UndoableUseCaseController superclass.
+ */
 public class AddFormComponentController extends UndoableUseCaseController {
 	private String componentId;
 	private String questionContent;

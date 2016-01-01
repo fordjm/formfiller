@@ -5,6 +5,11 @@ import java.util.List;
 import formfiller.entities.format.Format;
 import formfiller.utilities.FormatArgumentParser;
 
+/**
+ * ChangeFormatController implements the abstract getName(), 
+ * assignRequiredParameters(), and makeArguments() methods of the 
+ * UndoableUseCaseController superclass.
+ */
 public class ChangeFormatController extends UndoableUseCaseController {
 	private String componentId;
 	private String formatString;

@@ -2,6 +2,11 @@ package formfiller.delivery.controller;
 
 import java.util.List;
 
+/**
+ * AddOptionController implements the abstract getName(), 
+ * assignRequiredParameters(), and makeArguments() methods of the 
+ * UndoableUseCaseController superclass.
+ */
 public class AddOptionController extends UndoableUseCaseController {
 	private String componentId = "";
 	private String option = "";

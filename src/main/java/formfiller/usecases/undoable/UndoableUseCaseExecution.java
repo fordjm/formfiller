@@ -5,6 +5,10 @@ import formfiller.enums.Outcome;
 import formfiller.request.models.Request;
 import formfiller.response.models.NotificationResponseModel;
 
+/**
+ * The UndoableUseCaseExecution class implements the Template Method pattern 
+ * to factor out the generic execution algorithm used by its derivatives.
+ */
 public abstract class UndoableUseCaseExecution implements UndoableUseCase {
 	protected Outcome outcome = Outcome.NEUTRAL;
 	protected String message = "";

@@ -1,5 +1,8 @@
 package formfiller.entities;
 
+/**
+ * The interface for Answer objects.
+ */
 public interface Answer {
 	String getId();
 

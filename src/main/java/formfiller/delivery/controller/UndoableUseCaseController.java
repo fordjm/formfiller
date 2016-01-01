@@ -11,6 +11,13 @@ import formfiller.usecases.factory.UseCaseFactory;
 import formfiller.usecases.factory.UseCaseFactoryImpl;
 import formfiller.usecases.undoable.UndoableUseCase;
 
+/**
+ * UndoableUseCaseController uses the Template Method pattern to factor 
+ * out the generic event handling algorithm used by its derivatives. 
+ * It creates a new Arguments object from the parsed event, gets a 
+ * new request from the request builder, gets a new Use Case from the 
+ * use case factory, and executes the use case.
+ */
 public abstract class UndoableUseCaseController implements Controller {
 	private String name = "";
 

@@ -2,6 +2,9 @@ package formfiller.entities;
 
 import formfiller.utilities.StringUtilities;
 
+/**
+ * The Question object implementation.
+ */
 public class QuestionImpl implements Question {
 	private static final String END_PROMPT = "You have reached the end of this form.";
 	private static final String NULL_PROMPT = "No such question exists.";

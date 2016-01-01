@@ -4,6 +4,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * CharacterBasedEventParsingStrategy is used to parse events from the test 
+ * console user interface.  Since it relies on commas and quotation marks not 
+ * provided by automatic speech recognition, it cannot be used with speech-based 
+ * user interfaces.
+ */
 public class CharacterBasedEventParsingStrategy implements EventParsingStrategy {
 	private final String QUOTATION_MARK = "\"";
 

@@ -11,6 +11,10 @@ import formfiller.delivery.event.impl.ParsedEvent;
 //https://github.com/cleancoders/CleanCodeCaseStudy/blob/master/src/cleancoderscom/http/Router.java
 //Retrieved 2015-08-14
 
+/**
+ * The Router class matches parsed event methods to appropriate controllers 
+ * which handle the parsed event objects.
+ */
 public class Router {
 	public static final Controller handleUnfoundUseCaseController = 
 			new HandleUnfoundUseCaseController();
