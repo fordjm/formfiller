@@ -1,6 +1,10 @@
 package formfiller.utilities;
 
 import formfiller.ExecutedUseCases;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import formfiller.Context;
 import formfiller.delivery.presenter.FormComponentPresenter;
 import formfiller.delivery.presenter.NotificationPresenter;
@@ -37,16 +41,35 @@ public class TestSetup {
 	
 	public static void setupSampleFormComponents(){
 		setupContext();
-		Context.formComponentGateway.save(
-				makeFormComponent(false, 
-						makeQuestion("name", "What is your name?")));
-		Context.formComponentGateway.save(
-				makeFormComponent(false, 
-						makeQuestion("birthDate", "What is your birth date?"), 
-						makeAnswer("November 12, 1955")));
-		Context.formComponentGateway.save(
-				makeFormComponent(true, 
-						makeQuestion("age", "What is your age?")));
+		FormComponent[] components = makeTestComponents();
+		saveFormComponentsAtGateway(components);
+	}
+	
+	private static FormComponent[] makeTestComponents() {
+		List<FormComponent> result = new ArrayList<FormComponent>();
+		result.add(makeFormComponent(true, 
+				makeQuestion("name", "What is your name?")));
+		result.add(makeFormComponent(false, 
+						makeQuestion("birthDate", "What is your date of birth?")));
+		result.add(makeFormComponent(false, 
+				makeQuestion("age", "What is your age?")));
+		result.add(makeFormComponent(false, 
+				makeQuestion("race", "What is your race?")));
+		result.add(makeFormComponent(false, 
+				makeQuestion("gender", "What is your gender?")));
+		result.add(makeFormComponent(false, 
+				makeQuestion("city", "What city do you live in?")));
+		result.add(makeFormComponent(false, 
+				makeQuestion("referred_by", "Who referred you?")));
+		result.add(makeFormComponent(false, 
+				makeQuestion("purpose", "What is the purpose of your "
+						+ "visit today?")));
+		return result.toArray(new FormComponent[0]);
+	}
+
+	private static void saveFormComponentsAtGateway(FormComponent... components) {
+		for (FormComponent component : components)
+			Context.formComponentGateway.save(component);
 	}
 	
 	private static FormComponent makeFormComponent(boolean requiresAnswer, 

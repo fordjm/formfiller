@@ -55,7 +55,7 @@ public class TestSetupTest {
 
 	@Test
 	public void testNameComponent() {
-		setExpectedValues("name", "What is your name?", "", false);
+		setExpectedValues("name", "What is your name?", "", true);
 		
 		component = Context.formComponentGateway.find("name");
 		
@@ -64,8 +64,7 @@ public class TestSetupTest {
 
 	@Test
 	public void testBirthDateComponent() {
-		setExpectedValues("birthDate", "What is your birth date?", 
-				"November 12, 1955", false);
+		setExpectedValues("birthDate", "What is your date of birth?", "", false);
 		
 		component = Context.formComponentGateway.find("birthDate");
 		
@@ -74,7 +73,7 @@ public class TestSetupTest {
 
 	@Test
 	public void testAgeComponent() {
-		setExpectedValues("age", "What is your age?", "", true);
+		setExpectedValues("age", "What is your age?", "", false);
 		
 		component = Context.formComponentGateway.find("age");
 		
